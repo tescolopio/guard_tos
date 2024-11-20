@@ -1,4 +1,4 @@
-const { createServiceWorker } = require("../../src/background/service-worker");
+const { createServiceWorker } = require("../../src/background/serviceWorker");
 const { EXT_CONSTANTS } = require("../../src/utils/constants");
 
 describe("Service Worker", () => {
@@ -64,18 +64,18 @@ describe("Service Worker", () => {
     expect(chrome.runtime.onMessage.addListener).toHaveBeenCalled();
     expect(logMock).toHaveBeenCalledWith(
       EXT_CONSTANTS.DEBUG.LEVELS.INFO,
-      "Service worker initialized successfully"
+      "Service worker initialized successfully",
     );
   });
 
   test("should set up context menu", () => {
     serviceWorker._test.setupContextMenu();
     expect(chrome.contextMenus.create).toHaveBeenCalledWith(
-      EXT_CONSTANTS.CONTEXT_MENU.GRADE_TEXT
+      EXT_CONSTANTS.CONTEXT_MENU.GRADE_TEXT,
     );
     expect(logMock).toHaveBeenCalledWith(
       logLevelsMock.INFO,
-      "Context menu created successfully"
+      "Context menu created successfully",
     );
   });
 
@@ -89,7 +89,7 @@ describe("Service Worker", () => {
         message: message,
         iconUrl: EXT_CONSTANTS.EXTENSION.ICON_PATHS.MEDIUM,
       },
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -110,7 +110,7 @@ describe("Service Worker", () => {
       {
         selection: "test",
         tabId: 1,
-      }
+      },
     );
     expect(chrome.storage.local.set).toHaveBeenCalledWith({
       [EXT_CONSTANTS.STORAGE_KEYS.LAST_WORD]: "test",
@@ -118,7 +118,7 @@ describe("Service Worker", () => {
     expect(chrome.sidePanel.open).toHaveBeenCalledWith({ tabId: 1 });
     expect(logMock).toHaveBeenCalledWith(
       logLevelsMock.INFO,
-      "Context menu actions completed successfully"
+      "Context menu actions completed successfully",
     );
   });
 
@@ -131,7 +131,7 @@ describe("Service Worker", () => {
     expect(logMock).toHaveBeenCalledWith(
       logLevelsMock.WARN,
       "Invalid context menu click data:",
-      { data, tab }
+      { data, tab },
     );
     expect(chrome.notifications.create).toHaveBeenCalled();
   });
@@ -146,7 +146,7 @@ describe("Service Worker", () => {
     expect(chrome.storage.local.set).toHaveBeenCalledWith({ [key]: data });
     expect(logMock).toHaveBeenCalledWith(
       logLevelsMock.INFO,
-      `Data stored successfully for key: ${key}`
+      `Data stored successfully for key: ${key}`,
     );
   });
 
@@ -161,7 +161,7 @@ describe("Service Worker", () => {
     await serviceWorker._test.handleMessage(message, sender, sendResponse);
 
     expect(chrome.storage.local.get).toHaveBeenCalledWith(
-      EXT_CONSTANTS.STORAGE_KEYS.LAST_WORD
+      EXT_CONSTANTS.STORAGE_KEYS.LAST_WORD,
     );
     expect(sendResponse).toHaveBeenCalledWith({ lastWord: "testWord" });
   });
@@ -176,7 +176,7 @@ describe("Service Worker", () => {
     expect(logMock).toHaveBeenCalledWith(
       logLevelsMock.WARN,
       "Unknown message action:",
-      "invalidAction"
+      "invalidAction",
     );
     expect(sendResponse).toHaveBeenCalledWith({
       error: EXT_CONSTANTS.MESSAGES.ERROR.UNKNOWN_ACTION,
@@ -196,7 +196,7 @@ describe("Service Worker", () => {
     expect(chrome.storage.local.set).toHaveBeenCalled();
     expect(logMock).toHaveBeenCalledWith(
       logLevelsMock.INFO,
-      "ToS analysis completed successfully"
+      "ToS analysis completed successfully",
     );
   });
 
@@ -209,7 +209,7 @@ describe("Service Worker", () => {
     expect(logMock).toHaveBeenCalledWith(
       logLevelsMock.WARN,
       "Invalid ToS detection data:",
-      { message, sender }
+      { message, sender },
     );
   });
 
@@ -228,7 +228,7 @@ describe("Service Worker", () => {
     expect(logMock).toHaveBeenCalledWith(
       logLevelsMock.WARN,
       "Invalid tab data for notification check:",
-      tab
+      tab,
     );
     expect(result).toEqual({ shouldShow: false, error: "Invalid tab data" });
   });

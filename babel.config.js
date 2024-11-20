@@ -63,5 +63,5 @@ module.exports = {
       ],
     },
   },
-  ignore: ['node_modules', 'dist', '**/*.spec.js', '**/*.test.js'],
+  ignore: ['node_modules', 'dist'],
 };
