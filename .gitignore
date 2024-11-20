@@ -91,6 +91,15 @@ out
 .nuxt
 dist
 
+# Jest specific files
+jest.config.js
+jest.setup.js
+
+# Webpack specific files
+webpack.config.js
+webpack.config.*.js
+
+
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and not Next.js
@@ -99,6 +108,9 @@ dist
 
 # vuepress build output
 .vuepress/dist
+
+# Windows specific files
+Thumbs.db
 
 # vuepress v2.x temp and cache directory
 .temp
