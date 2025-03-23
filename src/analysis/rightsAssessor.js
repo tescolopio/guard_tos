@@ -5,7 +5,7 @@
  * @date 2024-10-05
  */
 
-const { LEGAL_PATTERNS, RIGHTS_PATTERNS } = require('..data/legalPatterns');
+const { LEGAL_PATTERNS, RIGHTS_PATTERNS } = require('../data/legalPatterns');
 
 (function(global) {
   'use strict';
@@ -114,7 +114,7 @@ const { LEGAL_PATTERNS, RIGHTS_PATTERNS } = require('..data/legalPatterns');
      * @returns {Promise<string|null>} Definition or null
      */
     async function fetchDefinition(word) {
-      // Placeholder until API integration
+      //TODO: include funcytionality to grab find corresponding definition from the data/dictionaries and return the definition. This may be done in an array.
       return null;
     }
 

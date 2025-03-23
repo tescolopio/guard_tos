@@ -20,12 +20,7 @@
     const { ANALYSIS } = global.Constants;
     const { GRADES } = ANALYSIS;
 
-    // Regex patterns for syllable counting
-    const SYLLABLE_PATTERNS = {
-      SUBTRACT: [/cial/, /tia/, /cius/, /cious/, /giu/, /ion/, /iou/, /sia$/, /.ely$/, /sed$/],
-      ADD: [/ia/, /riet/, /dien/, /iu/, /io/, /ii/, /[aeiouym]bl$/, /[aeiou]{3}/, /^mc/, /ism$/, 
-            /([^aeiouy])\1l$/, /[^l]lien/, /^coa[dglx]./, /[^gq]ua[^auieo]/, /dnt$/]
-    };
+   
 
     function splitIntoSentences(text) {
       return text.split(/[.!?]+/).filter(sentence => sentence.trim() !== "");

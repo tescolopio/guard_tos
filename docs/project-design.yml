@@ -1,0 +1,1731 @@
+project:
+  name: Terms Guardian
+  version: 1.0.0
+  structure:
+    - name: root
+      files:
+        - yarn.lock
+        - readme.md
+        - package.json
+        - manifest.json
+        - jest.setup.js
+        - jest.config.js
+        - babel.config.js
+        - .yarnrc.yml
+        - .env
+      folders:
+        - name: __tests__
+          files: null
+          folders:
+            - name: e2e
+              files: null
+              folders: null
+            - name: helpers
+              files:
+                - chromeSetup.js:
+                  title: Chrome Setup
+                  description: Chrome-specific setup script
+                  functions:
+                    - setupChromeEnvironment:
+                        description: Sets up the Chrome environment with mock APIs and analyzers
+                        parameters:
+                          - customChromeAPI: object (optional)
+                          - customAnalyzers: object (optional)
+                        returns: 
+                          chrome: object
+                          analyzers: object
+                    - resetChromeEnvironment:
+                        description: Resets the Chrome environment and analyzers
+                    - createMessageSender:
+                        description: Creates a mock Chrome message sender
+                        parameters:
+                          - type: string (optional, default: "content_script")
+                        returns: object (Message sender object)
+                    - simulateChromeMessage:
+                        description: Simulates a Chrome runtime message
+                        parameters:
+                          - message: object
+                          - sender: object (optional, default: createMessageSender())
+                        returns: Promise
+                    - createStorageChanges:
+                        description: Creates a mock Chrome storage change object
+                        parameters:
+                          - key: string
+                          - oldValue: any
+                          - newValue: any
+                        returns: object (Storage changes object)
+                  dependencies:
+                    - "./mockData"
+                  exports:
+                    - setupChromeEnvironment
+                    - resetChromeEnvironment
+                    - createMessageSender
+                    - simulateChromeMessage
+                    - createStorageChanges
+                - mockData.js:
+                  title: Mock Data
+                  description: Mock data for testing Terms Guardian extension
+                  functions:
+                    - getMockChromeAPI:
+                        description: Returns a fresh copy of the mock Chrome API
+                        returns: object
+                    - getMockAnalyzers:
+                        description: Returns a fresh copy of the mock analyzers
+                        returns: object
+                    - getMockMessages:
+                        description: Returns a fresh copy of the mock messages
+                        returns: object
+                  dependencies: []
+                  exports:
+                    - mockLegalText:
+                        description: Mock legal text samples
+                        properties:
+                          - simple:
+                              text: string
+                              expectedScore: number
+                              expectedRights: array of strings
+                              metadata: object
+                          - complex:
+                              text: string
+                              expectedScore: number
+                              expectedRights: array of strings
+                              metadata: object
+                    - mockAnalysisResults:
+                        description: Mock analysis results
+                        properties:
+                          - readability: object
+                          - rights: object
+                          - uncommonWords: array of objects
+                    - mockDOMStructures:
+                        description: Mock DOM structures
+                        properties:
+                          - legalSection: string
+                          - nonLegalSection: string
+                    - mockChromeAPI:
+                        description: Mock Chrome API
+                        properties:
+                          - runtime: object
+                          - storage: object
+                          - action: object
+                          - sidePanel: object
+                          - tabs: object
+                          - scripting: object
+                    - mockAnalyzers:
+                        description: Mock analyzers responses
+                        properties:
+                          - RightsAssessor: object
+                          - TosSummarizer: object
+                          - TextExtractor: object
+                          - UncommonWordsIdentifier: object
+                    - mockMessages:
+                        description: Mock extension messages
+                        properties:
+                          - tosDetected: object
+                          - analyzeRequest: object
+                          - analysisComplete: object
+                    - getMockChromeAPI
+                    - getMockAnalyzers
+                    - getMockMessages
+                - setup.js:
+                    title: Jest Test Setup
+                    description: Global setup script for Jest tests
+                    functions:
+                      - createMatchMediaMock:
+                          description: Mocks the window.matchMedia function
+                          returns: Object (Mock matchMedia implementation)
+                      - MockResizeObserver:
+                          description: Mocks the ResizeObserver class
+                          methods:
+                            - observe: Mocks the observe method
+                            - unobserve: Mocks the unobserve method
+                            - disconnect: Mocks the disconnect method
+                      - createConsoleMock:
+                          description: Mocks console methods
+                          returns: Object (Mock console implementation)
+                      - mockFetch:
+                          description: Mocks the Fetch API
+                          returns: Function (Mock fetch implementation)
+                      - MockEvent:
+                          description: Mocks the DOM Event class
+                          constructor:
+                            parameters:
+                              - type: string
+                              - options: Object (optional)
+                          methods:
+                            - preventDefault: Mocks the preventDefault method
+                            - stopPropagation: Mocks the stopPropagation method
+                            - stopImmediatePropagation: Mocks the stopImmediatePropagation method
+                      - setupGlobalMocks:
+                          description: Sets up all global mocks and the test environment
+                    dependencies:
+                      - "@jest/globals"
+                      - "@testing-library/jest-dom"
+                      - "./chromeSetup"
+                      - "./testUtils"
+                    exports:
+                      - createMatchMediaMock
+                      - MockResizeObserver
+                      - createConsoleMock
+                      - mockFetch
+                      - MockEvent
+                      - setupGlobalMocks
+                - styleMock.js:
+                    title: Mock file for CSS modules
+                    description: |
+                      This is used by Jest when importing CSS files.
+                      It can be extended to mock specific CSS modules if needed.
+                    exports:
+                      - __esModule: true
+                      - default: {}
+                      - highlighted-text: highlighted-text
+                      - legal-term: legal-term
+                      - warning: warning
+                      - success: success
+                      - error: error
+                      - info: info
+                      - get:
+                          description: Returns the key as-is for testing
+                          parameters:
+                            - key: string
+                          returns: string
+                      - has:
+                          description: Checks if a class exists
+                          parameters:
+                            - key: string
+                          returns: boolean
+                      - getAll:
+                          description: Gets multiple classes
+                          parameters:
+                            - keys: array of strings
+                          returns: string
+                      - variables:
+                          --primary-color: "#007bff"
+                          --secondary-color: "#6c757d"
+                          --success-color: "#28a745"
+                          --warning-color: "#ffc107"
+                          --error-color: "#dc3545"
+                          --info-color: "#17a2b8"
+                - testUtils.js:
+                    title: Test Utilities
+                    description: Utility functions for testing
+                    imports:
+                      - mockData: ./mockData
+                    functions:
+                      - setupTestDOM:
+                          description: Sets up a clean DOM environment for testing
+                          parameters:
+                            - innerHTML: string (optional)
+                      - resetAllMocks:
+                          description: Resets all mocks and cleans up the testing environment
+                      - setupChromeAPI:
+                          description: Creates a mock Chrome API environment
+                          parameters:
+                            - customImplementation: object (optional)
+                          returns: object
+                      - setupMockAnalyzers:
+                          description: Sets up mock analyzers with default implementations
+                          parameters:
+                            - customImplementation: object (optional)
+                      - wait:
+                          description: Helper to wait for promises to resolve
+                          parameters:
+                            - ms: number (optional)
+                          returns: Promise
+                      - flushPromises:
+                          description: Helper to wait for all promises to resolve
+                          returns: Promise
+                      - createStorageEvent:
+                          description: Creates a mock storage event
+                          parameters:
+                            - key: string
+                            - newValue: any
+                            - oldValue: any (optional)
+                          returns: StorageEvent
+                      - simulateMutation:
+                          description: Simulates a DOM mutation
+                          parameters:
+                            - target: Element
+                            - type: string
+                          returns: MutationObserver
+                      - createMessageEvent:
+                          description: Creates a mock message event
+                          parameters:
+                            - message: object
+                            - source: string (optional)
+                          returns: MessageEvent
+                      - injectScript:
+                          description: Simulates script injection
+                          parameters:
+                            - src: string
+                            - options: object (optional)
+                          returns: HTMLScriptElement
+                      - createMockTab:
+                          description: Creates a mock tab object
+                          parameters:
+                            - props: object (optional)
+                          returns: object
+                    exports:
+                      - setupTestDOM
+                      - resetAllMocks
+                      - setupChromeAPI
+                      - setupMockAnalyzers
+                      - wait
+                      - flushPromises
+                      - createStorageEvent
+                      - simulateMutation
+                      - createMessageEvent
+                      - injectScript
+                      - createMockTab
+              folders: null
+            - name: integration
+              files: null
+              folders: null
+            - name: unit
+              files: null
+              folders: null
+        - name: .vscode
+        - name: .yarn
+        - name: config
+        - name: docs
+        - name: images
+        - name: scripts
+          files: null
+          folders: null
+        - name: webpack
+          files:
+            - webpack.common.js :
+                title: Webpack Common
+                description: Common Webpack configuration
+                functions: []
+                dependencies: []
+                return: null
+            - webpack.dev.js :
+                title: Webpack Development
+                description: Webpack configuration for development
+                functions: []
+                dependencies: []
+                return: null
+            - webpack.prod.js :
+                title: Webpack Production
+                description: Webpack configuration for production
+                functions: []
+                dependencies: []
+                return: null
+          folders: null
+        - name: src
+          files: null
+          folders:
+          - name: analysis
+            files:
+              - isLegalText.js:
+                title: Legal Text Detection
+                description: Detects if text contains legal content
+                functions:
+                  - createLegalTextDetector:
+                      description: Creates a detector for identifying legal text
+                      parameters:
+                        - log: function
+                        - logLevels: object
+                      returns: object
+                  - isLegalText:
+                      description: Analyzes text to determine if it's legal content
+                      parameters:
+                        - text: string
+                      returns: Promise<object>
+                  - createLegalTextAnalyzer:
+                      description: Creates an advanced analyzer for legal text using pattern matching and term density
+                      parameters:
+                        - log: function
+                        - logLevels: object
+                        - legalTerms: array of strings (optional)
+                      returns: object
+                  - analyzeText:
+                      description: Analyzes text to determine if it's legal content with detailed metrics
+                      parameters:
+                        - text: string
+                      returns: Promise<object>
+                  - calculateTextMetrics:
+                      description: Calculates basic text metrics
+                      parameters:
+                        - words: array of strings
+                        - sentences: array of strings
+                      returns: object
+                  - analyzePatterns:
+                      description: Analyzes legal patterns in text
+                      parameters:
+                        - text: string
+                      returns: object
+                  - determineTextStatus:
+                      description: Determines if text is legal content based on metrics and patterns
+                      parameters:
+                        - metrics: object
+                        - patternMetrics: object
+                      returns: object
+                dependencies:
+                  - "../utils/constants"
+                  - "./textExtractor"
+                exports:
+                  - createLegalTextDetector
+                  - createLegalTextAnalyzer
+              - readabilityGrader.js :
+                title: Readability Grader
+                description: Grades legal text using different readability metrics
+                functions:
+                  - createReadabilityGrader:
+                    description: Grades legal text using different readability metrics
+                    parameters:
+                      - log: function
+                      - logLevels: object
+                    returns: None
+                  - splitIntoSentences:
+                    description: Splits a text into sentences based on punctuation.
+                    parameters:
+                      - text: string
+                    returns: array of strings
+                  - splitIntoWords:
+                    description: Splits a text into words based on whitespace characters.
+                    parameters:
+                      - text: string
+                    returns: array of strings
+                  - extractWords:
+                    description: Extracts words from a text, handling punctuation, special characters, contractions, and hyphenated words.
+                    parameters:
+                      - text: string
+                    returns: array of strings
+                  - countSyllablesInWord:
+                    description: Counts the number of syllables in a single word using a set of predefined patterns for syllable counting.
+                    parameters:
+                      - word: string
+                    returns: integer
+                  - countSyllables:
+                    description: Counts the number of syllables in a text.
+                    parameters:
+                      - text: string
+                    returns: integer
+                  - countComplexwotrds:
+                    description: Counts the number of complex words in a text (words with 3 or more syllables
+                    parameters:
+                      - text: string
+                    returns: number of complex words in the text
+                  - fleschReadingEase:
+                    description: Calculates the Flesch Reading Ease score.
+                    parameters:
+                      - text: string
+                    returns: number
+                  - fleschKincaidGradeLevel:
+                    description: Calculates the Flesch- Kincaid Grade Level.
+                    parameters:
+                      - text: string
+                    returns: number
+                  - calculateNormalizedScores:
+                    description: Calculates normalized scores for readability metrics.
+                    parameters:
+                    - fleschScore: number
+                    - kincaidScore: number
+                    - fogIndexScore: number
+                    returns:
+                    - flesch: number (0-1)
+                    - kincaid: number (0-1)
+                    - fog: number (0-1)
+                  - calculateReadabilityGrade:
+                    description: Calculates the readability grade of a text using multiple algorithms and returns an average.
+                    parameters:
+                      - text: string
+                    returns: object
+                  - gunningFogIndex:
+                    description: Calculates the Gunning Fog Index.
+                    parameters:
+                      - text: string
+                    returns: integer
+                  - determineGrade:
+                    description: Determines the readability grade based on the average score and other scores.
+                    parameters:
+                      - averageScore: number
+                      - kincaidScore: number
+                      - fogIndexScore: number
+                    returns: string
+                dependencies: []
+                return: ReadabilityScore
+              - rightsAssessor.js :
+                title: Rights Assessor
+                description: Utilizes NLP models to grade text against user rights index
+                functions:
+                  - chunkText:
+                    description: Chunks text into smaller segments
+                    parameters:
+                    - text: string
+                    - chunkSize: number (optional, default is 500)
+                    returns: Array of text chunks
+                  - analyzeRightsPatterns:
+                    description: Temporary function to analyze rights patterns until TensorFlow model is integrated
+                    parameters:
+                    - text: string
+                    returns: object with scores for positive, negative, and obligations
+                  - identifyUncommonWords:
+                    description: Identifies uncommon words in text
+                    parameters:
+                    - text: string
+                    returns: Promise of an array of uncommon words with definitions
+                  - fetchDefinition:
+                    description: Placeholder for future API integration
+                    parameters:
+                    - word: string
+                    returns: Promise of a definition or null
+                  - analyzeContent:
+                    description: Main analysis function
+                    parameters:
+                    - text: string
+                    returns: Promise of an object with rights score, uncommon words, and details
+                dependencies: [Tensorflow.js, legalPatterns.js, commonWords.js, constants.js]
+                return: RightsIndexScore
+              - summarizeTos.js :
+                title: Summarize TOS
+                description: Summarizes legal text overall and by section
+                functions:
+                  - createSummarizer:
+                    description: Creates a summarizer object that can be used to summarize the ToS text.
+                    parameters:
+                      - compromise: function
+                      - cheerio: function
+                      - log: function
+                      - logLevels: object
+                    returns: object
+                  - summarizeTos:
+                    description: Summarizes the ToS text by breaking it into sections and summarizing each section.
+                    parameters:
+                      - html: string
+                    returns: object
+                  - identifySections:
+                    description: Identifies sections in the HTML using heading tags.
+                    parameters:
+                      - $: CheerioStatic
+                    returns: array of objects
+                  - extractSectionText:
+                    description: Extracts text from a section.
+                    parameters:
+                      - section: object
+                    returns: string
+                  - summarizeSection:
+                    description: Summarizes a section of text using compromise.js.
+                    parameters:
+                      - sectionText: string
+                    returns: string
+                  - combineSummaries:
+                    description: Combines section summaries into an overall summary.
+                    parameters:
+                      - sectionSummaries: array of objects
+                    returns: string
+                dependencies:
+                  compromise: function
+                  cheerio: function
+                  log: function
+                  logLevels: object
+
+                returns:
+                  - overall: string
+                  - sections: array of objects
+                  - metadata: object
+              - textExtractor.js :
+                title: Text Extractor
+                description: Extracts text from web pages/windows and passes it for analysis
+                functions:
+                  - createTextExtractor:
+                    description: Creates a text extractor object.
+                    parameters:
+                      - log: function
+                      - logLevels: object
+                      - utilities: object
+                    returns: object
+                  - handleExtractionError:
+                    description: Handles extraction errors.
+                    parameters:
+                      - error: string
+                      - errorType: string
+                    returns: object
+                  - extractFromHTML:
+                    description: Extracts text from HTML content.
+                    parameters:
+                      - html: string
+                    returns: object
+                  - analyzeHTMLStructure:
+                    description: Analyzes the structure of an HTML document.
+                    parameters:
+                      - node: Node
+                    returns: object
+                  - preprocessText:
+                    description: Preprocesses text for analysis.
+                    parameters:
+                      - text: string
+                    returns: string
+                  - processBatchedContent:
+                    description: Processes large documents in batches.
+                    parameters:
+                      - content: string
+                      - chunkSize: number
+                    returns: string
+                  - enrichMetadata:
+                    description: Enriches metadata before caching.
+                    parameters:
+                      - metadata: object
+                      - text: string
+                    returns: object
+                  - generateFingerprint:
+                    description: Generates a unique fingerprint for a given piece of text.
+                    parameters:
+                      - text: string
+                    returns: string
+                  - extractFromHighlights:
+                    description: Extracts legal text from highlighted elements.
+                    parameters:
+                      - highlights: array of objects
+                    returns: string
+                  - extractTextFromSections:
+                    description: Extracts legal text from sections.
+                    parameters:
+                      - sections: array of objects
+                    returns: string
+                  - extractTextFromSection:
+                    description: Extracts legal text from a section.
+                    parameters:
+                      - section: object
+                    returns: string
+                  - isLealtext:
+                    description: Checks if a piece of text contains enough legal terms.
+                    parameters:
+                      - text: string
+                    returns: boolean
+                dependencies: [textCache, legalTerms]
+                return: createTextExtractor, extractFromHTML, clearCache
+              - uncommonWordsIdentifier.js :
+                title: Uncommon Words Identifier
+                description: Identifies uncommon words in legal text for definitions
+                functions:
+                  - createUncommonWordsIdentifier:
+                    description: Creates an instance of the Uncommon Words Identifier.
+                    parameters:
+                      - log: object (required)
+                      - logLevels: object (required)
+                      - commonWords: array (optional, default: commonWords.js)
+                      - legalTerms: array (optional, default: legalTerms.js)
+                      - legalTermsDefinitions: object (optional, default: legalTermsDefinitions.js)
+                      - config: object (optional)
+                    returns:
+                      - An instance of the Uncommon Words Identifier.
+                  - extractWords:
+                    description: Extracts words from a given text.
+                    parameters:
+                      - text: string (required)
+                    returns:
+                      - An array of extracted words.
+                  - extractCompoundTerms:
+                    description: Extracts compound terms from a given text.
+                    parameters:
+                      - text: string (required)
+                    returns:
+                      - An array of extracted compound terms.
+                  - getDefinition:
+                    description: Retrieves the definition of a given word.
+                    parameters:
+                      - word: string (required)
+                    returns:
+                      - The definition of the given word, or null if not found.
+                  - processBatch:
+                    description: Processes a batch of words and retrieves their definitions.
+                    parameters:
+                      - words: array (required)
+                    returns:
+                      - An array of processed words with their definitions.
+                  - identifyUncommonWords:
+                    description: Identifies uncommon words in a given text.
+                    parameters:
+                      - text: string (required)
+                    returns:
+                      - An array of identified uncommon words.
+                  - clearCache:
+                    description: Clears the cache of extracted words and definitions.
+                    returns:
+                      - None.
+                dependencies: [textExtractor.js, legalDictionaryService.js, ]
+                return: createUncommonWordsIdentifier, identifyUncommonWords, clearCache
+          - name: background
+            files:
+              - serviceWorker.js:
+                title: Service Worker
+                description: Service worker for the Chrome extension, handling all background operations
+                functions:
+                  - createServiceWorker:
+                      description: Creates the service worker with the provided logging configuration
+                      parameters:
+                        - log: function (required)
+                        - logLevels: object (required)
+                      returns: object
+                  - setupContextMenu:
+                      description: Sets up the context menu
+                      parameters: []
+                      returns: void
+                  - showNotification:
+                      description: Shows a notification to the user
+                      parameters:
+                        - message: string (required)
+                      returns: void
+                  - handleContextMenuClick:
+                      description: Handles context menu clicks
+                      parameters:
+                        - data: object (required)
+                        - tab: object (required)
+                      returns: void
+                  - storeAnalysisData:
+                      description: Stores analysis data
+                      parameters:
+                        - key: string (required)
+                        - data: any (required)
+                      returns: Promise<void>
+                  - openSidePanel:
+                      description: Opens the side panel
+                      parameters:
+                        - tabId: number (required)
+                      returns: Promise<void>
+                  - handleMessage:
+                      description: Handles message routing
+                      parameters:
+                        - message: object (required)
+                        - sender: object (required)
+                        - sendResponse: function (required)
+                      returns: Promise<void>
+                  - handleTosDetected:
+                      description: Handles ToS detection
+                      parameters:
+                        - message: object (required)
+                        - sender: object (required)
+                      returns: Promise<void>
+                  - handleCheckNotification:
+                      description: Handles check notification requests
+                      parameters:
+                        - tab: object (required)
+                      returns: Promise<object>
+                  - analyzeContent:
+                      description: Analyzes content using available analyzers
+                      parameters:
+                        - text: string (required)
+                      returns: Promise<object>
+                  - initialize:
+                      description: Initializes the service worker
+                      parameters: []
+                      returns: void
+                dependencies: []
+                return: null
+            folders: null
+          - name: content
+            files:
+              - content.js:
+                title: Content Script
+                description: This script is responsible for detecting legal terms on web pages, notifying the user, and updating the extension badge accordingly.
+                functions:
+                  - ContentController:
+                      description: Initializes the content controller with logging configuration
+                      parameters:
+                        - log: function (required)
+                        - logLevels: object (required)
+                      returns: object
+                  - initializeAnalyzers:
+                      description: Initializes all analysis modules
+                      parameters: []
+                      returns: void
+                  - updateExtensionIcon:
+                      description: Updates the extension icon
+                      parameters:
+                        - showExclamation: boolean (required)
+                      returns: void
+                  - detectLegalAgreements:
+                      description: Detects legal agreements in the document
+                      parameters: []
+                      returns: Promise<void>
+                  - handleHighLegalTermCount:
+                      description: Handles high legal term count detection
+                      parameters:
+                        - text: string (required)
+                      returns: Promise<void>
+                  - handleModerateLegalTermCount:
+                      description: Handles moderate legal term count detection
+                      parameters: []
+                      returns: void
+                  - performFullAnalysis:
+                      description: Performs full analysis of text
+                      parameters:
+                        - text: string (required)
+                      returns: Promise<object>
+                  - initialize:
+                      description: Initializes the content script
+                      parameters: []
+                      returns: void
+                  - setupMessageListeners:
+                      description: Sets up message listeners
+                      parameters: []
+                      returns: void
+                  - handleGradeTextRequest:
+                      description: Handles grade text requests
+                      parameters: []
+                      returns: Promise<void>
+                  - injectScript:
+                      description: Helper function to inject a script into the page
+                      parameters:
+                        - scriptUrl: string (required)
+                      returns: void
+                dependencies:
+                  - "../utils/constants"
+                  - "../analysis/rightsAssessor"
+                  - "../data/commonWords"
+                  - "../data/legalTermsDefinitions"
+                exports:
+                  - ContentController
+                  - injectScript
+            folders: null
+          - name: data
+            files:
+              - commonWords.js :
+                title: Common Words
+                description: This script contains an array of common words used for filtering out non-legal terms.
+                functions: N/A
+                dependencies: N/A
+                return: Array of common words
+                exports: commonWords
+              - legalPatterns.js :
+                title: Legal Patterns
+                description: Common legal term patterns for analyzing if content is legal text
+                functions: N/A
+                dependencies: n/a
+                return: Array of legal term patterns
+                exports: LEGAL_PATTERNS
+              - legalTerms.js :
+                title: Legal Terms
+                description: Common legal terms for analyzing if text is considered legal text
+                functions: N/A
+                dependencies: N/A
+                return: array of legal terms
+                exports: legalTerms
+              - docPatterns.js:
+                title: Document Patterns
+                description: This script contains regular expressions for detecting document patterns.
+                functions: N/A
+                dependencies: N/A
+                return: regular expression for document patterns
+                exports: DOC_PATTERNS
+            folders:
+              - name: cache
+                files:
+                  - textCache.js:
+                    title: Text Cache
+                    description: Base text caching implementation
+                    functions:
+                      - TextCache:
+                          description: Initializes the text cache with the provided configuration
+                          parameters:
+                            - config: object (required)
+                          returns: object
+                      - get:
+                          description: Retrieves an entry from the cache
+                          parameters:
+                            - key: string (required)
+                            - type: string (required)
+                          returns: Promise<any>
+                      - set:
+                          description: Sets an entry in the cache
+                          parameters:
+                            - key: string (required)
+                            - value: any (required)
+                            - type: string (required)
+                          returns: Promise<void>
+                      - cleanup:
+                          description: Cleans up expired entries in the cache
+                          parameters: []
+                          returns: void
+                      - delete:
+                          description: Deletes an entry from the cache
+                          parameters:
+                            - key: string (required)
+                          returns: void
+                      - getStats:
+                          description: Retrieves statistics about the cache
+                          parameters: []
+                          returns: object
+                    exports:
+                      - TextCache
+                  - textCacheConfig.js:
+                    title: Text Cache Config
+                    description: Configuration class for text caching system
+                    functions:
+                      - TextCacheConfig:
+                          description: Initializes the text cache configuration with the provided options
+                          parameters:
+                            - options: object (optional)
+                          returns: object
+                      - fromConstants:
+                          description: Creates a TextCacheConfig instance from constants
+                          parameters:
+                            - constants: object (required)
+                          returns: object
+                    exports:
+                      - TextCacheConfig
+                  - textCacheWithRecovery.js:
+                    title: Text Cache with Recovery
+                    description: Enhanced text cache with error recovery
+                    functions:
+                      - TextCacheWithRecovery:
+                          description: Initializes the text cache with recovery capabilities
+                          parameters:
+                            - config: object (required)
+                            - log: function (required)
+                            - logLevels: object (required)
+                          returns: object
+                      - get:
+                          description: Retrieves an entry from the cache with error recovery
+                          parameters:
+                            - key: string (required)
+                            - type: string (required)
+                          returns: Promise<any>
+                      - set:
+                          description: Sets an entry in the cache with error recovery
+                          parameters:
+                            - key: string (required)
+                            - value: any (required)
+                            - type: string (required)
+                          returns: Promise<void>
+                      - cleanup:
+                          description: Cleans up expired entries in the cache with error recovery
+                          parameters: []
+                          returns: void
+                    exports:
+                      - TextCacheWithRecovery
+                folders: null
+              - name: dictionaries
+                files:
+                  - dict-a.json :
+                    title: Dictionary A
+                    description: Dictionary JSON object (A)
+                    functions: []
+                    dependencies: []
+                    return: null
+                  - dict-z.json :
+                    title: Dictionary Z
+                    description: Dictionary JSON object (Z)
+                    functions: []
+                    dependencies: []
+                    return: null
+                  - extract.js :
+                    title: Extract
+                    description: Extracts terms and definitions from dictionaries
+                    functions:
+                      - extractTerm
+                      - extractDefinition
+                    dependencies: []
+                    return: ExtractedTerm|ExtractedDefinition
+                folders: null
+          - name: panel
+            files:
+              - sidepanel.html :
+                title: Sidepanel HTML
+                description: Sidepanel display for readability grade, user rights index, summaries, definitions
+                functions: []
+                dependencies: []
+                return: null
+              - sidepanel.js:
+                title: Sidepanel
+                description: Manages the Terms Guardian analysis sidepanel UI
+                functions:
+                  - createSidepanel:
+                      description: Creates the sidepanel with the provided logging configuration
+                      parameters:
+                        - log: function (required)
+                        - logLevels: object (required)
+                      returns: object
+                  - updateSection:
+                      description: Updates a specific section of the sidepanel
+                      parameters:
+                        - sectionName: string (required)
+                        - updateFn: function (required)
+                      returns: Promise<void>
+                  - updateDocumentInfo:
+                      description: Updates the document information in the sidepanel
+                      parameters:
+                        - info: object (required)
+                      returns: void
+                  - updateScores:
+                      description: Updates the scores in the sidepanel
+                      parameters:
+                        - scores: object (required)
+                      returns: void
+                  - updateSummary:
+                      description: Updates the summary in the sidepanel
+                      parameters:
+                        - summary: string (required)
+                      returns: void
+                  - updateSections:
+                      description: Updates the sections in the sidepanel
+                      parameters:
+                        - sections: array (required)
+                      returns: void
+                  - updateExcerpts:
+                      description: Updates the key excerpts in the sidepanel
+                      parameters:
+                        - excerpts: array (required)
+                      returns: void
+                  - updateTerms:
+                      description: Updates the uncommon terms in the sidepanel
+                      parameters:
+                        - terms: array (required)
+                      returns: void
+                  - formatReadabilityPopup:
+                      description: Formats the readability popup content
+                      parameters:
+                        - data: object (required)
+                      returns: string
+                  - formatRightsPopup:
+                      description: Formats the rights popup content
+                      parameters:
+                        - data: object (required)
+                      returns: string
+                  - updatePopupContent:
+                      description: Updates the content of a popup
+                      parameters:
+                        - popupId: string (required)
+                        - data: object (required)
+                      returns: void
+                  - showPopup:
+                      description: Shows a popup
+                      parameters:
+                        - popupId: string (required)
+                      returns: void
+                  - hidePopup:
+                      description: Hides a popup
+                      parameters:
+                        - popupId: string (required)
+                      returns: void
+                  - updateSidepanelContent:
+                      description: Updates the content of the sidepanel
+                      parameters:
+                        - content: object (required)
+                      returns: Promise<void>
+                  - setupActionButtons:
+                      description: Sets up the action buttons in the sidepanel
+                      parameters: []
+                      returns: void
+                  - clearPanel:
+                      description: Clears the sidepanel content
+                      parameters: []
+                      returns: void
+                  - setupEventListeners:
+                      description: Sets up event listeners for the sidepanel
+                      parameters: []
+                      returns: void
+                dependencies:
+                  - global.Constants
+                exports:
+                  - createSidepanel
+            folders: null
+          - name: styles
+            files: 
+              - styles.css :
+                  title: Styles
+                  description: Styles guide
+                  functions: []
+                  dependencies: []
+                  return: null
+            folders: null
+          - name: utils
+            files:
+              - constants.js:
+                title: Constants
+                description: Central configuration and constants for the Terms Guardian extension
+                constants:
+                  - EXTENSION:
+                      description: Extension settings
+                      properties:
+                        - NAME: string
+                        - VERSION: string
+                        - ICON_PATHS: object
+                  - DETECTION:
+                      description: Detection settings
+                      properties:
+                        - INTERVAL_MS: number
+                        - THRESHOLDS: object
+                  - ANALYSIS:
+                      description: Analysis settings
+                      properties:
+                        - PERFORMANCE_THRESHOLDS: object
+                        - CHUNK_SIZE: number
+                        - MIN_WORD_LENGTH: number
+                        - MAX_RETRIES: number
+                        - CACHE_DURATION: number
+                        - GRADES: object
+                        - DEFINITION_CACHE_TIME: number
+                        - BATCH_SIZE: number
+                        - PRIORITIZE_LEGAL: boolean
+                        - COMPOUND_TERMS: boolean
+                  - MESSAGES:
+                      description: Notification messages
+                      properties:
+                        - AUTO_GRADE: string
+                        - SIGNIFICANT_TERMS: string
+                        - NO_LEGAL_TEXT: string
+                        - ERROR: object
+                  - SYLLABLE_PATTERNS:
+                      description: Regex patterns for syllable counting
+                      properties:
+                        - SUBTRACT: array
+                        - ADD: array
+                  - ERROR_TYPES:
+                      description: Error types
+                      properties:
+                        - MODEL_LOAD: string
+                        - API_ERROR: string
+                        - INVALID_TEXT: string
+                        - GENERAL: string
+                        - PERFORMANCE: string
+                        - STORAGE_FULL: string
+                        - NETWORK: string
+                        - EXTRACTION: object
+                  - DEBUG:
+                      description: Debug settings
+                      properties:
+                        - LEVELS: object
+                        - DEFAULT_LEVEL: number
+                        - STORAGE: object
+                        - PERFORMANCE: object
+                        - MODULES: object
+                  - CLASSES:
+                      description: DOM element classes
+                      properties:
+                        - HIGHLIGHT: string
+                        - SECTION: string
+                        - IMPORTANT: string
+                  - SELECTORS:
+                      description: DOM selectors
+                      properties:
+                        - LEGAL_SECTIONS: array
+                        - EXCLUDE_ELEMENTS: array
+                        - POPUPS: object
+                  - STORAGE_KEYS:
+                      description: Local storage keys
+                      properties:
+                        - LAST_WORD: string
+                        - ANALYSIS_RESULTS: string
+                        - CACHE_PREFIX: string
+                        - SETTINGS: string
+                        - DEBUG_LOGS: string
+                        - PERFORMANCE_METRICS: string
+                  - CONTEXT_MENU:
+                      description: Context menu items
+                      properties:
+                        - GRADE_TEXT: object
+                functions:
+                  - initializeGlobals:
+                      description: Initializes extension globals
+                      parameters: []
+                      returns: void
+                  - setupConstants:
+                      description: Manually initializes globals if needed
+                      parameters: []
+                      returns: void
+                exports:
+                  - EXT_CONSTANTS
+                  - EXTENSION
+                  - DETECTION
+                  - ANALYSIS
+                  - MESSAGES
+                  - ERROR_TYPES
+                  - DEBUG
+                  - CLASSES
+                  - SELECTORS
+                  - STORAGE_KEYS
+                  - CONTEXT_MENU
+                  - setupConstants
+                  - initializeGlobals
+              - debugger.js:
+                title: Debugger
+                description: This script contains logging utilities for debugging and error handling.
+                functions:
+                  - createDebugger:
+                      description: Creates a debugger instance with the provided configuration
+                      parameters:
+                        - initialConfig: object (optional)
+                      returns: object
+                  - formatDataWithCircular:
+                      description: Enhanced data formatting with proper circular reference handling
+                      parameters:
+                        - data: any (required)
+                      returns: string
+                  - getPerformanceAnalytics:
+                      description: Get performance analytics for a specific label
+                      parameters:
+                        - label: string (required)
+                      returns: Promise<object>
+                  - startTimer:
+                      description: Starts a performance timer for a specific label
+                      parameters:
+                        - label: string (required)
+                      returns: void
+                  - endTimer:
+                      description: Ends a performance timer for a specific label and logs the duration
+                      parameters:
+                        - label: string (required)
+                      returns: Promise<number>
+                  - saveLog:
+                      description: Saves a log entry to storage
+                      parameters:
+                        - logEntry: object (required)
+                      returns: Promise<void>
+                  - clearLogs:
+                      description: Clears all logs from storage
+                      parameters: []
+                      returns: Promise<void>
+                  - exportLogs:
+                      description: Exports all logs and performance metrics
+                      parameters: []
+                      returns: Promise<string>
+                  - formatData:
+                      description: Enhanced data formatting with circular reference handling
+                      parameters:
+                        - data: any (required)
+                      returns: string
+                  - getStackTrace:
+                      description: Gets detailed stack trace with source mapping support
+                      parameters:
+                        - error: Error (required)
+                      returns: string
+                  - log:
+                      description: Enhanced logging function with group support
+                      parameters:
+                        - level: number (required)
+                        - message: string (required)
+                        - data: any (optional)
+                        - error: Error (optional)
+                      returns: Promise<void>
+                  - trace:
+                      description: Logs a trace level message
+                      parameters:
+                        - message: string (required)
+                        - data: any (optional)
+                      returns: void
+                  - debug:
+                      description: Logs a debug level message
+                      parameters:
+                        - message: string (required)
+                        - data: any (optional)
+                      returns: void
+                  - info:
+                      description: Logs an info level message
+                      parameters:
+                        - message: string (required)
+                        - data: any (optional)
+                      returns: void
+                  - warn:
+                      description: Logs a warn level message
+                      parameters:
+                        - message: string (required)
+                        - data: any (optional)
+                      returns: void
+                  - error:
+                      description: Logs an error level message
+                      parameters:
+                        - message: string (required)
+                        - data: any (optional)
+                        - err: Error (optional)
+                      returns: void
+                  - startLogGroup:
+                      description: Starts a log group for grouping related logs together
+                      parameters:
+                        - groupName: string (required)
+                      returns: void
+                  - endLogGroup:
+                      description: Ends the current log group
+                      parameters: []
+                      returns: void
+                dependencies:
+                  - './constants'
+                exports:
+                  - createDebugger
+              - domManager.js:
+                title: DOM Manager
+                description: Orchestrates different DOM handling strategies based on page characteristics
+                functions:
+                  - createDomManager:
+                      description: Creates a DOM manager instance that coordinates different handling strategies
+                      parameters:
+                        - config: object (required)
+                          - log: function (required)
+                          - logLevels: object (required)
+                      returns: object
+                  - analyzeInitialContent:
+                      description: Performs initial content analysis before handler selection
+                      parameters: []
+                      returns: Promise<object>
+                  - analyzePageStructure:
+                      description: Analyzes the page structure to determine the most appropriate handler
+                      parameters: []
+                      returns: Promise<string>
+                  - setupHandler:
+                      description: Sets up the appropriate handler based on page analysis
+                      parameters: []
+                      returns: Promise<boolean>
+                  - processPage:
+                      description: Processes the page content using the selected handler
+                      parameters: []
+                      returns: Promise<object>
+                  - handleMutations:
+                      description: Handles mutation observations and content updates
+                      parameters:
+                        - mutations: array of MutationRecord (required)
+                      returns: Promise<void>
+                  - setupObserver:
+                      description: Sets up mutation observer
+                      parameters: []
+                      returns: void
+                  - initialize:
+                      description: Initializes the DOM manager system
+                      parameters: []
+                      returns: Promise<void>
+                  - cleanup:
+                      description: Cleans up resources
+                      parameters: []
+                      returns: void
+                dependencies:
+                  - './constants'
+                  - '../analysis/textExtractor'
+                  - './handlers/baseDomHandler'
+                  - './handlers/dynamicDomHandler'
+                  - './handlers/heuristicDomHandler'
+                  - './handlers/layoutDomHandler'
+                  - './utilities'
+                exports:
+                  - createDomManager
+              - utilities.js:
+                title: Utilities
+                description: This script contains utility functions used by other scripts in the web browser extension.
+                functions:
+                  - createUtilities:
+                      description: Creates utility functions with the provided configuration
+                      parameters:
+                        - log: function (required)
+                        - logLevels: object (required)
+                        - legalTerms: array of strings (required)
+                      returns: object
+                  - containsLegalTerm:
+                      description: Checks if the text contains an exact legal term match
+                      parameters:
+                        - text: string (required)
+                      returns: boolean
+                  - containsPartialMatch:
+                      description: Checks if the text contains a partial legal term match
+                      parameters:
+                        - text: string (required)
+                      returns: boolean
+                  - containsProximityMatch:
+                      description: Checks if the text contains a proximity legal term match
+                      parameters:
+                        - text: string (required)
+                        - proximity: number (optional, default: 5)
+                      returns: boolean
+                  - extractDomain:
+                      description: Extracts the domain from a URL
+                      parameters:
+                        - url: string (required)
+                      returns: string or null
+                  - updateExtensionIcon:
+                      description: Updates the extension icon
+                      parameters:
+                        - showExclamation: boolean (required)
+                      returns: void
+                  - updateSidepanel:
+                      description: Updates the sidepanel with content
+                      parameters:
+                        - content: object (required)
+                      returns: void
+                  - highlightLegalTerms:
+                      description: Highlights legal terms in the document
+                      parameters:
+                        - text: string (required)
+                      returns: number (Count of highlighted terms)
+                  - fetchWithTimeout:
+                      description: Fetches data with a timeout
+                      parameters:
+                        - url: string (required)
+                        - options: object (optional)
+                        - timeout: number (optional, default: 5000)
+                      returns: Promise<Response>
+                dependencies:
+                  - './constants'
+                exports:
+                  - createUtilities
+            folders:
+              - name: handlers
+                files:
+                  - baseDomHandler.js:
+                    title: Base DOM Handler
+                    description: Base functionality for all DOM handlers
+                    functions:
+                      - createBaseHandler:
+                          description: Creates a base handler with the provided logging configuration
+                          parameters:
+                            - log: function (required)
+                            - logLevels: object (required)
+                          returns: object
+                      - processElement:
+                          description: Processes a single element for legal content
+                          parameters:
+                            - element: Element (required)
+                          returns: Promise<object>
+                      - highlightLegalTerms:
+                          description: Highlights legal terms in an element
+                          parameters:
+                            - element: Element (required)
+                            - analysis: object (required)
+                          returns: Promise<void>
+                      - removeHighlights:
+                          description: Removes highlights from an element
+                          parameters:
+                            - element: Element (required)
+                          returns: void
+                      - cleanup:
+                          description: Cleans up handler resources
+                          parameters: []
+                          returns: void
+                    dependencies:
+                      - global.Constants
+                      - global.TextExtractor
+                      - global.LegalTextAnalyzer
+                      - global.utilities
+                    exports:
+                      - createBaseHandler
+                  - dynamicDomHandler.js:
+                    title: Dynamic DOM Handler
+                    description: Handles dynamic content loading and SPA-style pages
+                    functions:
+                      - createDynamicDomHandler:
+                          description: Creates a handler for dynamic DOM content
+                          parameters:
+                            - config: object (required)
+                              - log: function (required)
+                              - logLevels: object (required)
+                          returns: object
+                      - detectFrameworks:
+                          description: Detects which framework(s) are present
+                          parameters: []
+                          returns: Set<string>
+                      - isApplicable:
+                          description: Checks if this handler is applicable
+                          parameters: []
+                          returns: boolean
+                      - waitForContentStability:
+                          description: Waits for content to stabilize
+                          parameters:
+                            - timeout: number (optional, default: 5000)
+                          returns: Promise<boolean>
+                      - setupRouteChangeDetection:
+                          description: Sets up route change detection
+                          parameters: []
+                          returns: void
+                      - handleRouteChange:
+                          description: Handles route changes
+                          parameters: []
+                          returns: Promise<void>
+                      - processContent:
+                          description: Processes dynamic content
+                          parameters: []
+                          returns: Promise<object>
+                      - handleMutations:
+                          description: Handles mutations
+                          parameters:
+                            - mutations: array of MutationRecord (required)
+                          returns: Promise<void>
+                      - getObserverConfig:
+                          description: Gets observer configuration
+                          parameters: []
+                          returns: object
+                      - initialize:
+                          description: Initializes the handler
+                          parameters: []
+                          returns: Promise<void>
+                      - cleanup:
+                          description: Cleans up resources
+                          parameters: []
+                          returns: void
+                    dependencies:
+                      - global.Constants
+                      - global.BaseHandler
+                    exports:
+                      - createDynamicDomHandler
+                  - heuristicDomHandler.js:
+                    title: Heuristic DOM Handler
+                    description: Advanced pattern matching and heuristic analysis for unstructured content
+                    functions:
+                      - createHeuristicDomHandler:
+                          description: Creates a handler for heuristic DOM content
+                          parameters:
+                            - config: object (required)
+                              - log: function (required)
+                              - logLevels: object (required)
+                          returns: object
+                      - analyzeNodePosition:
+                          description: Analyzes node position and context
+                          parameters:
+                            - node: Element (required)
+                          returns: number
+                      - getPreviousHeading:
+                          description: Gets the previous heading element
+                          parameters:
+                            - node: Element (required)
+                          returns: Element or null
+                      - analyzeLinkDensity:
+                          description: Analyzes link density in a node
+                          parameters:
+                            - node: Element (required)
+                          returns: number
+                      - isApplicable:
+                          description: Default handler - always applicable as fallback
+                          parameters: []
+                          returns: boolean
+                      - processContent:
+                          description: Processes content using heuristic analysis
+                          parameters: []
+                          returns: Promise<object>
+                      - getNodePath:
+                          description: Gets unique path to node for identification
+                          parameters:
+                            - node: Element (required)
+                          returns: string
+                      - determineConfidence:
+                          description: Determines confidence level based on results
+                          parameters:
+                            - elements: array (required)
+                          returns: string
+                      - handleMutations:
+                          description: Handles mutations in the DOM
+                          parameters:
+                            - mutations: array of MutationRecord (required)
+                          returns: void
+                      - getObserverConfig:
+                          description: Gets mutation observer configuration
+                          parameters: []
+                          returns: object
+                      - initialize:
+                          description: Initializes the handler
+                          parameters: []
+                          returns: Promise<void>
+                      - cleanup:
+                          description: Cleans up resources
+                          parameters: []
+                          returns: void
+                    dependencies:
+                      - global.Constants
+                      - global.BaseHandler
+                    exports:
+                      - createHeuristicDomHandler
+                  - layoutDomHandler.js:
+                    title: Layout DOM Handler
+                    description: Processes content based on visual layout and structure
+                    functions:
+                      - createLayoutDomHandler:
+                          description: Creates a handler for layout-based DOM content
+                          parameters:
+                            - config: object (required)
+                              - log: function (required)
+                              - logLevels: object (required)
+                          returns: object
+                      - isApplicable:
+                          description: Checks if layout-based processing is applicable
+                          parameters: []
+                          returns: boolean
+                      - getElementStyles:
+                          description: Gets computed styles with caching
+                          parameters:
+                            - element: Element (required)
+                          returns: object
+                      - analyzeVisualHierarchy:
+                          description: Analyzes visual hierarchy of an element
+                          parameters:
+                            - element: Element (required)
+                          returns: object
+                      - calculateVisualScore:
+                          description: Calculates visual prominence score
+                          parameters:
+                            - styles: object (required)
+                            - metrics: object (required)
+                          returns: number
+                      - processContent:
+                          description: Processes content based on layout analysis
+                          parameters: []
+                          returns: Promise<object>
+                      - determineConfidence:
+                          description: Determines confidence based on visual analysis
+                          parameters:
+                            - elements: array (required)
+                          returns: string
+                      - handleMutations:
+                          description: Handles mutations in the DOM
+                          parameters:
+                            - mutations: array of MutationRecord (required)
+                          returns: void
+                      - getObserverConfig:
+                          description: Gets mutation observer configuration
+                          parameters: []
+                          returns: object
+                      - initialize:
+                          description: Initializes the layout handler
+                          parameters: []
+                          returns: Promise<void>
+                      - cleanup:
+                          description: Cleans up resources
+                          parameters: []
+                          returns: void
+                    dependencies:
+                      - global.Constants
+                      - global.BaseHandler
+                    exports:
+                      - createLayoutDomHandler
+                  - semanticDomHandler.js:
+                    title: Semantic DOM Handler
+                    description: Handles pages with semantic HTML5 structure
+                    functions:
+                      - createSemanticDomHandler:
+                          description: Creates a handler for semantic DOM content
+                          parameters:
+                            - config: object (required)
+                              - log: function (required)
+                              - logLevels: object (required)
+                          returns: object
+                      - isApplicable:
+                          description: Checks if semantic processing is applicable
+                          parameters: []
+                          returns: boolean
+                      - buildDocumentOutline:
+                          description: Builds document outline from semantic structure
+                          parameters: []
+                          returns: object
+                      - processSemanticSection:
+                          description: Processes a semantic section
+                          parameters:
+                            - element: Element (required)
+                          returns: Promise<object|null>
+                      - findSectionHeading:
+                          description: Finds heading for a section
+                          parameters:
+                            - section: Element (required)
+                          returns: object|null
+                      - countHeadings:
+                          description: Counts headings in an element
+                          parameters:
+                            - element: Element (required)
+                          returns: object
+                      - elementIsWithin:
+                          description: Checks if element is within containers
+                          parameters:
+                            - element: Element (required)
+                            - containers: NodeList (required)
+                          returns: boolean
+                      - processContent:
+                          description: Processes page content using semantic structure
+                          parameters: []
+                          returns: Promise<object>
+                      - determineConfidence:
+                          description: Determines confidence based on semantic analysis
+                          parameters:
+                            - elements: array (required)
+                          returns: string
+                      - calculateOutlineDepth:
+                          description: Calculates outline depth
+                          parameters:
+                            - outline: object (required)
+                          returns: number
+                      - handleMutations:
+                          description: Handles mutations in the DOM
+                          parameters:
+                            - mutations: array of MutationRecord (required)
+                          returns: void
+                      - getObserverConfig:
+                          description: Gets mutation observer configuration
+                          parameters: []
+                          returns: object
+                      - initialize:
+                          description: Initializes the semantic handler
+                          parameters: []
+                          returns: Promise<void>
+                      - cleanup:
+                          description: Cleans up resources
+                          parameters: []
+                          returns: void
+                    dependencies:
+                      - global.EXT_CONSTANTS
+                      - global.BaseHandler
+                    exports:
+                      - createSemanticDomHandler
+                  - specialCaseDomHandler.js:
+                    title: Special Case DOM Handler
+                    description: Handles known platforms and special case layouts
+                    functions:
+                      - createSpecialCaseHandler:
+                          description: Creates a handler for special case DOM content
+                          parameters:
+                            - config: object (required)
+                              - log: function (required)
+                              - logLevels: object (required)
+                          returns: object
+                      - isApplicable:
+                          description: Checks if the current page matches a known platform
+                          parameters: []
+                          returns: boolean
+                      - getPlatformConfig:
+                          description: Gets configuration for the current platform
+                          parameters: []
+                          returns: object or null
+                      - waitForPlatformContent:
+                          description: Waits for platform-specific content to load
+                          parameters:
+                            - platform: object (required)
+                          returns: Promise<boolean>
+                      - getPlatformLanguage:
+                          description: Gets language information for the platform
+                          parameters:
+                            - platform: object (required)
+                          returns: object
+                      - processContent:
+                          description: Processes content for the known platform
+                          parameters: []
+                          returns: Promise<object>
+                      - findSectionHeading:
+                          description: Finds section heading using platform config
+                          parameters:
+                            - section: Element (required)
+                            - platform: object (required)
+                          returns: object or null
+                      - handleMutations:
+                          description: Handles mutations in platform content
+                          parameters:
+                            - mutations: array of MutationRecord (required)
+                          returns: void
+                      - getObserverConfig:
+                          description: Gets mutation observer configuration
+                          parameters: []
+                          returns: object
+                      - initialize:
+                          description: Initializes the handler
+                          parameters: []
+                          returns: Promise<void>
+                      - cleanup:
+                          description: Cleans up resources
+                          parameters: []
+                          returns: void
+                    dependencies:
+                      - global.Constants
+                      - global.BaseHandler
+                    exports:
+                      - createSpecialCaseHandler
+  dependencies:
+    - yarn.lock
+    - readme.md
+    - package.json
+    - manifest.json
+    - jest.setup.js
+    - jest.config.js
+    - babel.config.js
+    - .yarnrc.yml
+    - .env

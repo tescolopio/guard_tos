@@ -1,67 +1,72 @@
 module.exports = {
   presets: [
     [
-      '@babel/preset-env',
+      "@babel/preset-env",
       {
         targets: {
-          node: 'current',
-          chrome: '88', // Manifest V3 minimum
+          chrome: "88", // Manifest V3 minimum
         },
-        useBuiltIns: 'usage',
+        useBuiltIns: "usage",
         corejs: 3,
-        modules: 'auto',
+        modules: "auto",
       },
     ],
-    '@babel/preset-react',
+    "@babel/preset-react",
   ],
   env: {
     test: {
       presets: [
         [
-          '@babel/preset-env',
+          "@babel/preset-env",
           {
-            targets: { node: 'current' },
-            modules: 'commonjs',
+            targets: { node: "current" },
+            modules: "commonjs",
           },
         ],
-        '@babel/preset-react',
+        "@babel/preset-react",
       ],
     },
     development: {
-      sourceMaps: 'inline',
+      sourceMaps: "inline",
       presets: [
         [
-          '@babel/preset-env',
+          "@babel/preset-env",
           {
             debug: true,
-            useBuiltIns: 'usage',
+            useBuiltIns: "usage",
             corejs: 3,
+            targets: {
+              chrome: "88",
+            },
           },
         ],
-        '@babel/preset-react',
+        "@babel/preset-react",
       ],
     },
     production: {
       presets: [
         [
-          '@babel/preset-env',
+          "@babel/preset-env",
           {
             modules: false,
-            useBuiltIns: 'usage',
+            useBuiltIns: "usage",
             corejs: 3,
+            targets: {
+              chrome: "88",
+            },
           },
         ],
-        '@babel/preset-react',
+        "@babel/preset-react",
       ],
       plugins: [
         [
-          'transform-remove-console',
+          "transform-remove-console",
           {
-            exclude: ['error', 'warn'],
+            exclude: ["error", "warn"],
           },
         ],
       ],
     },
   },
-  ignore: ['node_modules', 'dist'],
+  ignore: ["node_modules", "dist"],
 };

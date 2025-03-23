@@ -52,7 +52,11 @@ const EXT_CONSTANTS = {
       C: { MIN: 70, LABEL: 'Fair' },
       D: { MIN: 60, LABEL: 'Poor' },
       F: { MIN: 0,  LABEL: 'Very Poor' }
-    }
+    },
+    DEFINITION_CACHE_TIME: 24 * 60 * 60 * 1000,
+    BATCH_SIZE: 50,
+    PRIORITIZE_LEGAL: true,
+    COMPOUND_TERMS: true
   },
 
   // Notification Messages
@@ -70,7 +74,12 @@ const EXT_CONSTANTS = {
       NETWORK: "Network connection error"
     }
   },
-  
+   // Regex patterns for syllable counting
+  SYLLABLE_PATTERNS: {
+    SUBTRACT: [/cial/, /tia/, /cius/, /cious/, /giu/, /ion/, /iou/, /sia$/, /.ely$/, /sed$/],
+    ADD: [/ia/, /riet/, /dien/, /iu/, /io/, /ii/, /[aeiouym]bl$/, /[aeiou]{3}/, /^mc/, /ism$/,/([^aeiouy])\1l$/, /[^l]lien/, /^coa[dglx]./, /[^gq]ua[^auieo]/, /dnt$/]
+  },
+    
   // Error Types
   ERROR_TYPES: {
     MODEL_LOAD: 'MODEL_LOAD',

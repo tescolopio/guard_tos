@@ -4,10 +4,10 @@
  * @contributors {tescolopio}
  * @version 1.1.0
  * @date 2024-09-26
- * 
+ *
  * @author Timmothy Escolopio
  * @company 3D Tech Solutions LLC
- * 
+ *
  * @changes
  *  - 2024-09-18 | tescolopio | Initial creation of the script.
  *  - 2024-09-21.01 | tescolopio | Moved functionality from background.js to content.js to update the extension badge based on the number of legal terms detected.
@@ -16,17 +16,17 @@
  */
 
 const { EXT_CONSTANTS } = require("../utils/constants");
-const { RightsAssessor } = require("../utils/rightsAssessor");
+const { RightsAssessor } = require("../analysis/rightsAssessor");
 const { commonWords } = require("../data/commonWords");
 const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
 
-(function(global) {
-  'use strict';
+(function (global) {
+  "use strict";
 
   // Configuration
   class ContentController {
     constructor({ log, logLevels }) {
-      const { DETECTION, MESSAGES, CLASSES } = EXT_CONSTANTS;;
+      const { DETECTION, MESSAGES, CLASSES } = EXT_CONSTANTS;
       this.DETECTION_INTERVAL = DETECTION.INTERVAL;
       this.THRESHOLDS = DETECTION.THRESHOLDS;
       this.MESSAGES = MESSAGES;
@@ -35,11 +35,11 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
       this.logLevels = logLevels;
       this.lastDetectionTime = 0;
       this.observer = null;
-  
+
       // Initialize analyzers
       this.initializeAnalyzers();
     }
-  
+
     /**
      * Initializes all analysis modules
      */
@@ -49,14 +49,14 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
           log: this.log,
           logLevels: this.logLevels,
           commonWords: commonWords,
-          legalTermsDefinitions: legalTermsDefinitions
+          legalTermsDefinitions: legalTermsDefinitions,
         });
 
         this.summarizer = global.TosSummarizer.create({
           compromise: global.compromise,
           cheerio: global.cheerio,
           log: this.log,
-          logLevels: this.logLevels
+          logLevels: this.logLevels,
         });
 
         this.extractor = global.TextExtractor.create({
@@ -64,9 +64,9 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
           logLevels: this.logLevels,
           config: {
             highlightThreshold: 20,
-            sectionThreshold: 10
+            sectionThreshold: 10,
           },
-          legalTerms: global.legalTerms
+          legalTerms: global.legalTerms,
         });
 
         this.identifier = global.UncommonWordsIdentifier.create({
@@ -76,24 +76,25 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
           legalTermsDefinitions: global.legalTermsDefinitions,
           config: {
             minWordLength: 3,
-            maxDefinitionRetries: 3
-          }
+            maxDefinitionRetries: 3,
+          },
         });
 
         // Set up a message listener to receive the result from domManager.js
-        chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-          if (request.action === 'legalTextResult') {
-            if (request.isLegalText) {
-              this.updateExtensionIcon(true); // Set the badge to "!"
-              this.detectLegalAgreements(this.cachedText);  // Proceed with analysis
-            } else {
-              this.updateExtensionIcon(false); // Clear the badge
+        chrome.runtime.onMessage.addListener(
+          (request, sender, sendResponse) => {
+            if (request.action === "legalTextResult") {
+              if (request.isLegalText) {
+                this.updateExtensionIcon(true); // Set the badge to "!"
+                this.detectLegalAgreements(this.cachedText); // Proceed with analysis
+              } else {
+                this.updateExtensionIcon(false); // Clear the badge
+              }
+            } else if (request.type === "gradeText") {
+              this.handleGradeTextRequest();
             }
-          
-          } else if (request.type === "gradeText") {
-          this.handleGradeTextRequest();
-          }
-        });
+          },
+        );
 
         this.log(this.logLevels.INFO, "All analyzers initialized successfully");
       } catch (error) {
@@ -108,10 +109,13 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
      */
     updateExtensionIcon(showExclamation) {
       try {
-        chrome.action.setBadgeText({ 
-          text: showExclamation ? "!" : "" 
+        chrome.action.setBadgeText({
+          text: showExclamation ? "!" : "",
         });
-        this.log(this.logLevels.INFO, `Extension badge ${showExclamation ? 'set' : 'cleared'}`);
+        this.log(
+          this.logLevels.INFO,
+          `Extension badge ${showExclamation ? "set" : "cleared"}`,
+        );
       } catch (error) {
         this.log(this.logLevels.ERROR, "Error updating extension icon:", error);
       }
@@ -123,7 +127,8 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
     async detectLegalAgreements() {
       try {
         // 1. Extract and analyze the page text using TextExtractor
-        const extractionResult = await this.extractor.extractAndAnalyzePageText();
+        const extractionResult =
+          await this.extractor.extractAndAnalyzePageText();
 
         // 2. Handle potential errors from the extraction
         if (extractionResult.error) {
@@ -147,10 +152,14 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
         }
 
         // 5. Optionally, return true if a significant number of legal terms were found
-        // return legalTermCount >= CONSTANTS.DETECTION.THRESHOLDS.NOTIFY; 
+        // return legalTermCount >= CONSTANTS.DETECTION.THRESHOLDS.NOTIFY;
       } catch (error) {
         // 6. Handle any errors during the process
-        this.log(this.logLevels.ERROR, "Error detecting legal agreements:", error);
+        this.log(
+          this.logLevels.ERROR,
+          "Error detecting legal agreements:",
+          error,
+        );
         // Consider additional error handling or user feedback here
       }
     }
@@ -163,15 +172,19 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
       try {
         this.updateExtensionIcon(true);
         showNotification(this.NOTIFICATIONS.AUTO_GRADE);
-        
+
         const analysis = await this.performFullAnalysis(text);
-        chrome.runtime.sendMessage({ 
-          type: "tosDetected", 
+        chrome.runtime.sendMessage({
+          type: "tosDetected",
           text: text,
-          analysis: analysis 
+          analysis: analysis,
         });
       } catch (error) {
-        this.log(this.logLevels.ERROR, "Error handling high legal term count:", error);
+        this.log(
+          this.logLevels.ERROR,
+          "Error handling high legal term count:",
+          error,
+        );
       }
     }
 
@@ -191,16 +204,20 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
       try {
         const [rightsAnalysis, uncommonWords] = await Promise.all([
           this.assessor.analyzeContent(text),
-          this.identifier.identifyUncommonWords(text)
+          this.identifier.identifyUncommonWords(text),
         ]);
 
         return {
           rights: rightsAnalysis,
           uncommonWords: uncommonWords,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
       } catch (error) {
-        this.log(this.logLevels.ERROR, "Error performing full analysis:", error);
+        this.log(
+          this.logLevels.ERROR,
+          "Error performing full analysis:",
+          error,
+        );
         throw error;
       }
     }
@@ -209,39 +226,39 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
      * Initializes the content script
      */
     initialize() {
-      // Inject domManager.js 
-      injectScript(chrome.runtime.getURL('src/utils/domManager.js'));
+      // Inject domManager.js
+      injectScript(chrome.runtime.getURL("src/utils/domManager.js"));
 
       // Set up a message listener to receive the result from domManager.js
       chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-        if (request.action === 'legalTextResult') {
+        if (request.action === "legalTextResult") {
           if (request.isLegalText) {
             this.updateExtensionIcon(true); // Set the badge to "!"
 
-            // Instead of calling detectLegalAgreements directly, 
+            // Instead of calling detectLegalAgreements directly,
             // use the cached text and pass it to detectLegalAgreements
-            this.detectLegalAgreements(this.cachedText); 
+            this.detectLegalAgreements(this.cachedText);
           } else {
             this.updateExtensionIcon(false); // Clear the badge
-            // TODO: Handle the case where the page is not a legal text 
+            // TODO: Handle the case where the page is not a legal text
           }
         }
       });
 
-       // Cache the initial text content AFTER setting up the message listener
-      this.cachedText = this.extractor.extractText(document.body); 
+      // Cache the initial text content AFTER setting up the message listener
+      this.cachedText = this.extractor.extractText(document.body);
 
-      this.observer = new MutationObserver(mutations => {
-        mutations.forEach(mutation => {
-          if (mutation.type === 'childList') {
+      this.observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === "childList") {
             this.detectLegalAgreements();
           }
         });
       });
 
-      this.observer.observe(document.body, { 
-        childList: true, 
-        subtree: true 
+      this.observer.observe(document.body, {
+        childList: true,
+        subtree: true,
       });
 
       this.setupMessageListeners();
@@ -252,11 +269,13 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
      * Sets up message listeners
      */
     setupMessageListeners() {
-      chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-        if (request.type === "gradeText") {
-          await this.handleGradeTextRequest();
-        }
-      });
+      chrome.runtime.onMessage.addListener(
+        async (request, sender, sendResponse) => {
+          if (request.type === "gradeText") {
+            await this.handleGradeTextRequest();
+          }
+        },
+      );
     }
 
     /**
@@ -268,10 +287,10 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
 
       if (hasEnoughLegalText) {
         const analysis = await this.performFullAnalysis(selectedText);
-        chrome.runtime.sendMessage({ 
-          type: "tosDetected", 
+        chrome.runtime.sendMessage({
+          type: "tosDetected",
           text: selectedText,
-          analysis: analysis
+          analysis: analysis,
         });
       } else {
         chrome.runtime.sendMessage({ type: "sidepanelOpened" });
@@ -284,7 +303,7 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
    * @param {string} scriptUrl The URL of the script to inject
    */
   function injectScript(scriptUrl) {
-    const script = document.createElement('script');
+    const script = document.createElement("script");
     script.src = scriptUrl;
     document.head.appendChild(script);
   }
@@ -292,14 +311,15 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
   // Initialize the content controller
   const controller = new ContentController({
     log: console.log,
-    logLevels: EXT_CONSTANTS.DEBUG.LEVELS // Use CONSTANTS.DEBUG.LEVELS
+    logLevels: EXT_CONSTANTS.DEBUG.LEVELS, // Use CONSTANTS.DEBUG.LEVELS
   });
-  
+
   // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => controller.initialize());
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () =>
+      controller.initialize(),
+    );
   } else {
     controller.initialize();
   }
-
-})(typeof window !== 'undefined' ? window : global);
+})(typeof window !== "undefined" ? window : global);

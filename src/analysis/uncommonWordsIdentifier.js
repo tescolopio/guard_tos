@@ -11,7 +11,6 @@
   const { createLegalDictionaryService } = require('../utils/legalDictionaryService.js');
   const { commonWords } = require('../data/commonWords.js');
   const { legalTerms } = require('../data/legalTerms.js');
-  const { legalTermsDefinitions } = require('../data/legalTermsDefinitions.js');
 
   async function createUncommonWordsIdentifier({ 
     log, 
@@ -31,14 +30,6 @@
     
     const textExtractor = createTextExtractor({ log, logLevels });
     const dictionaryService = await createLegalDictionaryService({ log, logLevels });
-
-    const defaultConfig = {
-      minWordLength: 3,
-      definitionCacheTime: 24 * 60 * 60 * 1000,
-      batchSize: 50,
-      prioritizeLegalTerms: true,
-      compoundTerms: true
-    };
 
     config = { ...defaultConfig, ...config };
     const processedCache = new Map();

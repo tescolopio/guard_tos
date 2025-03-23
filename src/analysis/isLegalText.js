@@ -1,33 +1,27 @@
-const { EXT_CONSTANTS } = require('../utils/constants');
-
 /**
  * @file isLegalText.js
  * @description Advanced legal text analysis using pattern matching and term density
  * @version 2.0.0
  */
-(function(global) {
-  'use strict';
 
-  const { createTextExtractor } = require('./textExtractor');
+const { EXT_CONSTANTS } = require("../utils/constants");
+
+(function (global) {
+  "use strict";
+
+  const { createTextExtractor } = require("./textExtractor");
 
   function createLegalTextAnalyzer({ log, logLevels, legalTerms = [] }) {
-    const { DETECTION, ANALYSIS, SELECTORS } = EXT_CONSTANTS;
-    
-    const textExtractor = createTextExtractor({ 
-      log, 
+    const { DETECTION, ANALYSIS } = EXT_CONSTANTS;
+
+    const textExtractor = createTextExtractor({
+      log,
       logLevels,
       logLevels,
-      utilities: global.utilities
+      utilities: global.utilities,
     });
 
-    // Legal document patterns
-    const LEGAL_PATTERNS = {
-      SECTION_NUMBERING: /^\s*(?:\d+\.|\([a-z]\)|\([0-9]\)|\d+\.\d+)/m,
-      DEFINITIONS: /(?:^|\n)\s*["']?\w+["']?\s+(?:shall |means |refers to |is defined as )/im,
-      LEGAL_HEADERS: /(?:^|\n)(?:terms|privacy|policy|agreement|notice|disclaimer)/i,
-      CITATIONS: /(?:\d+\s+U\.S\.C\.|§+\s*\d+|\bCFR\b|\bFR\b)/i,
-      LISTS: /^\s*(?:[A-Z]\.|\d+\.|\u2022|\-)\s+/m
-    };
+    
 
     /**
      * Analyzes text to determine if it's legal content
@@ -37,14 +31,14 @@ const { EXT_CONSTANTS } = require('../utils/constants');
     async function analyzeText(text) {
       try {
         // Extract and preprocess text
-        const processedText = await textExtractor.extract(text, 'text');
-        
+        const processedText = await textExtractor.extract(text, "text");
+
         if (!processedText || processedText.length < ANALYSIS.MIN_WORD_LENGTH) {
           return {
             isLegal: false,
-            confidence: 'low',
-            reason: 'insufficient_text',
-            metrics: { termCount: 0, density: 0 }
+            confidence: "low",
+            reason: "insufficient_text",
+            metrics: { termCount: 0, density: 0 },
           };
         }
 
@@ -59,7 +53,10 @@ const { EXT_CONSTANTS } = require('../utils/constants');
         const patternMetrics = analyzePatterns(processedText);
 
         // Calculate final scores
-        const { isLegal, confidence, score } = determineTextStatus(metrics, patternMetrics);
+        const { isLegal, confidence, score } = determineTextStatus(
+          metrics,
+          patternMetrics,
+        );
 
         return {
           isLegal,
@@ -69,16 +66,16 @@ const { EXT_CONSTANTS } = require('../utils/constants');
             ...metrics,
             ...patternMetrics,
             totalWords: words.length,
-            totalSentences: sentences.length
-          }
+            totalSentences: sentences.length,
+          },
         };
       } catch (error) {
-        log(logLevels.ERROR, 'Error analyzing legal text:', error);
+        log(logLevels.ERROR, "Error analyzing legal text:", error);
         return {
           isLegal: false,
-          confidence: 'low',
-          reason: 'analysis_error',
-          error: error.message
+          confidence: "low",
+          reason: "analysis_error",
+          error: error.message,
         };
       }
     }
@@ -99,12 +96,18 @@ const { EXT_CONSTANTS } = require('../utils/constants');
         const normalizedWord = word.toLowerCase();
         if (legalTerms.includes(normalizedWord)) {
           totalTerms++;
-          legalTermCounts.set(normalizedWord, (legalTermCounts.get(normalizedWord) || 0) + 1);
+          legalTermCounts.set(
+            normalizedWord,
+            (legalTermCounts.get(normalizedWord) || 0) + 1,
+          );
 
           // Calculate proximity bonus using constants
-          if (lastTermIndex !== -1 && 
-             (index - lastTermIndex) <= DETECTION.THRESHOLDS.PROXIMITY) {
-            proximityBonus += 1 - ((index - lastTermIndex) / DETECTION.THRESHOLDS.PROXIMITY);
+          if (
+            lastTermIndex !== -1 &&
+            index - lastTermIndex <= DETECTION.THRESHOLDS.PROXIMITY
+          ) {
+            proximityBonus +=
+              1 - (index - lastTermIndex) / DETECTION.THRESHOLDS.PROXIMITY;
           }
           lastTermIndex = index;
         }
@@ -119,7 +122,7 @@ const { EXT_CONSTANTS } = require('../utils/constants');
         density,
         proximityScore: proximityBonus / Math.max(1, totalTerms),
         avgSentenceLength,
-        termDistribution: Object.fromEntries(legalTermCounts)
+        termDistribution: Object.fromEntries(legalTermCounts),
       };
     }
 
@@ -134,15 +137,17 @@ const { EXT_CONSTANTS } = require('../utils/constants');
         hasDefinitions: LEGAL_PATTERNS.DEFINITIONS.test(text),
         hasLegalHeaders: LEGAL_PATTERNS.LEGAL_HEADERS.test(text),
         hasCitations: LEGAL_PATTERNS.CITATIONS.test(text),
-        hasLists: LEGAL_PATTERNS.LISTS.test(text)
+        hasLists: LEGAL_PATTERNS.LISTS.test(text),
       };
 
-      const patternScore = Object.values(patterns)
-        .reduce((score, hasPattern) => score + (hasPattern ? 0.2 : 0), 0);
+      const patternScore = Object.values(patterns).reduce(
+        (score, hasPattern) => score + (hasPattern ? 0.2 : 0),
+        0,
+      );
 
       return {
         patterns,
-        patternScore
+        patternScore,
       };
     }
 
@@ -157,24 +162,17 @@ const { EXT_CONSTANTS } = require('../utils/constants');
       const { patternScore } = patternMetrics;
 
       // Calculate weighted score
-      const score = (
-        (density * 0.4) +
-        (proximityScore * 0.3) +
-        (patternScore * 0.3)
-      );
+      const score = density * 0.4 + proximityScore * 0.3 + patternScore * 0.3;
 
       // Determine if text is legal based on term thresholds from constants
-      const isLegal = (
-        termCount >= DETECTION.THRESHOLDS.SECTION &&
-        score >= 0.5
-      );
+      const isLegal = termCount >= DETECTION.THRESHOLDS.SECTION && score >= 0.5;
 
       // Determine confidence level based on term count thresholds
-      let confidence = 'low';
+      let confidence = "low";
       if (termCount >= DETECTION.THRESHOLDS.AUTO_GRADE) {
-        confidence = 'high';
+        confidence = "high";
       } else if (termCount >= DETECTION.THRESHOLDS.NOTIFY) {
-        confidence = 'medium';
+        confidence = "medium";
       }
 
       return { isLegal, confidence, score };
@@ -183,26 +181,27 @@ const { EXT_CONSTANTS } = require('../utils/constants');
     return {
       analyzeText,
       // Backwards compatibility
-      isLegalText: (text) => analyzeText(text).then(result => result.isLegal),
+      isLegalText: (text) => analyzeText(text).then((result) => result.isLegal),
       getLegalTermDensity: (text) => {
         const words = textExtractor.splitIntoWords(text);
-        return words.length > 0 ? 
-          (words.filter(word => legalTerms.includes(word)).length / words.length) : 0;
+        return words.length > 0
+          ? words.filter((word) => legalTerms.includes(word)).length /
+              words.length
+          : 0;
       },
       // Exposed for testing
       _test: {
         calculateTextMetrics,
         analyzePatterns,
-        determineTextStatus
-      }
+        determineTextStatus,
+      },
     };
   }
 
   // Make it available globally
-  if (typeof module !== 'undefined' && module.exports) {
+  if (typeof module !== "undefined" && module.exports) {
     module.exports = { createLegalTextAnalyzer };
   } else {
     global.LegalTextAnalyzer = { create: createLegalTextAnalyzer };
   }
-
-})(typeof window !== 'undefined' ? window : global);
+})(typeof window !== "undefined" ? window : global);
