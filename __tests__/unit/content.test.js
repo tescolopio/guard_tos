@@ -1,32 +1,109 @@
+/**
+ * @file content.test.js
+ * @description Unit tests for the ContentController (content script) of the Terms Guardian Chrome extension.
+ *
+ * This test suite ensures robust coverage of the content script's logic, including:
+ *   - Initialization and analyzer setup
+ *   - Extension badge management
+ *   - Legal agreement detection and analysis
+ *   - Chrome API and global analyzer mocking
+ *   - Message handling and error scenarios
+ *
+ * Mocks:
+ *   - Chrome APIs (runtime, action, etc.)
+ *   - Analyzer factories (RightsAssessor, TosSummarizer, TextExtractor, UncommonWordsIdentifier)
+ *   - Global variables required by the content script
+ *
+ * Coverage:
+ *   - Initialization and DOM readiness
+ *   - Badge icon updates for different detection scenarios
+ *   - Handling of high, moderate, and low legal term counts
+ *   - Graceful error handling during extraction/analysis
+ *   - Message handling for analyzeRequest and unknown types
+ *
+ * @author Timmothy Escolopio
+ * @company 3D Tech Solutions LLC
+ * @date 2024-07-17
+ * @version 1.1.0
+ */
 // __tests__/unit/content.test.js
 const { EXT_CONSTANTS } = require("../../src/utils/constants");
-const ContentController = require("../../src/content/content");
 const {
   setupTestDOM,
   createMessageEvent,
   simulateMutation,
+  wait,
+  setupChromeAPI,
 } = require("../helpers/testUtils");
+const { mockLegalText, mockAnalysisResults } = require("../helpers/mockData");
 
 describe("Content Controller", () => {
+  /**
+   * Sets up a fresh DOM, Chrome API mocks, analyzer mocks, and global variables before each test.
+   * Loads the ContentController class for isolated testing.
+   */
+  let ContentController;
   let contentController;
   let mockChrome;
+  let mockLog;
+  let mockLogLevels;
 
   beforeEach(() => {
     setupTestDOM();
-    mockChrome = {
-      runtime: {
-        sendMessage: jest.fn(),
-        onMessage: {
-          addListener: jest.fn(),
-          removeListener: jest.fn(),
-        },
-      },
-    };
-    global.chrome = mockChrome;
+    mockChrome = setupChromeAPI();
 
-    contentController = new ContentController();
+    // Mock the log and logLevels
+    mockLog = jest.fn();
+    mockLogLevels = EXT_CONSTANTS.DEBUG.LEVELS;
+
+    // Mock the global analyzer factories
+    global.RightsAssessor = {
+      create: jest.fn().mockReturnValue({
+        analyzeContent: jest.fn().mockResolvedValue(mockAnalysisResults.rights),
+      }),
+    };
+
+    global.TosSummarizer = {
+      create: jest.fn().mockReturnValue({
+        summarizeTos: jest.fn().mockResolvedValue("Summary"),
+      }),
+    };
+
+    global.TextExtractor = {
+      create: jest.fn().mockReturnValue({
+        extractAndAnalyzePageText: jest.fn().mockResolvedValue({
+          text: mockLegalText.simple.text,
+          metadata: { legalTermCount: 15 },
+        }),
+        extractText: jest.fn().mockReturnValue(mockLegalText.simple.text),
+      }),
+    };
+
+    global.UncommonWordsIdentifier = {
+      create: jest.fn().mockReturnValue({
+        identifyUncommonWords: jest
+          .fn()
+          .mockResolvedValue(["pursuant", "aforementioned", "hereinafter"]),
+      }),
+    };
+
+    // Mock other required globals
+    global.legalTerms = ["terms", "service", "agreement"];
+    global.commonWords = ["the", "and", "or"];
+    global.legalTermsDefinitions = {};
+    global.compromise = {};
+    global.cheerio = {};
+
+    // Load the ContentController
+    ContentController = require("../../src/content/content");
+
+    contentController = new ContentController({
+      log: mockLog,
+      logLevels: mockLogLevels,
+    });
   });
 
+  // --- Initialization and Analyzer Setup ---
   describe("Initialization", () => {
     test("should initialize analyzers successfully", () => {
       expect(global.RightsAssessor.create).toHaveBeenCalled();
@@ -41,6 +118,10 @@ describe("Content Controller", () => {
 
     test("should initialize content script when document is ready", () => {
       document.readyState = "complete";
+      const controller = new ContentController({
+        log: mockLog,
+        logLevels: mockLogLevels,
+      });
       controller.initialize();
       expect(chrome.runtime.onMessage.addListener).toHaveBeenCalled();
       expect(mockLog).toHaveBeenCalledWith(
@@ -51,6 +132,10 @@ describe("Content Controller", () => {
 
     test("should wait for document to complete before initializing", async () => {
       document.readyState = "loading";
+      const controller = new ContentController({
+        log: mockLog,
+        logLevels: mockLogLevels,
+      });
       controller.initialize();
       expect(chrome.runtime.onMessage.addListener).not.toHaveBeenCalled();
 
@@ -63,9 +148,10 @@ describe("Content Controller", () => {
     });
   });
 
+  // --- Extension Badge Management ---
   describe("Extension Icon Management", () => {
     test("should update extension icon with exclamation mark", () => {
-      controller.updateExtensionIcon(true);
+      contentController.updateExtensionIcon(true);
       expect(chrome.action.setBadgeText).toHaveBeenCalledWith({ text: "!" });
       expect(mockLog).toHaveBeenCalledWith(
         mockLogLevels.INFO,
@@ -74,7 +160,7 @@ describe("Content Controller", () => {
     });
 
     test("should update extension icon without exclamation mark", () => {
-      controller.updateExtensionIcon(false);
+      contentController.updateExtensionIcon(false);
       expect(chrome.action.setBadgeText).toHaveBeenCalledWith({ text: "" });
       expect(mockLog).toHaveBeenCalledWith(
         mockLogLevels.INFO,
@@ -83,10 +169,11 @@ describe("Content Controller", () => {
     });
   });
 
+  // --- Legal Agreement Detection and Analysis ---
   describe("Legal Agreement Detection", () => {
     test("should handle high legal term count", async () => {
       const text = mockLegalText.simple.text;
-      await controller.handleHighLegalTermCount(text);
+      await contentController.handleHighLegalTermCount(text);
 
       expect(chrome.runtime.sendMessage).toHaveBeenCalledWith({
         type: "tosDetected",
@@ -100,19 +187,21 @@ describe("Content Controller", () => {
     });
 
     test("should handle moderate legal term count", () => {
-      controller.handleModerateLegalTermCount();
+      contentController.handleModerateLegalTermCount();
       expect(chrome.action.setBadgeText).toHaveBeenCalledWith({ text: "!" });
     });
 
     test("should detect and handle high count legal agreements", async () => {
-      controller.extractor.extractAndAnalyzePageText.mockResolvedValueOnce({
-        metadata: {
-          legalTermCount: EXT_CONSTANTS.DETECTION.THRESHOLDS.AUTO_GRADE + 1,
+      contentController.extractor.extractAndAnalyzePageText.mockResolvedValueOnce(
+        {
+          metadata: {
+            legalTermCount: EXT_CONSTANTS.DETECTION.THRESHOLDS.AUTO_GRADE + 1,
+          },
+          text: mockLegalText.complex.text,
         },
-        text: mockLegalText.complex.text,
-      });
+      );
 
-      await controller.detectLegalAgreements();
+      await contentController.detectLegalAgreements();
 
       expect(chrome.runtime.sendMessage).toHaveBeenCalledWith({
         type: "tosDetected",
@@ -126,36 +215,40 @@ describe("Content Controller", () => {
     });
 
     test("should detect and handle moderate count legal agreements", async () => {
-      controller.extractor.extractAndAnalyzePageText.mockResolvedValueOnce({
-        metadata: {
-          legalTermCount: EXT_CONSTANTS.DETECTION.THRESHOLDS.NOTIFY + 1,
+      contentController.extractor.extractAndAnalyzePageText.mockResolvedValueOnce(
+        {
+          metadata: {
+            legalTermCount: EXT_CONSTANTS.DETECTION.THRESHOLDS.NOTIFY + 1,
+          },
+          text: mockLegalText.simple.text,
         },
-        text: mockLegalText.simple.text,
-      });
+      );
 
-      await controller.detectLegalAgreements();
+      await contentController.detectLegalAgreements();
       expect(chrome.action.setBadgeText).toHaveBeenCalledWith({ text: "!" });
     });
 
     test("should detect and handle low count legal agreements", async () => {
-      controller.extractor.extractAndAnalyzePageText.mockResolvedValueOnce({
-        metadata: {
-          legalTermCount: EXT_CONSTANTS.DETECTION.THRESHOLDS.NOTIFY - 1,
+      contentController.extractor.extractAndAnalyzePageText.mockResolvedValueOnce(
+        {
+          metadata: {
+            legalTermCount: EXT_CONSTANTS.DETECTION.THRESHOLDS.NOTIFY - 1,
+          },
+          text: mockLegalText.simple.text,
         },
-        text: mockLegalText.simple.text,
-      });
+      );
 
-      await controller.detectLegalAgreements();
+      await contentController.detectLegalAgreements();
       expect(chrome.action.setBadgeText).toHaveBeenCalledWith({ text: "" });
     });
 
     test("should handle extraction errors gracefully", async () => {
       const error = new Error("Extraction failed");
-      controller.extractor.extractAndAnalyzePageText.mockRejectedValueOnce(
+      contentController.extractor.extractAndAnalyzePageText.mockRejectedValueOnce(
         error,
       );
 
-      await controller.detectLegalAgreements();
+      await contentController.detectLegalAgreements();
 
       expect(mockLog).toHaveBeenCalledWith(
         mockLogLevels.ERROR,
@@ -166,6 +259,7 @@ describe("Content Controller", () => {
     });
   });
 
+  // --- Message Handling and Error Scenarios ---
   describe("Message Handling", () => {
     test("should handle analyze request messages", async () => {
       const message = {
@@ -173,7 +267,7 @@ describe("Content Controller", () => {
         text: mockLegalText.simple.text,
       };
 
-      await controller.handleMessage(message);
+      await contentController.handleMessage(message);
 
       expect(chrome.runtime.sendMessage).toHaveBeenCalledWith({
         type: "analysisComplete",
@@ -191,7 +285,7 @@ describe("Content Controller", () => {
         data: "test",
       };
 
-      await controller.handleMessage(message);
+      await contentController.handleMessage(message);
 
       expect(chrome.runtime.sendMessage).not.toHaveBeenCalled();
       expect(mockLog).not.toHaveBeenCalled();
