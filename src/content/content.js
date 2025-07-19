@@ -171,7 +171,6 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
     async handleHighLegalTermCount(text) {
       try {
         this.updateExtensionIcon(true);
-        showNotification(this.NOTIFICATIONS.AUTO_GRADE);
 
         const analysis = await this.performFullAnalysis(text);
         chrome.runtime.sendMessage({
@@ -193,33 +192,6 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
      */
     handleModerateLegalTermCount() {
       this.updateExtensionIcon(true);
-      showNotification(this.NOTIFICATIONS.SIGNIFICANT_TERMS);
-    }
-
-    /**
-     * Performs full analysis of text
-     * @param {string} text Text to analyze
-     */
-    async performFullAnalysis(text) {
-      try {
-        const [rightsAnalysis, uncommonWords] = await Promise.all([
-          this.assessor.analyzeContent(text),
-          this.identifier.identifyUncommonWords(text),
-        ]);
-
-        return {
-          rights: rightsAnalysis,
-          uncommonWords: uncommonWords,
-          timestamp: new Date().toISOString(),
-        };
-      } catch (error) {
-        this.log(
-          this.logLevels.ERROR,
-          "Error performing full analysis:",
-          error,
-        );
-        throw error;
-      }
     }
 
     /**
@@ -266,14 +238,69 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
     }
 
     /**
+     * Performs full analysis on given text
+     * @param {string} text Text to analyze
+     * @returns {Object} Analysis results
+     */
+    async performFullAnalysis(text) {
+      try {
+        const rightsAnalysis = await this.assessor.analyzeContent(text);
+        const uncommonWords = await this.identifier.identifyUncommonWords(text);
+
+        return {
+          rights: rightsAnalysis,
+          uncommonWords: uncommonWords,
+          timestamp: new Date().toISOString(),
+        };
+      } catch (error) {
+        this.log(
+          this.logLevels.ERROR,
+          "Error performing full analysis:",
+          error,
+        );
+        return {
+          rights: { error: "Analysis failed" },
+          uncommonWords: [],
+          timestamp: new Date().toISOString(),
+        };
+      }
+    }
+
+    /**
+     * Handles incoming messages
+     * @param {Object} message Message object
+     */
+    async handleMessage(message) {
+      if (!message || !message.type) {
+        return;
+      }
+
+      switch (message.type) {
+        case "analyzeRequest":
+          if (message.text) {
+            const analysis = await this.performFullAnalysis(message.text);
+            chrome.runtime.sendMessage({
+              type: "analysisComplete",
+              analysis: analysis,
+            });
+          }
+          break;
+        case "gradeText":
+          await this.handleGradeTextRequest();
+          break;
+        default:
+          // Unknown message type - ignore
+          break;
+      }
+    }
+
+    /**
      * Sets up message listeners
      */
     setupMessageListeners() {
       chrome.runtime.onMessage.addListener(
         async (request, sender, sendResponse) => {
-          if (request.type === "gradeText") {
-            await this.handleGradeTextRequest();
-          }
+          await this.handleMessage(request);
         },
       );
     }
@@ -321,5 +348,10 @@ const { legalTermsDefinitions } = require("../data/legalTermsDefinitions");
     );
   } else {
     controller.initialize();
+  }
+
+  // Export for testing
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = ContentController;
   }
 })(typeof window !== "undefined" ? window : global);

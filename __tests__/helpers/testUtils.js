@@ -27,65 +27,14 @@ const resetAllMocks = () => {
  * @returns {Object} Mock Chrome API
  */
 const setupChromeAPI = (customImplementation = {}) => {
-  const defaultImplementation = {
-    runtime: {
-      id: "mock-extension-id",
-      sendMessage: jest.fn(),
-      onMessage: {
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
-      },
-      getManifest: jest.fn(() => ({
-        manifest_version: 3,
-        version: "1.0.0",
-      })),
-    },
-    storage: {
-      local: {
-        get: jest.fn(),
-        set: jest.fn(),
-        remove: jest.fn(),
-        clear: jest.fn(),
-      },
-      sync: {
-        get: jest.fn(),
-        set: jest.fn(),
-        remove: jest.fn(),
-        clear: jest.fn(),
-      },
-    },
-    tabs: {
-      query: jest.fn(),
-      sendMessage: jest.fn(),
-      create: jest.fn(),
-      update: jest.fn(),
-      onUpdated: {
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
-      },
-    },
-    sidePanel: {
-      open: jest.fn(),
-      setOptions: jest.fn(),
-    },
-    contextMenus: {
-      create: jest.fn(),
-      remove: jest.fn(),
-      onClicked: {
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
-      },
-    },
-    scripting: {
-      executeScript: jest.fn(),
-      insertCSS: jest.fn(),
-    },
-    ...mockData.mockChromeAPI,
+  const mockChromeAPI = mockData.getMockChromeAPI();
+  const chromeAPI = {
+    ...mockChromeAPI,
     ...customImplementation,
   };
 
-  global.chrome = defaultImplementation;
-  return global.chrome;
+  global.chrome = chromeAPI;
+  return chromeAPI;
 };
 
 /**
@@ -93,6 +42,7 @@ const setupChromeAPI = (customImplementation = {}) => {
  * @param {Object} customImplementation - Optional custom implementation
  */
 const setupMockAnalyzers = (customImplementation = {}) => {
+  const mockAnalyzers = mockData.getMockAnalyzers();
   const defaultAnalyzers = {
     analyzeReadability: jest.fn().mockResolvedValue({
       score: 75,
@@ -109,7 +59,7 @@ const setupMockAnalyzers = (customImplementation = {}) => {
       confidence: 0.85,
       terms: ["privacy", "data", "consent"],
     }),
-    ...mockData.mockAnalyzers,
+    ...mockAnalyzers,
     ...customImplementation,
   };
 

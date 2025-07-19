@@ -43,10 +43,15 @@ describe("Debugger Utility", () => {
       trace: jest.fn(),
     };
 
-    // Mock performance
-    global.performance = {
-      now: jest.fn().mockReturnValue(0),
-    };
+    // Ensure performance.now is a Jest mock and not overwritten
+    if (!global.performance) {
+      global.performance = {};
+    }
+    Object.defineProperty(global.performance, "now", {
+      value: jest.fn(),
+      writable: true,
+      configurable: true,
+    });
 
     debugInstance = createDebugger({
       LOG_TO_CONSOLE: true,
@@ -92,14 +97,21 @@ describe("Debugger Utility", () => {
   });
 
   test("should save performance metric", async () => {
+    // Guarantee performance.now is a Jest mock
+    expect(jest.isMockFunction(performance.now)).toBe(true);
     // Setup performance.now mock to return different values
-    performance.now
-      .mockReturnValueOnce(0) // Start time
-      .mockReturnValueOnce(100); // End time
+    performance.now.mockReturnValueOnce(0); // Start time
+    performance.now.mockReturnValueOnce(100); // End time
 
     debugInstance.startTimer("testLabel");
     jest.advanceTimersByTime(100);
     const duration = await debugInstance.endTimer("testLabel");
+
+    // Debug output for diagnosis
+    const metrics = await chrome.storage.local.get(
+      EXT_CONSTANTS.STORAGE_KEYS.PERFORMANCE_METRICS,
+    );
+    // Uncomment for debugging: console.log('Saved metrics:', metrics);
 
     expect(duration).toBe(100);
     expect(chrome.storage.local.set).toHaveBeenCalledWith(
@@ -128,7 +140,15 @@ describe("Debugger Utility", () => {
       },
     });
 
+    // Debug output for diagnosis
+    const metrics = await chrome.storage.local.get(
+      EXT_CONSTANTS.STORAGE_KEYS.PERFORMANCE_METRICS,
+    );
+    // Uncomment for debugging: console.log('Analytics metrics:', metrics);
+
     const analytics = await debugInstance.getPerformanceAnalytics("testLabel");
+
+    // Uncomment for debugging: console.log('Analytics result:', analytics);
 
     expect(analytics).toEqual(
       expect.objectContaining({
@@ -149,6 +169,9 @@ describe("Debugger Utility", () => {
     debugInstance.startLogGroup("testGroup");
     await debugInstance.info("Test info message in group");
     debugInstance.endLogGroup();
+
+    // Debug output for diagnosis
+    // Uncomment for debugging: console.log('console.info calls:', console.info.mock.calls);
 
     expect(console.group).toHaveBeenCalledWith("testGroup");
     expect(console.groupEnd).toHaveBeenCalled();

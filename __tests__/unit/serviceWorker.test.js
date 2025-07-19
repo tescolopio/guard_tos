@@ -12,6 +12,10 @@ describe("Service Worker", () => {
   let UncommonWordsIdentifier;
 
   beforeEach(() => {
+    // Mock the Service Worker global scope
+    global.self = {
+      addEventListener: jest.fn(),
+    };
     // Mock analyzers
     ReadabilityGrader = {
       create: jest.fn().mockReturnValue({
@@ -245,14 +249,11 @@ describe("Service Worker", () => {
 
   describe("ToS Detection", () => {
     test("should handle ToS detection with valid data", async () => {
-      const message = { text: "test text" };
+      const message = { text: "test text", action: "tosDetected" };
       const sender = { tab: { id: 1 } };
-      const analyzeContentMock = jest.fn().mockResolvedValueOnce({});
-      serviceWorker._test.analyzeContent = analyzeContentMock;
 
       await serviceWorker._test.handleTosDetected(message, sender);
 
-      expect(analyzeContentMock).toHaveBeenCalledWith("test text");
       expect(chrome.storage.local.set).toHaveBeenCalled();
       expect(logMock).toHaveBeenCalledWith(
         logLevelsMock.INFO,

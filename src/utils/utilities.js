@@ -4,37 +4,43 @@
  * @contributor {tescolopio}
  * @version 1.1.0
  * @date 2024-09-22
- * 
+ *
  * @company 3D Tech Solutions LLC
- * 
+ *
  * @changes
  *  - 2024-09-18 | tescolopio | Initial creation of the script.
  *  - 2024-09-22 | tescolopio | Modified to work with Chrome extension content scripts.
  */
 
-(function(global) {
-  'use strict';
+(function (global) {
+  "use strict";
 
-  const { EXT_CONSTANTS } = require('./constants');
+  const { EXT_CONSTANTS } = require("./constants");
 
   function createUtilities({ log, logLevels, legalTerms }) {
     // Get constants
-    const { DETECTION, MESSAGES, EXTENSION, CLASSES } = EXT_CONSTANTS;
+    const { MESSAGES, EXTENSION } = EXT_CONSTANTS;
 
     /**
      * Legal term detection functions
      */
     function containsLegalTerm(text) {
-      log(logLevels.DEBUG, `Checking for exact legal term match in text: ${text}`);
+      log(
+        logLevels.DEBUG,
+        `Checking for exact legal term match in text: ${text}`,
+      );
       const legalTermsSet = new Set(legalTerms);
       const words = text.split(/\s+/);
-      const result = words.some(word => legalTermsSet.has(word));
+      const result = words.some((word) => legalTermsSet.has(word));
       log(logLevels.DEBUG, `Exact match result: ${result}`);
       return result;
     }
 
     function containsPartialMatch(text) {
-      log(logLevels.DEBUG, `Checking for partial legal term match in text: ${text}`);
+      log(
+        logLevels.DEBUG,
+        `Checking for partial legal term match in text: ${text}`,
+      );
       const legalTermsSet = new Set(legalTerms);
       const result = legalTermsSet.has(text);
       log(logLevels.DEBUG, `Partial match result: ${result}`);
@@ -42,14 +48,20 @@
     }
 
     function containsProximityMatch(text, proximity = 5) {
-      log(logLevels.DEBUG, `Checking for proximity legal term match in text: ${text}`);
+      log(
+        logLevels.DEBUG,
+        `Checking for proximity legal term match in text: ${text}`,
+      );
       const legalTermsSet = new Set(legalTerms);
       const words = text.split(/\s+/);
       for (let i = 0; i < words.length; i++) {
         if (legalTermsSet.has(words[i])) {
           for (let j = 1; j <= proximity; j++) {
             if (legalTermsSet.has(words[i + j])) {
-              log(logLevels.DEBUG, `Proximity match found: ${words[i]} ${words[i + j]}`);
+              log(
+                logLevels.DEBUG,
+                `Proximity match found: ${words[i]} ${words[i + j]}`,
+              );
               return true;
             }
           }
@@ -64,7 +76,7 @@
      */
     function extractDomain(url) {
       try {
-        if (!url || typeof url !== 'string') {
+        if (!url || typeof url !== "string") {
           return null;
         }
 
@@ -84,45 +96,53 @@
      */
     function updateExtensionIcon(showExclamation) {
       try {
-        chrome.action.setBadgeText({ 
-          text: showExclamation ? "!" : "" 
+        chrome.action.setBadgeText({
+          text: showExclamation ? "!" : "",
         });
-        chrome.action.setBadgeBackgroundColor({ color: showExclamation ? "#FF0000" : EXTENSION.BADGE_COLOR });
-        log(logLevels.INFO, `Extension badge ${showExclamation ? 'set' : 'cleared'}`);
+        chrome.action.setBadgeBackgroundColor({
+          color: showExclamation ? "#FF0000" : EXTENSION.BADGE_COLOR,
+        });
+        log(
+          logLevels.INFO,
+          `Extension badge ${showExclamation ? "set" : "cleared"}`,
+        );
       } catch (error) {
         log(logLevels.ERROR, "Error updating extension icon:", error);
       }
     }
 
     /**
-     * Updates the sidepanel with content
-     * @param {Object} content Content to update the sidepanel with
+     * Updates the sidePanel with content
+     * @param {Object} content Content to update the sidePanel with
      */
-    function updateSidepanel(content) {
+    function updateSidePanel(content) {
       try {
-        log(logLevels.INFO, 'Updating sidepanel with content');
-        
+        log(logLevels.INFO, "Updating sidePanel with content");
+
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           if (chrome.runtime.lastError) {
-            log(logLevels.ERROR, `Error querying tabs: ${chrome.runtime.lastError.message}`);
+            log(
+              logLevels.ERROR,
+              `Error querying tabs: ${chrome.runtime.lastError.message}`,
+            );
             showNotification(MESSAGES.ERROR.GENERAL);
             return;
           }
 
           if (!tabs?.length) {
-            log(logLevels.ERROR, 'No active tab found');
+            log(logLevels.ERROR, "No active tab found");
             showNotification(MESSAGES.ERROR.GENERAL);
             return;
           }
 
           const activeTab = tabs[0];
-          chrome.tabs.sendMessage(activeTab.id, { 
-            type: "updateSidepanel", 
-            content: content 
+          chrome.tabs.sendMessage(activeTab.id, {
+            type: "updateSidePanel",
+            content: content,
           });
         });
       } catch (error) {
-        log(logLevels.ERROR, "Error updating sidepanel:", error);
+        log(logLevels.ERROR, "Error updating sidePanel:", error);
       }
     }
 
@@ -137,7 +157,7 @@
         const words = text.split(/\s+/);
         let count = 0;
 
-        words.forEach(word => {
+        words.forEach((word) => {
           if (legalTermsSet.has(word)) {
             // Highlight the word in the document (implementation depends on your requirements)
             count++;
@@ -164,7 +184,7 @@
       const id = setTimeout(() => controller.abort(), timeout);
       const response = await fetch(url, {
         ...options,
-        signal: controller.signal  
+        signal: controller.signal,
       });
       clearTimeout(id);
       return response;
@@ -176,27 +196,27 @@
       containsProximityMatch,
       extractDomain,
       updateExtensionIcon,
-      updateSidepanel,
+      updateSidePanel,
       highlightLegalTerms,
-      fetchWithTimeout
+      fetchWithTimeout,
     };
   }
-  
+
   global.createUtilities = {
-    create: createUtilities
+    create: createUtilities,
   };
 
   // Export for both Chrome extension and test environments
-  if (typeof module !== 'undefined' && module.exports) {
+  if (typeof module !== "undefined" && module.exports) {
     module.exports = { createUtilities };
   } else {
     const utils = createUtilities({
       log: global.log,
       logLevels: global.logLevels,
-      legalTerms: global.legalTerms
+      legalTerms: global.legalTerms,
     });
-    
+
     // Expose utilities globally
     Object.assign(global, utils);
   }
-})(typeof window !== 'undefined' ? window : global);
+})(typeof window !== "undefined" ? window : global);

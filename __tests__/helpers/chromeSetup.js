@@ -1,5 +1,5 @@
 // __tests__/helpers/chromeSetup.js
-const { mockChromeAPI, mockAnalyzers } = require("./mockData");
+const { getMockChromeAPI, getMockAnalyzers } = require("./mockData");
 
 /**
  * Sets up the Chrome environment with mock APIs and analyzers
@@ -7,6 +7,9 @@ const { mockChromeAPI, mockAnalyzers } = require("./mockData");
  * @param {Object} customAnalyzers - Optional custom analyzers implementation
  */
 const setupChromeEnvironment = (customChromeAPI = {}, customAnalyzers = {}) => {
+  // Get the mock Chrome API
+  const mockChromeAPI = getMockChromeAPI();
+
   // Set up Chrome API
   global.chrome = {
     ...mockChromeAPI,
@@ -20,6 +23,7 @@ const setupChromeEnvironment = (customChromeAPI = {}, customAnalyzers = {}) => {
   };
 
   // Set up analyzers with both mock implementations and custom overrides
+  const mockAnalyzers = getMockAnalyzers();
   const analyzers = {
     RightsAssessor: {
       ...mockAnalyzers.RightsAssessor,

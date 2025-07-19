@@ -75,79 +75,105 @@ const mockDOMStructures = {
   `,
 };
 
-// Mock Chrome API
-const mockChromeAPI = {
-  runtime: {
-    getURL: jest.fn((path) => `chrome-extension://mock-id/${path}`),
-    sendMessage: jest.fn(),
-    onMessage: {
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-      hasListeners: jest.fn(),
+// Mock Chrome API factory function
+const getMockChromeAPI = () => {
+  // Use jest.fn() if available, otherwise create a simple mock function
+  const mockFn =
+    typeof jest !== "undefined"
+      ? jest.fn
+      : () => {
+          const fn = function () {};
+          fn.mockReturnValue = () => fn;
+          fn.mockResolvedValue = () => fn;
+          fn.mockImplementation = () => fn;
+          return fn;
+        };
+
+  return {
+    runtime: {
+      getURL: mockFn()((path) => `chrome-extension://mock-id/${path}`),
+      sendMessage: mockFn(),
+      onMessage: {
+        addListener: mockFn(),
+        removeListener: mockFn(),
+        hasListeners: mockFn(),
+      },
     },
-  },
-  storage: {
-    local: {
-      get: jest.fn().mockResolvedValue({}),
-      set: jest.fn().mockResolvedValue(undefined),
-      remove: jest.fn().mockResolvedValue(undefined),
+    storage: {
+      local: {
+        get: mockFn().mockResolvedValue({}),
+        set: mockFn().mockResolvedValue(undefined),
+        remove: mockFn().mockResolvedValue(undefined),
+      },
     },
-  },
-  action: {
-    setBadgeText: jest.fn(),
-    setBadgeBackgroundColor: jest.fn(),
-    setIcon: jest.fn(),
-  },
-  sidePanel: {
-    open: jest.fn(),
-    close: jest.fn(),
-    getOptions: jest.fn(),
-  },
-  tabs: {
-    query: jest.fn().mockResolvedValue([{ id: 1 }]),
-    sendMessage: jest.fn(),
-    create: jest.fn(),
-    update: jest.fn(),
-  },
-  scripting: {
-    executeScript: jest.fn(),
-  },
+    action: {
+      setBadgeText: mockFn(),
+      setBadgeBackgroundColor: mockFn(),
+      setIcon: mockFn(),
+    },
+    sidePanel: {
+      open: mockFn(),
+      close: mockFn(),
+      getOptions: mockFn(),
+    },
+    tabs: {
+      query: mockFn().mockResolvedValue([{ id: 1 }]),
+      sendMessage: mockFn(),
+      create: mockFn(),
+      update: mockFn(),
+    },
+    scripting: {
+      executeScript: mockFn(),
+    },
+  };
 };
 
-// Mock analyzers responses
-const mockAnalyzers = {
-  RightsAssessor: {
-    create: jest.fn().mockReturnValue({
-      analyzeContent: jest.fn().mockResolvedValue(mockAnalysisResults.rights),
-    }),
-  },
-  TosSummarizer: {
-    create: jest.fn().mockReturnValue({
-      generateSummary: jest.fn().mockResolvedValue("Summary of terms"),
-    }),
-  },
-  TextExtractor: {
-    create: jest.fn().mockReturnValue({
-      extractAndAnalyzePageText: jest.fn().mockResolvedValue({
-        metadata: { legalTermCount: 5 },
-        text: mockLegalText.simple.text,
+// Mock analyzers responses factory function
+const getMockAnalyzers = () => {
+  // Use jest.fn() if available, otherwise create a simple mock function
+  const mockFn =
+    typeof jest !== "undefined"
+      ? jest.fn
+      : () => {
+          const fn = function () {};
+          fn.mockReturnValue = () => fn;
+          fn.mockResolvedValue = () => fn;
+          fn.mockImplementation = () => fn;
+          return fn;
+        };
+
+  return {
+    RightsAssessor: {
+      create: mockFn().mockReturnValue({
+        analyzeContent: mockFn().mockResolvedValue(mockAnalysisResults.rights),
       }),
-      extractText: jest.fn().mockReturnValue(mockLegalText.simple.text),
-    }),
-  },
-  UncommonWordsIdentifier: {
-    create: jest.fn().mockReturnValue({
-      identifyUncommonWords: jest
-        .fn()
-        .mockResolvedValue(
+    },
+    TosSummarizer: {
+      create: mockFn().mockReturnValue({
+        generateSummary: mockFn().mockResolvedValue("Summary of terms"),
+      }),
+    },
+    TextExtractor: {
+      create: mockFn().mockReturnValue({
+        extractAndAnalyzePageText: mockFn().mockResolvedValue({
+          metadata: { legalTermCount: 5 },
+          text: mockLegalText.simple.text,
+        }),
+        extractText: mockFn().mockReturnValue(mockLegalText.simple.text),
+      }),
+    },
+    UncommonWordsIdentifier: {
+      create: mockFn().mockReturnValue({
+        identifyUncommonWords: mockFn().mockResolvedValue(
           mockAnalysisResults.uncommonWords.map((w) => w.word),
         ),
-    }),
-  },
+      }),
+    },
+  };
 };
 
-// Mock extension messages
-const mockMessages = {
+// Mock extension messages factory function
+const getMockMessages = () => ({
   tosDetected: {
     type: "tosDetected",
     text: mockLegalText.simple.text,
@@ -169,18 +195,14 @@ const mockMessages = {
       timestamp: "2024-03-18T12:00:00.000Z",
     },
   },
-};
+});
 
 // Export all mocks
 module.exports = {
   mockLegalText,
   mockAnalysisResults,
   mockDOMStructures,
-  mockChromeAPI,
-  mockAnalyzers,
-  mockMessages,
-  // Helper function to get fresh copies of mutable objects
-  getMockChromeAPI: () => JSON.parse(JSON.stringify(mockChromeAPI)),
-  getMockAnalyzers: () => JSON.parse(JSON.stringify(mockAnalyzers)),
-  getMockMessages: () => JSON.parse(JSON.stringify(mockMessages)),
+  getMockChromeAPI,
+  getMockAnalyzers,
+  getMockMessages,
 };

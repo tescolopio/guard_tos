@@ -11,17 +11,19 @@ const { EXT_CONSTANTS } = require("../utils/constants");
 
   const { createTextExtractor } = require("./textExtractor");
 
-  function createLegalTextAnalyzer({ log, logLevels, legalTerms = [] }) {
+  function createLegalTextAnalyzer({
+    log,
+    logLevels,
+    legalTerms = [],
+    utilities,
+  }) {
     const { DETECTION, ANALYSIS } = EXT_CONSTANTS;
 
     const textExtractor = createTextExtractor({
       log,
       logLevels,
-      logLevels,
-      utilities: global.utilities,
+      utilities,
     });
-
-    
 
     /**
      * Analyzes text to determine if it's legal content

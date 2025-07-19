@@ -35,6 +35,14 @@ module.exports = merge(common, {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
           reuseExistingChunk: true,
+          /**
+           * Generates a name for a module based on its package name.
+           *
+           * @param {object} module - The module object provided by Webpack.
+           * @param {string} module.context - The context path of the module.
+           * @returns {string} The generated name in the format `vendor.<packageName>`, 
+           * where `<packageName>` is derived from the module's path in `node_modules`.
+           */
           name(module) {
             const packageName = module.context.match(
               /[\\/]node_modules[\\/](.*?)([\\/]|$)/,

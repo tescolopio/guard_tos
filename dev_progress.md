@@ -157,6 +157,111 @@ Terms Guardian is a Chrome extension that analyzes Terms of Service and legal do
 
 ## Outstanding Issues (TODO)
 
+### 🚨 Critical Test Issues (as of July 16, 2025)
+
+#### ❌ Service Worker Tests
+
+- [ ] ReferenceError: `self` is not defined
+  - Fix: Mock or define `global.self` in the test environment for service worker tests.
+
+#### ❌ Content Controller Tests
+
+- [ ] ReferenceError: `document` is not defined
+  - Fix: Use `@jest-environment jsdom` or set `testEnvironment: "jsdom"` for these tests.
+
+#### ❌ Debugger Utility Tests
+
+- [ ] `performance.now.mockReturnValueOnce is not a function`
+  - Fix: Mock `performance.now` with `jest.fn()` or similar.
+- [ ] Analytics and log group expectation mismatches
+  - Fix: Review and update test mocks and expectations for analytics and log grouping.
+
+#### ❌ Webpack Production Tests
+
+- [ ] Plugin instance/type errors and undefined properties
+  - Fix: Review plugin order, conditional logic, and ensure all plugin mocks are correct.
+
+---
+
+### 🛠️ Next Steps for Testing
+
+1. [ ] Fix service worker test environment (`self` global)
+2. [ ] Update content tests to use `jsdom` environment
+3. [ ] Mock `performance.now` and update debugger test expectations
+4. [ ] Review and fix webpack.prod test plugin logic and mocks
+5. [ ] Re-run full suite after each fix
+
+---
+
+## Project Overview
+
+Terms Guardian is a Chrome extension that analyzes Terms of Service and legal documents to help users understand what they're agreeing to.
+
+## Project Goals
+
+### Core Features
+
+- [x] Automatic ToS detection on web pages
+- [x] Readability analysis using multiple algorithms
+- [x] Rights assessment and evaluation
+- [x] Plain language summaries
+- [x] Uncommon legal terms identification
+- [x] Side panel UI for detailed analysis
+- [x] Chrome extension badge notifications
+
+### Technical Architecture
+
+- [x] Manifest V3 compliance
+- [x] Modular code structure
+- [x] Content script for page analysis
+- [x] Service worker for background processing
+- [x] Comprehensive data patterns for legal terms
+- [x] Caching system for performance
+- [x] Error handling and logging
+
+## Current State
+
+### ✅ Completed Components
+
+#### Core Analysis Engine
+
+- **TextExtractor**: Extracts text from HTML, PDF, DOCX formats
+- **ReadabilityGrader**: Calculates readability scores using multiple algorithms
+- **RightsAssessor**: Evaluates user rights retention (placeholder for TensorFlow.js)
+- **UncommonWordsIdentifier**: Identifies and defines complex legal terms
+- **TosSummarizer**: Generates plain language summaries
+
+#### Extension Infrastructure
+
+- **Content Script**: Detects legal text and manages UI updates
+- **Service Worker**: Handles background operations and message routing
+- **Side Panel**: Displays detailed analysis results
+- **Context Menu**: Allows text selection analysis
+
+#### Data Management
+
+- **Legal Terms Database**: Comprehensive legal terminology
+- **Pattern Recognition**: Rights, privacy, liability patterns
+- **Caching System**: Efficient storage and retrieval
+- **Constants Configuration**: Centralized configuration management
+
+#### Build System
+
+- **Webpack**: Multi-environment configuration (dev/prod)
+- **Babel**: ES6+ transpilation
+- **Jest**: Testing framework setup
+- **ESLint**: Code quality enforcement
+
+### 🔄 In Progress
+
+#### Testing Infrastructure
+
+- **Mock System**: Factory functions for test mocks
+- **Test Utilities**: Helper functions for test setup
+- **Unit Tests**: Comprehensive test coverage planned
+
+## Outstanding Issues (TODO)
+
 ### 🚨 Critical Issues
 
 #### Test Failures
