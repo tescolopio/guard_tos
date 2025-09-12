@@ -15,7 +15,10 @@ const required = [
   "images/icon16.png",
   "images/icon48.png",
   "images/icon128.png",
-  "dictionaries/dict-a.json",
+  // Dictionary chunks are now loaded dynamically - check for at least a few
+  "dict-a.js",
+  "dict-c.js",
+  "dict-s.js",
 ];
 
 function exists(rel) {

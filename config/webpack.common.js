@@ -73,7 +73,6 @@ module.exports = {
           },
         },
         { from: "./images", to: "images" },
-        { from: "./src/data/dictionaries", to: "dictionaries" },
         { from: "./src/styles/styles.css", to: "styles.css" },
       ],
     }),

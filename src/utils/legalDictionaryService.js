@@ -22,6 +22,7 @@ async function createLegalDictionaryService({
   let entries = [];
   let allLoaded = false;
   const loadedLetters = new Set();
+  let initialized = false;
 
   // Individual loaders to enable per-letter lazy loading without dynamic expression warnings
   const staticReq = (p) => require(p);
@@ -171,31 +172,43 @@ async function createLegalDictionaryService({
   const titleIndex = new Map();
   const tokenIndex = new Map();
 
-  // Simple LRU cache & constants
-  const cache = new Map();
-  const { EXT_CONSTANTS } = require("../utils/constants");
-  const MAX_CACHE =
-    (EXT_CONSTANTS &&
-      EXT_CONSTANTS.ANALYSIS &&
-      EXT_CONSTANTS.ANALYSIS.DICTIONARY &&
-      EXT_CONSTANTS.ANALYSIS.DICTIONARY.CACHE_SIZE) ||
-    1000;
-  const TTL =
-    (EXT_CONSTANTS &&
-      EXT_CONSTANTS.ANALYSIS &&
-      EXT_CONSTANTS.ANALYSIS.DEFINITION_CACHE_TIME) ||
-    24 * 60 * 60 * 1000;
+  // Lazy initialization function - only initialize when first accessed
+  function ensureInitialized() {
+    if (initialized) return;
+    initialized = true;
+    
+    // Initialize constants only when needed
+    try {
+      const { EXT_CONSTANTS } = require("../utils/constants");
+      if (EXT_CONSTANTS && EXT_CONSTANTS.ANALYSIS && EXT_CONSTANTS.ANALYSIS.DICTIONARY) {
+        Object.assign(serviceConfig, {
+          MAX_CACHE: EXT_CONSTANTS.ANALYSIS.DICTIONARY.CACHE_SIZE || 1000,
+          TTL: (EXT_CONSTANTS.ANALYSIS.DEFINITION_CACHE_TIME) || 24 * 60 * 60 * 1000
+        });
+      }
+    } catch (e) {
+      // Use defaults if constants can't be loaded
+    }
+  }
 
+  // Simple LRU cache & configuration
+  const cache = new Map();
+  const serviceConfig = {
+    MAX_CACHE: 1000,
+    TTL: 24 * 60 * 60 * 1000
+  };
+  
   let hits = 0;
   let misses = 0;
   // metricsInterval retained for compatibility if later needed
   let metricsInterval = null;
 
   function getCached(key) {
+    ensureInitialized();
     const now = Date.now();
     if (!cache.has(key)) return null;
     const item = cache.get(key);
-    if (now - item.ts > TTL) {
+    if (now - item.ts > serviceConfig.TTL) {
       cache.delete(key);
       return null;
     }
@@ -206,8 +219,9 @@ async function createLegalDictionaryService({
   }
 
   function setCached(key, val) {
+    ensureInitialized();
     cache.set(key, { ts: Date.now(), val });
-    if (cache.size > MAX_CACHE) {
+    if (cache.size > serviceConfig.MAX_CACHE) {
       const oldest = cache.keys().next().value;
       if (oldest !== undefined) cache.delete(oldest);
     }
@@ -256,6 +270,7 @@ async function createLegalDictionaryService({
   }
 
   async function getDefinition(word) {
+    ensureInitialized();
     const key = normalize(word);
     if (!key) return null;
     const first = key[0];
@@ -392,8 +407,8 @@ async function createLegalDictionaryService({
       hits,
       misses,
       size: cache.size,
-      ttl: TTL,
-      max: MAX_CACHE,
+      ttl: serviceConfig.TTL,
+      max: serviceConfig.MAX_CACHE,
     }),
   };
 }

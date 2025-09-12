@@ -37,6 +37,7 @@ module.exports = merge(common, {
           },
           chunks: "async",
           priority: 10,
+          enforce: true, // Force creation of this cache group
         },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
@@ -45,6 +46,10 @@ module.exports = merge(common, {
           priority: 5,
         },
       },
+      // Prevent small chunks that don't save much
+      minSize: 20000,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 5,
     },
   },
   plugins: [...(process.env.ANALYZE ? [new BundleAnalyzerPlugin()] : [])],
