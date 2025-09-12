@@ -4,16 +4,21 @@
  * @version 1.0.0
  */
 
-(function(global) {
-  'use strict';
+(function (global) {
+  "use strict";
 
   class TextCacheConfig {
     constructor(options = {}) {
-      const { DETECTION, ANALYSIS } = global.Constants;
+      const constantsSource =
+        (global && global.Constants) ||
+        (global && global.EXT_CONSTANTS) ||
+        require("../../utils/constants").EXT_CONSTANTS;
+      const { DETECTION, ANALYSIS } = constantsSource;
 
       this.MAX_ENTRIES = options.maxEntries || 100;
       this.TTL = options.ttl || 1000 * 60 * 5; // 5 minutes default
-      this.MIN_CACHE_LENGTH = options.minCacheLength || DETECTION.THRESHOLDS.AUTO_GRADE;
+      this.MIN_CACHE_LENGTH =
+        options.minCacheLength || DETECTION.THRESHOLDS.AUTO_GRADE;
       this.BATCH_THRESHOLD = options.batchThreshold || ANALYSIS.BATCH_THRESHOLD;
       this.CHUNK_SIZE = options.chunkSize || ANALYSIS.CHUNK_SIZE;
     }
@@ -24,16 +29,15 @@
         ttl: 1000 * 60 * 5,
         minCacheLength: constants.DETECTION.THRESHOLDS.AUTO_GRADE,
         batchThreshold: constants.ANALYSIS.BATCH_THRESHOLD,
-        chunkSize: constants.ANALYSIS.CHUNK_SIZE
+        chunkSize: constants.ANALYSIS.CHUNK_SIZE,
       });
     }
   }
 
   // Export for both environments
-  if (typeof module !== 'undefined' && module.exports) {
+  if (typeof module !== "undefined" && module.exports) {
     module.exports = { TextCacheConfig };
   } else {
     global.TextCacheConfig = TextCacheConfig;
   }
-
-})(typeof window !== 'undefined' ? window : global);
+})(typeof window !== "undefined" ? window : global);

@@ -4,19 +4,19 @@
  * @contributors {tescolopio}
  * @version 1.1.0
  * @date 2024-09-25
- * 
+ *
  * @company 3D Tech Solutions LLC
- * 
+ *
  * @changes
  *  - 2024-09-18 | tescolopio | Initial creation of the script.
- *  - 2024-09-24 | tescolopio | Updated script to include more robust logging and error handling. Also included config settings for logging. 
+ *  - 2024-09-24 | tescolopio | Updated script to include more robust logging and error handling. Also included config settings for logging.
  *  - 2024-09-25 | tescolopio | Modified to work with Chrome extension content scripts.
  */
 
 const { EXT_CONSTANTS } = require("./constants");
 
-(function(global) {
-  'use strict';
+(function (global) {
+  "use strict";
 
   function createDebugger(initialConfig = {}) {
     // Get constants
@@ -25,7 +25,7 @@ const { EXT_CONSTANTS } = require("./constants");
     // Enhanced default configuration with new DEBUG constants
     const defaultConfig = {
       DEBUG_LEVEL: DEBUG.DEFAULT_LEVEL,
-      TIMESTAMP_FORMAT: 'ISO',
+      TIMESTAMP_FORMAT: "ISO",
       LOG_TO_CONSOLE: true,
       LOG_TO_STORAGE: true,
       STORAGE_KEY: DEBUG.STORAGE.KEY,
@@ -34,12 +34,13 @@ const { EXT_CONSTANTS } = require("./constants");
       INCLUDE_STACK_TRACE: true,
       TRACK_PERFORMANCE: DEBUG.PERFORMANCE.ENABLED,
       GROUP_RELATED_LOGS: true,
-      MODULE_FILTERS: Object.values(DEBUG.MODULES),
+      // Default to no filtering so all groups log unless caller opts in
+      MODULE_FILTERS: [],
       PERFORMANCE_THRESHOLD: DEBUG.PERFORMANCE.THRESHOLD_WARNING,
       PERFORMANCE_SAMPLE_RATE: DEBUG.PERFORMANCE.SAMPLE_RATE,
       EXPORT_FORMAT: DEBUG.STORAGE.EXPORT_FORMAT,
       formatData: formatDataWithCircular,
-      getPerformanceAnalytics
+      getPerformanceAnalytics,
     };
 
     const config = { ...defaultConfig, ...initialConfig };
@@ -47,35 +48,39 @@ const { EXT_CONSTANTS } = require("./constants");
     const performanceMetrics = new Map();
     let activeLogGroup = null;
 
-      /**
+    /**
      * Enhanced data formatting with proper circular reference handling
      */
     function formatDataWithCircular(data) {
       try {
-        if (!data) return '';
-    
+        if (!data) return "";
+
         const seen = new WeakSet();
-        const formatted = JSON.stringify(data, (key, value) => {
-          if (typeof value === 'object' && value !== null) {
-            if (seen.has(value)) {
-              return '[Circular Reference]';
+        const formatted = JSON.stringify(
+          data,
+          (key, value) => {
+            if (typeof value === "object" && value !== null) {
+              if (seen.has(value)) {
+                return "[Circular Reference]";
+              }
+              seen.add(value);
             }
-            seen.add(value);
-          }
-          if (value instanceof Error) {
-            // TODO: Consider adding more error properties if needed
-            return {
-              name: value.name,
-              message: value.message,
-              stack: value.stack
-            };
-          }
-          return value;
-        }, 2);
-    
+            if (value instanceof Error) {
+              // TODO: Consider adding more error properties if needed
+              return {
+                name: value.name,
+                message: value.message,
+                stack: value.stack,
+              };
+            }
+            return value;
+          },
+          2,
+        );
+
         // TODO: Make MAX_DATA_LENGTH configurable from outside
-        return formatted.length > config.MAX_DATA_LENGTH 
-          ? formatted.substring(0, config.MAX_DATA_LENGTH) + '... [truncated]'
+        return formatted.length > config.MAX_DATA_LENGTH
+          ? formatted.substring(0, config.MAX_DATA_LENGTH) + "... [truncated]"
           : formatted;
       } catch (error) {
         // TODO: Improve error handling and logging
@@ -85,11 +90,12 @@ const { EXT_CONSTANTS } = require("./constants");
     // Add performance metrics storage
     const metricsManager = {
       async saveMetric(label, duration) {
-        if (!config.TRACK_PERFORMANCE) return;
+        if (!config.TRACK_PERFORMANCE) return null;
 
         try {
           const key = EXT_CONSTANTS.STORAGE_KEYS.PERFORMANCE_METRICS;
-          const { metrics = {} } = await chrome.storage.local.get(key);
+          const { [key]: metricsRaw } = await chrome.storage.local.get(key);
+          const metrics = metricsRaw || {};
 
           if (!metrics[label]) {
             metrics[label] = {
@@ -97,7 +103,7 @@ const { EXT_CONSTANTS } = require("./constants");
               total: 0,
               min: duration,
               max: duration,
-              samples: []
+              samples: [],
             };
           }
 
@@ -111,7 +117,7 @@ const { EXT_CONSTANTS } = require("./constants");
           if (Math.random() < config.PERFORMANCE_SAMPLE_RATE) {
             stat.samples.push({
               timestamp: new Date().toISOString(),
-              duration
+              duration,
             });
 
             // Keep only recent samples
@@ -123,30 +129,30 @@ const { EXT_CONSTANTS } = require("./constants");
           await chrome.storage.local.set({ [key]: metrics });
           return metrics[label];
         } catch (error) {
-          console.error('Error saving performance metric:', error);
+          console.error("Error saving performance metric:", error);
           return null;
         }
       },
 
       async getMetrics(label) {
         try {
-          const { metrics = {} } = await chrome.storage.local.get(
-            EXT_CONSTANTS.STORAGE_KEYS.PERFORMANCE_METRICS
-          );
+          const key = EXT_CONSTANTS.STORAGE_KEYS.PERFORMANCE_METRICS;
+          const { [key]: metricsRaw } = await chrome.storage.local.get(key);
+          const metrics = metricsRaw || {};
           return label ? metrics[label] : metrics;
         } catch (error) {
-          console.error('Error getting performance metrics:', error);
+          console.error("Error getting performance metrics:", error);
           return null;
         }
-      }
+      },
     };
 
     /**
      * Get performance analytics for a specific label
      */
     async function getPerformanceAnalytics(label) {
-      if (!label || typeof label !== 'string') {
-        throw new Error('Label must be provided and must be a string');
+      if (!label || typeof label !== "string") {
+        throw new Error("Label must be provided and must be a string");
       }
 
       const metrics = await metricsManager.getMetrics(label);
@@ -157,8 +163,9 @@ const { EXT_CONSTANTS } = require("./constants");
           average,
           recentSamples: metrics.samples.slice(-10),
           analysisTimestamp: new Date().toISOString(),
-          threshold: EXT_CONSTANTS.ANALYSIS.PERFORMANCE_THRESHOLDS[label] || 
-                    DEBUG.PERFORMANCE.THRESHOLD_WARNING
+          threshold:
+            EXT_CONSTANTS.ANALYSIS.PERFORMANCE_THRESHOLDS[label] ||
+            DEBUG.PERFORMANCE.THRESHOLD_WARNING,
         };
       }
       return null;
@@ -168,28 +175,42 @@ const { EXT_CONSTANTS } = require("./constants");
     const performanceMonitor = {
       startTimer(label) {
         if (!config.TRACK_PERFORMANCE) return;
-        performanceMetrics.set(label, performance.now());
+        // Use performance.now if available; fallback to Date.now
+        const nowFn =
+          typeof performance !== "undefined" && performance.now
+            ? performance.now
+            : Date.now;
+        performanceMetrics.set(label, nowFn());
       },
 
       async endTimer(label) {
         if (!config.TRACK_PERFORMANCE) return;
         const startTime = performanceMetrics.get(label);
-        if (startTime) {
-          const duration = performance.now() - startTime;
+        if (startTime !== undefined) {
+          const nowFn =
+            typeof performance !== "undefined" && performance.now
+              ? performance.now
+              : Date.now;
+          const endTime = nowFn();
+          const duration = endTime - startTime;
           performanceMetrics.delete(label);
 
           const thresholds = EXT_CONSTANTS.ANALYSIS.PERFORMANCE_THRESHOLDS;
-          const specificThreshold = thresholds[label] || DEBUG.PERFORMANCE.THRESHOLD_WARNING;
+          const specificThreshold =
+            thresholds[label] || DEBUG.PERFORMANCE.THRESHOLD_WARNING;
 
           if (duration > specificThreshold) {
-            log(logLevels.WARN, `Performance warning: ${label} took ${duration.toFixed(2)}ms`, 
-              { threshold: specificThreshold, duration });
+            log(
+              logLevels.WARN,
+              `Performance warning: ${label} took ${duration.toFixed(2)}ms`,
+              { threshold: specificThreshold, duration },
+            );
           }
 
           await metricsManager.saveMetric(label, duration);
           return duration;
         }
-      }
+      },
     };
 
     /**
@@ -201,7 +222,9 @@ const { EXT_CONSTANTS } = require("./constants");
         if (!config.LOG_TO_STORAGE) return;
 
         try {
-          const { debugLogs = [] } = await chrome.storage.local.get(config.STORAGE_KEY);
+          const { debugLogs = [] } = await chrome.storage.local.get(
+            config.STORAGE_KEY,
+          );
           debugLogs.push({ ...logEntry, timestamp: new Date().toISOString() });
 
           // Implement log rotation
@@ -212,7 +235,7 @@ const { EXT_CONSTANTS } = require("./constants");
 
           await chrome.storage.local.set({ [config.STORAGE_KEY]: debugLogs });
         } catch (error) {
-          console.error('Error saving debug log:', error);
+          console.error("Error saving debug log:", error);
         }
       },
 
@@ -220,10 +243,10 @@ const { EXT_CONSTANTS } = require("./constants");
         try {
           await chrome.storage.local.remove([
             config.STORAGE_KEY,
-            EXT_CONSTANTS.STORAGE_KEYS.PERFORMANCE_METRICS
+            EXT_CONSTANTS.STORAGE_KEYS.PERFORMANCE_METRICS,
           ]);
         } catch (error) {
-          console.error('Error clearing logs:', error);
+          console.error("Error clearing logs:", error);
         }
       },
 
@@ -231,24 +254,24 @@ const { EXT_CONSTANTS } = require("./constants");
         try {
           const [debugLogs, metrics] = await Promise.all([
             chrome.storage.local.get(config.STORAGE_KEY),
-            metricsManager.getMetrics()
+            metricsManager.getMetrics(),
           ]);
 
           const exportData = {
             logs: debugLogs[config.STORAGE_KEY] || [],
             metrics,
             exportDate: new Date().toISOString(),
-            config: { ...config }
+            config: { ...config },
           };
 
-          return config.EXPORT_FORMAT === 'json' 
+          return config.EXPORT_FORMAT === "json"
             ? JSON.stringify(exportData, null, 2)
             : exportData;
         } catch (error) {
-          console.error('Error exporting logs:', error);
-          return '[]';
+          console.error("Error exporting logs:", error);
+          return "[]";
         }
-      }
+      },
     };
 
     /**
@@ -256,28 +279,32 @@ const { EXT_CONSTANTS } = require("./constants");
      */
     function formatData(data) {
       try {
-        if (!data) return '';
+        if (!data) return "";
 
         const seen = new WeakSet();
-        const formatted = JSON.stringify(data, (key, value) => {
-          if (typeof value === 'object' && value !== null) {
-            if (seen.has(value)) {
-              return '[Circular Reference]';
+        const formatted = JSON.stringify(
+          data,
+          (key, value) => {
+            if (typeof value === "object" && value !== null) {
+              if (seen.has(value)) {
+                return "[Circular Reference]";
+              }
+              seen.add(value);
             }
-            seen.add(value);
-          }
-          if (value instanceof Error) {
-            return {
-              name: value.name,
-              message: value.message,
-              stack: value.stack
-            };
-          }
-          return value;
-        }, 2);
+            if (value instanceof Error) {
+              return {
+                name: value.name,
+                message: value.message,
+                stack: value.stack,
+              };
+            }
+            return value;
+          },
+          2,
+        );
 
-        return formatted.length > config.MAX_DATA_LENGTH 
-          ? formatted.substring(0, config.MAX_DATA_LENGTH) + '... [truncated]'
+        return formatted.length > config.MAX_DATA_LENGTH
+          ? formatted.substring(0, config.MAX_DATA_LENGTH) + "... [truncated]"
           : formatted;
       } catch (error) {
         return `[Error formatting data: ${error.message}]`;
@@ -288,7 +315,7 @@ const { EXT_CONSTANTS } = require("./constants");
      * Gets detailed stack trace with source mapping support
      */
     function getStackTrace(error) {
-      if (!config.INCLUDE_STACK_TRACE) return '';
+      if (!config.INCLUDE_STACK_TRACE) return "";
 
       try {
         if (error?.stack) {
@@ -297,9 +324,9 @@ const { EXT_CONSTANTS } = require("./constants");
 
         const stack = new Error().stack;
         // Remove first two lines (Error creation and getStackTrace call)
-        return stack?.split('\n').slice(3).join('\n') || '';
+        return stack?.split("\n").slice(3).join("\n") || "";
       } catch (error) {
-        return '[Error getting stack trace]';
+        return "[Error getting stack trace]";
       }
     }
 
@@ -310,7 +337,9 @@ const { EXT_CONSTANTS } = require("./constants");
       if (level > config.DEBUG_LEVEL) return;
 
       const timestamp = new Date().toISOString();
-      const levelName = Object.keys(logLevels).find(key => logLevels[key] === level) || 'UNKNOWN';
+      const levelName =
+        Object.keys(logLevels).find((key) => logLevels[key] === level) ||
+        "UNKNOWN";
 
       const logEntry = {
         timestamp,
@@ -318,10 +347,14 @@ const { EXT_CONSTANTS } = require("./constants");
         message,
         data: data ? formatData(data) : null,
         groupId: activeLogGroup,
-        stack: error ? getStackTrace(error) : null
+        stack: error ? getStackTrace(error) : null,
       };
 
-      if (config.MODULE_FILTERS.length > 0 && activeLogGroup) {
+      if (
+        config.MODULE_FILTERS &&
+        config.MODULE_FILTERS.length > 0 &&
+        activeLogGroup
+      ) {
         if (!config.MODULE_FILTERS.includes(activeLogGroup)) {
           return;
         }
@@ -334,7 +367,8 @@ const { EXT_CONSTANTS } = require("./constants");
         if (error) logMessage += logEntry.stack;
 
         if (config.GROUP_RELATED_LOGS && activeLogGroup) {
-          console.groupCollapsed(`Group: ${activeLogGroup}`);
+          const groupFn = console.groupCollapsed || console.group || (() => {});
+          groupFn(`Group: ${activeLogGroup}`);
         }
 
         switch (level) {
@@ -369,7 +403,8 @@ const { EXT_CONSTANTS } = require("./constants");
     const debug = (message, data) => log(logLevels.DEBUG, message, data);
     const info = (message, data) => log(logLevels.INFO, message, data);
     const warn = (message, data) => log(logLevels.WARN, message, data);
-    const error = (message, data, err) => log(logLevels.ERROR, message, data, err);
+    const error = (message, data, err) =>
+      log(logLevels.ERROR, message, data, err);
 
     /**
      * Group related logs together
@@ -377,7 +412,7 @@ const { EXT_CONSTANTS } = require("./constants");
     function startLogGroup(groupName) {
       activeLogGroup = groupName;
       if (config.GROUP_RELATED_LOGS && config.LOG_TO_CONSOLE) {
-        console.group(groupName);
+        (console.group || console.groupCollapsed || (() => {}))(groupName);
       }
     }
 
@@ -409,7 +444,7 @@ const { EXT_CONSTANTS } = require("./constants");
   }
 
   // Export for both Chrome extension and test environments
-  if (typeof module !== 'undefined' && module.exports) {
+  if (typeof module !== "undefined" && module.exports) {
     module.exports = { createDebugger };
   } else {
     const debugInstance = createDebugger();
@@ -431,8 +466,7 @@ const { EXT_CONSTANTS } = require("./constants");
       getMetrics: debugInstance.getMetrics,
       getPerformanceAnalytics: debugInstance.getPerformanceAnalytics,
       levels: debugInstance.logLevels,
-      config: debugInstance.config
+      config: debugInstance.config,
     };
   }
-
-})(typeof window !== 'undefined' ? window : global);
+})(typeof window !== "undefined" ? window : global);

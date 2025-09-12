@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Enhanced Tooltips</title>
+    <link rel="stylesheet" href="../dist/styles.css" />
+  </head>
+  <body>
+    <div style="padding: 20px">
+      <h1>Tooltip Test Page</h1>
+
+      <!-- Mock score cards -->
+      <div class="scores" style="display: flex; gap: 20px; margin: 20px 0">
+        <div class="score-card readability-score" data-popup="readabilityPopup">
+          <div class="grade-circle">
+            <span id="readability-grade">B</span>
+          </div>
+          <p>Readability Score</p>
+          <div
+            id="readabilityPopup"
+            class="popup"
+            role="tooltip"
+            title="Readability Score Tooltip"
+          >
+            <div class="popup-content">
+              <!-- Content will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <div class="score-card user-rights-index" data-popup="rightsPopup">
+          <div class="grade-circle">
+            <span id="user-rights-index">70%</span>
+          </div>
+          <p>User Rights Index</p>
+          <div
+            id="rightsPopup"
+            class="popup"
+            role="tooltip"
+            title="User Rights Index Tooltip"
+          >
+            <div class="popup-content">
+              <!-- Content will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        <strong>Instructions:</strong> Hover over the score cards above to see
+        the enhanced tooltips with detailed metrics.
+      </p>
+    </div>
+
+    <script src="../dist/sidepanel.js"></script>
+    <script>
+      // Test data
+      const mockReadabilityData = {
+        flesch: 52.6,
+        kincaid: 8.9,
+        fogIndex: 11.2,
+        averageGrade: "B",
+        confidence: 0.45,
+        normalizedScore: 67.3,
+      };
+
+      const mockRightsData = {
+        rightsScore: 70,
+        grade: "C",
+        confidence: 0.48,
+        details: {
+          clauseCounts: {
+            HIGH_RISK: {
+              ARBITRATION: 1,
+              CLASS_ACTION_WAIVER: 1,
+            },
+            MEDIUM_RISK: {
+              LIABILITY_LIMITATION: 1,
+            },
+            POSITIVES: {
+              RIGHT_TO_DELETE: 1,
+            },
+          },
+          dictionaryTerms: [
+            {
+              word: "arbitration",
+              definition: "Process of resolving disputes outside court",
+            },
+            {
+              word: "liability",
+              definition: "Legal responsibility for damages",
+            },
+            { word: "indemnify", definition: "To compensate for harm or loss" },
+          ],
+        },
+      };
+
+      // Wait for DOM to load then populate tooltips
+      document.addEventListener("DOMContentLoaded", function () {
+        // We need to access the popup formatting functions
+        // For testing, let's create simple versions
+
+        function formatReadabilityPopup(data) {
+          if (!data) return "No readability data available";
+
+          const grade = data.averageGrade || data.grade || "N/A";
+          const confidence = (data.confidence * 100).toFixed(0);
+
+          return `
+                    <div class="popup-header">
+                        <strong>Readability Grade: ${grade}</strong>
+                    </div>
+                    <div class="popup-metrics">
+                        <h4>Individual Scores:</h4>
+                        <div class="metric-row">
+                            <span class="metric-label">Flesch Reading Ease:</span>
+                            <span class="metric-value">${data.flesch?.toFixed(1) || "N/A"}</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Flesch-Kincaid Grade:</span>
+                            <span class="metric-value">${data.kincaid?.toFixed(1) || "N/A"}</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Gunning Fog Index:</span>
+                            <span class="metric-value">${data.fogIndex?.toFixed(1) || "N/A"}</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Confidence:</span>
+                            <span class="metric-value">${confidence}%</span>
+                        </div>
+                    </div>
+                    <div class="popup-explanation">
+                        <p><strong>What this means:</strong></p>
+                        <p>This document is fairly easy to read with some education. Written at a 10th-12th grade level.</p>
+                    </div>
+                `;
+        }
+
+        function formatRightsPopup(data) {
+          if (!data) return "No rights data available";
+
+          const score = data.rightsScore || data.score || 0;
+          const displayScore = (score > 1 ? score : score * 100).toFixed(0);
+          const grade = data.grade || "C";
+          const confidence = data.confidence
+            ? (data.confidence * 100).toFixed(0)
+            : "N/A";
+
+          return `
+                    <div class="popup-header">
+                        <strong>Rights Score: ${displayScore}% (Grade ${grade})</strong>
+                    </div>
+                    <div class="popup-metrics">
+                        <div class="metric-row">
+                            <span class="metric-label">User Rights Protection:</span>
+                            <span class="metric-value">${displayScore}%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Confidence:</span>
+                            <span class="metric-value">${confidence}%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Legal Terms Found:</span>
+                            <span class="metric-value">${data.details?.dictionaryTerms?.length || 0}</span>
+                        </div>
+                    </div>
+                    <div class="popup-clauses">
+                        <h4>Detected Clauses:</h4>
+                        <div class="clause-category high-risk">
+                            <strong>High Risk:</strong> Arbitration, Class Action Waiver
+                        </div>
+                        <div class="clause-category positive">
+                            <strong>User-Friendly:</strong> Right To Delete
+                        </div>
+                    </div>
+                    <div class="popup-explanation">
+                        <p><strong>What this means:</strong></p>
+                        <p>This document has moderate user protection but may contain some concerning clauses.</p>
+                    </div>
+                `;
+        }
+
+        // Populate the tooltips
+        document.querySelector("#readabilityPopup .popup-content").innerHTML =
+          formatReadabilityPopup(mockReadabilityData);
+        document.querySelector("#rightsPopup .popup-content").innerHTML =
+          formatRightsPopup(mockRightsData);
+
+        // Set up hover events
+        document.querySelectorAll("[data-popup]").forEach((element) => {
+          const popupId = element.dataset.popup;
+          element.addEventListener("mouseenter", () => {
+            const popup = document.getElementById(popupId);
+            if (popup) {
+              popup.style.display = "block";
+              popup.style.left = element.offsetLeft + "px";
+              popup.style.top =
+                element.offsetTop + element.offsetHeight + 5 + "px";
+            }
+          });
+          element.addEventListener("mouseleave", () => {
+            const popup = document.getElementById(popupId);
+            if (popup) popup.style.display = "none";
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

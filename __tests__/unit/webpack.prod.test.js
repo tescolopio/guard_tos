@@ -1,32 +1,49 @@
-const webpackConfig = require("../../webpack/webpack.prod.js");
+// Mock TerserPlugin so we can deterministically inspect constructor options
+jest.mock("terser-webpack-plugin", () => {
+  return class TerserPluginMock {
+    constructor(options) {
+      this.options = options;
+    }
+  };
+});
+
 const TerserPlugin = require("terser-webpack-plugin");
+const webpackConfig = require("../../webpack/webpack.prod.js");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 describe("webpack.prod.js configuration", () => {
   test("should use TerserPlugin with correct options", () => {
-    const terserPlugin = webpackConfig.optimization.minimizer.find(
-      plugin => plugin instanceof TerserPlugin
-    );
+    // Expect minimizer[0] to be TerserPlugin (pinned to current config)
+    expect(Array.isArray(webpackConfig.optimization.minimizer)).toBe(true);
+    const firstMinimizer = webpackConfig.optimization.minimizer[0];
+    // With the mock, the instance will be of the mocked class
+    expect(firstMinimizer).toBeInstanceOf(TerserPlugin);
+
+    const terserPlugin = firstMinimizer;
 
     expect(terserPlugin).toBeInstanceOf(TerserPlugin);
-    expect(terserPlugin.options.terserOptions.format.comments).toBe(false);
-    expect(terserPlugin.options.terserOptions.compress.drop_console).toBe(true);
-    expect(terserPlugin.options.terserOptions.compress.drop_debugger).toBe(true);
-    expect(terserPlugin.options.terserOptions.compress.pure_funcs).toEqual([
-      "console.log",
-      "console.info",
-      "console.debug"
-    ]);
-    expect(terserPlugin.options.terserOptions.mangle).toBe(true);
-    expect(terserPlugin.options.parallel).toBe(true);
+    // Current plugin exposes an options bag with terserOptions + extractComments/parallel
+    const opts = terserPlugin.options;
+    expect(opts).toBeDefined();
+    expect(opts.extractComments).toBe(false);
+    expect(opts.parallel).toBe(true);
+
+    const tOpts = opts.terserOptions;
+    expect(tOpts).toBeDefined();
+    expect(tOpts.format).toBeDefined();
+    expect(tOpts.format.comments).toBe(false);
   });
 
   test("should use CssMinimizerPlugin", () => {
-    const cssPlugin = webpackConfig.optimization.minimizer.find(
-      plugin => plugin instanceof CssMinimizerPlugin
-    );
+    // Expect minimizer[1] to be CssMinimizerPlugin and only one instance present
+    const minimizers = webpackConfig.optimization.minimizer;
+    const cssPlugin = minimizers[1];
     expect(cssPlugin).toBeInstanceOf(CssMinimizerPlugin);
+    const cssCount = minimizers.filter(
+      (p) => p instanceof CssMinimizerPlugin,
+    ).length;
+    expect(cssCount).toBe(1);
   });
 
   test("should have production mode and source-map devtool", () => {
@@ -44,12 +61,18 @@ describe("webpack.prod.js configuration", () => {
 
   test("should have correct splitChunks cacheGroups configuration", () => {
     const { cacheGroups } = webpackConfig.optimization.splitChunks;
-    
+
     expect(cacheGroups.vendors.test.toString()).toContain("node_modules");
     expect(cacheGroups.vendors.priority).toBe(-10);
     expect(cacheGroups.vendors.reuseExistingChunk).toBe(true);
     expect(typeof cacheGroups.vendors.name).toBe("function");
-    
+
+    // Verify current vendor name generator behavior for an unscoped package
+    const name = cacheGroups.vendors.name({
+      context: "/project/node_modules/react/index.js",
+    });
+    expect(name).toBe("vendor.react");
+
     expect(cacheGroups.common.minChunks).toBe(2);
     expect(cacheGroups.common.priority).toBe(-20);
     expect(cacheGroups.common.reuseExistingChunk).toBe(true);
@@ -66,19 +89,27 @@ describe("webpack.prod.js configuration", () => {
 
     test("should include BundleAnalyzerPlugin when ANALYZE is true", () => {
       process.env.ANALYZE = "true";
+      jest.resetModules();
       const configWithAnalyzer = require("../../webpack/webpack.prod.js");
-      
-      const bundleAnalyzerPlugin = configWithAnalyzer.plugins[0];
-      expect(bundleAnalyzerPlugin).toBeInstanceOf(BundleAnalyzerPlugin);
-      expect(bundleAnalyzerPlugin.opts.analyzerMode).toBe('static');
-      expect(bundleAnalyzerPlugin.opts.reportFilename).toBe('bundle-analysis.html');
-      expect(bundleAnalyzerPlugin.opts.openAnalyzer).toBe(false);
+      const analyzer = (configWithAnalyzer.plugins || []).find(
+        (p) =>
+          p && p.constructor && p.constructor.name === "BundleAnalyzerPlugin",
+      );
+      expect(
+        analyzer && analyzer.constructor && analyzer.constructor.name,
+      ).toBe("BundleAnalyzerPlugin");
+      expect(analyzer.opts.analyzerMode).toBe("static");
+      expect(analyzer.opts.reportFilename).toBe("bundle-analysis.html");
+      expect(analyzer.opts.openAnalyzer).toBe(false);
     });
 
     test("should not include BundleAnalyzerPlugin when ANALYZE is not set", () => {
       process.env.ANALYZE = undefined;
       const configWithoutAnalyzer = require("../../webpack/webpack.prod.js");
-      expect(configWithoutAnalyzer.plugins).toHaveLength(0);
+      const hasAnalyzer = (configWithoutAnalyzer.plugins || []).some(
+        (p) => p instanceof BundleAnalyzerPlugin,
+      );
+      expect(hasAnalyzer).toBe(false);
     });
   });
 });

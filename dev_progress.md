@@ -1,19 +1,19 @@
 # Terms Guardian - Development Progress
 
-## ✅ CURRENT STATUS: Jest Configuration Optimized - Tests Working!
+> Quick link: See the concise MVP checklist at `docs/mvp_todo.md` for current MVP status and next actions.
 
-### Latest Session Progress (Today)
+## ✅ CURRENT STATUS (Sep 7 2025): Stable Pipeline, Optimized Rights Rubric, Dictionary Term Tracking Added
 
-- ✅ **Fixed Chrome API Mock Setup** - Resolved undefined `mockChromeAPI.runtime` issues
-- ✅ **Fixed Constants Module Export** - Resolved ES6/CommonJS module export conflicts
-- ✅ **Fixed Jest Mock Factory Functions** - Resolved missing mock implementations
-- ✅ **Cleaned up Content Script** - Removed undefined function references
-- ✅ **Updated Mock Data with Jest Compatibility** - Added fallback for non-Jest environments
-- ✅ **Fixed Content Script Duplicate Methods** - Removed duplicate `performFullAnalysis`
-- ✅ **Created Missing Legal Terms Definitions** - Added `legalTermsDefinitions.js` file
-- ✅ **Identified Jest Environment Issue** - jsdom incompatibility confirmed
-- ✅ **Resolved Jest Hanging Issue** - Setup file was causing the problem
-- ✅ **Optimized Test Configuration** - Sequential execution with proper timeouts
+### Recent Milestones
+
+- ✅ Single-pass mega-regex for rights clause detection (named capture groups; fewer scans)
+- ✅ Extended clause rubric (delegation of arbitrability, negative option billing, jury trial waiver, moral rights waiver)
+- ✅ Deterministic word count + performance ceilings in integration test
+- ✅ Sidepanel diagnostics: live clause counts + dictionary cache metrics
+- ✅ Dictionary term frequency scanning with definitions surfaced in rights.details.dictionaryTerms
+- ✅ New UI section: Dictionary Terms (frequency + definition tooltip-ready)
+- ✅ Replaced volatile snapshots with explicit assertions (stable tests)
+- ✅ All suites green (20/20, 99 tests) including golden rights rubric tests
 
 ### Test Infrastructure Status
 
@@ -88,74 +88,9 @@ module.exports = {
 3. **Complete Test Suite**: Get all tests passing with optimal configuration
 4. **Add Chrome API Mocks**: Integrate proper Chrome extension mocking---
 
-## Project Overview
+<!-- Duplicate historical progress block removed to prevent heading duplication (see earlier section for current component status) -->
 
-Terms Guardian is a Chrome extension that analyzes Terms of Service and legal documents to help users understand what they're agreeing to.
-
-## Project Goals
-
-### Core Features
-
-- [x] Automatic ToS detection on web pages
-- [x] Readability analysis using multiple algorithms
-- [x] Rights assessment and evaluation
-- [x] Plain language summaries
-- [x] Uncommon legal terms identification
-- [x] Side panel UI for detailed analysis
-- [x] Chrome extension badge notifications
-
-### Technical Architecture
-
-- [x] Manifest V3 compliance
-- [x] Modular code structure
-- [x] Content script for page analysis
-- [x] Service worker for background processing
-- [x] Comprehensive data patterns for legal terms
-- [x] Caching system for performance
-- [x] Error handling and logging
-
-## Current State
-
-### ✅ Completed Components
-
-#### Core Analysis Engine
-
-- **TextExtractor**: Extracts text from HTML, PDF, DOCX formats
-- **ReadabilityGrader**: Calculates readability scores using multiple algorithms
-- **RightsAssessor**: Evaluates user rights retention (placeholder for TensorFlow.js)
-- **UncommonWordsIdentifier**: Identifies and defines complex legal terms
-- **TosSummarizer**: Generates plain language summaries
-
-#### Extension Infrastructure
-
-- **Content Script**: Detects legal text and manages UI updates
-- **Service Worker**: Handles background operations and message routing
-- **Side Panel**: Displays detailed analysis results
-- **Context Menu**: Allows text selection analysis
-
-#### Data Management
-
-- **Legal Terms Database**: Comprehensive legal terminology
-- **Pattern Recognition**: Rights, privacy, liability patterns
-- **Caching System**: Efficient storage and retrieval
-- **Constants Configuration**: Centralized configuration management
-
-#### Build System
-
-- **Webpack**: Multi-environment configuration (dev/prod)
-- **Babel**: ES6+ transpilation
-- **Jest**: Testing framework setup
-- **ESLint**: Code quality enforcement
-
-### 🔄 In Progress
-
-#### Testing Infrastructure
-
-- **Mock System**: Factory functions for test mocks
-- **Test Utilities**: Helper functions for test setup
-- **Unit Tests**: Comprehensive test coverage planned
-
-## Outstanding Issues (TODO)
+## Outstanding Issues (Historical Reference)
 
 ### 🚨 Critical Test Issues (as of July 16, 2025)
 
@@ -260,7 +195,7 @@ Terms Guardian is a Chrome extension that analyzes Terms of Service and legal do
 - **Test Utilities**: Helper functions for test setup
 - **Unit Tests**: Comprehensive test coverage planned
 
-## Outstanding Issues (TODO)
+## Current Issues (Superseded - See Updated Snapshot Above)
 
 ### 🚨 Critical Issues
 
@@ -324,7 +259,7 @@ Terms Guardian is a Chrome extension that analyzes Terms of Service and legal do
 - [ ] **Onboarding**: First-time user experience
 - [ ] **Settings Panel**: User configuration options
 
-## Next Steps
+## Roadmap Legacy (Superseded)
 
 ### Immediate Actions (Week 1)
 
@@ -356,7 +291,7 @@ Terms Guardian is a Chrome extension that analyzes Terms of Service and legal do
 - **Bundle Size**: Keep under 2MB total
 - **Performance**: < 100ms average analysis time
 
-### User Experience
+### User Experience (Legacy Plan)
 
 - **Load Time**: < 500ms extension initialization
 - **Analysis Speed**: < 2s for standard ToS document
@@ -398,5 +333,19 @@ Terms Guardian is a Chrome extension that analyzes Terms of Service and legal do
 
 ---
 
-_Last Updated: July 16, 2025_
+## Development Metrics (Current Targets)
+
+| Category     | Metric                            | Target       | Current (Approx)          |
+| ------------ | --------------------------------- | ------------ | ------------------------- |
+| Quality      | Test Coverage                     | ≥85%         | (not measured here)       |
+| Quality      | Cyclomatic Complexity             | <10          | Appears within target     |
+| Performance  | Rights mega-regex scan            | <40ms median | Within target             |
+| Performance  | Full analysis (sample ToS)        | <1.5s median | ~1.6–1.9s (needs tuning)  |
+| Performance  | Dictionary term scan (≤40 terms)  | <30ms        | Within target             |
+| UX           | Sidepanel render latency          | <400ms       | Acceptable                |
+| Reliability  | Failure rate                      | <1%          | Passing tests 0% failures |
+| Transparency | Clause counts surfaced            | 100%         | Available via diagnostics |
+| Cache        | Dictionary hit ratio steady-state | >60%         | TBD (metrics available)   |
+
+_Last Updated: September 7, 2025_
 _Next Review: Weekly_

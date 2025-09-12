@@ -106,6 +106,40 @@ const LEGAL_PATTERNS = {
     /(?:^|\n)\s*["']?\w+["']?\s+(?:shall |means |refers to |is defined as )/im,
   LEGAL_HEADERS:
     /(?:^|\n)(?:terms|privacy|policy|agreement|notice|disclaimer|conditions)/i,
+  // Clause-level patterns for rights scoring rubric
+  CLAUSES: {
+    HIGH_RISK: {
+      ARBITRATION: /(binding\s+)?arbitration|arbitral\s+tribunal/i,
+      CLASS_ACTION_WAIVER: /class\s+action\s+waiver|waive\s+.*class\s+action/i,
+      UNILATERAL_CHANGES:
+        /we\s+may\s+modify|we\s+reserve\s+the\s+right\s+to\s+change/i,
+      DATA_SALE_OR_SHARING:
+        /sell\s+your\s+data|share\s+your\s+personal\s+data/i,
+      AUTO_RENEWAL_FRICTION: /auto-?renew(al)?|automatic\s+renewal/i,
+      NEGATIVE_OPTION_BILLING: /negative\s+option/i,
+      DELEGATION_ARBITRABILITY:
+        /exclusive\s+authority\s+to\s+determine\s+arbitrability|arbitrator\s+shall\s+decide\s+arbitrability/i,
+    },
+    MEDIUM_RISK: {
+      ARBITRATION_CARVEOUTS:
+        /arbitration\s+except\s+for|small\s+claims\s+court/i,
+      VAGUE_CONSENT: /consent\s+.*(implied|deemed)/i,
+      LIMITED_RETENTION_DISCLOSURE:
+        /retain\s+your\s+data\s+for\s+(a|an)\s+period/i,
+      MORAL_RIGHTS_WAIVER:
+        /waive\s+(any|all)\s+moral\s+rights|moral\s+rights\s+waive/i,
+      JURY_TRIAL_WAIVER:
+        /waive\s+(the\s+)?(right\s+to\s+)?(a\s+)?jury\s+trial|jury\s+trial\s+waiver/i,
+    },
+    POSITIVES: {
+      CLEAR_OPT_OUT: /opt-?out\s+(procedure|process)/i,
+      SELF_SERVICE_DELETION:
+        /(delete|erase)\s+your\s+account|remove\s+your\s+data/i,
+      NO_DATA_SALE: /we\s+do\s+not\s+sell\s+(your\s+)?(personal\s+)?data/i,
+      TRANSPARENT_RETENTION:
+        /(retain|store)\s+data\s+for\s+\d+\s+(days|months|years)/i,
+    },
+  },
 };
 
 // Export the legal patterns

@@ -32,8 +32,13 @@
         : [];
     }
 
-    // ANALYSIS from CONSTANTS for BATCH_THRESHOLD and CHUNK_SIZE
-    const { ANALYSIS, ERROR_TYPES } = global.Constants;
+    // ANALYSIS from constants for BATCH_THRESHOLD and CHUNK_SIZE
+    // Prefer test-provided globals; fallback to project constants
+    const constantsSource =
+      (global && global.Constants) ||
+      (global && global.EXT_CONSTANTS) ||
+      require("../utils/constants").EXT_CONSTANTS;
+    const { ANALYSIS, ERROR_TYPES } = constantsSource;
 
     async function handleExtractionError(error, errorType) {
       log(logLevels.ERROR, `Extraction error (${errorType}):`, error);
@@ -61,12 +66,16 @@
       return `${prefix}_${Math.abs(hash)}`;
     }
     // Initialize cache system
-    const cacheConfig = new global.TextCacheConfig();
-    const textCache = new global.TextCacheWithRecovery(
-      cacheConfig,
-      log,
-      logLevels,
-    );
+    // Use global if provided by tests, else require project implementations
+    const TextCacheConfig =
+      (global && global.TextCacheConfig) ||
+      require("../data/cache/textCacheConfig").TextCacheConfig;
+    const TextCacheWithRecovery =
+      (global && global.TextCacheWithRecovery) ||
+      require("../data/cache/textCacheWithRecovery").TextCacheWithRecovery;
+
+    const cacheConfig = new TextCacheConfig();
+    const textCache = new TextCacheWithRecovery(cacheConfig, log, logLevels);
 
     async function extract(input, type) {
       try {
@@ -145,6 +154,11 @@
 
         // Update metadata
         metadata.wordCount = words.length;
+        if (!metadata.wordCount && processedText) {
+          metadata.wordCount = processedText
+            .split(/\s+/)
+            .filter(Boolean).length;
+        }
         metadata.hasLegalTerms = words.some((word) =>
           global.legalTerms?.includes(word.toLowerCase()),
         );
@@ -382,38 +396,74 @@
       };
     }
 
-    // /**
-    //  * Extracts and analyzes text from the entire page, section by section.
-    //  * @return {Promise<string>} A promise that resolves to the extracted legal text
-    //  * or an empty string if none is found.
-    //  */
-    // async function extractAndAnalyzePageText() {
-    //   try {
-    //     log(logLevels.DEBUG, 'Starting text extraction and analysis');
+    /**
+     * Extracts and analyzes text from the entire page, section by section.
+     * @return {Promise<object>} A promise that resolves to the extracted legal text and metadata
+     */
+    async function extractAndAnalyzePageText() {
+      try {
+        log(logLevels.DEBUG, "Starting text extraction and analysis");
 
-    //     // Attempt to extract legal text based on highlighted elements
-    //     const extractedTextFromHighlights = extractTextFromHighlights();
+        // Attempt to extract legal text based on highlighted elements
+        const extractedTextFromHighlights = extractTextFromHighlights();
 
-    //     if (extractedTextFromHighlights) {
-    //       log(config.logLevel, 'Legal text extracted from highlights successfully.');
-    //       return extractedTextFromHighlights;
-    //     }
+        if (extractedTextFromHighlights) {
+          log(
+            logLevels.INFO,
+            "Legal text extracted from highlights successfully.",
+          );
+          return {
+            text: extractedTextFromHighlights,
+            metadata: {
+              legalTermCount: splitIntoWords(extractedTextFromHighlights)
+                .length,
+              source: "highlights",
+            },
+          };
+        }
 
-    //     // If extraction from highlights fails, try section-based extraction
-    //     const extractedTextFromSections = await extractTextFromSections();
+        // If extraction from highlights fails, try section-based extraction
+        const extractedTextFromSections = await extractTextFromSections();
 
-    //     if (extractedTextFromSections) {
-    //       log(config.logLevel, 'Legal text extracted from sections successfully.');
-    //       return extractedTextFromSections;
-    //     }
+        if (extractedTextFromSections) {
+          log(
+            logLevels.INFO,
+            "Legal text extracted from sections successfully.",
+          );
+          return {
+            text: extractedTextFromSections,
+            metadata: {
+              legalTermCount: splitIntoWords(extractedTextFromSections).length,
+              source: "sections",
+            },
+          };
+        }
 
-    //     log(config.logLevel, 'No legal text found on the page.');
-    //     return '';
-    //   } catch (error) {
-    //     log(logLevels.ERROR, 'Error extracting and analyzing page text', { error });
-    //     return '';
-    //   }
-    // }
+        log(logLevels.INFO, "No legal text found on the page.");
+        return {
+          text: "",
+          metadata: { legalTermCount: 0, source: "none" },
+        };
+      } catch (error) {
+        log(logLevels.ERROR, "Error extracting and analyzing page text", {
+          error,
+        });
+        return {
+          text: "",
+          metadata: { legalTermCount: 0, source: "error" },
+        };
+      }
+    }
+
+    /**
+     * Simple text extraction from a DOM element
+     * @param {Element} element - DOM element to extract text from
+     * @return {string} Extracted text
+     */
+    function extractText(element) {
+      if (!element) return "";
+      return element.textContent || element.innerText || "";
+    }
 
     /**
      * Extracts text based on number of highlighted sections
@@ -583,6 +633,8 @@
       splitIntoSentences,
       splitIntoWords,
       preprocessText,
+      extractAndAnalyzePageText,
+      extractText,
       // Cache management
       clearCache: () => textCache.cleanup(),
       getCacheStats: () => textCache.getStats(),

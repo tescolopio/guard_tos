@@ -10,14 +10,12 @@ module.exports = {
     content: "./src/content/content.js",
     sidepanel: "./src/panel/sidepanel.js",
     constants: "./src/utils/constants.js",
+    debugger: "./src/utils/debugger.js",
   },
   output: {
     path: path.resolve(__dirname, "../dist"),
     filename: "[name].js",
     clean: true,
-  },
-  experiments: {
-    outputModule: true,
   },
   resolve: {
     extensions: [".js", ".jsx"],
@@ -50,7 +48,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: "./src/manifest.json",
+          from: "./manifest.json",
           to: "manifest.json",
           transform(content) {
             return Buffer.from(
@@ -61,13 +59,22 @@ module.exports = {
             );
           },
         },
-        { from: "./src/panel/sidepanel.html", to: "sidepanel.html" },
+        {
+          from: "./src/panel/sidepanel.html",
+          to: "sidepanel.html",
+          transform(content) {
+            // rewrite asset paths for dist root
+            let html = content.toString();
+            html = html.replace("../styles/styles.css", "./styles.css");
+            html = html.replace("../utils/constants.js", "./constants.js");
+            html = html.replace("../utils/debugger.js", "./debugger.js");
+            html = html.replace("sidepanel.js", "./sidepanel.js");
+            return Buffer.from(html);
+          },
+        },
         { from: "./images", to: "images" },
         { from: "./src/data/dictionaries", to: "dictionaries" },
-        {
-          from: "./src/utils/constants.js",
-          to: "utils/constants.js",
-        },
+        { from: "./src/styles/styles.css", to: "styles.css" },
       ],
     }),
     new MiniCssExtractPlugin({

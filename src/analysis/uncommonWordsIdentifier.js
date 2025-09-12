@@ -19,8 +19,7 @@
     logLevels,
     commonWords: providedCommonWords = commonWords,
     legalTerms: providedLegalTerms = legalTerms,
-    legalTermsDefinitions:
-      providedLegalTermsDefinitions = legalTermsDefinitions,
+    legalTermsDefinitions: providedLegalTermsDefinitions = {},
     config = {},
     utilities,
   }) {
@@ -39,8 +38,7 @@
     const validLegalTerms = Array.isArray(providedLegalTerms)
       ? providedLegalTerms
       : legalTerms;
-    const validLegalTermsDefinitions =
-      providedLegalTermsDefinitions || legalTermsDefinitions;
+    const validLegalTermsDefinitions = providedLegalTermsDefinitions || {};
 
     const textExtractor = createTextExtractor({ log, logLevels, utilities });
     const dictionaryService = await createLegalDictionaryService({

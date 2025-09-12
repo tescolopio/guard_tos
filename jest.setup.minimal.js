@@ -4,6 +4,7 @@ const { TextEncoder, TextDecoder } = require("util");
 // Basic polyfills
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
+global.self = global;
 
 // Basic DOM-like objects for Node.js environment
 global.document = {
@@ -53,3 +54,10 @@ global.window = {
     pathname: "/",
   },
 };
+
+// Ensure performance.now exists and is mockable in tests
+if (!global.performance) {
+  global.performance = {};
+}
+// Force a mockable performance.now for all tests
+global.performance.now = jest.fn(() => Date.now());

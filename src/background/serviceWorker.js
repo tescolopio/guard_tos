@@ -112,13 +112,6 @@ function createServiceWorker({ log, logLevels }) {
    */
   async function openSidePanel(tabId) {
     try {
-      // Check if a side panel is already open
-      const window = await chrome.windows.getCurrent();
-      if (window.sidePanel?.state === "open") {
-        log(logLevels.INFO, "Side panel is already open");
-        return; // No need to open another one
-      }
-
       await chrome.sidePanel.open({ tabId });
       log(logLevels.INFO, "Side panel opened successfully");
     } catch (error) {
@@ -336,6 +329,10 @@ function createServiceWorker({ log, logLevels }) {
 
       // Always return true to indicate that you will respond asynchronously
       return true;
+    });
+
+    chrome.action.onClicked.addListener((tab) => {
+      openSidePanel(tab.id);
     });
 
     state.initialized = true;
