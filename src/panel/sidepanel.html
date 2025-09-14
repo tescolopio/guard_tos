@@ -5,117 +5,195 @@ It provides a user interface for analyzing terms and conditions documents, displ
 key excerpts, and uncommon terms.
 -->
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Terms Guardian Analysis</title>
     <link rel="stylesheet" href="../styles/styles.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="sidepanel-content" class="loading">
-        <header class="panel-header">
-            <h1>Terms Guardian</h1>
-            <h2>Know Your Terms, Know Your Rights!</h2>
+      <header class="panel-header">
+        <h1>Terms Guardian</h1>
+        <h2>Know Your Terms, Know Your Rights!</h2>
 
-            <div class="analysis-header">
-                <div class="url-container">
-                    <a id="terms-url" href="#" target="_blank" rel="noopener">Terms URL</a>
-                </div>
-                <h3 id="terms-title"></h3>
+        <div class="analysis-header">
+          <div class="url-container">
+            <a id="terms-url" href="#" target="_blank" rel="noopener"
+              >Terms URL</a
+            >
+          </div>
+          <h3 id="terms-title"></h3>
+        </div>
+
+        <div class="scores">
+          <div
+            class="score-card readability-score"
+            data-popup="readabilityPopup"
+          >
+            <div class="grade-circle">
+              <span id="readability-grade">-</span>
             </div>
-
-            <div class="scores">
-                <div class="score-card readability-score" data-popup="readabilityPopup">
-                    <div class="grade-circle">
-                        <span id="readability-grade">-</span>
-                    </div>
-                    <p>Readability Score</p>
-                    <div id="readabilityPopup" class="popup" role="tooltip" title="Readability Score Tooltip">
-                        <div class="popup-content"></div>
-                    </div>
-                </div>
-
-                <div class="score-card user-rights-index" data-popup="rightsPopup">
-                    <div class="grade-circle">
-                        <span id="user-rights-index">-</span>
-                    </div>
-                    <p>User Rights Index</p>
-                    <div id="rightsPopup" class="popup" role="tooltip" title="User Rights Index Tooltip">
-                        <div class="popup-content"></div>
-                    </div>
-                </div>
+            <p>Readability Score</p>
+            <div
+              id="readabilityPopup"
+              class="popup"
+              role="tooltip"
+              title="Readability Score Tooltip"
+            >
+              <div class="popup-content"></div>
             </div>
-        </header>
+          </div>
 
-        <main class="analysis-content">
-            <div class="loading-indicator">Analyzing document...</div>
-
-            <section class="column">
-                <h2>Overall Summary</h2>
-                <div id="overall-summary" class="content-section">
-                    <div class="placeholder">Loading summary...</div>
-                </div>
-            </section>
-
-            <section class="column">
-                <h2>Summary by Section</h2>
-                <div id="section-summaries" class="content-section">
-                    <div class="placeholder">Loading sections...</div>
-                </div>
-            </section>
-        </main>
-
-        <aside class="additional-info">
-            <section class="key-excerpts" data-popup="excerptsPopup">
-                <h2>Key Excerpts</h2>
-                <div id="key-excerpts-list" class="content-section">
-                    <div class="placeholder">Loading excerpts...</div>
-                </div>
-                <div id="excerptsPopup" class="popup" role="tooltip" title="Key Excerpts Tooltip">
-                    <div class="popup-content"></div>
-                </div>
-            </section>
-
-            <section class="uncommon-terms" data-popup="termsPopup">
-                <h2>Uncommon Terms</h2>
-                <div id="uncommon-terms-list" class="content-section">
-                    <div class="placeholder">Loading terms...</div>
-                </div>
-                <div id="termsPopup" class="popup" role="tooltip" title="Uncommon Terms Tooltip">
-                    <div class="popup-content"></div>
-                </div>
-            </section>
-        </aside>
-
-        <footer class="panel-footer">
-            <div class="action-buttons">
-                <button type="button" id="contactBtn" class="action-button">
-                    Contact Us
-                </button>
-                <button type="button" id="reportBtn" class="action-button">
-                    Report Issue
-                </button>
-                <button type="button" id="githubBtn" class="action-button">
-                    Github
-                </button>
-                <button type="button" id="feedbackBtn" class="action-button">
-                    Give Feedback
-                </button>
-                <button type="button" id="donateBtn" class="action-button">
-                    Donate
-                </button>
+          <div class="score-card user-rights-index" data-popup="rightsPopup">
+            <div class="grade-circle">
+              <span id="user-rights-index">-</span>
             </div>
-            <div id="status-message" class="status-message" role="status" aria-live="polite"></div>
-        </footer>
+            <p>User Rights Index</p>
+            <div
+              id="rightsPopup"
+              class="popup"
+              role="tooltip"
+              title="User Rights Index Tooltip"
+            >
+              <div class="popup-content"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="analysis-content">
+        <div class="loading-indicator">Analyzing document...</div>
+
+        <section class="column">
+          <h2>Overall Summary</h2>
+          <div id="overall-summary" class="content-section">
+            <div class="placeholder">Loading summary...</div>
+          </div>
+        </section>
+
+        <section class="column">
+          <h2>Summary by Section</h2>
+          <div id="section-summaries" class="content-section">
+            <div class="placeholder">Loading sections...</div>
+          </div>
+        </section>
+      </main>
+
+      <aside class="additional-info">
+        <section class="key-excerpts" data-popup="excerptsPopup">
+          <h2>Key Excerpts</h2>
+          <div id="key-excerpts-list" class="content-section">
+            <div class="placeholder">Loading excerpts...</div>
+          </div>
+          <div
+            id="excerptsPopup"
+            class="popup"
+            role="tooltip"
+            title="Key Excerpts Tooltip"
+          >
+            <div class="popup-content"></div>
+          </div>
+        </section>
+
+        <section class="uncommon-terms" data-popup="termsPopup">
+          <h2>Uncommon Terms</h2>
+          <div id="uncommon-terms-list" class="content-section">
+            <div class="placeholder">Loading terms...</div>
+          </div>
+          <div
+            id="termsPopup"
+            class="popup"
+            role="tooltip"
+            title="Uncommon Terms Tooltip"
+          >
+            <div class="popup-content"></div>
+          </div>
+        </section>
+
+        <section class="dictionary-terms" data-popup="termsPopup">
+          <h2>Dictionary Terms</h2>
+          <ul id="dictionary-terms-list" class="content-section">
+            <div class="placeholder">Loading dictionary terms...</div>
+          </ul>
+        </section>
+      </aside>
+
+      <footer class="panel-footer">
+        <div class="action-buttons">
+          <button type="button" id="contactBtn" class="action-button">
+            Contact Us
+          </button>
+          <button type="button" id="reportBtn" class="action-button">
+            Report Issue
+          </button>
+          <button type="button" id="githubBtn" class="action-button">
+            Github
+          </button>
+          <button type="button" id="feedbackBtn" class="action-button">
+            Give Feedback
+          </button>
+          <button type="button" id="donateBtn" class="action-button">
+            Donate
+          </button>
+        </div>
+        <div
+          id="status-message"
+          class="status-message"
+          role="status"
+          aria-live="polite"
+        ></div>
+      </footer>
+
+      <!-- Optional Diagnostics (visible only when enabled) -->
+      <section id="diagnostics" class="diagnostics" style="display: none">
+        <h2>Diagnostics</h2>
+        <label style="display: block; margin: 0.5rem 0">
+          <input type="checkbox" id="toggle-diagnostics" /> Enable Dictionary
+          Metrics
+        </label>
+        <div class="diagnostic-card">
+          <h3>Dictionary Cache</h3>
+          <div class="diag-grid">
+            <div>Hits: <span id="dict-metric-hits">0</span></div>
+            <div>Misses: <span id="dict-metric-misses">0</span></div>
+            <div>Size: <span id="dict-metric-size">0</span></div>
+            <div>Max: <span id="dict-metric-max">0</span></div>
+            <div>TTL (ms): <span id="dict-metric-ttl">0</span></div>
+            <div>Last Update: <span id="dict-metric-ts">-</span></div>
+          </div>
+        </div>
+        <div class="diagnostic-card" id="pattern-weights-card">
+          <h3>Pattern Weights & Clause Counts</h3>
+          <label
+            style="
+              display: block;
+              margin: 0.25rem 0 0.5rem 0;
+              font-size: 0.85rem;
+            "
+          >
+            <input type="checkbox" id="toggle-clause-counts" /> Show Live Clause
+            Counts
+          </label>
+          <div class="diag-grid" id="pattern-weights-grid">
+            <!-- dynamically populated -->
+          </div>
+          <div
+            class="diag-grid"
+            id="pattern-clausecounts-grid"
+            style="display: none; margin-top: 0.5rem"
+          >
+            <!-- dynamically populated with live counts -->
+          </div>
+        </div>
+      </section>
     </div>
 
     <script src="../utils/constants.js"></script>
     <script src="../utils/debugger.js"></script>
     <script src="sidepanel.js"></script>
-</body>
-
+  </body>
 </html>

@@ -97,17 +97,24 @@ describe("Debugger Utility", () => {
   });
 
   test("should save performance metric", async () => {
-    // Guarantee performance.now is a Jest mock
-    expect(jest.isMockFunction(performance.now)).toBe(true);
-    // Setup performance.now mock to return different values
-    performance.now.mockReturnValueOnce(0); // Start time
-    performance.now.mockReturnValueOnce(100); // End time
+    // Ensure performance.now is available and mockable
+    if (!jest.isMockFunction(performance.now)) {
+      Object.defineProperty(performance, "now", {
+        value: jest.fn(),
+        writable: true,
+        configurable: true,
+      });
+    }
+
+    // Mock performance.now to return 0 for startTimer, 100 for endTimer
+    let callCount = 0;
+    performance.now.mockImplementation(() => {
+      callCount++;
+      return callCount === 1 ? 0 : 100;
+    });
 
     debugInstance.startTimer("testLabel");
-    jest.advanceTimersByTime(100);
-    const duration = await debugInstance.endTimer("testLabel");
-
-    // Debug output for diagnosis
+    const duration = await debugInstance.endTimer("testLabel"); // Debug output for diagnosis
     const metrics = await chrome.storage.local.get(
       EXT_CONSTANTS.STORAGE_KEYS.PERFORMANCE_METRICS,
     );

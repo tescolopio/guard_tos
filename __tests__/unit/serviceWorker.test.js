@@ -60,6 +60,15 @@ describe("Service Worker", () => {
         getManifest: jest.fn(() => ({ version: "1.0.0" })),
         lastError: null,
       },
+      action: {
+        onClicked: {
+          addListener: jest.fn(),
+          removeListener: jest.fn(),
+        },
+      },
+      sidePanel: {
+        open: jest.fn().mockResolvedValue(undefined),
+      },
       contextMenus: {
         create: jest.fn(),
         onClicked: {
@@ -194,6 +203,37 @@ describe("Service Worker", () => {
       );
       expect(chrome.notifications.create).toHaveBeenCalled();
     });
+
+    test("should handle side panel open failure gracefully", async () => {
+      const data = { selectionText: "test" };
+      const tab = { id: 1 };
+
+      const err = new Error("panel failed");
+      chrome.sidePanel.open.mockRejectedValueOnce(err);
+
+      await serviceWorker._test.handleContextMenuClick(data, tab);
+
+      // set still attempted
+      expect(chrome.storage.local.set).toHaveBeenCalledWith({
+        [EXT_CONSTANTS.STORAGE_KEYS.LAST_WORD]: "test",
+      });
+
+      // open failure should be logged from openSidePanel
+      expect(logMock).toHaveBeenCalledWith(
+        logLevelsMock.ERROR,
+        "Error opening side panel:",
+        err,
+      );
+
+      // openSidePanel swallows error; no outer error log or notification is expected
+      const outerErrorLogged = logMock.mock.calls.some(
+        ([level, text]) =>
+          level === logLevelsMock.ERROR &&
+          text === "Error handling context menu click:",
+      );
+      expect(outerErrorLogged).toBe(false);
+      expect(chrome.notifications.create).not.toHaveBeenCalled();
+    });
   });
 
   describe("Data Storage", () => {
@@ -208,6 +248,25 @@ describe("Service Worker", () => {
         logLevelsMock.INFO,
         `Data stored successfully for key: ${key}`,
       );
+    });
+
+    test("should log error when chrome.runtime.lastError is set after set", async () => {
+      const key = "failKey";
+      const data = "oops";
+      // Simulate lastError on next check
+      chrome.storage.local.set.mockImplementationOnce(async () => {
+        chrome.runtime.lastError = { message: "Quota exceeded" };
+      });
+
+      await serviceWorker._test.storeAnalysisData(key, data);
+      expect(chrome.storage.local.set).toHaveBeenCalledWith({ [key]: data });
+      expect(logMock).toHaveBeenCalledWith(
+        logLevelsMock.ERROR,
+        "Error storing data:",
+        chrome.runtime.lastError,
+      );
+      // Cleanup
+      chrome.runtime.lastError = null;
     });
   });
 
@@ -227,6 +286,52 @@ describe("Service Worker", () => {
         EXT_CONSTANTS.STORAGE_KEYS.LAST_WORD,
       );
       expect(sendResponse).toHaveBeenCalledWith({ lastWord: "testWord" });
+    });
+
+    test("should respond with error if message is invalid", async () => {
+      const sendResponse = jest.fn();
+      await serviceWorker._test.handleMessage(null, {}, sendResponse);
+      expect(logMock).toHaveBeenCalledWith(
+        logLevelsMock.WARN,
+        "Invalid message received:",
+        null,
+      );
+      expect(sendResponse).toHaveBeenCalledWith({ error: "Invalid message" });
+    });
+
+    test("getWord should handle storage.get lastError gracefully", async () => {
+      const message = { action: "getWord" };
+      const sender = {};
+      const sendResponse = jest.fn();
+
+      // Simulate lastError during get; service should still respond with undefined
+      chrome.storage.local.get.mockImplementationOnce(async () => {
+        chrome.runtime.lastError = { message: "internal get failure" };
+        return {}; // no value returned
+      });
+
+      await serviceWorker._test.handleMessage(message, sender, sendResponse);
+
+      expect(chrome.storage.local.get).toHaveBeenCalledWith(
+        EXT_CONSTANTS.STORAGE_KEYS.LAST_WORD,
+      );
+      expect(sendResponse).toHaveBeenCalledWith({ lastWord: undefined });
+
+      // It should at least log that a message was received, and not log an error for handleMessage
+      expect(logMock).toHaveBeenCalledWith(
+        logLevelsMock.DEBUG,
+        "Message received:",
+        message,
+      );
+
+      const errorLogForHandleMessage = logMock.mock.calls.some(
+        ([level, text]) =>
+          level === logLevelsMock.ERROR && text === "Error handling message:",
+      );
+      expect(errorLogForHandleMessage).toBe(false);
+
+      // Cleanup
+      chrome.runtime.lastError = null;
     });
 
     test("should handle message with invalid action", async () => {

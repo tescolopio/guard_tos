@@ -1,6 +1,7 @@
 // jest.config.js - Main Jest configuration
 module.exports = {
   testEnvironment: "node",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.minimal.js"],
   moduleNameMapper: {
     "\\.(css|less)$": "<rootDir>/__tests__/helpers/styleMock.js",
     "^@/(.*)$": "<rootDir>/src/$1",

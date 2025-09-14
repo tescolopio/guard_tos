@@ -91,13 +91,32 @@ const getMockChromeAPI = () => {
 
   return {
     runtime: {
-      getURL: mockFn()((path) => `chrome-extension://mock-id/${path}`),
+      getURL: mockFn().mockImplementation(
+        (path) => `chrome-extension://mock-id/${path}`,
+      ),
       sendMessage: mockFn(),
       onMessage: {
         addListener: mockFn(),
         removeListener: mockFn(),
         hasListeners: mockFn(),
       },
+      onInstalled: {
+        addListener: mockFn(),
+      },
+      lastError: null,
+      getManifest: mockFn().mockReturnValue({ version: "1.0.0" }),
+    },
+    contextMenus: {
+      create: mockFn(),
+      onClicked: {
+        addListener: mockFn(),
+        removeListener: mockFn(),
+      },
+    },
+    notifications: {
+      create: mockFn().mockImplementation((options, callback) =>
+        callback?.("notificationId"),
+      ),
     },
     storage: {
       local: {
@@ -110,6 +129,15 @@ const getMockChromeAPI = () => {
       setBadgeText: mockFn(),
       setBadgeBackgroundColor: mockFn(),
       setIcon: mockFn(),
+      onClicked: {
+        addListener: mockFn(),
+        removeListener: mockFn(),
+      },
+    },
+    windows: {
+      getCurrent: mockFn().mockResolvedValue({
+        sidePanel: { state: "closed" },
+      }),
     },
     sidePanel: {
       open: mockFn(),
@@ -143,6 +171,14 @@ const getMockAnalyzers = () => {
         };
 
   return {
+    ReadabilityGrader: {
+      create: mockFn().mockReturnValue({
+        calculateReadabilityGrade: mockFn().mockResolvedValue({
+          score: 75,
+          grade: "B",
+        }),
+      }),
+    },
     RightsAssessor: {
       create: mockFn().mockReturnValue({
         analyzeContent: mockFn().mockResolvedValue(mockAnalysisResults.rights),
@@ -151,6 +187,7 @@ const getMockAnalyzers = () => {
     TosSummarizer: {
       create: mockFn().mockReturnValue({
         generateSummary: mockFn().mockResolvedValue("Summary of terms"),
+        summarizeTos: mockFn().mockResolvedValue("Summary of terms"),
       }),
     },
     TextExtractor: {

@@ -30,6 +30,11 @@ const EXT_CONSTANTS = {
       SECTION: 10, // Minimum legal terms in a section to consider it legal text
       PROXIMITY: 5, // Maximum word distance for proximity matching
     },
+    // Gates for pattern-based fallback path
+    FALLBACK_GATES: {
+      MIN_WORDS_FOR_FALLBACK: 50,
+      MIN_PATTERN_SCORE: 0.3,
+    },
   },
 
   // Analysis Settings
@@ -56,6 +61,57 @@ const EXT_CONSTANTS = {
     BATCH_SIZE: 50,
     PRIORITIZE_LEGAL: true,
     COMPOUND_TERMS: true,
+    DICTIONARY: {
+      CACHE_SIZE: 1000,
+    },
+    // Rights scoring rubric configuration
+    RIGHTS: {
+      NORMALIZATION_PER_WORDS: 1000, // normalize signal counts per N words
+      WEIGHTS: {
+        // penalties (negative weights)
+        HIGH_RISK: {
+          ARBITRATION: -15,
+          CLASS_ACTION_WAIVER: -15,
+          UNILATERAL_CHANGES: -12,
+          DATA_SALE_OR_SHARING: -10,
+          AUTO_RENEWAL_FRICTION: -8,
+          NEGATIVE_OPTION_BILLING: -8,
+          DELEGATION_ARBITRABILITY: -10,
+        },
+        // medium risk
+        MEDIUM_RISK: {
+          ARBITRATION_CARVEOUTS: -6,
+          VAGUE_CONSENT: -5,
+          LIMITED_RETENTION_DISCLOSURE: -5,
+          MORAL_RIGHTS_WAIVER: -5,
+          JURY_TRIAL_WAIVER: -6,
+        },
+        // positives (bonuses)
+        POSITIVES: {
+          CLEAR_OPT_OUT: 5,
+          SELF_SERVICE_DELETION: 5,
+          NO_DATA_SALE: 6,
+          TRANSPARENT_RETENTION: 4,
+        },
+        CAPS: {
+          MAX_NEGATIVE: -60,
+          MAX_POSITIVE: 20,
+        },
+      },
+      GRADING: {
+        // Map numeric score (0-100) to letter grade
+        A: { MIN: 85 },
+        B: { MIN: 75 },
+        C: { MIN: 65 },
+        D: { MIN: 50 },
+        F: { MIN: 0 },
+      },
+      CONFIDENCE: {
+        COVERAGE_WEIGHT: 0.4,
+        SIGNAL_WEIGHT: 0.4,
+        TYPE_WEIGHT: 0.2,
+      },
+    },
   },
 
   // Notification Messages
@@ -138,6 +194,13 @@ const EXT_CONSTANTS = {
       TRACE: 4,
     },
     DEFAULT_LEVEL: 2, // INFO level
+    // Feature flags and diagnostics config
+    FEATURES: {
+      DICTIONARY_METRICS: {
+        ENABLED: true,
+        POLL_MS: 10000,
+      },
+    },
     STORAGE: {
       KEY: "debugLogs",
       MAX_ENTRIES: 1000,
@@ -205,6 +268,7 @@ const EXT_CONSTANTS = {
     SETTINGS: "guardianSettings",
     DEBUG_LOGS: "debugLogs",
     PERFORMANCE_METRICS: "perfMetrics",
+    DICTIONARY_METRICS: "dictionaryMetrics",
   },
 
   // Context Menu Items

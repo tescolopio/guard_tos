@@ -9,7 +9,7 @@ module.exports = merge(common, {
   mode: "production",
   devtool: "source-map",
   optimization: {
-    minimize: true,
+    minimize: true, // Re-enable minification to debug Terser errors
     minimizer: [
       new TerserPlugin({
         terserOptions: {
@@ -26,8 +26,30 @@ module.exports = merge(common, {
       }),
     ],
     splitChunks: {
-      chunks: "all",
-      name: false,
+      chunks: "async", // Only split async chunks (like dynamic imports)
+      cacheGroups: {
+        dictionaries: {
+          test: /dict-[a-z]\.json$/,
+          name: (module) => {
+            // Extract letter from path like "dict-a.json" -> "dict-a"
+            const match = module.resource.match(/dict-([a-z])\.json$/);
+            return match ? `dict-${match[1]}` : "dict-unknown";
+          },
+          chunks: "async",
+          priority: 10,
+          enforce: true, // Force creation of this cache group
+        },
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "initial",
+          priority: 5,
+        },
+      },
+      // Prevent small chunks that don't save much
+      minSize: 20000,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 5,
     },
   },
   plugins: [...(process.env.ANALYZE ? [new BundleAnalyzerPlugin()] : [])],

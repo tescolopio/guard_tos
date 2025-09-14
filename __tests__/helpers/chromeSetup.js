@@ -25,6 +25,10 @@ const setupChromeEnvironment = (customChromeAPI = {}, customAnalyzers = {}) => {
   // Set up analyzers with both mock implementations and custom overrides
   const mockAnalyzers = getMockAnalyzers();
   const analyzers = {
+    ReadabilityGrader: {
+      ...mockAnalyzers.ReadabilityGrader,
+      ...customAnalyzers?.ReadabilityGrader,
+    },
     RightsAssessor: {
       ...mockAnalyzers.RightsAssessor,
       ...customAnalyzers?.RightsAssessor,
@@ -96,10 +100,20 @@ const simulateChromeMessage = async (
   sender = createMessageSender(),
 ) => {
   const listeners = global.chrome.runtime.onMessage.addListener.mock.calls;
-  const responses = await Promise.all(
-    listeners.map(([listener]) => listener(message, sender)),
-  );
-  return responses[responses.length - 1];
+  let lastResponse;
+  for (const [listener] of listeners) {
+    await new Promise((resolve) => {
+      const sendResponse = (resp) => {
+        lastResponse = resp;
+        resolve();
+      };
+      const maybePromise = listener(message, sender, sendResponse);
+      if (maybePromise && typeof maybePromise.then === "function") {
+        maybePromise.then(() => resolve()).catch(() => resolve());
+      }
+    });
+  }
+  return lastResponse;
 };
 
 /**

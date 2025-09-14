@@ -19,8 +19,7 @@
     logLevels,
     commonWords: providedCommonWords = commonWords,
     legalTerms: providedLegalTerms = legalTerms,
-    legalTermsDefinitions:
-      providedLegalTermsDefinitions = legalTermsDefinitions,
+    legalTermsDefinitions: providedLegalTermsDefinitions = {},
     config = {},
     utilities,
   }) {
@@ -39,14 +38,21 @@
     const validLegalTerms = Array.isArray(providedLegalTerms)
       ? providedLegalTerms
       : legalTerms;
-    const validLegalTermsDefinitions =
-      providedLegalTermsDefinitions || legalTermsDefinitions;
+    const validLegalTermsDefinitions = providedLegalTermsDefinitions || {};
 
     const textExtractor = createTextExtractor({ log, logLevels, utilities });
-    const dictionaryService = await createLegalDictionaryService({
-      log,
-      logLevels,
-    });
+    let dictionaryService = null; // Lazy initialization
+    
+    // Helper function to get dictionary service only when needed
+    async function getDictionaryService() {
+      if (!dictionaryService) {
+        dictionaryService = await createLegalDictionaryService({
+          log,
+          logLevels,
+        });
+      }
+      return dictionaryService;
+    }
 
     const defaultConfig = {
       minWordLength: 3,
@@ -150,7 +156,8 @@
         };
       }
 
-      const dictDefinition = await dictionaryService.getDefinition(word);
+      const dictService = await getDictionaryService();
+      const dictDefinition = await dictService.getDefinition(word);
       if (dictDefinition) {
         processedCache.set(word, {
           definition: dictDefinition,
@@ -206,9 +213,11 @@
       }
     }
 
-    function clearCache() {
+    async function clearCache() {
       processedCache.clear();
-      dictionaryService.clearCache();
+      if (dictionaryService) {
+        dictionaryService.clearCache();
+      }
       log(logLevels.INFO, "All caches cleared");
     }
 

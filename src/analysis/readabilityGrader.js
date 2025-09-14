@@ -4,7 +4,7 @@
  * @contributors {tescolopio}
  * @version 1.1.0
  * @date 2024-09-29
- * 
+ *
  * @changes
  *  - 2024-09-18 | tescolopio | Initial creation of the script.
  *  - 2024-09-21.01 | tescolopio | added imports and exports for modularity, added error handling and logging.
@@ -12,24 +12,25 @@
  *  - 2024-10-5 | tescolopio | Modified to work with Chrome extension environment.
  *  - 2024-10-5.01 | tescolopio | Fixed syllable counting and punctuation handling for more accurate results.
  */
-(function(global) {
-  'use strict';
+(function (global) {
+  "use strict";
 
   function createReadabilityGrader({ log, logLevels }) {
-    
-    const { ANALYSIS } = global.Constants;
+    const constantsSource =
+      (global && global.Constants) ||
+      (global && global.EXT_CONSTANTS) ||
+      require("../utils/constants").EXT_CONSTANTS;
+    const { ANALYSIS, SYLLABLE_PATTERNS } = constantsSource;
     const { GRADES } = ANALYSIS;
 
-   
-
     function splitIntoSentences(text) {
-      return text.split(/[.!?]+/).filter(sentence => sentence.trim() !== "");
+      return text.split(/[.!?]+/).filter((sentence) => sentence.trim() !== "");
     }
-    
+
     function splitIntoWords(text) {
-      return text.split(/\s+/).filter(word => word.trim() !== "");
+      return text.split(/\s+/).filter((word) => word.trim() !== "");
     }
-    
+
     /**
      * Extracts words from a text, handling punctuation, special characters, contractions, and hyphenated words.
      * @param {string} text The text to extract words from.
@@ -37,7 +38,7 @@
      */
     function extractWords(text) {
       const words = text.toLowerCase().match(/\b[\w']+(?:-[\w']+)*\b/g) || [];
-      return words.filter(word => word.length >= ANALYSIS.MIN_WORD_LENGTH);
+      return words.filter((word) => word.length >= ANALYSIS.MIN_WORD_LENGTH);
     }
 
     /**
@@ -48,20 +49,26 @@
     function countSyllablesInWord(word) {
       if (!word || word.length < ANALYSIS.MIN_WORD_LENGTH) return 1;
 
-      const xx = word.toLowerCase().replace(/'/g, '').replace(/e\b/g, '');
+      const xx = word.toLowerCase().replace(/'/g, "").replace(/e\b/g, "");
       const scrugg = xx.split(/[^aeiouy]+/).filter(Boolean);
 
-      const subtractCount = SYLLABLE_PATTERNS.SUBTRACT
-        .reduce((count, pattern) => count + (xx.match(pattern) || []).length, 0);
+      const subtractCount = SYLLABLE_PATTERNS.SUBTRACT.reduce(
+        (count, pattern) => count + (xx.match(pattern) || []).length,
+        0,
+      );
 
-      const addCount = SYLLABLE_PATTERNS.ADD
-        .reduce((count, pattern) => count + (xx.match(pattern) || []).length, 0);
+      const addCount = SYLLABLE_PATTERNS.ADD.reduce(
+        (count, pattern) => count + (xx.match(pattern) || []).length,
+        0,
+      );
 
-      const baseCount = scrugg.length - (scrugg.length > 0 && '' === scrugg ? 1 : 0);
-      const consonantCount = xx.split(/\b/)
-        .map(x => x.trim())
+      const baseCount =
+        scrugg.length - (scrugg.length > 0 && "" === scrugg ? 1 : 0);
+      const consonantCount = xx
+        .split(/\b/)
+        .map((x) => x.trim())
         .filter(Boolean)
-        .filter(x => !x.match(/[.,'!?]/g))
+        .filter((x) => !x.match(/[.,'!?]/g))
         .reduce((count, x) => count + (x.match(/[aeiouy]/) ? 0 : 1), 0);
 
       return Math.max(1, baseCount - subtractCount + addCount + consonantCount);
@@ -73,8 +80,10 @@
      * @return {number} The total number of syllables.
      */
     function countSyllables(text) {
-      return extractWords(text)
-        .reduce((count, word) => count + countSyllablesInWord(word), 0);
+      return extractWords(text).reduce(
+        (count, word) => count + countSyllablesInWord(word),
+        0,
+      );
     }
 
     /**
@@ -83,8 +92,10 @@
      * @return {number} The number of complex words.
      */
     function countComplexWords(text) {
-      return extractWords(text)
-        .reduce((count, word) => count + (countSyllablesInWord(word) >= 3 ? 1 : 0), 0);
+      return extractWords(text).reduce(
+        (count, word) => count + (countSyllablesInWord(word) >= 3 ? 1 : 0),
+        0,
+      );
     }
 
     /**
@@ -97,10 +108,14 @@
       const sentences = splitIntoSentences(text);
       const words = splitIntoWords(text);
       const syllables = countSyllables(text);
-      
+
       if (sentences.length === 0 || words.length === 0) return 0;
-      
-      return 206.835 - 1.015 * (words.length / sentences.length) - 84.6 * (syllables / words.length);
+
+      return (
+        206.835 -
+        1.015 * (words.length / sentences.length) -
+        84.6 * (syllables / words.length)
+      );
     }
 
     /**
@@ -113,10 +128,14 @@
       const sentences = splitIntoSentences(text);
       const words = splitIntoWords(text);
       const syllables = countSyllables(text);
-      
+
       if (sentences.length === 0 || words.length === 0) return 0;
-      
-      return 0.39 * (words.length / sentences.length) + 11.8 * (syllables / words.length) - 15.59;
+
+      return (
+        0.39 * (words.length / sentences.length) +
+        11.8 * (syllables / words.length) -
+        15.59
+      );
     }
 
     /**
@@ -129,23 +148,30 @@
       const sentences = splitIntoSentences(text);
       const words = splitIntoWords(text);
       const complexWords = countComplexWords(text);
-      
+
       if (sentences.length === 0 || words.length === 0) return 0;
-      
-      return 0.4 * ((words.length / sentences.length) + 100 * (complexWords / words.length));
+
+      return (
+        0.4 *
+        (words.length / sentences.length + 100 * (complexWords / words.length))
+      );
     }
 
-    function calculateNormalizedScores(fleschScore, kincaidScore, fogIndexScore) {
+    function calculateNormalizedScores(
+      fleschScore,
+      kincaidScore,
+      fogIndexScore,
+    ) {
       return {
         flesch: Math.max(0, Math.min((120 - fleschScore) / 120, 1)),
         kincaid: Math.min(kincaidScore / 18, 1),
-        fog: Math.min(fogIndexScore / 18, 1)
+        fog: Math.min(fogIndexScore / 18, 1),
       };
     }
 
     function determineGrade(averageScore, kincaidScore, fogIndexScore) {
       let grade;
-      
+
       if (averageScore <= GRADES.A.MIN) grade = "A";
       else if (averageScore <= GRADES.B.MIN) grade = "B";
       else if (averageScore <= GRADES.C.MIN) grade = "C";
@@ -168,7 +194,7 @@
      */
     function calculateReadabilityGrade(text) {
       try {
-        if (typeof text !== 'string' || text.trim() === "") {
+        if (typeof text !== "string" || text.trim() === "") {
           throw new Error("Invalid input text for readability analysis.");
         }
 
@@ -184,17 +210,25 @@
 
         // Log metrics
         log(logLevels.DEBUG, {
-          text: text.substring(0, 100) + '...',
+          text: text.substring(0, 100) + "...",
           wordCount: words.length,
           sentenceCount: splitIntoSentences(text).length,
           syllableCount: countSyllables(text),
           complexWordCount: countComplexWords(text),
-          scores: { fleschScore, kincaidScore, fogIndexScore }
+          scores: { fleschScore, kincaidScore, fogIndexScore },
         });
 
         // Calculate normalized scores
-        const normalized = calculateNormalizedScores(fleschScore, kincaidScore, fogIndexScore);
-        const averageScore = (normalized.flesch * 0.4 + normalized.kincaid * 0.3 + normalized.fog * 0.3) * 100;
+        const normalized = calculateNormalizedScores(
+          fleschScore,
+          kincaidScore,
+          fogIndexScore,
+        );
+        const averageScore =
+          (normalized.flesch * 0.4 +
+            normalized.kincaid * 0.3 +
+            normalized.fog * 0.3) *
+          100;
 
         // Determine final grade
         const grade = determineGrade(averageScore, kincaidScore, fogIndexScore);
@@ -205,12 +239,11 @@
           fogIndex: fogIndexScore,
           averageGrade: grade,
           normalizedScore: averageScore,
-          confidence: Math.min(1, words.length / 100) // Simple confidence metric
+          confidence: Math.min(1, words.length / 100), // Simple confidence metric
         };
 
         log(logLevels.INFO, "Final readability analysis:", result);
         return result;
-
       } catch (error) {
         log(logLevels.ERROR, "Error calculating readability grade:", error);
         return {
@@ -218,7 +251,7 @@
           kincaid: 0,
           fogIndex: 0,
           averageGrade: "N/A",
-          error: error.message
+          error: error.message,
         };
       }
     }
@@ -230,18 +263,17 @@
       _test: {
         countSyllablesInWord,
         extractWords,
-        calculateNormalizedScores
-      }
+        calculateNormalizedScores,
+      },
     };
   }
 
   // Export for both Chrome extension and test environments
-  if (typeof module !== 'undefined' && module.exports) {
+  if (typeof module !== "undefined" && module.exports) {
     module.exports = { createReadabilityGrader };
   } else {
     global.ReadabilityGrader = {
-      create: createReadabilityGrader
+      create: createReadabilityGrader,
     };
   }
-
-})(typeof window !== 'undefined' ? window : global);
+})(typeof window !== "undefined" ? window : global);

@@ -4,10 +4,12 @@
  * @version 1.0.0
  */
 
-(function(global) {
-  'use strict';
+(function (global) {
+  "use strict";
 
-  class TextCacheWithRecovery extends global.TextCache {
+  const BaseTextCache =
+    (global && global.TextCache) || require("./textCache").TextCache;
+  class TextCacheWithRecovery extends BaseTextCache {
     constructor(config, log, logLevels) {
       super(config);
       this.log = log;
@@ -50,17 +52,16 @@
           processed: new Map(),
           metadata: new Map(),
           structure: new WeakMap(),
-          timestamp: new Map()
+          timestamp: new Map(),
         };
       }
     }
   }
 
   // Export for both environments
-  if (typeof module !== 'undefined' && module.exports) {
+  if (typeof module !== "undefined" && module.exports) {
     module.exports = { TextCacheWithRecovery };
   } else {
     global.TextCacheWithRecovery = TextCacheWithRecovery;
   }
-
-})(typeof window !== 'undefined' ? window : global);
+})(typeof window !== "undefined" ? window : global);
