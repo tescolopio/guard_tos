@@ -23,7 +23,10 @@ let EXT_CONSTANTS,
   utilities,
   commonWords,
   legalTermsDefinitions;
-let createSummarizer, createTextExtractor, createUncommonWordsIdentifier;
+let createSummarizer,
+  createEnhancedSummarizer,
+  createTextExtractor,
+  createUncommonWordsIdentifier;
 let ContentHashService,
   EnhancedCacheService,
   DatabaseService,
@@ -42,6 +45,8 @@ try {
   legalTermsDefinitions =
     require("../data/legalTermsDefinitions").legalTermsDefinitions;
   createSummarizer = require("../analysis/summarizeTos").createSummarizer;
+  createEnhancedSummarizer =
+    require("../analysis/enhancedSummarizer").createEnhancedSummarizer;
   createTextExtractor =
     require("../analysis/textExtractor").createTextExtractor;
   createUncommonWordsIdentifier =
@@ -67,6 +72,8 @@ try {
   commonWords = global.commonWords;
   legalTermsDefinitions = global.legalTermsDefinitions;
   createSummarizer = global.TosSummarizer && global.TosSummarizer.create;
+  createEnhancedSummarizer =
+    global.EnhancedTosSummarizer && global.EnhancedTosSummarizer.create;
   createTextExtractor = global.TextExtractor && global.TextExtractor.create;
   createUncommonWordsIdentifier =
     global.UncommonWordsIdentifier && global.UncommonWordsIdentifier.create;
@@ -140,6 +147,17 @@ try {
           throw new Error("TosSummarizer not available");
         }
         this.summarizer = createSummarizer({
+          compromise: global.compromise,
+          cheerio: global.cheerio,
+          log: this.log,
+          logLevels: this.logLevels,
+        });
+
+        // Enhanced summarizer for plain language summaries
+        if (!createEnhancedSummarizer) {
+          throw new Error("EnhancedTosSummarizer not available");
+        }
+        this.enhancedSummarizer = createEnhancedSummarizer({
           compromise: global.compromise,
           cheerio: global.cheerio,
           log: this.log,
@@ -546,7 +564,13 @@ try {
 
         // Create simple HTML wrapper for text to enable summarization
         const htmlContent = `<html><body><div>${text.replace(/\n/g, "<br>")}</div></body></html>`;
-        const summaryAnalysis = await this.summarizer.summarizeTos(htmlContent);
+
+        // Use enhanced summarizer for plain language summaries
+        const summaryAnalysis =
+          await this.enhancedSummarizer.summarizeTos(htmlContent);
+
+        // Keep legacy summarizer for backward compatibility if needed
+        const legacySummary = await this.summarizer.summarizeTos(htmlContent);
 
         const uncommonWords = await this.identifier.identifyUncommonWords(text);
         const keyExcerpts = this.extractKeyExcerpts(text);
@@ -554,11 +578,16 @@ try {
         return {
           rights: rightsAnalysis.rightsScore / 100, // Convert to 0-1 scale for UI
           readability: readabilityAnalysis,
-          summary: summaryAnalysis.overall, // Overall summary as string
-          sections: summaryAnalysis.sections, // Section summaries as array
+          summary: summaryAnalysis.overall, // Enhanced plain language summary
+          enhancedSummary: summaryAnalysis, // Complete enhanced summary object
+          legacySummary: legacySummary.overall, // Original summary for comparison
+          sections: summaryAnalysis.sections, // Enhanced section summaries with risk levels
           excerpts: keyExcerpts, // Key excerpts as array of strings
           rightsDetails: rightsAnalysis, // Keep full details for diagnostics
           uncommonWords: uncommonWords,
+          riskLevel: summaryAnalysis.overallRisk, // Overall document risk assessment
+          keyFindings: summaryAnalysis.keyFindings, // Important findings for quick review
+          plainLanguageAlert: summaryAnalysis.plainLanguageAlert, // User warnings if any
           timestamp: new Date().toISOString(),
         };
       } catch (error) {

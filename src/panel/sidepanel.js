@@ -176,9 +176,111 @@
       updatePopupContent("rightsPopup", scores.rights);
     }
 
-    function updateSummary(summary) {
+    function updateSummary(summary, enhancedData) {
       if (!summary) return;
-      elements.overallSummary.textContent = summary;
+
+      // Update main summary with enhanced formatting
+      if (enhancedData && enhancedData.enhancedSummary) {
+        const summaryHtml = formatEnhancedSummary(
+          enhancedData.enhancedSummary.overall,
+        );
+        elements.overallSummary.innerHTML = summaryHtml;
+
+        // Update risk level display
+        updateRiskDisplay(enhancedData.riskLevel);
+
+        // Update key findings
+        updateKeyFindings(enhancedData.keyFindings);
+
+        // Show risk alert if needed
+        updateRiskAlert(enhancedData.plainLanguageAlert);
+      } else {
+        elements.overallSummary.textContent = summary;
+      }
+    }
+
+    function formatEnhancedSummary(summaryText) {
+      if (!summaryText) return "";
+
+      // Convert markdown-style formatting to HTML
+      let html = summaryText
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/📋 \*\*(.*?)\*\*/g, "<h3>📋 $1</h3>")
+        .replace(/⚠️ (.*?)(?=\n|$)/g, '<div class="warning-text">⚠️ $1</div>')
+        .replace(/✅ (.*?)(?=\n|$)/g, '<div class="positive-text">✅ $1</div>')
+        .replace(/💰 (.*?)(?=\n|$)/g, '<div class="money-text">💰 $1</div>')
+        .replace(/🔒 (.*?)(?=\n|$)/g, '<div class="privacy-text">🔒 $1</div>')
+        .replace(/\n\n/g, "</p><p>")
+        .replace(/\n/g, "<br>");
+
+      return `<p>${html}</p>`;
+    }
+
+    function updateRiskDisplay(riskLevel) {
+      const riskDisplay = document.getElementById("document-risk");
+      const riskBadge = document.getElementById("risk-badge");
+
+      if (riskLevel && riskDisplay && riskBadge) {
+        riskBadge.textContent = riskLevel.replace("-", " ").toUpperCase();
+        riskBadge.className = `risk-badge ${riskLevel}`;
+        riskDisplay.style.display = "block";
+      }
+    }
+
+    function updateKeyFindings(keyFindings) {
+      const keyFindingsSection = document.getElementById(
+        "key-findings-section",
+      );
+      const keyFindingsList = document.getElementById("key-findings-list");
+
+      if (!keyFindings || !keyFindings.length) {
+        keyFindingsSection.style.display = "none";
+        return;
+      }
+
+      keyFindingsList.innerHTML = "";
+      keyFindings.forEach((finding) => {
+        const findingDiv = document.createElement("div");
+        findingDiv.className = "key-finding-item";
+
+        // Determine if finding is concerning or positive
+        if (
+          finding.includes("⚠️") ||
+          finding.includes("💰") ||
+          finding.includes("🔒")
+        ) {
+          findingDiv.classList.add("concerning");
+        } else if (finding.includes("✅")) {
+          findingDiv.classList.add("positive");
+        }
+
+        findingDiv.textContent = finding;
+        keyFindingsList.appendChild(findingDiv);
+      });
+
+      keyFindingsSection.style.display = "block";
+    }
+
+    function updateRiskAlert(alertMessage) {
+      const riskAlert = document.getElementById("risk-alert");
+      const riskMessageEl = document.getElementById("risk-message");
+
+      if (alertMessage && riskAlert && riskMessageEl) {
+        riskMessageEl.textContent = alertMessage;
+        riskAlert.style.display = "block";
+
+        // Add appropriate risk class based on message content
+        const alertDiv = riskAlert.querySelector(".risk-alert");
+        if (alertMessage.includes("several sections")) {
+          alertDiv.className = "risk-alert high-risk";
+        } else if (alertMessage.includes("some terms")) {
+          alertDiv.className = "risk-alert medium-risk";
+        } else {
+          alertDiv.className = "risk-alert";
+        }
+      } else if (riskAlert) {
+        riskAlert.style.display = "none";
+      }
     }
 
     function updateSections(sections) {
@@ -193,10 +295,38 @@
       sections.forEach((section) => {
         const sectionDiv = document.createElement("div");
         sectionDiv.classList.add(CLASSES.SECTION_SUMMARY);
-        sectionDiv.innerHTML = `
-          <h3>${section.heading}</h3>
-          <p>${section.summary}</p>
-        `;
+
+        // Enhanced section display with risk levels and key points
+        if (section.riskLevel && section.keyPoints) {
+          sectionDiv.innerHTML = `
+            <div class="section-header">
+              <h3 class="section-title">${section.userFriendlyHeading || section.heading}</h3>
+              <span class="section-risk-badge ${section.riskLevel}">${section.riskLevel}</span>
+            </div>
+            <div class="section-content">
+              <div class="section-summary-text">${section.summary}</div>
+              ${
+                section.keyPoints && section.keyPoints.length > 0
+                  ? `
+                <div class="section-key-points">
+                  <h4>Key Points:</h4>
+                  <ul>
+                    ${section.keyPoints.map((point) => `<li>${point}</li>`).join("")}
+                  </ul>
+                </div>
+              `
+                  : ""
+              }
+            </div>
+          `;
+        } else {
+          // Fallback to original format
+          sectionDiv.innerHTML = `
+            <h3>${section.heading}</h3>
+            <p>${section.summary}</p>
+          `;
+        }
+
         elements.sectionSummaries.appendChild(sectionDiv);
       });
     }
@@ -683,7 +813,7 @@
             updateDocumentInfo(content.documentInfo),
           ),
           updateSection("scores", () => updateScores(content.scores)),
-          updateSection("summary", () => updateSummary(content.summary)),
+          updateSection("summary", () => updateSummary(content.summary, content)),
           updateSection("sections", () => updateSections(content.sections)),
           updateSection("excerpts", () => updateExcerpts(content.excerpts)),
           updateSection("terms", () => updateTerms(content.terms)),

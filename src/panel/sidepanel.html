@@ -68,16 +68,50 @@ key excerpts, and uncommon terms.
       <main class="analysis-content">
         <div class="loading-indicator">Analyzing document...</div>
 
-        <section class="column">
-          <h2>Overall Summary</h2>
-          <div id="overall-summary" class="content-section">
-            <div class="placeholder">Loading summary...</div>
+        <!-- Risk Alert Section -->
+        <section
+          class="risk-alert-section"
+          id="risk-alert"
+          style="display: none"
+        >
+          <div class="risk-alert">
+            <div class="risk-icon">⚠️</div>
+            <div class="risk-content">
+              <div class="risk-message" id="risk-message"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Key Findings Section -->
+        <section
+          class="key-findings-section"
+          id="key-findings-section"
+          style="display: none"
+        >
+          <h2>📋 Key Findings</h2>
+          <div id="key-findings-list" class="key-findings-list">
+            <div class="placeholder">Loading key findings...</div>
           </div>
         </section>
 
         <section class="column">
-          <h2>Summary by Section</h2>
-          <div id="section-summaries" class="content-section">
+          <h2>📝 Plain Language Summary</h2>
+          <div id="overall-summary" class="content-section enhanced-summary">
+            <div class="placeholder">Loading summary...</div>
+          </div>
+
+          <!-- Document Risk Level Display -->
+          <div class="document-risk" id="document-risk" style="display: none">
+            <div class="risk-level-indicator">
+              <span class="risk-label">Document Risk Level:</span>
+              <span class="risk-badge" id="risk-badge">Medium</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="column">
+          <h2>📑 Section-by-Section Breakdown</h2>
+          <div id="section-summaries" class="content-section enhanced-sections">
             <div class="placeholder">Loading sections...</div>
           </div>
         </section>
