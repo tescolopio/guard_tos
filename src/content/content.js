@@ -24,6 +24,11 @@ let EXT_CONSTANTS,
   commonWords,
   legalTermsDefinitions;
 let createSummarizer, createTextExtractor, createUncommonWordsIdentifier;
+let ContentHashService,
+  EnhancedCacheService,
+  DatabaseService,
+  UserPreferenceService,
+  TextCache;
 
 try {
   EXT_CONSTANTS = require("../utils/constants").EXT_CONSTANTS;
@@ -41,6 +46,16 @@ try {
     require("../analysis/textExtractor").createTextExtractor;
   createUncommonWordsIdentifier =
     require("../analysis/uncommonWordsIdentifier").createUncommonWordsIdentifier;
+
+  // Hash-based caching services
+  ContentHashService =
+    require("../services/contentHashService").ContentHashService;
+  EnhancedCacheService =
+    require("../services/enhancedCacheService").EnhancedCacheService;
+  DatabaseService = require("../services/databaseService").DatabaseService;
+  UserPreferenceService =
+    require("../services/userPreferenceService").UserPreferenceService;
+  TextCache = require("../data/cache/textCache").TextCache;
 } catch (e) {
   // Fallback to global objects in production build
   EXT_CONSTANTS = global.EXT_CONSTANTS;
@@ -55,6 +70,13 @@ try {
   createTextExtractor = global.TextExtractor && global.TextExtractor.create;
   createUncommonWordsIdentifier =
     global.UncommonWordsIdentifier && global.UncommonWordsIdentifier.create;
+
+  // Hash-based caching global fallbacks
+  ContentHashService = global.ContentHashService;
+  EnhancedCacheService = global.EnhancedCacheService;
+  DatabaseService = global.DatabaseService;
+  UserPreferenceService = global.UserPreferenceService;
+  TextCache = global.TextCache;
 }
 
 (function (global) {
@@ -151,6 +173,68 @@ try {
           },
         });
 
+        // Initialize hash-based caching services
+        try {
+          if (
+            UserPreferenceService &&
+            DatabaseService &&
+            ContentHashService &&
+            EnhancedCacheService
+          ) {
+            this.preferenceService = new UserPreferenceService();
+            this.databaseService = new DatabaseService({ testMode: true });
+            // Create a simple in-memory text cache (fallback if TextCache not available)
+            const FallbackTextCache = class {
+              constructor(cfg) {
+                this.cfg = cfg || { TTL: 24 * 60 * 60 * 1000 };
+                this.map = new Map();
+              }
+              async get(key) {
+                const e = this.map.get(key);
+                if (!e) return null;
+                if (Date.now() - e.t > this.cfg.TTL) {
+                  this.map.delete(key);
+                  return null;
+                }
+                return e.v;
+              }
+              async set(key, value) {
+                this.map.set(key, { v: value, t: Date.now() });
+              }
+              async delete(key) {
+                this.map.delete(key);
+              }
+              getStats() {
+                return { processed: this.map.size };
+              }
+              cleanup() {
+                const now = Date.now();
+                for (const [k, e] of this.map) {
+                  if (now - e.t > this.cfg.TTL) this.map.delete(k);
+                }
+              }
+            };
+
+            this.textCache = TextCache
+              ? new TextCache({
+                  TTL:
+                    EXT_CONSTANTS.ANALYSIS.CACHE_DURATION ||
+                    24 * 60 * 60 * 1000,
+                  MAX_ENTRIES: 200,
+                })
+              : new FallbackTextCache();
+
+            this.hashService = new ContentHashService();
+            this.enhancedCache = new EnhancedCacheService(
+              this.textCache,
+              this.databaseService,
+              this.preferenceService,
+            );
+          }
+        } catch (svcErr) {
+          this.log(this.logLevels.WARN, "Hash caching init failed:", svcErr);
+        }
+
         // Set up a message listener to receive the result from domManager.js
         chrome.runtime.onMessage.addListener(
           (request, sender, sendResponse) => {
@@ -218,6 +302,11 @@ try {
           };
         } else {
           // Extract and analyze the page text using TextExtractor
+          let ContentHashService,
+            EnhancedCacheService,
+            DatabaseService,
+            UserPreferenceService,
+            TextCache;
           extractionResult = await this.extractor.extractAndAnalyzePageText();
         }
 
@@ -300,8 +389,55 @@ try {
     async handleHighLegalTermCount(text) {
       try {
         this.updateExtensionIcon(true);
+        const url =
+          (typeof window !== "undefined" &&
+            window.location &&
+            window.location.href) ||
+          "unknown://local";
 
+        // Try cache first
+        if (this.enhancedCache && this.preferenceService) {
+          try {
+            const enabled = await this.preferenceService.isHashCachingEnabled();
+            if (enabled) {
+              const cacheResult = await this.enhancedCache.getCachedAnalysis(
+                url,
+                text,
+              );
+              if (cacheResult && cacheResult.data) {
+                const cachedAnalysis = this.normalizeAnalysisEntry(
+                  cacheResult.data,
+                );
+                this.log(
+                  this.logLevels.INFO,
+                  `Cache hit from ${cacheResult.source} for ${url}`,
+                );
+                chrome.runtime.sendMessage({
+                  type: "tosDetected",
+                  text: text,
+                  analysis: cachedAnalysis,
+                });
+                return;
+              }
+            }
+          } catch (e) {
+            this.log(this.logLevels.WARN, "Cache lookup error:", e);
+          }
+        }
+
+        // No cache: do analysis
         const analysis = await this.performFullAnalysis(text);
+
+        // Store in cache
+        if (this.enhancedCache && this.hashService) {
+          try {
+            const metadata = await this.hashService.generateMetadata(url, text);
+            await this.enhancedCache.storeAnalysis(metadata, analysis);
+          } catch (e) {
+            this.log(this.logLevels.WARN, "Cache store error:", e);
+          }
+        }
+
         chrome.runtime.sendMessage({
           type: "tosDetected",
           text: text,
@@ -314,6 +450,15 @@ try {
           error,
         );
       }
+    }
+
+    /**
+     * Normalize cached entry shape to analysis result
+     */
+    normalizeAnalysisEntry(entry) {
+      if (!entry) return null;
+      if (entry.analysis) return entry.analysis;
+      return entry;
     }
 
     /**

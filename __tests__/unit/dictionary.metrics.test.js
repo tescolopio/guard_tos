@@ -8,8 +8,6 @@ describe("Dictionary Service - cache metrics and sizing", () => {
 
   beforeAll(() => {
     originalCacheSize = EXT_CONSTANTS.ANALYSIS.DICTIONARY.CACHE_SIZE;
-    // Use a tiny cache to make LRU behavior easy to observe
-    EXT_CONSTANTS.ANALYSIS.DICTIONARY.CACHE_SIZE = 2;
   });
 
   afterAll(() => {
@@ -17,7 +15,18 @@ describe("Dictionary Service - cache metrics and sizing", () => {
   });
 
   test("hits/misses update and TTL/MAX reflect constants; LRU enforces max size", async () => {
-    const svc = await createLegalDictionaryService({});
+    // Use a tiny cache to make LRU behavior easy to observe
+    EXT_CONSTANTS.ANALYSIS.DICTIONARY.CACHE_SIZE = 2;
+
+    // Force reinitialize both modules with new cache size by requiring them fresh
+    delete require.cache[require.resolve("../../src/utils/constants")];
+    delete require.cache[
+      require.resolve("../../src/utils/legalDictionaryService")
+    ];
+    const {
+      createLegalDictionaryService: createFreshService,
+    } = require("../../src/utils/legalDictionaryService");
+    const svc = await createFreshService({});
 
     // Ensure full dictionary loaded for test determinism
     if (svc.getAllLegalTermsAsync) {

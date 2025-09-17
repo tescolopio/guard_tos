@@ -1,18 +1,26 @@
-# MVP TODO Checklist — Terms Guardian (as of 2025-09-10)
+# MVP TODO Checklist — Terms Guardian (as of 2025-09-17)
 
-## **🚀 UPDATED NEXT ACTIONS**
+## UPDATED NEXT ACTIONS
 
-1. **✅ COMPLETED**: All core analysis modules integrated into main pipeline
-2. **✅ COMPLETED**: Data structure alignment between analysis and UI
-3. **✅ COMPLETED**: Key excerpts and section summaries implemented
-4. **✅ COMPLETED**: Build system working (non-minified)
-5. **✅ COMPLETED**: Test the integration on sample ToS page
-6. **Fix Terser Issues**: Resolve minification errors for production build
-7. **Bundle Optimization**: Address large dictionary bundle sizes
+1. **COMPLETED**: All core analysis modules integrated into main pipeline
+2. **COMPLETED**: Data structure alignment between analysis and UI
+3. **COMPLETED**: Key excerpts and section summaries implemented
+4. **COMPLETED**: Build system working (non-minified)
+5. **COMPLETED**: Integration tested on sample ToS pages
+6. **COMPLETED**: Hash-based caching system with change detection
+7. **COMPLETED**: API layer with PostgreSQL database backend
+8. **COMPLETED**: Settings UI with privacy controls and cache management
+9. **COMPLETED**: Comprehensive test suite with cache flow testing
+10. **Fix Terser Issues**: Resolve minification errors for production build
+11. **Bundle Optimization**: Address large dictionary bundle sizes
 
 - [x] Dev and prod webpack configs
 - [x] Verify production build bundles (use `npm run build:verify`)
 - [x] Lightweight manual smoke test on a known ToS page (local HTML fixture ok)
+- [x] Hash-based content caching with performance optimization
+- [x] Database integration with API server and Docker infrastructure
+- [x] User settings interface with processing mode controls
+- [x] Cache flow testing and validation
 - [ ] **Bundle Size Optimization** - Large dictionary bundles need code splitting
 
 ## Documentation
@@ -44,19 +52,49 @@
 3. **✅ Manual Smoke Testing** - 10-minute test on sample ToS page
 4. **QA Checklist Finalization** - Pass/fail verification with test results
 
-## **📊 IMPLEMENTATION STATUS MATRIX**
+## IMPLEMENTATION STATUS MATRIX
 
-| Feature             | Module Status | Integration Status | UI Status   | Priority |
-| ------------------- | ------------- | ------------------ | ----------- | -------- |
-| Legal Detection     | ✅ Complete   | ✅ Complete        | ✅ Complete | -        |
-| Rights Assessment   | ✅ Complete   | ✅ Complete        | ✅ Complete | -        |
-| Readability Grading | ✅ Complete   | ✅ Complete        | ✅ Complete | -        |
-| Summarization       | ✅ Complete   | ✅ Complete        | ✅ Complete | -        |
-| Uncommon Words      | ✅ Complete   | ✅ Complete        | ✅ Complete | -        |
-| Key Excerpts        | ✅ Complete   | ✅ Complete        | ✅ Complete | -        |
-| Section Summaries   | ✅ Complete   | ✅ Complete        | ✅ Complete | -        |
-| Dictionary Terms    | ✅ Complete   | ✅ Complete        | ✅ Complete | -        |
-| Test Infrastructure | ✅ Complete   | ✅ Complete        | ✅ Complete | -        |
+| Feature              | Module Status | Integration Status | UI Status | Priority |
+| -------------------- | ------------- | ------------------ | --------- | -------- |
+| Legal Detection      | Complete      | Complete           | Complete  | -        |
+| Rights Assessment    | Complete      | Complete           | Complete  | -        |
+| Readability Grading  | Complete      | Complete           | Complete  | -        |
+| Summarization        | Complete      | Complete           | Complete  | -        |
+| Uncommon Words       | Complete      | Complete           | Complete  | -        |
+| Key Excerpts         | Complete      | Complete           | Complete  | -        |
+| Section Summaries    | Complete      | Complete           | Complete  | -        |
+| Dictionary Terms     | Complete      | Complete           | Complete  | -        |
+| Hash-Based Caching   | Complete      | Complete           | Complete  | -        |
+| Database Integration | Complete      | Complete           | Complete  | -        |
+| Settings UI          | Complete      | Complete           | Complete  | -        |
+| Cache Management     | Complete      | Complete           | Complete  | -        |
+| Test Infrastructure  | Complete      | Complete           | Complete  | -        |
+
+## Latest Milestone Achievements (September 17, 2025)
+
+### Hash-Based Caching System
+
+- **Content Hash Service**: SHA-256 based change detection with crypto fallback for Jest compatibility
+- **Enhanced Cache Service**: Multi-tier caching with local and cloud storage options
+- **Performance Optimization**: Intelligent cache hit/miss detection reduces redundant processing
+
+### Database Backend Integration
+
+- **REST API Server**: Full CRUD operations with Express.js and PostgreSQL
+- **Docker Infrastructure**: Containerized services with health checks and persistence
+- **Database Service**: Auto-detection of Jest vs production environments
+
+### Advanced Settings Interface
+
+- **User Privacy Controls**: Local-only vs cloud processing mode selection
+- **Cache Management**: Statistics display, manual cache clearing, export functionality
+- **Settings Persistence**: User preferences stored and synchronized across sessions
+
+### Testing Infrastructure Enhancements
+
+- **Cache Flow Testing**: Comprehensive test suite covering 16 cache scenarios
+- **Node Crypto Compatibility**: Multi-tier crypto fallback eliminates Jest test errors
+- **Mock Services**: Enhanced testing utilities for localStorage and service interfaces
 
 ## MVP Definition
 

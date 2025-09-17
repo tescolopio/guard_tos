@@ -163,19 +163,19 @@
       fogIndexScore,
     ) {
       return {
-        flesch: Math.max(0, Math.min((120 - fleschScore) / 120, 1)),
-        kincaid: Math.min(kincaidScore / 18, 1),
-        fog: Math.min(fogIndexScore / 18, 1),
+        flesch: Math.max(0, Math.min(fleschScore / 120, 1)),
+        kincaid: Math.max(0, Math.min((18 - kincaidScore) / 18, 1)),
+        fog: Math.max(0, Math.min((18 - fogIndexScore) / 18, 1)),
       };
     }
 
     function determineGrade(averageScore, kincaidScore, fogIndexScore) {
       let grade;
 
-      if (averageScore <= GRADES.A.MIN) grade = "A";
-      else if (averageScore <= GRADES.B.MIN) grade = "B";
-      else if (averageScore <= GRADES.C.MIN) grade = "C";
-      else if (averageScore <= GRADES.D.MIN) grade = "D";
+      if (averageScore >= GRADES.A.MIN) grade = "A";
+      else if (averageScore >= GRADES.B.MIN) grade = "B";
+      else if (averageScore >= GRADES.C.MIN) grade = "C";
+      else if (averageScore >= GRADES.D.MIN) grade = "D";
       else grade = "F";
 
       // Fine-tune based on other scores

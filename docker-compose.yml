@@ -1,0 +1,71 @@
+version: "3.8"
+
+services:
+  terms-guardian-db:
+    image: postgres:15-alpine
+    container_name: terms-guardian-db
+    environment:
+      POSTGRES_DB: terms_guardian
+      POSTGRES_USER: tg_user
+      POSTGRES_PASSWORD: tg_password_dev
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    ports:
+      - "5434:5432"
+    volumes:
+      - terms_guardian_data:/var/lib/postgresql/data
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tg_user -d terms_guardian"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - terms-guardian-network
+
+  terms-guardian-redis:
+    image: redis:7-alpine
+    container_name: terms-guardian-redis
+    ports:
+      - "6381:6379"
+    volumes:
+      - terms_guardian_redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - terms-guardian-network
+
+  terms-guardian-api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: terms-guardian-api
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: development
+      DB_HOST: terms-guardian-db
+      DB_PORT: 5432
+      DB_NAME: terms_guardian
+      DB_USER: tg_user
+      DB_PASSWORD: tg_password_dev
+      PORT: 3001
+    depends_on:
+      terms-guardian-db:
+        condition: service_healthy
+    networks:
+      - terms-guardian-network
+    restart: unless-stopped
+
+volumes:
+  terms_guardian_data:
+  terms_guardian_redis_data:
+
+networks:
+  terms-guardian-network:
+    driver: bridge

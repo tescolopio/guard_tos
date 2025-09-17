@@ -115,12 +115,6 @@
             metadata.structure = result.structure;
             break;
           }
-          case "pdf":
-            extractedText = await extractFromPDF(input);
-            break;
-          case "docx":
-            extractedText = await extractFromDOCX(input);
-            break;
           case "text":
             extractedText = extractFromText(input);
             break;
@@ -624,11 +618,21 @@
       }
     }
 
+    /**
+     * Extracts text from plain text input
+     * @param {string} input Plain text content
+     * @returns {string} Cleaned text
+     */
+    function extractFromText(input) {
+      if (typeof input !== "string") {
+        return "";
+      }
+      return preprocessText(input);
+    }
+
     return {
       extract,
       extractFromHTML,
-      extractFromPDF,
-      extractFromDOCX,
       extractFromText,
       splitIntoSentences,
       splitIntoWords,

@@ -800,6 +800,284 @@
     debug.endTimer("sidepanelInit");
     debug.endGroup();
 
+    /**
+     * Settings Management
+     */
+    const settingsManager = {
+      userPreferenceService: null,
+      enhancedCacheService: null,
+
+      async init() {
+        // Initialize services if available
+        if (typeof UserPreferenceService !== "undefined") {
+          this.userPreferenceService = new UserPreferenceService();
+        }
+
+        this.setupEventListeners();
+        await this.loadSettings();
+        await this.updateCacheStats();
+      },
+
+      setupEventListeners() {
+        // Settings toggle
+        const settingsToggle = document.createElement("button");
+        settingsToggle.className = "settings-toggle";
+        settingsToggle.innerHTML = "⚙️";
+        settingsToggle.title = "Toggle Settings";
+        document.body.appendChild(settingsToggle);
+
+        settingsToggle.addEventListener("click", () => {
+          const settingsSection = document.getElementById("settings");
+          const isVisible = settingsSection.style.display !== "none";
+          settingsSection.style.display = isVisible ? "none" : "block";
+          settingsToggle.classList.toggle("active", !isVisible);
+        });
+
+        // Settings controls
+        const enableCaching = document.getElementById("enable-hash-caching");
+        const processingMode = document.getElementById("processing-mode");
+        const cacheRetention = document.getElementById("cache-retention");
+        const autoUpdate = document.getElementById("auto-update");
+        const debugMode = document.getElementById("debug-mode");
+
+        if (enableCaching) {
+          enableCaching.addEventListener("change", async (e) => {
+            await this.saveSetting("enableHashCaching", e.target.checked);
+          });
+        }
+
+        if (processingMode) {
+          processingMode.addEventListener("change", async (e) => {
+            await this.saveSetting("processingMode", e.target.value);
+          });
+        }
+
+        if (cacheRetention) {
+          cacheRetention.addEventListener("change", async (e) => {
+            const days = parseInt(e.target.value);
+            if (days >= 1 && days <= 365) {
+              await this.saveSetting("cacheRetentionDays", days);
+            }
+          });
+        }
+
+        if (autoUpdate) {
+          autoUpdate.addEventListener("change", async (e) => {
+            await this.saveSetting("autoUpdateEnabled", e.target.checked);
+          });
+        }
+
+        if (debugMode) {
+          debugMode.addEventListener("change", async (e) => {
+            await this.saveSetting("debugMode", e.target.checked);
+            // Toggle debug mode immediately
+            if (typeof debug !== "undefined") {
+              debug.setLevel(e.target.checked ? "DEBUG" : "INFO");
+            }
+          });
+        }
+
+        // Action buttons
+        const clearCacheBtn = document.getElementById("clear-cache-btn");
+        const refreshStatsBtn = document.getElementById("refresh-stats-btn");
+        const resetSettingsBtn = document.getElementById("reset-settings-btn");
+        const exportSettingsBtn = document.getElementById(
+          "export-settings-btn",
+        );
+
+        if (clearCacheBtn) {
+          clearCacheBtn.addEventListener("click", async () => {
+            if (confirm("Are you sure you want to clear all cached data?")) {
+              await this.clearCache();
+              await this.updateCacheStats();
+            }
+          });
+        }
+
+        if (refreshStatsBtn) {
+          refreshStatsBtn.addEventListener("click", async () => {
+            await this.updateCacheStats();
+          });
+        }
+
+        if (resetSettingsBtn) {
+          resetSettingsBtn.addEventListener("click", async () => {
+            if (confirm("Reset all settings to defaults?")) {
+              await this.resetSettings();
+              await this.loadSettings();
+            }
+          });
+        }
+
+        if (exportSettingsBtn) {
+          exportSettingsBtn.addEventListener("click", async () => {
+            await this.exportSettings();
+          });
+        }
+      },
+
+      async loadSettings() {
+        if (!this.userPreferenceService) return;
+
+        try {
+          const preferences = await this.userPreferenceService.getPreferences();
+
+          const enableCaching = document.getElementById("enable-hash-caching");
+          const processingMode = document.getElementById("processing-mode");
+          const cacheRetention = document.getElementById("cache-retention");
+          const autoUpdate = document.getElementById("auto-update");
+          const debugMode = document.getElementById("debug-mode");
+
+          if (enableCaching)
+            enableCaching.checked = preferences.enableHashCaching;
+          if (processingMode) processingMode.value = preferences.processingMode;
+          if (cacheRetention)
+            cacheRetention.value = preferences.cacheRetentionDays;
+          if (autoUpdate) autoUpdate.checked = preferences.autoUpdateEnabled;
+          if (debugMode) debugMode.checked = preferences.debugMode;
+        } catch (error) {
+          console.error("Failed to load settings:", error);
+        }
+      },
+
+      async saveSetting(key, value) {
+        if (!this.userPreferenceService) return;
+
+        try {
+          const preferences = await this.userPreferenceService.getPreferences();
+          preferences[key] = value;
+          await this.userPreferenceService.setPreferences(preferences);
+          debug.info(`Setting saved: ${key} = ${value}`);
+        } catch (error) {
+          console.error("Failed to save setting:", error);
+        }
+      },
+
+      async updateCacheStats() {
+        try {
+          // Get cache stats from enhanced cache service or fallback to storage
+          let stats = {
+            localHits: 0,
+            cloudHits: 0,
+            misses: 0,
+            totalEntries: 0,
+            hitRate: 0,
+            totalSizeBytes: 0,
+          };
+
+          // Try to get stats from localStorage analysis entries
+          const keys = Object.keys(localStorage).filter((key) =>
+            key.startsWith("tg_analysis_"),
+          );
+          stats.totalEntries = keys.length;
+
+          let totalSize = 0;
+          keys.forEach((key) => {
+            const value = localStorage.getItem(key);
+            if (value) totalSize += value.length;
+          });
+          stats.totalSizeBytes = totalSize;
+
+          // Update UI
+          const elements = {
+            localHits: document.getElementById("cache-local-hits"),
+            cloudHits: document.getElementById("cache-cloud-hits"),
+            misses: document.getElementById("cache-misses"),
+            totalEntries: document.getElementById("cache-total-entries"),
+            hitRate: document.getElementById("cache-hit-rate"),
+            storageUsed: document.getElementById("cache-storage-used"),
+          };
+
+          if (elements.localHits)
+            elements.localHits.textContent = stats.localHits;
+          if (elements.cloudHits)
+            elements.cloudHits.textContent = stats.cloudHits;
+          if (elements.misses) elements.misses.textContent = stats.misses;
+          if (elements.totalEntries)
+            elements.totalEntries.textContent = stats.totalEntries;
+          if (elements.hitRate) {
+            const total = stats.localHits + stats.cloudHits + stats.misses;
+            const rate =
+              total > 0
+                ? (((stats.localHits + stats.cloudHits) / total) * 100).toFixed(
+                    1,
+                  )
+                : 0;
+            elements.hitRate.textContent = `${rate}%`;
+          }
+          if (elements.storageUsed) {
+            const kb = (stats.totalSizeBytes / 1024).toFixed(1);
+            elements.storageUsed.textContent = `${kb} KB`;
+          }
+        } catch (error) {
+          console.error("Failed to update cache stats:", error);
+        }
+      },
+
+      async clearCache() {
+        try {
+          // Clear localStorage cache entries
+          const keys = Object.keys(localStorage).filter((key) =>
+            key.startsWith("tg_analysis_"),
+          );
+          keys.forEach((key) => localStorage.removeItem(key));
+
+          debug.info(`Cleared ${keys.length} cache entries`);
+          return true;
+        } catch (error) {
+          console.error("Failed to clear cache:", error);
+          return false;
+        }
+      },
+
+      async resetSettings() {
+        if (!this.userPreferenceService) return;
+
+        try {
+          await this.userPreferenceService.resetToDefaults();
+          debug.info("Settings reset to defaults");
+        } catch (error) {
+          console.error("Failed to reset settings:", error);
+        }
+      },
+
+      async exportSettings() {
+        if (!this.userPreferenceService) return;
+
+        try {
+          const preferences = await this.userPreferenceService.getPreferences();
+
+          const exportData = {
+            preferences,
+            exportDate: new Date().toISOString(),
+            version: "1.0.0",
+          };
+
+          const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+            type: "application/json",
+          });
+
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `terms-guardian-settings-${new Date().toISOString().split("T")[0]}.json`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+
+          debug.info("Settings exported successfully");
+        } catch (error) {
+          console.error("Failed to export settings:", error);
+        }
+      },
+    };
+
+    // Initialize settings
+    settingsManager.init().catch((error) => {
+      console.error("Failed to initialize settings:", error);
+    });
+
     // Listen for messages
     chrome.runtime.onMessage.addListener((message) => {
       debug.info("Received message", { type: message.type });

@@ -190,10 +190,80 @@ key excerpts, and uncommon terms.
           </div>
         </div>
       </section>
+
+      <!-- Settings Section -->
+      <section id="settings" class="settings" style="display: none">
+        <h2>Settings</h2>
+
+        <div class="settings-card">
+          <h3>Cache Settings</h3>
+          <label style="display: block; margin: 0.5rem 0">
+            <input type="checkbox" id="enable-hash-caching" checked /> Enable
+            Hash-based Caching
+          </label>
+          <div class="setting-group">
+            <label for="processing-mode">Processing Mode:</label>
+            <select id="processing-mode">
+              <option value="cloud">Cloud Processing (Shared Results)</option>
+              <option value="local">Local Only (Private)</option>
+            </select>
+          </div>
+          <div class="setting-group">
+            <label for="cache-retention">Cache Retention (days):</label>
+            <input
+              type="number"
+              id="cache-retention"
+              min="1"
+              max="365"
+              value="30"
+            />
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <h3>Analysis Preferences</h3>
+          <label style="display: block; margin: 0.5rem 0">
+            <input type="checkbox" id="auto-update" checked /> Auto-update
+            Analysis
+          </label>
+          <label style="display: block; margin: 0.5rem 0">
+            <input type="checkbox" id="debug-mode" /> Debug Mode
+          </label>
+        </div>
+
+        <div class="settings-card">
+          <h3>Cache Statistics</h3>
+          <div class="diag-grid">
+            <div>Local Hits: <span id="cache-local-hits">0</span></div>
+            <div>Cloud Hits: <span id="cache-cloud-hits">0</span></div>
+            <div>Misses: <span id="cache-misses">0</span></div>
+            <div>Total Entries: <span id="cache-total-entries">0</span></div>
+            <div>Hit Rate: <span id="cache-hit-rate">0%</span></div>
+            <div>Storage Used: <span id="cache-storage-used">0 KB</span></div>
+          </div>
+          <button id="clear-cache-btn" class="settings-btn danger">
+            Clear Cache
+          </button>
+          <button id="refresh-stats-btn" class="settings-btn">
+            Refresh Stats
+          </button>
+        </div>
+
+        <div class="settings-actions">
+          <button id="reset-settings-btn" class="settings-btn">
+            Reset to Defaults
+          </button>
+          <button id="export-settings-btn" class="settings-btn">
+            Export Settings
+          </button>
+        </div>
+      </section>
     </div>
 
     <script src="../utils/constants.js"></script>
     <script src="../utils/debugger.js"></script>
+    <script src="../services/userPreferenceService.js"></script>
+    <script src="../services/enhancedCacheService.js"></script>
     <script src="sidepanel.js"></script>
   </body>
 </html>

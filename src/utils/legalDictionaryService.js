@@ -172,18 +172,30 @@ async function createLegalDictionaryService({
   const titleIndex = new Map();
   const tokenIndex = new Map();
 
+  // Simple LRU cache & configuration - must be declared before ensureInitialized
+  const cache = new Map();
+  const serviceConfig = {
+    MAX_CACHE: 1000,
+    TTL: 24 * 60 * 60 * 1000,
+  };
+
   // Lazy initialization function - only initialize when first accessed
   function ensureInitialized() {
     if (initialized) return;
     initialized = true;
-    
+
     // Initialize constants only when needed
     try {
       const { EXT_CONSTANTS } = require("../utils/constants");
-      if (EXT_CONSTANTS && EXT_CONSTANTS.ANALYSIS && EXT_CONSTANTS.ANALYSIS.DICTIONARY) {
+      if (
+        EXT_CONSTANTS &&
+        EXT_CONSTANTS.ANALYSIS &&
+        EXT_CONSTANTS.ANALYSIS.DICTIONARY
+      ) {
         Object.assign(serviceConfig, {
           MAX_CACHE: EXT_CONSTANTS.ANALYSIS.DICTIONARY.CACHE_SIZE || 1000,
-          TTL: (EXT_CONSTANTS.ANALYSIS.DEFINITION_CACHE_TIME) || 24 * 60 * 60 * 1000
+          TTL:
+            EXT_CONSTANTS.ANALYSIS.DEFINITION_CACHE_TIME || 24 * 60 * 60 * 1000,
         });
       }
     } catch (e) {
@@ -191,13 +203,6 @@ async function createLegalDictionaryService({
     }
   }
 
-  // Simple LRU cache & configuration
-  const cache = new Map();
-  const serviceConfig = {
-    MAX_CACHE: 1000,
-    TTL: 24 * 60 * 60 * 1000
-  };
-  
   let hits = 0;
   let misses = 0;
   // metricsInterval retained for compatibility if later needed
@@ -403,13 +408,16 @@ async function createLegalDictionaryService({
     getAllLegalTermsAsync,
     clearCache,
     scanDictionaryTerms,
-    _metrics: () => ({
-      hits,
-      misses,
-      size: cache.size,
-      ttl: serviceConfig.TTL,
-      max: serviceConfig.MAX_CACHE,
-    }),
+    _metrics: () => {
+      ensureInitialized();
+      return {
+        hits,
+        misses,
+        size: cache.size,
+        ttl: serviceConfig.TTL,
+        max: serviceConfig.MAX_CACHE,
+      };
+    },
   };
 }
 
