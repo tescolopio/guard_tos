@@ -7,18 +7,39 @@
 (function (global) {
   "use strict";
 
-  const { createTextExtractor } = require("./textExtractor.js");
+  let createTextExtractor;
+  try {
+    ({ createTextExtractor } = require("./textExtractor.js"));
+  } catch (e) {
+    // Fallback: minimalist tokenizer to avoid optional chaining issues in older Node
+    createTextExtractor = function () {
+      return {
+        splitIntoWords(text) {
+          const t = String(text || "").toLowerCase();
+          // tokens include hyphenated legal terms as single words
+          const tokens = t.match(/\b[a-z][a-z0-9-]*\b/g);
+          return tokens || [];
+        },
+      };
+    };
+  }
   const {
     createLegalDictionaryService,
   } = require("../utils/legalDictionaryService.js");
   const { commonWords } = require("../data/commonWords.js");
-  const { legalTerms } = require("../data/legalTerms.js");
+  let __legalTerms = [];
+  try {
+    ({ legalTerms: __legalTerms } = require("../data/legalTerms.js"));
+  } catch (e) {
+    // ESM export or other load issue; proceed without built-in legal terms
+    __legalTerms = [];
+  }
 
   async function createUncommonWordsIdentifier({
     log,
     logLevels,
     commonWords: providedCommonWords = commonWords,
-    legalTerms: providedLegalTerms = legalTerms,
+    legalTerms: providedLegalTerms = __legalTerms,
     legalTermsDefinitions: providedLegalTermsDefinitions = {},
     config = {},
     utilities,
@@ -42,7 +63,7 @@
 
     const textExtractor = createTextExtractor({ log, logLevels, utilities });
     let dictionaryService = null; // Lazy initialization
-    
+
     // Helper function to get dictionary service only when needed
     async function getDictionaryService() {
       if (!dictionaryService) {

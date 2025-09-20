@@ -1,0 +1,106 @@
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#khanType {
+  /* Used to style the topic title on a topic page, eg
+  "Introduction to algebra" on /math/algebra/introduction-to-algebra.
+  Also used for the tutorial title on tutorial landing pages.
+  Not restricted to styling the titles of "Topic" entities. */
+}
+.vertical-shadow {
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #aaa;
+  box-shadow: 0 1px 3px #ccc;
+}
+html.page-container-min-width-zero body,
+html.page-container-min-width-zero #page-container {
+  min-width: 0;
+}
+/* Fall back colors? Eg educator, talks & interviews */
+body,
+#page-container {
+  min-width: 0;
+}
+#page_sub_nav {
+  display: none;
+}
+#privacy-policy ol {
+  list-style: decimal;
+}
+#privacy-policy ol > li {
+  margin-left: 20px;
+}
+#privacy-policy ul {
+  list-style-type: disc;
+}
+#privacy-policy ul > li {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+#privacy-policy li {
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+#privacy-policy .section-highlight {
+  background: #f4fff2;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#privacy-policy .section-highlight hr {
+  margin-left: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#privacy-policy .section-highlight li {
+  font-size: 16px;
+}
+#privacy-policy .policy-indent {
+  margin-left: 40px;
+}
+#tos {
+  font-size: 14px;
+  line-height: 20px;
+}
+#terms-details {
+  margin: 1.5em 0;
+}
+#terms-details li {
+  margin-bottom: 1.5em;
+}
+#terms-details li ol {
+  margin-left: 1.5em;
+  margin-top: 1.5em;
+}
+.tos-underline {
+  text-decoration: underline;
+}
+.tos-italics {
+  font-style: italics;
+}
+

@@ -1,0 +1,58 @@
+var $component = $('.lucid-search');
+var environment = $component.data('environment');
+var searchBarRedirectUrl = $component.data('searchbarredirecturl');
+var applicationName = $component.data('applicationname');
+var language = $component.data('language');
+
+const customThemeFix = `
+    #sui-search-box__input-wrapper .sui-search-box__text-input, .sui-search-box__text-input {
+      padding: 14px 10px;
+    }
+`;
+
+const barGetConfig = () => {
+	return {
+		env: environment,
+		suiLanguage: language,
+		searchLanguage: language,
+		showSearchButton: true,
+		searchBarRedirectUrl: searchBarRedirectUrl,
+		analyticsConfig: {
+			applicationName: applicationName
+		}
+	};
+};
+
+const mobileBarGetConfig = () => {
+	return {
+		env: environment,
+		customTheme: customThemeFix,
+		suiLanguage: language,
+		searchLanguage: language,
+		showSearchButton: true,
+		searchBarRedirectUrl: searchBarRedirectUrl,
+		analyticsConfig: {
+			applicationName: applicationName
+		}
+	};
+};
+
+function renderSplunkSearchBarComponent() {
+	const desktopContainer = document.querySelector(".splunk-header-v2 .search-container .input-group");
+	const desktopBar = document.createElement("wplt-search-bar-web-component");
+
+	const beforeMobileContainer = document.querySelector(".splunk-header-v2 .splunk-navbar .navbar-nav.navbar-right .search-icon-conatiner .input-group");
+	const beforeMobileBar = document.createElement("wplt-search-bar-web-component");
+
+	const mobileContainer = document.querySelector(".splunk-header-v2-mobile .splunk-search-wrapper .splunk-search-form-wrapper");
+	const mobileBar = document.createElement("wplt-search-bar-web-component");
+
+	desktopBar.config = barGetConfig();
+	desktopContainer.replaceChildren(desktopBar);
+
+	beforeMobileBar.config = barGetConfig();
+	beforeMobileContainer.replaceChildren(beforeMobileBar);
+
+	mobileBar.config = mobileBarGetConfig();
+	mobileContainer.replaceChildren(mobileBar);
+}

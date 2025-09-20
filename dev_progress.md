@@ -1,6 +1,8 @@
 # Terms Guardian - Development Progress
 
 > Quick link: See the concise MVP checklist at `docs/mvp_todo.md` for current MVP status and next actions.
+>
+> ML Augmentation Status: See `docs/training_progress.md` for up-to-date model/dataset/thresholds and next steps.
 
 ## ✅ CURRENT STATUS (Sep 7 2025): Stable Pipeline, Optimized Rights Rubric, Dictionary Term Tracking Added
 
@@ -397,6 +399,15 @@ Terms Guardian is a Chrome extension that analyzes Terms of Service and legal do
   - Enhanced mock services for localStorage and service interfaces
 
 ### Performance Metrics Update
+
+### ML Augmentation Update (2025-09-17)
+
+- Augmented dataset built from CUAD/LEDGAR + local harvested CLASS_ACTION_WAIVER examples (2,608 rows)
+- Retrained TF‑IDF + OvR LR model → `src/data/dictionaries/tfidf_logreg_v2.json`
+- Recalibrated thresholds (PR-based):
+  - ARBITRATION 0.2213 · CLASS_ACTION_WAIVER 0.0317 · LIABILITY_LIMITATION 0.4628 · UNILATERAL_CHANGES 0.0588
+- Updated `src/utils/constants.js` with suggested thresholds; prod build verified
+- Details and commands in `docs/training_progress.md`
 
 - **Test Coverage**: Increased to 114 tests passing across 22 test suites
 - **Cache Performance**: Hash-based change detection reduces redundant processing by ~40%

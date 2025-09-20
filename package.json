@@ -14,7 +14,17 @@
     "lint": "eslint src/**/*.js",
     "format": "prettier --write \"src/**/*.{js,html,css}\"",
     "clean": "rimraf dist",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "ml:prep": "bash -lc '/mnt/d/guard_tos/.venv/bin/python scripts/prepare_datasets.py --output data/clauses.jsonl'",
+    "ml:clean-harvest": "bash -lc '/mnt/d/guard_tos/.venv/bin/python scripts/clean_harvest_jsonl.py --input data/harvested_class_action.jsonl --output data/harvested_class_action.cleaned.jsonl'",
+    "ml:prep:aug": "npm run ml:clean-harvest && bash -lc '/mnt/d/guard_tos/.venv/bin/python scripts/prepare_datasets.py --output data/clauses.jsonl --augment data/harvested_class_action.cleaned.jsonl'",
+    "ml:train": "bash -lc '/mnt/d/guard_tos/.venv/bin/python scripts/train_tfidf_logreg.py --input data/clauses.jsonl --output src/data/dictionaries/tfidf_logreg_v2.json --labels ARBITRATION CLASS_ACTION_WAIVER LIABILITY_LIMITATION UNILATERAL_CHANGES'",
+    "ml:calibrate": "bash -lc '/mnt/d/guard_tos/.venv/bin/python scripts/calibrate_thresholds.py --data data/clauses.jsonl --model src/data/dictionaries/tfidf_logreg_v2.json --labels ARBITRATION CLASS_ACTION_WAIVER LIABILITY_LIMITATION UNILATERAL_CHANGES --out-json data/threshold_suggestions.json --out-md docs/analysis/model-calibration.md'",
+    "ml:eval": "npm run ml:calibrate && node scripts/threshold_eval.js",
+    "ml:full": "npm run ml:prep && npm run ml:train && npm run ml:calibrate",
+    "ml:full:aug": "npm run ml:prep:aug && npm run ml:train && npm run ml:calibrate",
+    "curate:tos": "node scripts/curate_tos.js",
+    "harvest:candidates": "bash -lc '/mnt/d/guard_tos/.venv/bin/python scripts/harvest_clause_candidates.py --input test-pages/curated-tos --output data/harvested_candidates.jsonl'"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
@@ -23,13 +33,18 @@
     "crypto-browserify": "^3.12.1",
     "jsdom": "^26.1.0",
     "mammoth": "^1.6.0",
-    "pdfjs-dist": "^4.0.379"
+    "pdfjs-dist": "^4.0.379",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.5",
+    "vm-browserify": "^1.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
+    "@playwright/test": "^1.55.0",
     "@testing-library/jest-dom": "^6.4.2",
+    "@types/node": "^24.5.2",
     "babel-loader": "^9.1.3",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "clean-webpack-plugin": "^4.0.0",

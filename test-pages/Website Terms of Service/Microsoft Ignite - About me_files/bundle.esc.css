@@ -1,0 +1,1093 @@
+﻿@font-face {
+  font-family: "SegoeUILightLocal";
+  /*src: local('Segoe UI Light'), local("Segoe WP Light"), local('SegoeUI-Light');*/
+  src: url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Light.woff2") format("woff2"), url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Light.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "SegoeUILocal";
+  /*src: local("Segoe UI"), local("Segoe"), local("Segoe WP");*/
+  src: url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro.woff2") format("woff2"), url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "SegoeUISemiboldLocal";
+  /*src: local("Segoe UI Semibold"), local("Segoe Semibold"), local("Segoe WP Semibold");*/
+  src: url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Semibold.woff2") format("woff2"), url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Semibold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Segoe UI Semibold";
+  /*src: local("Segoe UI Semibold"), local("Segoe Semibold"), local("Segoe WP Semibold");*/
+  src: url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Semibold.woff2") format("woff2"), url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Semibold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "SegoeUIBoldLocal";
+  /*src: local("Segoe UI Bold"), local("Segoe Bold"), local("Segoe WP Bold");*/
+  src: url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Bold.woff2") format("woff2"), url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+:root {
+  --ms-font-semi: "Segoe UI Semibold", "SegoeUILightLocal","wf_segoe-ui_light", "Segoe UI", "SegoeUILocal", "wf_segoe-ui_normal", Arial, Geneva, Helvetica, sans-serif;
+  --ms-font-light: "Segoe UI Light", "SegoeUILightLocal","wf_segoe-ui_light", "Segoe UI", "SegoeUILocal", "wf_segoe-ui_normal", Arial, Geneva, Helvetica, sans-serif;
+  --ms-font: "Segoe UI", "SegoeUILightLocal","wf_segoe-ui_light", "Segoe UI", "SegoeUILocal", "wf_segoe-ui_normal", Arial, Geneva, Helvetica, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  -webkit-flex: 1 0 auto;
+}
+
+header, footer {
+  flex-shrink: 0;
+}
+
+a.no-underline {
+  --bs-text-decoration: none;
+}
+
+/*** Styling for positioning of the localization dropdown select object ***/
+.l-language-selection {
+  position: sticky;
+  top: 0;
+  padding-right: 25px;
+  z-index: 1;
+  margin-inline: auto;
+  width: 100%;
+  /*This media query matches the one in the UHF from Microsoft*/
+}
+.esc .l-language-selection {
+  top: 54px;
+}
+.l-language-selection .form-select {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.l-language-selection .form-select:focus {
+  outline: 1.5px dashed var(--bs-black);
+  outline-offset: -3px;
+}
+@media screen and (min-width: 1083px) {
+  .l-language-selection {
+    max-width: 1600px;
+    width: 90%;
+    padding-right: 0;
+  }
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr;
+  gap: 16px;
+}
+
+/*** The flow utility class provides flow and rhythm between direct sibling elements. 
+    Where --flow-space is not defined: the default value is 1em, which equals 
+    the font size of the affected element. ***/
+.flow > * + * {
+  margin-top: var(--flow-space, 1em);
+}
+
+@media screen and (forced-colors: active), (-ms-high-contrast: active) {
+  .form-control:focus {
+    outline: 2px dashed;
+    outline-offset: 1px;
+  }
+  button,
+  .btn.btn-default,
+  .btn.btn-primary,
+  .btn.btn-secondary {
+    border: 1px solid transparent !important;
+  }
+}
+/* Position "other" textbox below radio button and label for "other" Radio button survey questions.
+    Textbox input must be placed above radio input in html markup in order for functionality 
+    to work correctly to save other response input by the user.  
+    *Note there is also javascript toggling some of these classes to make this work.
+    If you are reading this, and know a better way, please update.  - Wes
+*/
+.radio-other.radio-other-reposition {
+  padding-bottom: 10px;
+}
+
+.radio-other {
+  position: relative;
+}
+.radio-other .other-radiotextbox-reposition {
+  position: relative;
+  top: 30px;
+}
+.radio-other .other-radiolabel-reposition {
+  position: relative;
+  bottom: 37.5px;
+}
+.radio-other .other-radio-reposition {
+  position: absolute;
+  top: 0;
+}
+
+.popover-tooltip {
+  margin-left: 4px;
+}
+.popover-tooltip:focus-visible {
+  outline: 1.5px dashed var(--bs-black);
+  outline-offset: 1px;
+}
+
+p.field-validation-valid {
+  margin-bottom: 0;
+}
+
+.fa-question-circle:focus, .fa-question-circle:active, .fa-question-circle:active:focus {
+  outline: 1.5px dashed var(--bs-black);
+}
+
+.validation-mark:after {
+  content: "*";
+  color: var(--bs-red);
+  font-weight: 500;
+  font-size: 18px;
+  margin-left: 3px;
+  position: absolute;
+}
+
+.elevate {
+  background: rgb(255, 255, 255);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.outline {
+  border: 1px solid var(--bs-gray-400);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Balance text wrapping on headings */
+h1, h2,
+h3, h4 {
+  text-wrap: balance;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 5ex;
+}
+
+.modal-open #headerArea.uhf {
+  padding-right: 17px;
+  background: var(--bs-black);
+}
+
+.file-upload {
+  overflow: clip;
+  position: relative;
+  width: auto;
+}
+.file-upload__preview {
+  width: 150px;
+}
+.file-upload input {
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.file-upload:focus-within {
+  outline: 2.5px dotted var(--bs-black);
+}
+.file-upload .fa {
+  margin-right: 10px;
+}
+
+.help-block {
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: var(--bs-form-invalid-color);
+  font-weight: 400;
+  font-family: var(--bs-body-font-family);
+}
+
+.job-role-validation-message .field-validation-error {
+  margin-top: -10px;
+  color: var(--bs-danger);
+}
+
+/*Combobox-autocomplete*/
+.combobox-list {
+  position: relative;
+}
+
+.combobox-clear {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  .combobox-clear {
+    position: absolute;
+    right: -44px;
+    top: 8px;
+  }
+}
+
+.combobox input, .combobox button {
+  cursor: pointer;
+}
+.combobox button {
+  border: none;
+  position: absolute;
+  right: 20px;
+  top: 11px;
+  width: 13px;
+  outline: none;
+  color: var(--bs-gray-900);
+  transition: all 0.4s ease;
+  display: flex;
+  place-items: center;
+  font-size: 12px;
+  background-color: transparent;
+}
+.combobox ul[role=listbox] {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 0px;
+  top: 37px;
+  list-style: none;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-bottom-width: 2px;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  display: none;
+  max-height: 250px;
+  width: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  cursor: pointer;
+  z-index: 100;
+}
+.combobox ul[role=listbox] li[role=option] {
+  margin: 0;
+  display: block;
+  padding-left: 12px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-top: var(--bs-border-width) solid transparent;
+  border-bottom: var(--bs-border-width) solid transparent;
+  text-transform: capitalize;
+}
+.combobox [role=listbox].focus [role=option][aria-selected=true],
+.combobox [role=listbox] [role=option]:hover {
+  background-color: var(--bs-primary-bg-subtle);
+  border-top: var(--bs-border-width) solid var(--bs-border-color);
+  border-bottom: var(--bs-border-width) solid var(--bs-border-color);
+}
+
+/* Badge summary */
+.badge__info {
+  background: url(https://regcdn.event.microsoft.com/cdn/event/default/img/bg_badge2.png) no-repeat scroll 0 0 transparent;
+  min-height: 221px;
+  text-align: center;
+  width: 333px;
+  background-size: 330px auto;
+  overflow: hidden;
+  padding-top: 45px;
+}
+.badge__info .badge__title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.session-alert {
+  text-align: center;
+  z-index: 1060;
+}
+.session-alert__expired, .session-alert__extend {
+  padding: 1rem;
+}
+.session-alert .modal-content {
+  box-shadow: 3px 3px 10px;
+}
+
+#termsAndConditionsModal .modal-body div,
+#termsAndConditionsModaledit .modal-body div {
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+:root {
+  --table-border-radius: var(--bs-card-border-radius);
+}
+
+.table-card {
+  margin-bottom: 0;
+  --bs-border-color: transparent;
+  --bs-table-bg: transparent;
+}
+.table-card thead {
+  background-color: var(--bs-white);
+}
+.table-card thead th {
+  vertical-align: bottom;
+  border-bottom: unset;
+}
+.table-card thead th:first-child {
+  border-radius: var(--table-border-radius) 0px 0px 0px;
+}
+.table-card thead th:last-child {
+  border-radius: 0px var(--table-border-radius) 0px 0px;
+}
+.table-card td, .table-card th {
+  padding: 1rem 12px;
+  vertical-align: top;
+  border-top: unset;
+}
+.table-card td:last-child, .table-card th:last-child {
+  text-align: right;
+}
+@media (min-width: 1200px) {
+  .table-card td, .table-card th {
+    padding: 1rem 25px;
+  }
+}
+.table-card tbody tr:nth-of-type(odd).no-stripe {
+  background-color: transparent;
+}
+.table-card tbody tr:nth-of-type(odd).no-stripe > * {
+  --bs-table-bg-type: transparent;
+}
+.table-card .lastrow > * {
+  --bs-table-bg-type: transparent;
+}
+
+/* jqueryui Date Picker */
+.ui-state-default {
+  color: var(--bs-black) !important;
+  /*background: var(--bs-white) !important;*/
+}
+
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight {
+  background-color: var(--bs-white) !important;
+  color: var(--bs-black) !important;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default {
+  font-weight: 500 !important;
+}
+
+.ui-state-disabled .ui-state-default {
+  background-image: repeating-linear-gradient(45deg, #555, #808080 33.3%) !important;
+  color: var(--bs-white) !important;
+}
+
+.ui-state-disabled,
+.ui-widget-content .ui-state-disabled,
+.ui-widget-header .ui-state-disabled {
+  opacity: 1 !important;
+}
+
+select.ui-datepicker-month:focus {
+  outline: 2.5px dotted var(--bs-black);
+  outline-offset: -2px;
+}
+
+select.ui-datepicker-year:focus {
+  outline: 2.5px dotted var(--bs-black);
+  outline-offset: -2px;
+}
+
+/*fix for iOS mobile scrolling - adjust to correct context*/
+.ui-menu.ui-widget-content {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+a {
+  --bs-text-decoration: underline;
+  color: var(--bs-link-color);
+  text-decoration: var(--bs-text-decoration);
+  word-break: break-word;
+  font-weight: 600;
+  font-size: 15px;
+}
+a:hover {
+  color: var(--bs-link-hover-color);
+  --bs-text-decoration: underline;
+  outline: none;
+}
+a:active, a:focus-visible {
+  --bs-link-color: var(--bs-link-hover-color);
+  --bs-text-decoration: underline;
+}
+a.btn:hover, a.btn:active, a.btn:focus-visible {
+  --bs-btn-focus-box-shadow: none;
+}
+a.btn:focus-visible {
+  outline: 2px dashed var(--bs-black);
+  outline-offset: 1px;
+}
+a:focus-visible {
+  outline: 1.5px dashed var(--bs-black);
+  outline-offset: -1px;
+}
+
+/*************************** Buttons ***************************/
+.btn {
+  --btn-text-decoration: none;
+  --btn-hover-text-decoration: none;
+  --bs-btn-font-family: inherit;
+  text-decoration: var(--btn-text-decoration);
+  border-radius: 4px;
+}
+.btn:hover {
+  text-decoration: var(--btn-hover-text-decoration);
+}
+.btn:focus-visible {
+  outline: 2px dashed var(--bs-black);
+  outline-offset: 1px;
+  --bs-btn-focus-box-shadow: none;
+}
+
+.btn-group-lg > .btn, .btn-lg {
+  --bs-btn-padding-y: 0.5rem;
+  --bs-btn-padding-x: 1rem;
+  --bs-btn-font-size: 1.25rem;
+  --bs-btn-border-radius: var(--bs-border-radius-lg);
+}
+
+/*************************** Forms ***************************/
+.form-control,
+.form-select,
+.form-check-input,
+.input-group-text {
+  --bs-border-color: var(--bs-gray-600);
+}
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus,
+.input-group-text:focus {
+  outline: 1.5px dashed var(--bs-black);
+  outline-offset: 0px;
+}
+.form-control:focus-visible,
+.form-select:focus-visible,
+.form-check-input:focus-visible,
+.input-group-text:focus-visible {
+  outline: 1.5px dashed var(--bs-black);
+  outline-offset: 0px;
+}
+
+label {
+  font-size: 15px;
+  font-family: var(--ms-font-semi);
+  color: var(--bs-black);
+  vertical-align: text-top;
+}
+
+.form-check label,
+.form-check input {
+  cursor: pointer;
+}
+
+.col-form-label {
+  font-weight: 500;
+}
+
+/*************************** Modals ***************************/
+.modal .btn-close:focus {
+  outline: 1.5px dashed var(--bs-black);
+  outline-offset: 0px;
+}
+
+.l-main {
+  background: var(--bg-banner);
+  background-attachment: fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+@media (max-width: 767.98px) {
+  .l-main {
+    background: var(--bg-sm-banner);
+    background-attachment: fixed;
+    background-size: cover;
+  }
+}
+.l-main:focus {
+  outline: none;
+}
+.l-main__content {
+  max-width: unset;
+  margin: 150px 12px 60px;
+}
+@media (min-width: 576px) {
+  .l-main__content {
+    margin: 150px 24px 60px;
+  }
+}
+@media (min-width: 768px) {
+  .l-main__content {
+    max-width: 736px;
+  }
+}
+@media (min-width: 992px) {
+  .l-main__content {
+    margin: 116px auto 60px;
+  }
+}
+@media (min-width: 1200px) {
+  .l-main__content {
+    margin: 136px auto 80px;
+  }
+}
+.l-main__content:has(.l-main__append) .l-main__body {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.l-main__body {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  padding: 25px;
+  border-radius: 14px;
+}
+body.modal-open .l-main__body {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+@media (min-width: 576px) {
+  .l-main__body {
+    padding: 40px;
+  }
+}
+@media (min-width: 768px) {
+  .l-main__body {
+    padding: 80px;
+  }
+}
+.l-main__append {
+  background: rgb(var(--bs-white-rgb), 0.9);
+  padding: 10px 25px;
+  border-bottom-right-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+@media (min-width: 576px) {
+  .l-main__append {
+    padding: 10px 40px;
+  }
+}
+@media (min-width: 768px) {
+  .l-main__append {
+    padding: 20px 80px;
+  }
+}
+.l-main__append:empty {
+  display: none;
+}
+
+.l-footer {
+  padding: 10px 15px 10px;
+  text-align: center;
+  font-size: 11px;
+}
+.l-footer a {
+  color: white;
+}
+.l-footer__block {
+  display: inline-block;
+}
+
+.breakout {
+  margin-inline: -25px;
+  padding-inline: 25px;
+  padding-block: 2rem;
+  background: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1.5rem;
+}
+@media (min-width: 576px) {
+  .breakout {
+    margin-inline: -40px;
+    padding-inline: 40px;
+  }
+}
+@media (min-width: 768px) {
+  .breakout {
+    margin-inline: -80px;
+    padding-inline: 80px;
+  }
+}
+
+.code .btn.btn-link {
+  --bs-btn-padding-x: 0rem;
+}
+
+.link-block {
+  color: var(--bs-link-color);
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: underline;
+}
+.link-block:hover {
+  color: var(--bs-link-hover-color);
+}
+.link-block:focus-visible {
+  outline: 1.5px dashed var(--bs-black);
+}
+.link-block svg {
+  margin-inline: 5px;
+  cursor: pointer;
+  fill: var(--bs-primary);
+}
+
+/*************************** Pricing Cards ***************************/
+h1 {
+  /*color: $secondary;*/
+  font-size: 46px;
+}
+
+p {
+  /*color: $secondary;*/
+  font-size: 15px;
+}
+p a {
+  font-size: inherit !important;
+}
+
+ul li {
+  font-size: 15px;
+}
+
+label, .terms-and-conditions_underline, .modal-body, .modal-body *:not(.btn) {
+  /*color: $secondary !important;*/
+}
+
+.pricing-cards {
+  align-content: stretch;
+  margin-top: 60px;
+}
+.pricing-cards div[class*=card-col] .card {
+  align-content: stretch;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border: none !important;
+  -webkit-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.pricing-cards div[class*=card-col] .card .card-heading {
+  width: 100%;
+  height: 40px;
+  position: absolute;
+  top: -4px;
+  left: 0;
+  padding-top: 10px;
+  text-align: center;
+}
+.pricing-cards div[class*=card-col] .card .card-body {
+  padding-top: 60px;
+}
+.pricing-cards div[class*=card-col] .card .card-body .card-cost {
+  color: #c03bc4;
+  font-size: 24px;
+  font-family: var(--ms-font-semi);
+  margin-bottom: 10px;
+}
+.pricing-cards div[class*=card-col] .card .card-body h3.card-title {
+  color: #702573;
+  font-size: 36px;
+  font-family: var(--ms-font-semi);
+  margin-bottom: 20px;
+}
+.pricing-cards div[class*=card-col] .card .card-body h4.card-type {
+  color: #c03bc4;
+  font-size: 24px;
+  font-family: var(--ms-font-semi);
+}
+.pricing-cards div[class*=card-col] .card .card-body h5 {
+  color: #702573;
+  font-size: 15px;
+  font-family: var(--ms-font-semi);
+}
+.pricing-cards div[class*=card-col] .card .card-body p {
+  color: #702573;
+  font-size: 15px;
+  font-family: var(--ms-font);
+}
+.pricing-cards div[class*=card-col] .card .card-body hr {
+  border-width: 2px;
+  color: #702573;
+}
+.pricing-cards div[class*=card-col] .card .card-body ul li {
+  color: #702573;
+  font-size: 15px;
+  font-family: var(--ms-font);
+}
+.pricing-cards .card-col-1 .card-heading {
+  background: url("https://regcdn.event.microsoft.com/cdn/event/34785/ignite-card-heading-1.png") no-repeat center center/cover;
+}
+.pricing-cards .card-col-1 .card-heading.sold-out {
+  background: #e50000;
+  color: #ffffff;
+}
+.pricing-cards .card-col-2 .card-heading {
+  background: url("https://regcdn.event.microsoft.com/cdn/event/34785/ignite-card-heading-2.png") no-repeat center center/cover;
+}
+.pricing-cards .card-col-2 .card-heading.sold-out {
+  background: #e50000;
+  color: #ffffff;
+}
+.pricing-cards .card-col-3 .card-heading {
+  background: url("https://regcdn.event.microsoft.com/cdn/event/34785/ignite-card-heading-3.png") no-repeat center center/cover;
+}
+.pricing-cards .card-col-3 .card-body {
+  background: #fff8f3;
+}
+.pricing-cards .card-col-3 .card-body .card-cost, .pricing-cards .card-col-3 .card-body h4.card-type {
+  color: #7f5a1a !important;
+}
+.pricing-cards .card-col-3 .card-body h3.card-title, .pricing-cards .card-col-3 .card-body h5, .pricing-cards .card-col-3 .card-body p, .pricing-cards .card-col-3 .card-body hr, .pricing-cards .card-col-3 .card-body ul li {
+  color: #73391d !important;
+}
+
+.btn-primary {
+  background: #702573 !important;
+  border-color: #702573 !important;
+  color: #fff !important;
+}
+
+.modal-content {
+  color: #463668;
+}
+
+.edit-accordion__header svg {
+  fill: #0078d4 !important;
+}
+
+@media (max-width: 575.98px) {
+  .button-group {
+    flex-wrap: wrap;
+  }
+}
+@media (min-width: 576px) {
+  .button-group {
+    height: 90px;
+    align-content: center;
+  }
+}
+@media (min-width: 992px) {
+  .button-group {
+    height: 70px;
+    align-content: center;
+  }
+}
+.button-group .btn {
+  width: 100%;
+  align-content: center;
+  height: 100%;
+}
+@media (max-width: 575.98px) {
+  .button-group .btn {
+    margin: 5px 0 !important;
+  }
+}
+@media (min-width: 576px) {
+  .button-group .btn {
+    width: 33.33% !important;
+  }
+}
+@media (max-width: 991.98px) {
+  .button-group .btn.text-nowrap {
+    white-space: normal !important;
+  }
+}
+
+/**************************  Step Nav ******************************/
+.stepbar {
+  --stepbar-color-text: var(--bs-black);
+  --stepbar-color-default: var(--bs-white);
+  --stepbar-color-default-text: var(--bs-black);
+  --stepbar-color-past: var(--bs-white);
+  --stepbar-color-past-text: var(--bs-primary);
+  --stepbar-color-current: var(--bs-primary);
+  --stepbar-color-current-text: var(--bs-white);
+  --stepbar-margin: -20px auto 16px;
+  --stepbar-step-text: var(--stepbar-color-text);
+  --stepbar-step-font-weight: normal;
+  --stepbar-step-number-color: var(--stepbar-color-default-text);
+  --stepbar-step-number-bg: var(--stepbar-color-default);
+  --stepbar-step-number-width: 30px;
+  --stepbar-step-number-height: 30px;
+  --stepbar-step-border-width: 50%;
+  --stepbar-step-border-size: 3px;
+  --stepbar-step-border-bg: transparent;
+  --stepbar-step-border-radius: var(--stepbar-step-border-size);
+  --stepbar-font-size: 14px;
+  width: 100%;
+  font-size: var(--stepbar-font-size);
+  margin: var(--stepbar-margin);
+  padding: 2px;
+  overflow-x: auto;
+}
+.stepbar__ul {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+}
+.stepbar__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--stepbar-step-number-bg);
+  color: var(--stepbar-step-number-color);
+  margin: 0px 0px 5px 0px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: bold;
+  width: var(--stepbar-step-number-width);
+  height: var(--stepbar-step-number-height);
+}
+@media (min-width: 768px) {
+  .stepbar__number {
+    margin: 0px 0px 5px 0px;
+  }
+}
+.stepbar__content {
+  flex-direction: column;
+  padding: 10px 10px 13px;
+}
+@media (min-width: 768px) {
+  .stepbar__content {
+    padding: 10px 15px 13px;
+  }
+}
+.stepbar__content:focus-visible {
+  outline: 1.5px dashed #000;
+}
+.stepbar__text {
+  color: var(--stepbar-step-text, #000);
+  margin: 0;
+  text-align: center;
+}
+.stepbar__border {
+  position: relative;
+  display: block;
+  width: var(--stepbar-step-border-width);
+  height: var(--stepbar-step-border-size);
+  background: var(--stepbar-step-border-bg);
+  border-radius: var(--stepbar-step-border-radius);
+}
+.stepbar__step {
+  list-style-type: none;
+  min-width: 140px;
+  padding: 0px;
+  margin-right: 4px;
+  font-weight: var(--stepbar-step-font-weight);
+  min-width: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stepbar__step:first-child {
+  margin-left: auto;
+}
+.stepbar__step:last-child {
+  margin-right: auto;
+}
+.stepbar__step--current, .stepbar__step--past {
+  cursor: pointer;
+}
+.stepbar__step--current {
+  --stepbar-step-font-weight: 700;
+  --stepbar-step-number-color: var(--stepbar-color-current-text);
+  --stepbar-step-number-bg: var(--stepbar-color-current);
+  --stepbar-step-text: var(--stepbar-color-current);
+  --stepbar-step-border-bg: var(--stepbar-color-current);
+}
+.stepbar__step--past {
+  --stepbar-step-number-color: var(--stepbar-color-past-text);
+  --stepbar-step-number-bg: var(--stepbar-color-past);
+  --stepbar-step-text: var(--stepbar-color-past-text);
+  --stepbar-step-border-bg: transparent;
+}
+
+#headerArea.uhf {
+  margin-bottom: -0.12em;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 2;
+}
+
+.c-show-pipe::before {
+  border-right: solid 2px var(--bs-white);
+}
+
+@media only screen and (min-width: 1779px) {
+  .c-uhfh .c-show-pipe::before {
+    padding-left: unset !important;
+  }
+}
+@media only screen and (max-width: 859px) {
+  .c-uhfh.c-sgl-stck .cat-logo-button-cont {
+    width: 100vw !important;
+  }
+  .c-uhfh.c-sgl-stck nav.c-uhfh-gnav,
+  .c-uhfh.c-sgl-stck nav#uhf-c-nav {
+    border-bottom: 0px !important;
+  }
+  .c-uhfh > div:first-child nav > ul > li {
+    border-top: 0px !important;
+  }
+}
+footer {
+  background: #000;
+  color: var(--bs-white);
+}
+footer .c-uhff {
+  margin-top: 0;
+  background: #000;
+  color: var(--bs-white);
+}
+footer .c-uhff .c-uhff-nav a.c-uhff-link {
+  color: var(--bs-white);
+}
+footer .c-uhff .c-uhff-nav .c-heading-4 {
+  color: var(--bs-white);
+}
+footer .c-uhff .c-uhff-nav .c-uhff-base ul.c-list {
+  color: var(--bs-white);
+}
+footer .c-uhff .c-uhff-base {
+  background: #000;
+}
+footer .c-uhff .c-uhff-base ul.c-list {
+  color: var(--bs-white);
+  font-size: 11px;
+}
+footer .c-uhff .c-uhff-base ul.c-list li {
+  font-size: 11px;
+}
+footer .c-uhff .c-uhff-base ul.c-list li a {
+  font-size: 11px !important;
+}
+footer .c-uhff .c-uhff-base a.c-uhff-link {
+  color: var(--bs-white);
+}
+footer ul li {
+  font-size: 11px !important;
+}
+footer ul li a {
+  font-size: 11px !important;
+}
+footer .l-footer a {
+  font-size: 11px !important;
+}
+
+@media screen and (min-width: 860px) {
+  .c-uhfh > div:first-child {
+    margin-bottom: 0px !important;
+  }
+}
+@font-face {
+  font-family: "SegoeUILightLocal";
+  /*src: local('Segoe UI Light'), local("Segoe WP Light"), local('SegoeUI-Light');*/
+  src: url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Light.woff2") format("woff2"), url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Light.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "SegoeUILocal";
+  /*src: local("Segoe UI"), local("Segoe"), local("Segoe WP");*/
+  src: url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro.woff2") format("woff2"), url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "SegoeUISemiboldLocal";
+  /*src: local("Segoe UI Semibold"), local("Segoe Semibold"), local("Segoe WP Semibold");*/
+  src: url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Semibold.woff2") format("woff2"), url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Semibold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Segoe UI Semibold";
+  /*src: local("Segoe UI Semibold"), local("Segoe Semibold"), local("Segoe WP Semibold");*/
+  src: url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Semibold.woff2") format("woff2"), url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Semibold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "SegoeUIBoldLocal";
+  /*src: local("Segoe UI Bold"), local("Segoe Bold"), local("Segoe WP Bold");*/
+  src: url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Bold.woff2") format("woff2"), url("https://regcdn.event.microsoft.com/cdn/font/segoe-pro/SegoePro-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+:root {
+  --blue-focus-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 125, 188, 0.6);
+  --bg-banner: #e5c777 url(https://regcdn.event.microsoft.com/cdn/event/34785/FY25_IGNITE_Ph1_SignIn_Desktop_1920x1080.png) right 54px no-repeat;
+  --bg-sm-banner: #e5c777 url(https://regcdn.event.microsoft.com/cdn/event/34785/FY25_IGNITE_Ph1_SignIn_Tablet_1083x609.png) right 54px no-repeat;
+  --bs-link-color: #0078d4;
+  --bs-link-hover-color: #0060aa;
+  --star-color: #ffa500;
+  --featured-color: #ffa500;
+  --featured-hover-color: #EA9C0D;
+  --bs-black: #463668;
+  --bs-body-color: #463668;
+  --bs-heading-color: #463668;
+  --bs-secondary-color: #463668;
+  --bs-modal-color: #463668;
+}
+
+/*@use "variables/variables-css.qd" as *;*/

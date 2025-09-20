@@ -1,0 +1,283 @@
+﻿$.validator.addMethod("requiretrue", function (value, element, param) {
+    return element.checked;
+});
+$.validator.unobtrusive.adapters.addBool("requiretrue");
+
+$.validator.unobtrusive.adapters.add('surveyquestion', [],
+    function (options) {
+        options.rules['surveyquestion'] = options.params;
+        if (options.message) {
+            options.messages['surveyquestion'] = options.message;
+        }
+    }
+);
+
+$.validator.addMethod('surveyquestion', function (value, element, params) {
+    if (/SelectedAnswers/.test(element.name)) {
+        // multiselect question type
+        var $selectedBoxes = $('input[name="' + element.name + '"]:checked');
+        if ($selectedBoxes.length == 0) {
+            return false;
+        }
+    } else {
+        var requiredFieldValue = $('input[name="' + element.name.replace("Response", "Required") + '"]').val();
+        if (requiredFieldValue == "True") {
+            if (element.type == "select-one" && (value.toLowerCase() == "select" || value.toLowerCase() == "choose" || value.toLowerCase() == "")) {
+                return false;
+            }
+            if (element.type == "radio") {
+                var $selectedRadios = $('input[name="' + element.name + '"]:checked');
+                if ($selectedRadios.length == 0) {
+                    return false;
+                }
+            }
+            if (value == "") {
+                return false;
+            }
+        }
+    }
+    return true;
+}, '');
+
+$.validator.unobtrusive.adapters.add('mandatory', [],
+    function (options) {
+        options.rules['mandatory'] = options.params;
+        if (options.message) {
+            options.messages['mandatory'] = options.message;
+        }
+    }
+);
+
+$.validator.addMethod('mandatory', function (value, element, params) {
+    if (element.type == "checkbox" && !element.checked) {
+        return false;
+    }
+    if (element.type == "radio" && $('input[name="' + element.name + '"]:checked').length == 0) {
+        return false;
+    }
+    return true;
+}, '');
+
+$.validator.unobtrusive.adapters.add("requiredif", ["other", "comp", "value"],
+	function (options) {
+	    options.rules['requiredif'] = {
+	        other: options.params.other,
+	        comp: options.params.comp,
+	        value: options.params.value
+	    };
+	    options.messages['requiredif'] = options.message;
+	}
+);
+
+$.validator.addMethod("requiredif", function (value, element, params) {
+    if ($(element).val() != '') return true
+    
+    var parsed = element.name.split(".");
+    parsed[parsed.length - 1] = params.other;
+    var otherName = parsed.join(".");
+    var $other = $('[name="' + otherName + '"]');
+
+    if (!$other.length || otherName == element.name) {
+        return false;
+    }
+
+    var otherVal = ($other.prop('type').toUpperCase() == "CHECKBOX") ?
+                   ($other.prop("checked") ? "true" : "false") : $other.val().toLowerCase();
+
+    switch (params.comp) {
+        case 'isequalto':
+            return otherVal != params.value;
+        case 'isnotequalto':
+            return otherVal == params.value;
+        case 'regexp':
+            return !otherVal.match(RegExp(params.value));
+    }
+
+    return false;
+});
+
+$.validator.unobtrusive.adapters.add('cardholder', [],
+    function (options) {
+        options.rules['cardholder'] = options.params;
+        if (options.message) {
+            options.messages['cardholder'] = options.message;
+        }
+    }
+);
+
+$.validator.addMethod('cardholder', function (value, element, params) {
+    //name must not contain 4 consecutive numbers
+    if (/\d{5}/.test(value)) {
+        return false;
+    }
+    // Name must not contain last four of cc number
+    var cardNumber = $('input[name="' + element.name.replace("CardholderName", "Number").replace("ccName", "ccNumber") + '"]').val();
+    if (cardNumber && cardNumber.length > 4 && value.search(cardNumber.substr(-4)) > -1) {
+        return false;
+    }
+    // Name must not contain security code
+    var securityCode = $('input[name="' + element.name.replace("CardholderName", "SecurityCode").replace("ccName", "ccCode") + '"]').val();
+    if (securityCode && securityCode.length && value.search(securityCode) > -1) {
+        return false;
+    }
+    return true;
+}, '');
+
+$.validator.unobtrusive.adapters.add('dangerous', [],
+    function (options) {
+        options.rules['dangerous'] = options.params;
+        if (options.message) {
+            options.messages['dangerous'] = options.message;
+        }
+    }
+);
+
+$.validator.addMethod('dangerous', function (value, element, params) {
+    if (/(<(\w|!|\/|\?)|&#)/.test(value)) {
+        return false;
+    }
+    return true;
+}, '');
+
+$.validator.unobtrusive.adapters.add('expiration', [],
+    function (options) {
+        options.rules['expiration'] = options.params;
+        if (options.message) {
+            options.messages['expiration'] = options.message;
+        }
+    }
+);
+
+$.validator.addMethod('expiration', function (value, element, params) {
+    var expirationMoment = moment([$('select[name="' + element.name + '"]#yearSelect').val(), $('select[name="' + element.name + '"]#monthSelect').val() - 1]).endOf("month");
+    return expirationMoment.isAfter();
+}, '');
+
+$.validator.unobtrusive.adapters.add('earlyexpiry', [],
+    function (options) {
+    	options.rules['earlyexpiry'] = options.params;
+    	if (options.message) {
+    		options.messages['earlyexpiry'] = options.message;
+    	}
+    }
+);
+
+$.validator.addMethod('earlyexpiry', function (value, element, params) {
+    var expirationMoment = moment([$('select[name="' + element.name + '"]#yearSelect').val(), $('select[name="' + element.name + '"]#monthSelect').val() - 1]).endOf("month");
+    var dateFormat = $('[id^=checkoutText]').data("dateformat");
+    var checkoutMoment = moment($('[id^=checkoutText]').val(), dateFormat);
+    if (expirationMoment == undefined || checkoutMoment == undefined) return true;
+    return (expirationMoment.isAfter(checkoutMoment));
+}, '');
+
+$.validator.unobtrusive.adapters.add('msemail', [],
+    function (options) {
+        options.rules['msemail'] = options.params;
+        if (options.message) {
+            options.messages['msemail'] = options.message;
+        }
+    }
+);
+
+$.validator.addMethod('msemail', function (value, element, params) {
+    if (value == "") {
+        //allow ms email validation to not require the user to enter a value
+        //if a field is to be required, it should use the required attribute
+        return true;
+    }
+    if (value.toLowerCase().indexOf("@microsoft.com") >= 0) {
+        return true;
+    }
+    return false;
+}, '');
+
+$.validator.unobtrusive.adapters.add('minimumnights', ["nights"],
+    function (options) {
+        options.rules['minimumnights'] = {
+            nights: options.params.nights
+        }
+        if (options.message) {
+            options.messages['minimumnights'] = options.message;
+        }
+    }
+);
+
+$.validator.addMethod('minimumnights', function (value, element, params) {
+    var $dateSelectionDiv = $(element).parents('.occupant-request-date-selection');
+    var $checkInDateInput = $dateSelectionDiv.find('input[name^="checkinDate"]');
+    var $checkOutDateInput = $dateSelectionDiv.find('input[name^="checkoutDate"]');
+    
+    var checkInDate = moment($checkInDateInput.val(), 'MM/DD/YYYY');
+    var checkOutDate = moment($checkOutDateInput.val(), 'MM/DD/YYYY');
+    if (checkInDate != undefined && checkOutDate != undefined && checkInDate.isValid() && checkOutDate.isValid()) {
+        var nights = $dateSelectionDiv.find('input[name^="' + params.nights + '"]').val();
+        if (checkOutDate.diff(checkInDate, 'days') >= nights) {
+            return true;
+        }
+    }
+
+    return false;
+}, '');
+
+$.validator.unobtrusive.adapters.add('notccnumber', [],
+    function (options) {
+        options.rules['notccnumber'] = {
+            nights: options.params.nights
+        }
+        if (options.message) {
+            options.messages['notccnumber'] = options.message;
+        }
+    }
+);
+
+$.validator.addMethod('notccnumber', function (value, element, params) {
+    if (!value) {
+        return true;
+    }
+
+    var valueSanitized = value.replace(/-/g, '').replace(/ /g, '').replace(/(\r\n|\n|\r)/gm, "");
+    var numbersOnly = valueSanitized.match(/\d+/g);
+    if (numbersOnly) {
+        var isValid = true;
+        _.each(numbersOnly, function (num) {
+            var potentialCCNumber = num.length >= 13;
+            if (potentialCCNumber) {
+                isValid = false;
+            }
+        });
+        return isValid;
+    }
+
+    return true;
+}, '');
+
+$.validator.unobtrusive.adapters.add('multiselect-checkbox-selectone', [],
+    function (options) {
+        options.rules['multiselect-checkbox-selectone'] = options.params;
+        if (options.message) {
+            options.messages['multiselect-checkbox-selectone'] = options.message;
+        }
+    }
+);
+
+$.validator.addMethod('multiselect-checkbox-selectone', function (value, element, params) {
+    var isValid = $(element).parents('.form-group').find('input[type="checkbox"]:checked').length > 0;
+
+    if (isValid) {
+        $(element).parents('.form-group').find('.form-text').not('[id$="_label2"]').hide();
+    }
+    else {
+        $(element).parents('.form-group').find('.form-text').not('[id$="_label2"]').show();
+    }
+
+    return isValid;
+}, '');
+
+$.validator.addMethod('url', function (value, element, params) {
+    if (value == "") {
+        //if a field is to be required, it should use the required attribute
+        return true;
+    }
+    var regex = /^(?:(?:(?:https?):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/;
+    return regex.test(value);
+}, '');

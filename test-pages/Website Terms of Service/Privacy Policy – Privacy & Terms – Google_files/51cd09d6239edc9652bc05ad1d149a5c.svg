@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="360" height="204" viewBox="0 0 360 204">
+  <defs>
+    <linearGradient id="linear-gradient" x1="293.155" y1="108.155" x2="321.845" y2="79.466" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bdc1c6"/>
+      <stop offset="1" stop-color="#bdc1c6" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="46" y1="93" x2="74" y2="93" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bdc1c6" stop-opacity="0"/>
+      <stop offset="0.137" stop-color="#bdc1c6" stop-opacity="0.021"/>
+      <stop offset="0.279" stop-color="#bdc1c6" stop-opacity="0.084"/>
+      <stop offset="0.424" stop-color="#bdc1c6" stop-opacity="0.189"/>
+      <stop offset="0.57" stop-color="#bdc1c6" stop-opacity="0.336"/>
+      <stop offset="0.718" stop-color="#bdc1c6" stop-opacity="0.525"/>
+      <stop offset="0.864" stop-color="#bdc1c6" stop-opacity="0.753"/>
+      <stop offset="1" stop-color="#bdc1c6"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect x="171" y="104" width="28" height="32" rx="1" ry="1" fill="none"/>
+    </clipPath>
+    <linearGradient id="linear-gradient-3" x1="16" y1="165" x2="60" y2="165" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9aa0a6" stop-opacity="0"/>
+      <stop offset="0.15" stop-color="#9aa0a6" stop-opacity="0.025"/>
+      <stop offset="0.306" stop-color="#9aa0a6" stop-opacity="0.1"/>
+      <stop offset="0.464" stop-color="#9aa0a6" stop-opacity="0.225"/>
+      <stop offset="0.624" stop-color="#9aa0a6" stop-opacity="0.4"/>
+      <stop offset="0.786" stop-color="#9aa0a6" stop-opacity="0.626"/>
+      <stop offset="0.946" stop-color="#9aa0a6" stop-opacity="0.898"/>
+      <stop offset="1" stop-color="#9aa0a6"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" x1="79" x2="123" xlink:href="#linear-gradient-3"/>
+    <linearGradient id="linear-gradient-5" x1="90" y1="168" x2="90" y2="106" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c5221f"/>
+      <stop offset="1" stop-color="#c5221f" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-6" x1="87.477" y1="142" x2="87.477" y2="168" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5f6368"/>
+      <stop offset="1" stop-color="#5f6368" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-7" x1="76" y1="74" x2="76" y2="94" xlink:href="#linear-gradient"/>
+  </defs>
+  <title>site_sec_B_04</title>
+  <g style="isolation: isolate">
+    <g id="Content">
+      <g>
+        <g>
+          <path d="M279,94l21.367-21.746a9.993,9.993,0,0,1,14.266,0L336,94Z" fill="#e8eaed"/>
+          <path d="M279,94l21.367-21.746a9.993,9.993,0,0,1,14.266,0L336,94Z" opacity="0.5" fill="url(#linear-gradient)" style="mix-blend-mode: multiply"/>
+          <path d="M192,94l45.151-45.431a16,16,0,0,1,22.7,0L305,94Z" fill="#e8eaed"/>
+        </g>
+        <path d="M309.529,31a8.47,8.47,0,0,0-7.864,5.4A5.563,5.563,0,0,0,299.6,36a5.668,5.668,0,0,0-5.6,5h23.873A8.688,8.688,0,0,0,318,39.571,8.521,8.521,0,0,0,309.529,31Z" fill="#e8eaed"/>
+        <path d="M167,36a8.477,8.477,0,0,0-8.379-8.571,8.186,8.186,0,0,0-4.2,1.161A9.987,9.987,0,0,0,146.052,24a10.09,10.09,0,0,0-9.68,7.534,6.541,6.541,0,0,0-2.889-.677A6.73,6.73,0,0,0,127,36Z" fill="#e8eaed"/>
+        <path d="M112.647,17a5.661,5.661,0,0,1,5.242,3.778,3.554,3.554,0,0,1,1.378-.278A3.851,3.851,0,0,1,123,24H107.085A6.378,6.378,0,0,1,107,23,5.832,5.832,0,0,1,112.647,17Z" fill="#e8eaed"/>
+        <polyline points="360 0 360 204 0 204 0 0" fill="none"/>
+        <path d="M32,45a4.238,4.238,0,0,1,4.19-4.286,4.093,4.093,0,0,1,2.1.581A4.993,4.993,0,0,1,42.474,39a5.045,5.045,0,0,1,4.84,3.767,3.27,3.27,0,0,1,1.444-.338A3.365,3.365,0,0,1,52,45Z" fill="#e8eaed"/>
+        <rect x="46" y="92" width="28" height="2" fill="url(#linear-gradient-2)" style="mix-blend-mode: multiply"/>
+        <g>
+          <g>
+            <rect x="123" y="72" width="144" height="96" fill="#dadce0"/>
+            <path d="M125,62H265a2,2,0,0,1,2,2v8a0,0,0,0,1,0,0H123a0,0,0,0,1,0,0V64A2,2,0,0,1,125,62Z" fill="#bdc1c6"/>
+            <circle cx="131" cy="67" r="2" fill="#9aa0a6"/>
+            <rect x="135" y="104" width="28" height="32" rx="1" ry="1" fill="#fbbc04"/>
+            <rect x="171" y="104" width="28" height="32" rx="1" ry="1" fill="#fbbc04"/>
+            <rect x="207" y="104" width="28" height="32" rx="1" ry="1" fill="#fbbc04"/>
+            <path d="M244,104h23a0,0,0,0,1,0,0v32a0,0,0,0,1,0,0H244a1,1,0,0,1-1-1V105A1,1,0,0,1,244,104Z" fill="#fbbc04"/>
+            <g>
+              <rect x="135" y="144" width="36" height="3" rx="1.5" ry="1.5" fill="#4285f4"/>
+              <rect x="135" y="153" width="54" height="2" rx="1" ry="1" fill="#34a853"/>
+            </g>
+            <g clip-path="url(#clip-path)">
+              <g>
+                <path d="M206.455,118.909a5.545,5.545,0,1,1-5.546,5.545,5.552,5.552,0,0,1,5.546-5.545m0-1A6.545,6.545,0,1,0,213,124.455a6.546,6.546,0,0,0-6.545-6.545Z" fill="#fff"/>
+                <path d="M183.545,118.909A5.545,5.545,0,1,1,178,124.455a5.552,5.552,0,0,1,5.545-5.545m0-1a6.545,6.545,0,1,0,6.546,6.545,6.545,6.545,0,0,0-6.546-6.545Z" fill="#fff"/>
+                <polygon points="195 124.455 189.273 114.227 200.727 114.227 195 124.455" fill="none" stroke="#fff" stroke-linejoin="round"/>
+                <polygon points="200.727 114.227 206.455 124.455 195 124.455 200.727 114.227" fill="none" stroke="#fff" stroke-linejoin="round"/>
+                <polyline points="183.545 124.455 189.273 114.227 195 124.455" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/>
+                <g>
+                  <path d="M186.409,119.341l3.679-6.559a1.227,1.227,0,0,0-1.07-1.828h-1.452a.818.818,0,0,1-.579-.24l-1.4-1.4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M185.591,109.318l1.4,1.4a.818.818,0,0,0,.579.24h1.093" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <line x1="197.864" y1="119.341" x2="202.568" y2="110.955" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="199.909" y1="110.955" x2="204" y2="110.955" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+            </g>
+            <g>
+              <path d="M150.167,110v1.7A3.5,3.5,0,0,1,152.5,115v4h-7v-4a3.5,3.5,0,0,1,2.333-3.3V110h2.333m1-1h-4.333v2.06A4.507,4.507,0,0,0,144.5,115v5h9v-5a4.507,4.507,0,0,0-2.333-3.94V109Z" fill="#fff"/>
+              <circle cx="149" cy="115" r="1" fill="#fff"/>
+              <path d="M152.5,120v9.125a.875.875,0,0,1-.875.875h-5.25a.875.875,0,0,1-.875-.875V120h7m1-1h-9v10.125A1.877,1.877,0,0,0,146.375,131h5.25a1.877,1.877,0,0,0,1.875-1.875V119Z" fill="#fff"/>
+              <rect x="146" y="108" width="6" height="2" rx="1" ry="1" fill="#fff"/>
+            </g>
+            <g>
+              <path d="M141,84H242a0,0,0,0,1,0,0V96a0,0,0,0,1,0,0H141a6,6,0,0,1-6-6v0A6,6,0,0,1,141,84Z" fill="#fff"/>
+              <path d="M242,84h7a6,6,0,0,1,6,6v0a6,6,0,0,1-6,6h-7a0,0,0,0,1,0,0V84A0,0,0,0,1,242,84Z" fill="#4285f4"/>
+              <rect x="141" y="89" width="44" height="2" rx="1" ry="1" fill="#bdc1c6"/>
+              <g>
+                <path d="M245.686,89.23a1.544,1.544,0,1,1,1.544,1.544A1.542,1.542,0,0,1,245.686,89.23Zm5.058,3-1.71-1.71a2.191,2.191,0,0,0,.369-1.79,2.23,2.23,0,1,0-2.671,2.671,2.191,2.191,0,0,0,1.79-.369l1.71,1.71a.361.361,0,0,0,.511,0h0A.361.361,0,0,0,250.744,92.233Z" fill="#fff"/>
+                <rect x="244" y="86" width="8" height="8" fill="none"/>
+              </g>
+            </g>
+          </g>
+          <rect x="16" y="162" width="44" height="6" fill="url(#linear-gradient-3)" style="mix-blend-mode: multiply"/>
+          <rect x="79" y="162" width="44" height="6" fill="url(#linear-gradient-4)" style="mix-blend-mode: multiply"/>
+          <g>
+            <path d="M295,108h4a8,8,0,0,1,8,8v44a8,8,0,0,1-8,8h-4a0,0,0,0,1,0,0V108A0,0,0,0,1,295,108Z" fill="#bdc1c6"/>
+            <path d="M195,108h4a8,8,0,0,1,8,8v44a8,8,0,0,1-8,8h-4a0,0,0,0,1,0,0V108A0,0,0,0,1,195,108Z" transform="translate(402 276) rotate(180)" fill="#bdc1c6"/>
+            <g>
+              <rect x="207" y="108" width="88" height="60" fill="#e8eaed"/>
+              <g>
+                <rect x="272" y="154" width="23" height="2" fill="#9aa0a6"/>
+                <rect x="207" y="154" width="65" height="2" fill="#ea4335"/>
+                <circle cx="272" cy="155" r="3" fill="#ea4335"/>
+              </g>
+              <g>
+                <rect x="207" y="145" width="88" height="1" fill="silver"/>
+                <g>
+                  <g>
+                    <path d="M259,131a7,7,0,1,1-7,7,7.008,7.008,0,0,1,7-7m0-1a8,8,0,1,0,8,8,8,8,0,0,0-8-8Z" fill="silver"/>
+                    <path d="M231,131a7,7,0,1,1-7,7,7.008,7.008,0,0,1,7-7m0-1a8,8,0,1,0,8,8,8,8,0,0,0-8-8Z" fill="silver"/>
+                    <polygon points="245 138 238 125.5 252 125.5 245 138" fill="none" stroke="silver" stroke-linejoin="round"/>
+                    <polygon points="252 125.5 259 138 245 138 252 125.5" fill="none" stroke="silver" stroke-linejoin="round"/>
+                    <polyline points="231 138 238 125.5 245 138" fill="none" stroke="silver" stroke-linecap="round" stroke-linejoin="round"/>
+                    <g>
+                      <path d="M234.5,131.75l4.5-8.016a1.5,1.5,0,0,0-1.308-2.234h-1.774a1,1,0,0,1-.707-.293L233.5,119.5" fill="none" stroke="silver" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M233.5,119.5l1.707,1.707a1,1,0,0,0,.707.293h1.336" fill="none" stroke="silver" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                    <line x1="248.5" y1="131.75" x2="254.25" y2="121.5" fill="none" stroke="silver" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="251" y1="121.5" x2="256" y2="121.5" fill="none" stroke="silver" stroke-linecap="round" stroke-linejoin="round"/>
+                  </g>
+                  <g>
+                    <path d="M277.5,127h-13a.5.5,0,0,1,0-1h13a.5.5,0,0,1,0,1Z" fill="silver"/>
+                    <path d="M269.5,122h-5a.5.5,0,0,1,0-1h5a.5.5,0,0,1,0,1Z" fill="silver"/>
+                    <path d="M285.5,136h-15a.5.5,0,0,1,0-1h15a.5.5,0,0,1,0,1Z" fill="silver"/>
+                    <path d="M275.5,141h-5a.5.5,0,0,1,0-1h5a.5.5,0,0,1,0,1Z" fill="silver"/>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g>
+            <path d="M98,106.025c-.333-.009-.665-.025-1-.025v.058A36,36,0,0,0,63,142v26H84.091a8,8,0,0,0,7.646-5.647l3.656-11.882A12,12,0,0,1,106.863,142H133A35.993,35.993,0,0,0,98,106.025Z" fill="#3c4043"/>
+            <path d="M97,106H83a36,36,0,0,0-36,36v14a12,12,0,0,0,12,12h9.091a8,8,0,0,0,7.646-5.647l3.656-11.882A12,12,0,0,1,90.863,142H133A36,36,0,0,0,97,106Z" fill="#ea4335"/>
+            <path d="M97,106H83a36,36,0,0,0-36,36v14a12,12,0,0,0,12,12h9.091a8,8,0,0,0,7.646-5.647l3.656-11.882A12,12,0,0,1,90.863,142H133A36,36,0,0,0,97,106Z" opacity="0.5" fill="url(#linear-gradient-5)" style="mix-blend-mode: multiply"/>
+            <path d="M120,129a2,2,0,0,1,0,4H104a2,2,0,0,1,0-4h16m0-2H104a4,4,0,0,0,0,8h16a4,4,0,0,0,0-8Z" fill="#fff"/>
+            <path d="M62,149a3,3,0,1,1-3,3,3,3,0,0,1,3-3m0-2a5,5,0,1,0,5,5,5.006,5.006,0,0,0-5-5Z" fill="#fff"/>
+            <path d="M90.863,142a12,12,0,0,0-11.469,8.471l-3.656,11.882A8,8,0,0,1,68.091,168h16a8,8,0,0,0,7.646-5.647l3.656-11.882A12,12,0,0,1,106.863,142h-16Z" opacity="0.5" fill="url(#linear-gradient-6)" style="mix-blend-mode: multiply"/>
+            <g>
+              <polygon points="106 156 100 156 93 142 99 142 106 156" fill="#3c4043"/>
+              <polygon points="100 156 106 156 113 142 107 142 100 156" fill="#3c4043"/>
+              <path d="M100,156h6a0,0,0,0,1,0,0v9a3,3,0,0,1-3,3h0a3,3,0,0,1-3-3v-9A0,0,0,0,1,100,156Z" fill="#3c4043"/>
+            </g>
+            <g>
+              <polygon points="126 156 120 156 113 142 119 142 126 156" fill="#3c4043"/>
+              <polygon points="120 156 126 156 133 142 127 142 120 156" fill="#3c4043"/>
+              <path d="M120,156h6a0,0,0,0,1,0,0v9a3,3,0,0,1-3,3h0a3,3,0,0,1-3-3v-9A0,0,0,0,1,120,156Z" fill="#3c4043"/>
+            </g>
+          </g>
+          <rect x="200" y="129" width="2" height="18" rx="1" ry="1" fill="#9aa0a6"/>
+        </g>
+        <g>
+          <polygon points="85.414 74 82.586 74 78 78.586 78 74 74 74 74 78.586 69.414 74 66.586 74 74 81.414 74 94 78 94 78 81.414 85.414 74" fill="#e8eaed"/>
+          <polygon points="85.414 74 82.586 74 78 78.586 78 74 74 74 74 78.586 69.414 74 66.586 74 74 81.414 74 94 78 94 78 81.414 85.414 74" opacity="0.5" fill="url(#linear-gradient-7)" style="mix-blend-mode: multiply"/>
+          <path d="M92.113,60.326a7,7,0,0,0-9.438-9.438,7,7,0,0,0-13.348,0,7,7,0,0,0-9.438,9.438A7,7,0,0,0,62,74H90a7,7,0,0,0,2.113-13.674Z" fill="#e8eaed"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

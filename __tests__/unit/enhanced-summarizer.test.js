@@ -7,10 +7,10 @@
 // Mock dependencies
 const mockCompromise = (text) => ({
   sentences: () => ({
-    json: () => text.split('. ').map(s => ({ text: s.trim() + '.' })),
-    first: () => ({ text: text.split('. ')[0] + '.' }),
-    last: () => ({ text: text.split('. ').slice(-1)[0] + '.' })
-  })
+    json: () => text.split(". ").map((s) => ({ text: s.trim() + "." })),
+    first: () => ({ text: text.split(". ")[0] + "." }),
+    last: () => ({ text: text.split(". ").slice(-1)[0] + "." }),
+  }),
 });
 
 const mockCheerio = {
@@ -18,68 +18,82 @@ const mockCheerio = {
     const $ = (selector) => {
       const mockElement = {
         text: () => {
-          if (selector === 'body') {
-            return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+          if (selector === "body") {
+            return html
+              .replace(/<[^>]*>/g, " ")
+              .replace(/\s+/g, " ")
+              .trim();
           }
-          if (selector.includes('script, style')) {
+          if (selector.includes("script, style")) {
             return { remove: () => $ };
           }
-          return 'Sample section content';
+          return "Sample section content";
         },
         each: (callback) => {
           // Mock headings based on HTML content
-          if (selector.includes('h1, h2, h3')) {
-            const headingMatches = html.match(/<h[1-6][^>]*>(.*?)<\/h[1-6]>/gi) || [];
+          if (selector.includes("h1, h2, h3")) {
+            const headingMatches =
+              html.match(/<h[1-6][^>]*>(.*?)<\/h[1-6]>/gi) || [];
             headingMatches.forEach((match, i) => {
-              const text = match.replace(/<[^>]*>/g, '').trim();
+              const text = match.replace(/<[^>]*>/g, "").trim();
               const mockEl = {
                 text: () => text,
-                next: () => ({ length: 1, text: () => 'Section content here', next: () => ({ length: 0 }) }),
-                nextUntil: () => ({ text: () => 'Section content from nextUntil' })
+                next: () => ({
+                  length: 1,
+                  text: () => "Section content here",
+                  next: () => ({ length: 0 }),
+                }),
+                nextUntil: () => ({
+                  text: () => "Section content from nextUntil",
+                }),
               };
               callback(i, mockEl);
             });
           }
         },
-        nextUntil: () => ({ text: () => 'This is sample content for the section.' }),
+        nextUntil: () => ({
+          text: () => "This is sample content for the section.",
+        }),
         next: () => ({ length: 0 }),
         remove: () => $,
-        length: html.includes('<h') ? 1 : 0
+        length: html.includes("<h") ? 1 : 0,
       };
-      
+
       return mockElement;
     };
-    
-    $.prototype.length = html.includes('<h') ? 1 : 0;
+
+    $.prototype.length = html.includes("<h") ? 1 : 0;
     return $;
-  }
+  },
 };
 
 const mockLog = () => {};
-const mockLogLevels = { INFO: 'info', DEBUG: 'debug', ERROR: 'error' };
+const mockLogLevels = { INFO: "info", DEBUG: "debug", ERROR: "error" };
 
 // Import the module
-const { createEnhancedSummarizer } = require('../../src/analysis/enhancedSummarizer');
+const {
+  createEnhancedSummarizer,
+} = require("../../src/analysis/enhancedSummarizer");
 
-describe('Enhanced Summarizer', () => {
+describe("Enhanced Summarizer", () => {
   let enhancedSummarizer;
-  
+
   beforeEach(() => {
     enhancedSummarizer = createEnhancedSummarizer({
       compromise: mockCompromise,
       cheerio: mockCheerio,
       log: mockLog,
-      logLevels: mockLogLevels
+      logLevels: mockLogLevels,
     });
   });
 
-  describe('Basic Functionality', () => {
-    test('should create summarizer instance', () => {
+  describe("Basic Functionality", () => {
+    test("should create summarizer instance", () => {
       expect(enhancedSummarizer).toBeDefined();
-      expect(typeof enhancedSummarizer.summarizeTos).toBe('function');
+      expect(typeof enhancedSummarizer.summarizeTos).toBe("function");
     });
 
-    test('should return enhanced summary structure', async () => {
+    test("should return enhanced summary structure", async () => {
       const sampleHtml = `
         <html>
           <body>
@@ -100,14 +114,14 @@ describe('Enhanced Summarizer', () => {
         sections: expect.any(Array),
         metadata: expect.objectContaining({
           enhancedSummary: true,
-          riskAssessment: true
-        })
+          riskAssessment: true,
+        }),
       });
     });
   });
 
-  describe('Plain Language Conversion', () => {
-    test('should convert legal jargon to plain language', async () => {
+  describe("Plain Language Conversion", () => {
+    test("should convert legal jargon to plain language", async () => {
       const legalText = `
         <html>
           <body>
@@ -120,19 +134,25 @@ describe('Enhanced Summarizer', () => {
       const result = await enhancedSummarizer.summarizeTos(legalText);
 
       // Check that plain language conversions occurred
-      expect(result.overall.toLowerCase()).toMatch(/protect from legal claims|immediately|give up/);
+      expect(result.overall.toLowerCase()).toMatch(
+        /protect from legal claims|immediately|give up/,
+      );
     });
 
-    test('should maintain user-friendly language in summaries', async () => {
-      const result = await enhancedSummarizer.summarizeTos('<html><body><h2>Test</h2><p>Sample content</p></body></html>');
+    test("should maintain user-friendly language in summaries", async () => {
+      const result = await enhancedSummarizer.summarizeTos(
+        "<html><body><h2>Test</h2><p>Sample content</p></body></html>",
+      );
 
       // Summary should be user-friendly
-      expect(result.overall).toMatch(/here's what this means|here's what this/i);
+      expect(result.overall).toMatch(
+        /here's what this means|here's what this/i,
+      );
     });
   });
 
-  describe('Risk Assessment', () => {
-    test('should identify high-risk content', async () => {
+  describe("Risk Assessment", () => {
+    test("should identify high-risk content", async () => {
       const highRiskHtml = `
         <html>
           <body>
@@ -144,11 +164,11 @@ describe('Enhanced Summarizer', () => {
 
       const result = await enhancedSummarizer.summarizeTos(highRiskHtml);
 
-      expect(['high', 'medium-high']).toContain(result.overallRisk);
-      expect(result.sections[0].riskLevel).toBe('high');
+      expect(["high", "medium-high"]).toContain(result.overallRisk);
+      expect(result.sections[0].riskLevel).toBe("high");
     });
 
-    test('should identify medium-risk content', async () => {
+    test("should identify medium-risk content", async () => {
       const mediumRiskHtml = `
         <html>
           <body>
@@ -160,11 +180,11 @@ describe('Enhanced Summarizer', () => {
 
       const result = await enhancedSummarizer.summarizeTos(mediumRiskHtml);
 
-      expect(['medium', 'medium-high']).toContain(result.overallRisk);
-      expect(result.sections[0].riskLevel).toBe('medium');
+      expect(["medium", "medium-high"]).toContain(result.overallRisk);
+      expect(result.sections[0].riskLevel).toBe("medium");
     });
 
-    test('should identify low-risk content', async () => {
+    test("should identify low-risk content", async () => {
       const lowRiskHtml = `
         <html>
           <body>
@@ -176,12 +196,12 @@ describe('Enhanced Summarizer', () => {
 
       const result = await enhancedSummarizer.summarizeTos(lowRiskHtml);
 
-      expect(result.sections[0].riskLevel).toBe('low');
+      expect(result.sections[0].riskLevel).toBe("low");
     });
   });
 
-  describe('Section Analysis', () => {
-    test('should categorize sections by type', async () => {
+  describe("Section Analysis", () => {
+    test("should categorize sections by type", async () => {
       const multiSectionHtml = `
         <html>
           <body>
@@ -198,15 +218,15 @@ describe('Enhanced Summarizer', () => {
       const result = await enhancedSummarizer.summarizeTos(multiSectionHtml);
 
       expect(result.sections.length).toBeGreaterThan(0);
-      
+
       // Check section types are assigned
-      const sectionTypes = result.sections.map(s => s.type);
-      expect(sectionTypes).toContain('privacy');
-      expect(sectionTypes).toContain('payments');
-      expect(sectionTypes).toContain('rights');
+      const sectionTypes = result.sections.map((s) => s.type);
+      expect(sectionTypes).toContain("privacy");
+      expect(sectionTypes).toContain("payments");
+      expect(sectionTypes).toContain("rights");
     });
 
-    test('should generate user-friendly headings', async () => {
+    test("should generate user-friendly headings", async () => {
       const result = await enhancedSummarizer.summarizeTos(`
         <html>
           <body>
@@ -217,10 +237,10 @@ describe('Enhanced Summarizer', () => {
       `);
 
       const section = result.sections[0];
-      expect(section.userFriendlyHeading).toBe('Your Privacy & Data');
+      expect(section.userFriendlyHeading).toBe("Your Privacy & Data");
     });
 
-    test('should extract key points from sections', async () => {
+    test("should extract key points from sections", async () => {
       const result = await enhancedSummarizer.summarizeTos(`
         <html>
           <body>
@@ -236,8 +256,8 @@ describe('Enhanced Summarizer', () => {
     });
   });
 
-  describe('Key Findings', () => {
-    test('should identify concerning patterns', async () => {
+  describe("Key Findings", () => {
+    test("should identify concerning patterns", async () => {
       const concerningHtml = `
         <html>
           <body>
@@ -251,13 +271,13 @@ describe('Enhanced Summarizer', () => {
 
       expect(result.keyFindings).toBeDefined();
       expect(result.keyFindings.length).toBeGreaterThan(0);
-      
+
       // Should identify concerning patterns
-      const findings = result.keyFindings.join(' ').toLowerCase();
+      const findings = result.keyFindings.join(" ").toLowerCase();
       expect(findings).toMatch(/refund|data|terminat/);
     });
 
-    test('should identify positive patterns', async () => {
+    test("should identify positive patterns", async () => {
       const positiveHtml = `
         <html>
           <body>
@@ -271,15 +291,15 @@ describe('Enhanced Summarizer', () => {
 
       expect(result.keyFindings).toBeDefined();
       expect(result.keyFindings.length).toBeGreaterThan(0);
-      
+
       // Should identify positive patterns
-      const findings = result.keyFindings.join(' ').toLowerCase();
+      const findings = result.keyFindings.join(" ").toLowerCase();
       expect(findings).toMatch(/opt.*out|delete.*data|contact.*support/);
     });
   });
 
-  describe('Alert Generation', () => {
-    test('should generate alerts for high-risk documents', async () => {
+  describe("Alert Generation", () => {
+    test("should generate alerts for high-risk documents", async () => {
       const highRiskHtml = `
         <html>
           <body>
@@ -296,10 +316,12 @@ describe('Enhanced Summarizer', () => {
       const result = await enhancedSummarizer.summarizeTos(highRiskHtml);
 
       expect(result.plainLanguageAlert).toBeDefined();
-      expect(result.plainLanguageAlert).toMatch(/several sections|significantly limit/i);
+      expect(result.plainLanguageAlert).toMatch(
+        /several sections|significantly limit/i,
+      );
     });
 
-    test('should generate moderate alerts for medium-risk documents', async () => {
+    test("should generate moderate alerts for medium-risk documents", async () => {
       const mediumRiskHtml = `
         <html>
           <body>
@@ -312,28 +334,32 @@ describe('Enhanced Summarizer', () => {
       const result = await enhancedSummarizer.summarizeTos(mediumRiskHtml);
 
       if (result.plainLanguageAlert) {
-        expect(result.plainLanguageAlert).toMatch(/some terms|pay special attention/i);
+        expect(result.plainLanguageAlert).toMatch(
+          /some terms|pay special attention/i,
+        );
       }
     });
   });
 
-  describe('Error Handling', () => {
-    test('should handle empty HTML gracefully', async () => {
-      const result = await enhancedSummarizer.summarizeTos('');
+  describe("Error Handling", () => {
+    test("should handle empty HTML gracefully", async () => {
+      const result = await enhancedSummarizer.summarizeTos("");
 
       expect(result).toBeDefined();
       expect(result.overall).toBeDefined();
       expect(result.sections).toBeDefined();
     });
 
-    test('should handle malformed HTML', async () => {
-      const result = await enhancedSummarizer.summarizeTos('<html><body><h2>Test</h2><p>Content');
+    test("should handle malformed HTML", async () => {
+      const result = await enhancedSummarizer.summarizeTos(
+        "<html><body><h2>Test</h2><p>Content",
+      );
 
       expect(result).toBeDefined();
       expect(result.overall).toBeDefined();
     });
 
-    test('should handle HTML without headings', async () => {
+    test("should handle HTML without headings", async () => {
       const result = await enhancedSummarizer.summarizeTos(`
         <html>
           <body>
@@ -348,14 +374,14 @@ describe('Enhanced Summarizer', () => {
     });
   });
 
-  describe('Performance', () => {
-    test('should complete analysis within reasonable time', async () => {
+  describe("Performance", () => {
+    test("should complete analysis within reasonable time", async () => {
       const largeHtml = `
         <html>
           <body>
-            ${'<h2>Section</h2><p>'.repeat(10)}
-            ${'This is a long paragraph with lots of legal terms including indemnify, liability, and intellectual property. '.repeat(50)}
-            ${'</p>'.repeat(10)}
+            ${"<h2>Section</h2><p>".repeat(10)}
+            ${"This is a long paragraph with lots of legal terms including indemnify, liability, and intellectual property. ".repeat(50)}
+            ${"</p>".repeat(10)}
           </body>
         </html>
       `;
@@ -370,28 +396,30 @@ describe('Enhanced Summarizer', () => {
   });
 });
 
-describe('Enhanced Summarizer Integration', () => {
-  test('should integrate with existing content structure', () => {
+describe("Enhanced Summarizer Integration", () => {
+  test("should integrate with existing content structure", () => {
     // Test that the enhanced summarizer produces data compatible with existing UI expectations
     const enhancedSummarizer = createEnhancedSummarizer({
       compromise: mockCompromise,
       cheerio: mockCheerio,
       log: mockLog,
-      logLevels: mockLogLevels
+      logLevels: mockLogLevels,
     });
 
     expect(enhancedSummarizer.summarizeTos).toBeDefined();
   });
 
-  test('should maintain backward compatibility with legacy summary format', async () => {
+  test("should maintain backward compatibility with legacy summary format", async () => {
     const enhancedSummarizer = createEnhancedSummarizer({
       compromise: mockCompromise,
       cheerio: mockCheerio,
       log: mockLog,
-      logLevels: mockLogLevels
+      logLevels: mockLogLevels,
     });
 
-    const result = await enhancedSummarizer.summarizeTos('<html><body><h2>Test</h2><p>Content</p></body></html>');
+    const result = await enhancedSummarizer.summarizeTos(
+      "<html><body><h2>Test</h2><p>Content</p></body></html>",
+    );
 
     // Should still have the basic fields expected by existing code
     expect(result.overall).toBeDefined();

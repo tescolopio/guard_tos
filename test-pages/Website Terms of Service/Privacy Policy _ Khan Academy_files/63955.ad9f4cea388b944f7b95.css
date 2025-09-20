@@ -1,0 +1,931 @@
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#khanType {
+  /* Used to style the topic title on a topic page, eg
+  "Introduction to algebra" on /math/algebra/introduction-to-algebra.
+  Also used for the tutorial title on tutorial landing pages.
+  Not restricted to styling the titles of "Topic" entities. */
+}
+.vertical-shadow {
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #aaa;
+  box-shadow: 0 1px 3px #ccc;
+}
+html.page-container-min-width-zero body,
+html.page-container-min-width-zero #page-container {
+  min-width: 0;
+}
+/* Fall back colors? Eg educator, talks & interviews */
+/**
+ * For hover card tooltips
+ *
+ * TODO(stephanie): Converted from base-hovercard.css and hence needs to be
+ * less-ified/have variables extracted out.
+ */
+.qtip.custom-override {
+  max-width: 450px;
+}
+.qtip-default.custom-override {
+  border-color: transparent;
+  background-color: transparent;
+}
+.qtip-default.custom-override .qtip-tip {
+  /* Because qtip seems to add inline styles in IE */
+  display: none !important;
+}
+.qtip-default.custom-override .qtip-content {
+  border: none;
+  background-color: transparent;
+  padding: 0 0 10px 0;
+  top: -7px;
+}
+.hover-card-triangle {
+  position: relative;
+  height: 10px;
+  z-index: 1;
+}
+.hover-card-triangle:before {
+  display: block;
+  position: absolute;
+  left: 26px;
+  top: 2px;
+  content: " ";
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #BBB;
+}
+.hover-card-triangle:after {
+  display: block;
+  position: absolute;
+  left: 26px;
+  top: 3px;
+  content: " ";
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #FFF;
+}
+.hover-card-triangle.right:after,
+.hover-card-triangle.right:before {
+  left: auto;
+  right: 26px;
+}
+.hover-card-container {
+  width: 450px;
+  line-height: normal;
+}
+.hover-card-message {
+  padding: 0 0 5px 5px;
+  font-size: 115%;
+  line-height: 20px;
+}
+.hover-card-content-container {
+  position: relative;
+  background: #FFF;
+}
+.hover-card-content {
+  min-height: 60px;
+  padding: 10px;
+  position: relative;
+}
+.hover-card-content .private {
+  visibility: hidden;
+}
+.hover-card-content .user-info {
+  word-wrap: break-word;
+  margin-left: 70px;
+  margin-right: 110px;
+}
+.hover-card-content .user-info img.avatar {
+  float: left;
+  margin-left: -70px;
+  height: 60px;
+  width: 60px;
+}
+.hover-card-content .user-info .profile-link {
+  text-decoration: none;
+}
+.hover-card-content .user-info .nickname-container {
+  color: #999;
+  font-size: 16px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  max-width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.hover-card-content .user-info .nickname {
+  color: #000;
+  font-weight: bold;
+  float: left;
+  max-width: 170px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.hover-card-content .user-info .nickname:hover {
+  text-decoration: underline;
+}
+.hover-card-content .user-info .username {
+  margin-left: 10px;
+  text-overflow: ellipsis;
+}
+.hover-card-content .user-info .bio {
+  color: #999;
+  font-size: 14px;
+  line-height: 16px;
+}
+.hover-card-content .user-stats {
+  position: absolute;
+  right: 10px;
+}
+.hover-card-content .user-stats .badge-container {
+  text-align: right;
+}
+.hover-card-content .user-stats .badge-container .badge-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: -2px;
+}
+.hover-card-content .user-stats .energy-points-badge {
+  margin-top: 10px;
+}
+.hover-card-content .user-actions {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+/** TODO(drew): Create discussion-package/variables.less that this file and moderation.less can refer to **/
+/* Voting arrows */
+/* Comments */
+/* @editOffset is the amount necessary to offset the
+ * textarea so that when you edit a post, the text
+ * does not jump. It is related to @discussionItemPadding,
+ * which specifies the amount of padding at the top/bottom
+ * of discussion items.
+ *
+ * Currently, their values are the same, but they are
+ * separate (but related) variables because they serve
+ * different purposes.
+ */
+/* Discussion column margins */
+/* Column dimensions for spin-offs view */
+/* Colors for spin-off cards on hover */
+/* Styles specifically added for the new discussions rewrite */
+.discussion-code-format {
+  font-family: 'Inconsolata', monospace;
+  width: auto;
+}
+.discussion-code-inline {
+  display: inline;
+}
+.discussion-code-block {
+  display: block;
+  padding: 20px 0;
+  overflow: auto;
+  white-space: pre;
+}
+/* Discussion List */
+.discussion-clear-fix {
+  /* Fix to handle issues with floating elements.
+     * http://www.quirksmode.org/css/clearing.html
+     */
+  overflow: hidden;
+  /* Use padding/margin trick to avoid the edit
+     * field spilling out of the element, which is
+     * a problem because of the overflow: hidden
+     * fix above.
+     */
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-left: -8px;
+  margin-right: -8px;
+}
+.discussion-list {
+  /* Fix to handle issues with floating elements.
+     * http://www.quirksmode.org/css/clearing.html
+     */
+  overflow: hidden;
+  /* Use padding/margin trick to avoid the edit
+     * field spilling out of the element, which is
+     * a problem because of the overflow: hidden
+     * fix above.
+     */
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-left: -8px;
+  margin-right: -8px;
+}
+/* Scratchpads Discussion */
+.profile-scratchpads-list .discussion-list-content,
+.spin-offs .discussion-list-content {
+  /* Override bootstrap css */
+}
+.profile-scratchpads-list .discussion-list-content .row,
+.spin-offs .discussion-list-content .row {
+  margin-left: -20px;
+  *zoom: 1;
+}
+.profile-scratchpads-list .discussion-list-content .row:before,
+.spin-offs .discussion-list-content .row:before,
+.profile-scratchpads-list .discussion-list-content .row:after,
+.spin-offs .discussion-list-content .row:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.profile-scratchpads-list .discussion-list-content .row:after,
+.spin-offs .discussion-list-content .row:after {
+  clear: both;
+}
+.profile-scratchpads-list .discussion-list-content [class*="span"],
+.spin-offs .discussion-list-content [class*="span"] {
+  float: left;
+  min-height: 1px;
+  margin-left: 20px;
+}
+.profile-scratchpads-list .discussion-list-content .container,
+.spin-offs .discussion-list-content .container,
+.profile-scratchpads-list .discussion-list-content .navbar-static-top .container,
+.spin-offs .discussion-list-content .navbar-static-top .container,
+.profile-scratchpads-list .discussion-list-content .navbar-fixed-top .container,
+.spin-offs .discussion-list-content .navbar-fixed-top .container,
+.profile-scratchpads-list .discussion-list-content .navbar-fixed-bottom .container,
+.spin-offs .discussion-list-content .navbar-fixed-bottom .container {
+  width: 2284px;
+}
+.profile-scratchpads-list .discussion-list-content .span12,
+.spin-offs .discussion-list-content .span12 {
+  width: 2284px;
+}
+.profile-scratchpads-list .discussion-list-content .span11,
+.spin-offs .discussion-list-content .span11 {
+  width: 2092px;
+}
+.profile-scratchpads-list .discussion-list-content .span10,
+.spin-offs .discussion-list-content .span10 {
+  width: 1900px;
+}
+.profile-scratchpads-list .discussion-list-content .span9,
+.spin-offs .discussion-list-content .span9 {
+  width: 1708px;
+}
+.profile-scratchpads-list .discussion-list-content .span8,
+.spin-offs .discussion-list-content .span8 {
+  width: 1516px;
+}
+.profile-scratchpads-list .discussion-list-content .span7,
+.spin-offs .discussion-list-content .span7 {
+  width: 1324px;
+}
+.profile-scratchpads-list .discussion-list-content .span6,
+.spin-offs .discussion-list-content .span6 {
+  width: 1132px;
+}
+.profile-scratchpads-list .discussion-list-content .span5,
+.spin-offs .discussion-list-content .span5 {
+  width: 940px;
+}
+.profile-scratchpads-list .discussion-list-content .span4,
+.spin-offs .discussion-list-content .span4 {
+  width: 748px;
+}
+.profile-scratchpads-list .discussion-list-content .span3,
+.spin-offs .discussion-list-content .span3 {
+  width: 556px;
+}
+.profile-scratchpads-list .discussion-list-content .span2,
+.spin-offs .discussion-list-content .span2 {
+  width: 364px;
+}
+.profile-scratchpads-list .discussion-list-content .span1,
+.spin-offs .discussion-list-content .span1 {
+  width: 172px;
+}
+.profile-scratchpads-list .discussion-list-content .offset12,
+.spin-offs .discussion-list-content .offset12 {
+  margin-left: 2324px;
+}
+.profile-scratchpads-list .discussion-list-content .offset11,
+.spin-offs .discussion-list-content .offset11 {
+  margin-left: 2132px;
+}
+.profile-scratchpads-list .discussion-list-content .offset10,
+.spin-offs .discussion-list-content .offset10 {
+  margin-left: 1940px;
+}
+.profile-scratchpads-list .discussion-list-content .offset9,
+.spin-offs .discussion-list-content .offset9 {
+  margin-left: 1748px;
+}
+.profile-scratchpads-list .discussion-list-content .offset8,
+.spin-offs .discussion-list-content .offset8 {
+  margin-left: 1556px;
+}
+.profile-scratchpads-list .discussion-list-content .offset7,
+.spin-offs .discussion-list-content .offset7 {
+  margin-left: 1364px;
+}
+.profile-scratchpads-list .discussion-list-content .offset6,
+.spin-offs .discussion-list-content .offset6 {
+  margin-left: 1172px;
+}
+.profile-scratchpads-list .discussion-list-content .offset5,
+.spin-offs .discussion-list-content .offset5 {
+  margin-left: 980px;
+}
+.profile-scratchpads-list .discussion-list-content .offset4,
+.spin-offs .discussion-list-content .offset4 {
+  margin-left: 788px;
+}
+.profile-scratchpads-list .discussion-list-content .offset3,
+.spin-offs .discussion-list-content .offset3 {
+  margin-left: 596px;
+}
+.profile-scratchpads-list .discussion-list-content .offset2,
+.spin-offs .discussion-list-content .offset2 {
+  margin-left: 404px;
+}
+.profile-scratchpads-list .discussion-list-content .offset1,
+.spin-offs .discussion-list-content .offset1 {
+  margin-left: 212px;
+}
+.profile-scratchpads-list .discussion-list-content .fork.span1,
+.spin-offs .discussion-list-content .fork.span1 {
+  width: 173px;
+  padding: 6px;
+  margin-left: 0;
+}
+.profile-scratchpads-list .discussion-list-content.row,
+.spin-offs .discussion-list-content.row {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+.profile-scratchpads-list .discussion-list-content.row .fork:nth-child(5n+1),
+.spin-offs .discussion-list-content.row .fork:nth-child(5n+1) {
+  margin-left: 4px;
+}
+.profile-scratchpads-list {
+  margin-right: 20px;
+}
+.profile-scratchpads-list .discussion-list-count {
+  display: none;
+  visibility: hidden;
+}
+/* Sorting */
+.discussion-list-sort {
+  float: right;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 20px;
+  margin-top: 1px;
+}
+.discussion-list-sort > button {
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+.discussion-list-sort a {
+  color: #888;
+  margin-left: 10px;
+  text-decoration: none;
+}
+.discussion-list-sort a.selected {
+  color: #000;
+  cursor: default;
+}
+.discussion-list-sort a.selected:hover {
+  text-decoration: none;
+}
+.discussion-list-sort.subject-sort {
+  display: inline-block;
+  float: left;
+  height: 33px;
+  padding-right: 30px;
+  position: relative;
+  white-space: nowrap;
+  z-index: 1000;
+}
+.discussion-list-sort.subject-sort .icon-chevron-up,
+.discussion-list-sort.subject-sort .icon-chevron-down {
+  width: 12px;
+}
+.filterbar-dropdown-inner-container {
+  padding-right: 0;
+  position: relative;
+  top: -2px;
+}
+.filterbar-dropdown,
+.filterbar-mock-dropdown {
+  font-size: 13px;
+  position: absolute;
+}
+.filterbar-dropdown {
+  cursor: pointer;
+  opacity: 0;
+  z-index: 10;
+}
+.filterbar-mock-dropdown {
+  background-color: transparent;
+  border-color: transparent;
+  color: #005987;
+  height: 23px;
+  margin-left: 4px;
+  outline: 0;
+  z-index: 5;
+}
+.filterbar-mock-dropdown .icon-chevron-down {
+  font-size: 11px;
+  margin-left: 4px;
+}
+/* More Button */
+.discussion-list-more {
+  box-sizing: border-box;
+  clear: both;
+  float: left;
+  margin: 10px 0;
+  text-align: center;
+  width: 100%;
+}
+/* Discussion Item */
+.success-highlight {
+  background-color: #ebf1df;
+  color: #000;
+}
+.success-highlight .discussion-meta,
+.success-highlight .discussion-meta a,
+.success-highlight .discussion-meta a:hover,
+.success-highlight .discussion-meta a:visited {
+  color: #808080;
+}
+.success-highlight .discussion-meta-faded,
+.success-highlight .discussion-meta-faded a,
+.success-highlight .discussion-meta-faded a:hover,
+.success-highlight .discussion-meta-faded a:visited {
+  color: #b1b3ad;
+}
+.success-highlight .discussion-meta-separator {
+  color: #c9cebd;
+}
+.success-highlight .discussion-vote div.vote-for {
+  color: #c0cba2;
+}
+.success-highlight .replies-triangle:before {
+  border-bottom-color: #cad1bf;
+}
+.success-highlight .replies-triangle:after {
+  border-bottom-color: #ebf1df;
+}
+.success-highlight .replies-panel {
+  border: 1px solid #cad1bf;
+  margin-right: -2px;
+}
+.success-highlight .replies-panel .replies .reply > .item-separator {
+  border-bottom-color: #d2dac8;
+}
+.success-highlight .replies-panel .replies-closed {
+  border-top-color: #d2dac8;
+  color: #808080;
+}
+.success-highlight .discussion-vote div.vote-for.vote-up {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #cbcfc6 !important;
+}
+.success-highlight .discussion-vote div.vote-for.vote-down {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #cbcfc6 !important;
+}
+.success-highlight .formatting-tips-container code {
+  background-color: #c6d1ad;
+}
+/* Highlighting */
+.discussion-list .highlight {
+  /* Not using shorthand notation because
+           top and bottom margin/padding can be
+           different. */
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.discussion-list .warning-highlight {
+  background-color: #fcf8e3;
+}
+.discussion-list .success-highlight {
+  background-color: #ebf1df;
+}
+/* Content */
+.discussion-guidelines-format-table code {
+  background-color: #EEE;
+  display: inline;
+  font-family: 'Inconsolata', monospace;
+  padding: 1px 5px;
+  white-space: pre;
+  width: auto;
+  white-space: pre-wrap;
+  /* CSS3 */
+  white-space: -moz-pre-wrap;
+  /* Firefox */
+  white-space: -pre-wrap;
+  /* Opera <7 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* IE */
+}
+.discussion-guidelines-format-table pre code {
+  display: block;
+  margin: 1px 0;
+}
+.discussion-guidelines-format-table i {
+  font-style: italic;
+}
+.discussion-guidelines-format-table {
+  color: #555;
+  font-size: 12px;
+}
+.discussion-guidelines-format-table td {
+  padding: 0 5px;
+  vertical-align: baseline;
+  width: 50%;
+}
+.discussion-guidelines-format-table td:first-child {
+  border-right: 1px solid #ddd;
+}
+.discussion-guidelines-format-table td:last-child {
+  padding-left: 10px;
+}
+.discussion-guidelines-format-table-header td {
+  padding: 0 0 5px 5px;
+}
+.discussion-guidelines-format-table-header td:first-child {
+  padding-left: 0;
+}
+/* Meta */
+.discussion-meta {
+  display: block;
+  clear: both;
+  font-size: 11px;
+  height: 20px;
+  line-height: 20px;
+}
+.discussion-meta,
+.discussion-meta a,
+.discussion-meta a:visited {
+  color: #a0a0a0;
+}
+.discussion-meta .discussion-meta-controls {
+  float: left;
+}
+.discussion-meta .discussion-meta-info {
+  font-style: italic;
+  float: right;
+  text-align: right;
+}
+.discussion-meta-faded,
+.discussion-meta-faded a,
+.discussion-meta-faded a:visited {
+  color: #bfbfbf;
+}
+.discussion-meta-separator {
+  content: "\2022";
+  color: #ddd;
+  padding: 0 5px;
+}
+/* Author */
+.discussion-author {
+  color: #555;
+  font-style: normal;
+}
+a.discussion-author {
+  /* The href property is added lazily; force the underline here for visual
+     * consistency before the hovercard loads. */
+  text-decoration: underline;
+}
+.discussion-author-avatar {
+  height: 15px;
+  margin-bottom: -3px;
+  padding-right: 2px;
+  width: 15px;
+}
+/* Badges */
+.discussion-badge-icon {
+  height: 15px;
+  margin-bottom: -3px;
+  width: 15px;
+}
+/* Voting */
+.discussion-vote {
+  display: inline-block;
+  margin-left: 3px;
+}
+.discussion-vote div.vote-for {
+  cursor: pointer;
+  display: inline-block;
+}
+.discussion-vote div.vote-for.vote-up {
+  /* Firefox doesn't align arrows the same as webkit/IE */
+  -moz-transform: translate(1px, 0px);
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #e1e1e1 !important;
+}
+.discussion-vote div.vote-for.vote-up.vote-hover {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #3a6a00 !important;
+}
+.discussion-vote div.vote-for.vote-up.voted {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #7bab4b !important;
+}
+.discussion-vote div.vote-for.vote-up.voted.vote-hover {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #b0cd86 !important;
+}
+.discussion-vote div.vote-for.vote-down {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #e1e1e1 !important;
+}
+.discussion-vote div.vote-for.vote-down.vote-hover {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #861f00 !important;
+}
+.discussion-vote div.vote-for.vote-down.voted {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #bf4f04 !important;
+}
+.discussion-vote div.vote-for.vote-down.voted.vote-hover {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #dfa880 !important;
+}
+/* Forms */
+textarea.discussion-text {
+  /* textarea is inline by default, which causes a little
+     * space to appear beneath it. Set to display: block to
+     * eliminate this. Give it a small margin-bottom to
+     * compensate.
+     */
+  display: block;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  color: #808080;
+  font-family: inherit;
+  font-size: 13px;
+  /* When not open (and displaying placeholder text),
+     * show the placeholder text as italic. */
+  font-style: italic;
+  height: 38px;
+  line-height: 22px;
+  padding: 7px;
+  box-sizing: border-box;
+  width: 100%;
+  outline: none;
+  overflow: auto;
+  resize: none;
+}
+textarea.discussion-text.open {
+  min-height: 100px;
+  resize: vertical;
+}
+textarea.discussion-text.open:not(.placeholder) {
+  /* The placeholder class is added by the placeholder
+             * plugin when the browser does not support html5
+             * placeholders.
+             */
+  color: #000;
+  font-style: normal;
+}
+/* Notes */
+.note {
+  background-color: #feffda;
+  border: 1px solid #E9EBCA;
+  max-width: 150px;
+  position: absolute;
+  padding: 10px;
+  text-align: center;
+  z-index: 25;
+  border-radius: 5px;
+}
+/* Low Quality Notice */
+.low-quality-notice {
+  color: #555;
+  background-color: #fcf8e3;
+  border: 1px solid #fbeed5;
+  /* Use @editOffset to avoid expanding outside the edge
+     * of the element.
+     */
+  padding: 8px;
+  margin: 8px -8px 8px -8px;
+  font-size: 12px;
+}
+.low-quality-notice.duplicate-notice {
+  margin-top: 5px;
+}
+.low-quality-notice .low-quality-notice-header {
+  padding-bottom: 5px;
+}
+.low-quality-notice h4 {
+  margin-bottom: 5px;
+}
+/* Post Guidelines */
+.eval-left {
+  float: left;
+}
+.eval-left .styled-list {
+  margin-left: 1em;
+}
+.eval-guideline {
+  background-color: #F7F7F7;
+  border: 2px solid #DDD;
+  margin-bottom: 20px;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+}
+.eval-guideline code {
+  background-color: #EEE;
+  display: inline;
+  font-family: 'Inconsolata', monospace;
+  padding: 1px 5px;
+  white-space: pre;
+  width: auto;
+  white-space: pre-wrap;
+  /* CSS3 */
+  white-space: -moz-pre-wrap;
+  /* Firefox */
+  white-space: -pre-wrap;
+  /* Opera <7 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* IE */
+}
+.eval-guideline pre code {
+  display: block;
+  margin: 1px 0;
+}
+.eval-guideline div.discussion-meta {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.eval-guideline div.eval-skip {
+  font-size: smaller;
+  margin-top: 40px;
+}
+.eval-guideline div.eval-title {
+  font-size: larger;
+}
+.eval-guideline div.eval-tryeval,
+.eval-guideline div.eval-submitted {
+  margin-top: 20px;
+}
+.eval-guideline div.failed-objective-item {
+  margin-top: 10px;
+}
+.eval-guideline .failed-objectives {
+  margin-top: 20px;
+}
+.eval-guideline div.more-info {
+  margin-top: 20px;
+}
+.eval-guideline div.objective-more-info {
+  margin-bottom: 10px;
+}
+.eval-guideline .eval-button-container {
+  float: right;
+  min-height: 30px;
+}
+.eval-guideline .eval-peer-rubric-item {
+  margin-bottom: 15px;
+}
+.eval-guideline .eval-peer-rubric-item i {
+  display: inline-block;
+  width: 20px;
+}
+.eval-guideline .eval-peer-rubric-item i.pass {
+  color: green;
+}
+.eval-guideline .eval-peer-rubric-item i.nopass {
+  color: red;
+}
+.eval-guideline .eval-peer-rubric-item > div {
+  margin-left: 20px;
+}
+/* Formatting tips */
+.formatting-tips-container {
+  text-align: left;
+  clear: both;
+  margin-top: -2px;
+}
+.formatting-tips-panel {
+  background: #FFF;
+  border: 1px solid #e8e8e8;
+  margin-right: 6%;
+  padding: 8px;
+  color: #a0a0a0;
+}
+.formatting-tips-triangle {
+  height: 10px;
+  position: relative;
+  z-index: 1;
+}
+.formatting-tips-triangle:before,
+.formatting-tips-triangle:after {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  content: " ";
+  display: block;
+  height: 0;
+  left: 28px;
+  position: absolute;
+  width: 0;
+}
+.formatting-tips-triangle:before {
+  border-bottom: 9px solid #e8e8e8;
+  top: 1px;
+}
+.formatting-tips-triangle:after {
+  border-bottom: 9px solid #FFF;
+  top: 3px;
+}
+/* Replies */
+.eval-area li {
+  margin-top: 10px;
+}
+.eval-area textarea,
+.eval-area select {
+  display: block;
+  margin-bottom: 3px;
+  margin-left: 1px;
+  margin-top: 3px;
+}
+/**
+ * Discussion style overrides for bibliotron tutorial pages.
+ * Note that we use !important throughout the whole thing.
+ * The main reason for this is consistency (easier than
+ * keeping track of where it is and isn't needed).
+ */
+/**
+ * Discussion-related styles for the Project Feedback page
+ * aka /projectfeedback.
+ */
+.projectfeedback-container {
+  color: #44444C;
+  float: none;
+  margin: 0;
+  max-width: 840px;
+  padding: 0 30px 30px 30px;
+}
+.projectfeedback-container h4 {
+  border-bottom: 1px solid #ccc;
+  margin: 30px 0 0;
+  padding-bottom: 3px;
+}
+.projectfeedback-container .discussion-list-header {
+  min-height: 20px;
+  width: 100%;
+}
+.projectfeedback-container .discussion-list-refresh {
+  font-size: 10px;
+  text-decoration: none;
+}
+.projectfeedback-container .discussion-list-refresh .icon-refresh {
+  margin-left: 6px;
+  margin-right: 4px;
+}
+

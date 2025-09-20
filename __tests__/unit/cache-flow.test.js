@@ -15,6 +15,8 @@ const {
 
 // Use a simple in-memory storage for tests
 const mockStorage = new Map();
+// Expose for services that want to read raw storage in tests
+global.__TEST_MOCK_STORAGE = mockStorage;
 global.localStorage = {
   getItem: jest.fn((key) => mockStorage.get(key) || null),
   setItem: jest.fn((key, value) => mockStorage.set(key, value)),

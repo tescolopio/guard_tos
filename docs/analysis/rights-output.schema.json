@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://terms-guardian.org/schemas/rights-output.schema.json",
+  "title": "Terms Guardian Rights Analysis Output",
+  "type": "object",
+  "required": [
+    "rightsScore",
+    "grade",
+    "confidence",
+    "uncommonWords",
+    "details"
+  ],
+  "properties": {
+    "rightsScore": { "type": "number", "minimum": 0, "maximum": 100 },
+    "grade": { "type": "string", "enum": ["A", "B", "C", "D", "F"] },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "uncommonWords": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["word"],
+        "properties": {
+          "word": { "type": "string" },
+          "definition": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "details": {
+      "type": "object",
+      "required": [
+        "chunkCount",
+        "averageScore",
+        "clauseSignals",
+        "wordCount",
+        "clauseCounts"
+      ],
+      "properties": {
+        "chunkCount": { "type": "integer", "minimum": 0 },
+        "averageScore": { "type": "number", "minimum": 0, "maximum": 100 },
+        "clauseSignals": { "type": "integer", "minimum": 0 },
+        "wordCount": { "type": "integer", "minimum": 0 },
+        "clauseCounts": {
+          "type": "object",
+          "properties": {
+            "HIGH_RISK": { "$ref": "#/definitions/clauseCountMap" },
+            "MEDIUM_RISK": { "$ref": "#/definitions/clauseCountMap" },
+            "POSITIVES": { "$ref": "#/definitions/clauseCountMap" }
+          },
+          "additionalProperties": false
+        },
+        "categoryScores": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["raw", "adjusted", "score"],
+            "properties": {
+              "raw": { "type": "number" },
+              "adjusted": { "type": "number" },
+              "score": { "type": "number", "minimum": 0, "maximum": 100 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "dictionaryTerms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["term", "count"],
+            "properties": {
+              "term": { "type": "string" },
+              "count": { "type": "integer", "minimum": 1 },
+              "examples": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "clauseCountMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    }
+  }
+}

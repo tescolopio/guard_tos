@@ -1,0 +1,211 @@
+/*
+ * Simple Mobile Navigation
+ */
+;(function($) {
+    function MobileNav(options) {
+      this.options = $.extend({
+        container: null,
+        hideOnClickOutside: false,
+        menuActiveClass: 'nav-active',
+        menuOpener: '.nav-opener',
+        menuDrop: '.nav-drop',
+        toggleEvent: 'click',
+        outsideClickEvent: 'click touchstart pointerdown MSPointerDown'
+      }, options);
+      this.initStructure();
+      this.attachEvents();
+    }
+    MobileNav.prototype = {
+      initStructure: function() {
+        this.page = $('html');
+        this.container = $(this.options.container);
+        this.opener = this.container.find(this.options.menuOpener);
+        this.drop = this.container.find(this.options.menuDrop);        
+      },
+      attachEvents: function() {
+        var self = this;
+  
+        if(activateResizeHandler) {
+          activateResizeHandler();
+          activateResizeHandler = null;
+        }
+  
+        this.outsideClickHandler = function(e) {
+          if(self.isOpened()) {
+            var target = $(e.target);
+            if(!target.closest(self.opener).length && !target.closest(self.drop).length) {
+              self.hide();
+            }
+          }
+        };
+  
+        this.openerClickHandler = function(e) {
+          e.preventDefault();
+          self.toggle();
+        };
+  
+        this.opener.on(this.options.toggleEvent, this.openerClickHandler);
+      },
+      isOpened: function() {
+        return this.container.hasClass(this.options.menuActiveClass);
+      },
+      show: function() {
+      this.makeCallback('onShow', this);
+        this.container.addClass(this.options.menuActiveClass);
+        if(this.options.hideOnClickOutside) {
+          this.page.on(this.options.outsideClickEvent, this.outsideClickHandler);
+        }
+      },
+      hide: function() {
+        this.container.removeClass(this.options.menuActiveClass);
+        if(this.options.hideOnClickOutside) {
+          this.page.off(this.options.outsideClickEvent, this.outsideClickHandler);
+        }
+      this.makeCallback('onHide', this);
+      },
+      toggle: function() {
+        if(this.isOpened()) {
+          this.hide();
+        } else {
+          this.show();
+        }
+      },
+    makeCallback: function(name) {
+      if(typeof this.options[name] === 'function') {
+        var args = Array.prototype.slice.call(arguments);
+        args.shift();
+        this.options[name].apply(this, args);
+      }
+    },
+      destroy: function() {
+        this.container.removeClass(this.options.menuActiveClass);
+        this.opener.off(this.options.toggleEvent, this.clickHandler);
+        this.page.off(this.options.outsideClickEvent, this.outsideClickHandler);
+      }
+    };
+  
+    var activateResizeHandler = function() {
+      var win = $(window),
+      doc = $('html'),
+      resizeClass = 'resize-active',
+      flag, timer;
+      var removeClassHandler = function() {
+        flag = false;
+        doc.removeClass(resizeClass);
+      };
+      var resizeHandler = function() {
+        if(!flag) {
+          flag = true;
+          doc.addClass(resizeClass);
+        }
+        clearTimeout(timer);
+        timer = setTimeout(removeClassHandler, 500);
+      };
+      win.on('resize orientationchange', resizeHandler);
+    };
+  
+    $.fn.mobileNav = function(opt) {
+      var args = Array.prototype.slice.call(arguments);
+      var method = args[0];
+  
+      return this.each(function() {
+        var $container = jQuery(this);
+        var instance = $container.data('MobileNav');
+  
+        if (typeof opt === 'object' || typeof opt === 'undefined') {
+          $container.data('MobileNav', new MobileNav($.extend({
+            container: this
+          }, opt)));
+        } else if (typeof method === 'string' && instance) {
+          if (typeof instance[method] === 'function') {
+            args.shift();
+            instance[method].apply(instance, args);
+          }
+        }
+      });
+    };
+  }(jQuery));
+
+// primary navigation dropdowns
+jQuery(document).ready(function(){
+
+    /* Main Nav listeners */
+    jQuery('#nav .nested').on('mouseenter', function(e) {
+      var windowWidth = window.innerWidth;
+      if(windowWidth > 768){            
+        var dataMenu = jQuery(e.target).attr("data-menu");
+        
+        if(!jQuery('.nested-nav[data-menu = '+dataMenu+']').parent(".subnavs").hasClass('nav-active')){
+          e.preventDefault();    
+          jQuery('[data-menu = '+dataMenu+']').parent(".subnavs").addClass('nav-active');          
+        }
+
+        //Add nav-active class to body - if subnav is open and user 
+        //responds down to mobile from desktop, this fixes inconsistent menu open/close        
+        if(jQuery('body').hasClass('nav-active')){
+          jQuery('body').removeClass('nav-active');
+        }else{
+          jQuery('body').addClass('nav-active');
+        }        
+
+      }
+    });
+
+    //Mobile sub nav open listener
+    jQuery('.sub-arrow').on('click', function(e) {
+      var windowWidth = window.innerWidth;
+      if(windowWidth <= 768){            
+
+        var dataMenu = jQuery(e.target).siblings("a").attr("data-menu");
+        if(jQuery('.nested-nav[data-menu = '+dataMenu+']').parent(".subnavs").hasClass('nav-active')){
+          jQuery('.nested-nav[data-menu = '+dataMenu+']').parent(".subnavs").removeClass('nav-active');
+        }else{
+          e.preventDefault();    
+          jQuery('[data-menu = Blog]').parent(".subnavs").addClass('nav-active');
+        }
+      }
+    });    
+
+    //Mobile sub nav back button listener
+    jQuery(".mobile-back").on("click", function(e){
+      if (jQuery(e.target).is('.back-arrow, span, .mobile-back')) {
+        var subNav = jQuery(e.target).closest(".subnavs");
+        
+        if(subNav.hasClass('nav-active')){
+            subNav.removeClass('nav-active');
+        }        
+      }
+    });
+    /* Mobile Nav listeners */
+    var isTouchDevice = /MSIE 10.*Touch/.test(navigator.userAgent) || ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
+
+    jQuery('body').mobileNav({
+        menuActiveClass: 'nav-active',
+        menuOpener: '.nav-opener',
+        menuDrop: '#nav',
+
+        onHide: function (self) {
+            if(jQuery(".subnavs").hasClass("nav-active")){
+              jQuery(".subnavs").removeClass("nav-active")
+            }
+        }
+    });    
+
+    //Closes main nav subnav for desktop
+    jQuery('body').on('click', function(e) {
+      var windowWidth = window.innerWidth;
+      if(windowWidth > 768){
+        var parentElement = e.target.parentNode;
+        
+        setTimeout(() => {
+            //if nested nav is open
+            if(jQuery(".nav-active").length > 0){
+                //Remove nav-active class (closes menu submenu) if user doesn't click on subnav container, mobile menu text, or mobile menu sub menu arrow
+                if(!jQuery(e.target).hasClass("subnavs") && !jQuery(parentElement).hasClass("nested") && e.target.id != "menu-label" && e.target.id != "sub-arrow"){
+                    jQuery(".nav-active").removeClass("nav-active");
+                }                
+            }            
+        }, 10);
+      }
+    });  
+});

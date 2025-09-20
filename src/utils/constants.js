@@ -85,6 +85,8 @@ const EXT_CONSTANTS = {
           LIMITED_RETENTION_DISCLOSURE: -5,
           MORAL_RIGHTS_WAIVER: -5,
           JURY_TRIAL_WAIVER: -6,
+          // Added to align with ML-supported class and scoring rubric
+          LIABILITY_LIMITATION: -8,
         },
         // positives (bonuses)
         POSITIVES: {
@@ -112,6 +114,24 @@ const EXT_CONSTANTS = {
         TYPE_WEIGHT: 0.2,
       },
     },
+  },
+
+  // Lightweight ML settings (browser-first, optional)
+  ML: {
+    ENABLED: true,
+    MODEL_VERSION: "tfidf_logreg_v2",
+    // Use dictionaries folder which is already copied by webpack
+    ASSET_PATH: "dictionaries/tfidf_logreg_v2.json",
+    // Per-class thresholds for decisioning
+    THRESHOLDS: {
+      // Calibrated via scripts/calibrate_thresholds.py (see docs/analysis/model-calibration.md)
+      ARBITRATION: 0.22218167154095733,
+      CLASS_ACTION_WAIVER: 0.024667284473643268,
+      LIABILITY_LIMITATION: 0.4689842162814725,
+      UNILATERAL_CHANGES: 0.05755998593920249,
+    },
+    // Weight for rule-based signal when fusing with ML probability
+    FUSE_ALPHA: 0.65,
   },
 
   // Notification Messages
@@ -228,6 +248,8 @@ const EXT_CONSTANTS = {
     HIGHLIGHT: "legal-term-highlight",
     SECTION: "legal-text-section",
     IMPORTANT: "important-term",
+    // Used by sidepanel interactions for hover tooltips
+    UNCOMMON_TERM: "uncommon-term",
   },
 
   // DOM Selectors
@@ -257,6 +279,10 @@ const EXT_CONSTANTS = {
       RIGHTS: "#rightsPopup",
       EXCERPTS: "#excerptsPopup",
       TERMS: "#termsPopup",
+    },
+    // Sidepanel-specific element IDs referenced by sidepanel.js
+    SIDEPANEL: {
+      KEY_EXCERPTS_LIST: "key-excerpts-list",
     },
   },
 
@@ -301,14 +327,20 @@ const initializeGlobals = () => {
   try {
     if (typeof window !== "undefined") {
       window.EXT_CONSTANTS = EXT_CONSTANTS;
+      // Back-compat alias expected by some consumers
+      if (!window.Constants) window.Constants = EXT_CONSTANTS;
     }
     if (typeof globalThis !== "undefined") {
       globalThis.EXT_CONSTANTS = EXT_CONSTANTS;
+      // Back-compat alias expected by some consumers
+      if (!globalThis.Constants) globalThis.Constants = EXT_CONSTANTS;
     }
   } catch (e) {
     console.warn("Could not initialize global constants:", e);
   }
 };
+
+initializeGlobals();
 
 initializeGlobals();
 
@@ -332,3 +364,9 @@ if (typeof module !== "undefined" && module.exports) {
     setupConstants: initializeGlobals,
   };
 }
+
+console.log(
+  "Constants.js loaded, window.Constants:",
+  window && window.Constants,
+);
+console.log("Global Constants:", global && global.Constants);

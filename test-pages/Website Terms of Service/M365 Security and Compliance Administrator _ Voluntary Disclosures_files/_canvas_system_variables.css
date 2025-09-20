@@ -1,0 +1,148 @@
+/**
+ * Do not edit directly
+ * Generated on Thu, 18 Jan 2024 00:22:07 GMT
+ */
+
+:root {
+  --cnvs-sys-space-zero: 0; /* Stacks, rows in tables */
+  --cnvs-sys-shape-zero: 0rem; /* This is the initial shape of every new element. Use this for backgrounds screens and fixed navigation containers such as headers, and side-panels. */
+  --cnvs-sys-font-weight-bold: var(--cnvs-base-font-weight-700);
+  --cnvs-sys-font-weight-medium: var(--cnvs-base-font-weight-500);
+  --cnvs-sys-font-weight-normal: var(--cnvs-base-font-weight-400);
+  --cnvs-sys-font-weight-light: var(--cnvs-base-font-weight-300);
+  --cnvs-sys-line-height-subtext-medium: var(--cnvs-base-line-height-50);
+  --cnvs-sys-line-height-subtext-small: var(--cnvs-base-line-height-50);
+  --cnvs-sys-font-size-subtext-small: var(--cnvs-base-font-size-25);
+  --cnvs-sys-font-family-global: var(--cnvs-base-font-family-200);
+  --cnvs-sys-font-family-mono: var(--cnvs-base-font-family-100);
+  --cnvs-sys-font-family-default: var(--cnvs-base-font-family-50);
+  --cnvs-sys-space-x20: calc(var(--cnvs-base-unit) * 20); /* - Use sparingly; - Helps to put focus on the primary element within your page; - Use to de-clutter your UI when a lot of space is available */
+  --cnvs-sys-space-x16: calc(var(--cnvs-base-unit) * 16); /* - Use to de-clutter your UI when a lot of space is available; - Separate banner sections from page content; - Use to differentiate page content like page sections */
+  --cnvs-sys-space-x10: calc(var(--cnvs-base-unit) * 10); /* • Used for outer margins on the overall page content ; • Used for inner margins on large items such as page sections */
+  --cnvs-sys-space-x8: calc(var(--cnvs-base-unit) * 8); /* • Standard spacing between cards; • Used to separate groups of content ; • Separate section headings or titles from body text or inputs */
+  --cnvs-sys-space-x6: calc(var(--cnvs-base-unit) * 6); /* • Padding around card content; • Related elements where more space between them can be afforded; • Separate section headings or titles from body text or inputs */
+  --cnvs-sys-space-x4: calc(var(--cnvs-base-unit) * 4); /* Default space token. Used to group Inputs with related data */
+  --cnvs-sys-space-x3: calc(var(--cnvs-base-unit) * 3); /* Use when compact padding is required */
+  --cnvs-sys-space-x2: calc(var(--cnvs-base-unit) * 2); /* Commonly used to group compact elements like icon buttons */
+  --cnvs-sys-space-x1: var(--cnvs-base-unit); /* Compact spacing between text or icons */
+  --cnvs-sys-shape-round: calc(var(--cnvs-base-unit) * 250); /* Commonly used for our standard buttons and profile avatars: All Primary, Secondary Buttons, Radio Buttons and Notification Badges. */
+  --cnvs-sys-shape-x2: calc(var(--cnvs-base-unit) * 2); /* Use this for all the containers and popups: All Cards, Modals, Tooltips and Toasts. */
+  --cnvs-sys-shape-x1: var(--cnvs-base-unit); /* Use this for form components presenting text information or inputs: Text Inputs and Text Area, Dropdowns, Menus and Banners. */
+  --cnvs-sys-shape-half: calc(var(--cnvs-base-unit) * 0.5); /* Use this for subtle and small components that don’t require to group complex information like Status Indicators, Checkboxes and Color Swatches. */
+  --cnvs-sys-opacity-disabled: var(--cnvs-base-opacity-300); /* State layer added on top of disabled elements. */
+  --cnvs-sys-line-height-subtext-large: var(--cnvs-base-line-height-100);
+  --cnvs-sys-font-size-subtext-medium: var(--cnvs-base-font-size-50);
+  --cnvs-sys-depth-6: var(--cnvs-base-shadow-600); /* Modal Dialogs, Side Panels (when opacity overlay behaviour; is applied) */
+  --cnvs-sys-depth-5: var(--cnvs-base-shadow-500); /* Banners, Snackbars, Toast Messages, Non modal Dialogs, ; Side Panels (when opacity overlay behaviour is not applied) */
+  --cnvs-sys-depth-4: var(--cnvs-base-shadow-400); /* Bottom Sheets */
+  --cnvs-sys-depth-3: var(--cnvs-base-shadow-300); /* Floating Action Buttons (FAB), Menus */
+  --cnvs-sys-depth-2: var(--cnvs-base-shadow-200); /* Top navigation, Bottom Navigation */
+  --cnvs-sys-depth-1: var(--cnvs-base-shadow-100); /* Standard card depth */
+  --cnvs-sys-line-height-body-small: var(--cnvs-base-line-height-150);
+  --cnvs-sys-font-size-subtext-large: var(--cnvs-base-font-size-75);
+  --cnvs-sys-line-height-body-large: var(--cnvs-base-line-height-200);
+  --cnvs-sys-line-height-body-medium: var(--cnvs-base-line-height-200);
+  --cnvs-sys-font-size-body-small: var(--cnvs-base-font-size-100);
+  --cnvs-sys-line-height-heading-small: var(--cnvs-base-line-height-250);
+  --cnvs-sys-font-size-body-medium: var(--cnvs-base-font-size-125);
+  --cnvs-sys-line-height-heading-medium: var(--cnvs-base-line-height-300);
+  --cnvs-sys-font-size-body-large: var(--cnvs-base-font-size-150);
+  --cnvs-sys-line-height-heading-large: var(--cnvs-base-line-height-350);
+  --cnvs-sys-font-size-heading-small: var(--cnvs-base-font-size-200);
+  --cnvs-sys-line-height-title-small: var(--cnvs-base-line-height-400);
+  --cnvs-sys-font-size-heading-medium: var(--cnvs-base-font-size-250);
+  --cnvs-sys-line-height-title-medium: var(--cnvs-base-line-height-500);
+  --cnvs-sys-font-size-heading-large: var(--cnvs-base-font-size-300);
+  --cnvs-sys-line-height-title-large: var(--cnvs-base-line-height-600);
+  --cnvs-sys-font-size-title-small: var(--cnvs-base-font-size-400);
+  --cnvs-sys-font-size-title-medium: var(--cnvs-base-font-size-500);
+  --cnvs-sys-font-size-title-large: var(--cnvs-base-font-size-600);
+}
+
+.cnvs-sys-type-subtext-small {
+  font-family: var(--cnvs-base-font-family-50);
+  font-weight: var(--cnvs-base-font-weight-400);
+  line-height: var(--cnvs-base-line-height-50);
+  font-size: var(--cnvs-base-font-size-25);
+  letter-spacing: var(--cnvs-base-letter-spacing-50);
+}
+
+.cnvs-sys-type-subtext-medium {
+  font-family: var(--cnvs-base-font-family-50);
+  font-weight: var(--cnvs-base-font-weight-400);
+  line-height: var(--cnvs-base-line-height-50);
+  font-size: var(--cnvs-base-font-size-50);
+  letter-spacing: var(--cnvs-base-letter-spacing-100);
+}
+
+.cnvs-sys-type-subtext-large {
+  font-family: var(--cnvs-base-font-family-50);
+  font-weight: var(--cnvs-base-font-weight-400);
+  line-height: var(--cnvs-base-line-height-100);
+  font-size: var(--cnvs-base-font-size-75);
+  letter-spacing: var(--cnvs-base-letter-spacing-150);
+}
+
+.cnvs-sys-type-body-small {
+  font-family: var(--cnvs-base-font-family-50);
+  font-weight: var(--cnvs-base-font-weight-400);
+  line-height: var(--cnvs-base-line-height-150);
+  font-size: var(--cnvs-base-font-size-100);
+  letter-spacing: var(--cnvs-base-letter-spacing-200);
+}
+
+.cnvs-sys-type-body-medium {
+  font-family: var(--cnvs-base-font-family-50);
+  font-weight: var(--cnvs-base-font-weight-400);
+  line-height: var(--cnvs-base-line-height-200);
+  font-size: var(--cnvs-base-font-size-125);
+}
+
+.cnvs-sys-type-body-large {
+  font-family: var(--cnvs-base-font-family-50);
+  font-weight: var(--cnvs-base-font-weight-400);
+  line-height: var(--cnvs-base-line-height-200);
+  font-size: var(--cnvs-base-font-size-150);
+}
+
+.cnvs-sys-type-heading-small {
+  font-family: var(--cnvs-base-font-family-50);
+  font-weight: var(--cnvs-base-font-weight-700);
+  line-height: var(--cnvs-base-line-height-250);
+  font-size: var(--cnvs-base-font-size-200);
+}
+
+.cnvs-sys-type-heading-medium {
+  font-family: var(--cnvs-base-font-family-50);
+  font-weight: var(--cnvs-base-font-weight-700);
+  line-height: var(--cnvs-base-line-height-300);
+  font-size: var(--cnvs-base-font-size-250);
+}
+
+.cnvs-sys-type-heading-large {
+  font-family: var(--cnvs-base-font-family-50);
+  font-weight: var(--cnvs-base-font-weight-700);
+  line-height: var(--cnvs-base-line-height-350);
+  font-size: var(--cnvs-base-font-size-300);
+}
+
+.cnvs-sys-type-title-small {
+  font-family: var(--cnvs-base-font-family-50);
+  font-weight: var(--cnvs-base-font-weight-700);
+  line-height: var(--cnvs-base-line-height-400);
+  font-size: var(--cnvs-base-font-size-400);
+}
+
+.cnvs-sys-type-title-medium {
+  font-family: var(--cnvs-base-font-family-50);
+  font-weight: var(--cnvs-base-font-weight-700);
+  line-height: var(--cnvs-base-line-height-500);
+  font-size: var(--cnvs-base-font-size-500);
+}
+
+.cnvs-sys-type-title-large {
+  font-family: var(--cnvs-base-font-family-50);
+  font-weight: var(--cnvs-base-font-weight-700);
+  line-height: var(--cnvs-base-line-height-600);
+  font-size: var(--cnvs-base-font-size-600);
+}

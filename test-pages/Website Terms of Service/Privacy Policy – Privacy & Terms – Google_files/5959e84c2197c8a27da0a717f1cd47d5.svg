@@ -1,0 +1,33 @@
+<svg id="Content" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="96" height="96" viewBox="0 0 96 96">
+  <defs>
+    <clipPath id="clip-path">
+      <path d="M48,7A41,41,0,1,0,89,48,40.989,40.989,0,0,0,48,7Z" fill="none"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="29.091" y1="71.218" x2="66.018" y2="34.291" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2c66bf"/>
+      <stop offset="0.201" stop-color="#3572d4"/>
+      <stop offset="0.446" stop-color="#3c7de6"/>
+      <stop offset="0.704" stop-color="#4183f1"/>
+      <stop offset="1" stop-color="#4285f4"/>
+    </linearGradient>
+  </defs>
+  <title>site_sec_C_09</title>
+  <g>
+    <g>
+      <path d="M48,7A41,41,0,1,0,89,48,40.989,40.989,0,0,0,48,7Z" fill="#e8eaed"/>
+      <g clip-path="url(#clip-path)">
+        <path d="M35.543,42.584a10.048,10.048,0,1,0-2.421-19.789,12.572,12.572,0,0,0-22.647,4.788,7.546,7.546,0,0,0,.992,15Z" fill="#fff"/>
+      </g>
+      <g>
+        <path d="M67.1,70.026a13.044,13.044,0,0,0,1.842-25.958,20.445,20.445,0,0,0-37.55-4.494c-.1,0-.2-.015-.3-.015a15.233,15.233,0,0,0,0,30.467Z" fill="#2c66bf"/>
+        <path d="M67.1,66.9a13.044,13.044,0,0,0,1.842-25.958,20.445,20.445,0,0,0-37.55-4.494c-.1,0-.2-.015-.3-.015a15.233,15.233,0,0,0,0,30.467Z" fill="url(#linear-gradient)"/>
+      </g>
+      <path d="M56.978,44.794h-5.13V37.1h-7.7v7.7h-5.13L48,53.772ZM39.022,56.337V58.9H56.978V56.337Z" fill="#fff"/>
+      <g clip-path="url(#clip-path)">
+        <path d="M95.612,84.4A26.756,26.756,0,0,0,73.923,65.565,26.191,26.191,0,0,0,45.766,81.358a15.653,15.653,0,0,0-6.775-1.55A15.978,15.978,0,0,0,23.144,94.74Z" fill="#fff"/>
+      </g>
+      <rect width="96" height="96" fill="none"/>
+    </g>
+    <rect width="96" height="96" fill="none"/>
+  </g>
+</svg>

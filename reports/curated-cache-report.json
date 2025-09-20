@@ -1,0 +1,1531 @@
+{
+  "generatedAt": "2025-09-19T20:07:52.789Z",
+  "report": [
+    {
+      "file": "AWS Learner Terms & Conditions.html",
+      "url": "tg://curated-tos/AWS%20Learner%20Terms%20%26%20Conditions.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "BILLING_AND_AUTORENEWAL:77",
+        "CONTENT_AND_IP:78",
+        "LIABILITY_AND_REMEDIES:93"
+      ],
+      "uncommon": {
+        "total": 1374,
+        "top": [
+          "normal:579",
+          "line:437",
+          "item:425",
+          "active:384",
+          "border-radius:361",
+          "gutter:330",
+          "charts:324",
+          "line-height:323",
+          "box:288",
+          "motion:270"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "normal",
+            "count": 579,
+            "definition": "opposed to exceptional; that state wherein any body most exactly corn-ports in all its parts with the abstract idea thereof, and is most exactly fitted to pe...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "line",
+            "count": 437,
+            "definition": "In descents. The order or series of persons who have descended one front the other or ell from a common ancestor, considered as placed in a line of successio...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "item",
+            "count": 425,
+            "definition": "Also; likewise; again. This word was formerly used to mark the beginning of a new paragraph or division after the first, whence is derived the common applica...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "active",
+            "count": 384,
+            "definition": "That is in action; that demands action; actually subsisting; the oppo-site of passive. An active debt is one which draws interest An active trust is a confl-...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "border-radius",
+            "count": 361,
+            "definition": "A process grant-ed by a Judge ordinary, on either side of the border between England and Scotland, for arresting the person or effects of a per-son living on...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 62,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": -717.6502179939355,
+        "kincaid": 114.42927328246878,
+        "fogIndex": 44.56725250448868
+      },
+      "rights": {
+        "grade": "C",
+        "score": 78,
+        "confidence": 1,
+        "topCategories": [
+          "BILLING_AND_AUTORENEWAL:77",
+          "CONTENT_AND_IP:78",
+          "LIABILITY_AND_REMEDIES:93"
+        ],
+        "userRightsIndex": {
+          "overall": 78
+        }
+      }
+    },
+    {
+      "file": "Conditions of Use - Amazon Customer Service.html",
+      "url": "tg://curated-tos/Conditions%20of%20Use%20-%20Amazon%20Customer%20Service.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "BILLING_AND_AUTORENEWAL:92",
+        "CONTENT_AND_IP:97",
+        "DATA_PRACTICES:97"
+      ],
+      "uncommon": {
+        "total": 626,
+        "top": [
+          "declare:110",
+          "use:58",
+          "date:53",
+          "help:48",
+          "data:47",
+          "com:42",
+          "services:42",
+          "service:40",
+          "link:39",
+          "count:30"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "declare",
+            "count": 110,
+            "definition": "To solemnly assert a fact before witnesses, e. g., where a testator declares a paper signed by him to be his last will and testament. Lane v. Lane, 95 N. Y. 498",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "use",
+            "count": 58,
+            "definition": "A future use",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "date",
+            "count": 53,
+            "definition": "The specification or mention, in a written instrument, of the time (day and year) when it was made. Also the time so specified",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "help",
+            "count": 48,
+            "definition": "The formula, at the end of a common oath",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "data",
+            "count": 47,
+            "definition": "In old practice and conveyancing. The date of a deed; the time when it was given; that Is, executed",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 27,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": -30.217360765584687,
+        "kincaid": 18.183028990685923,
+        "fogIndex": 15.42547920360692
+      },
+      "rights": {
+        "grade": "C",
+        "score": 78,
+        "confidence": 1,
+        "topCategories": [
+          "BILLING_AND_AUTORENEWAL:92",
+          "CONTENT_AND_IP:97",
+          "DATA_PRACTICES:97"
+        ],
+        "userRightsIndex": {
+          "overall": 81
+        }
+      }
+    },
+    {
+      "file": "DuckDuckGo Terms of Service.html",
+      "url": "tg://curated-tos/DuckDuckGo%20Terms%20of%20Service.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CONTENT_AND_IP:88",
+        "DISPUTE_RESOLUTION:100",
+        "CLASS_ACTIONS:100"
+      ],
+      "uncommon": {
+        "total": 180,
+        "top": [
+          "value:75",
+          "services:34",
+          "terms:20",
+          "search:16",
+          "use:15",
+          "access:7",
+          "service:7",
+          "available:6",
+          "law:6",
+          "terms of service:5"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "value",
+            "count": 75,
+            "definition": "The utility of an object in sat-jsfylng, directly or indirectly, the needs or desires of human beings, called by economists “valne in use;” or its worth cons...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "services",
+            "count": 34,
+            "definition": "A function of the federal courts that takes place at the very start of the criminal justice process – after a person has been arrested and charged with a fed...",
+            "source": "US Courts Glossary"
+          },
+          {
+            "word": "terms",
+            "count": 20,
+            "definition": "In English law. Terms, (usually mortgages,) for a long period of years, which are created or kept out-standing for the purpose of attending or waiting upon a...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "search",
+            "count": 16,
+            "definition": "In international law. The",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "use",
+            "count": 15,
+            "definition": "A future use",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 16,
+      "overallRisk": "medium",
+      "readability": {
+        "grade": "F",
+        "flesch": 35.049061707523265,
+        "kincaid": 12.654800144910038,
+        "fogIndex": 15.868373384856904
+      },
+      "rights": {
+        "grade": "A",
+        "score": 100,
+        "confidence": 1,
+        "topCategories": [
+          "CONTENT_AND_IP:88",
+          "DISPUTE_RESOLUTION:100",
+          "CLASS_ACTIONS:100"
+        ],
+        "userRightsIndex": {
+          "overall": 85
+        }
+      }
+    },
+    {
+      "file": "FamilySearch Terms of Use. Everything you need to know, in one place..html",
+      "url": "tg://curated-tos/FamilySearch%20Terms%20of%20Use.%20Everything%20you%20need%20to%20know%2C%20in%20one%20place..html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CONTENT_AND_IP:70",
+        "DATA_PRACTICES:92",
+        "DISPUTE_RESOLUTION:100"
+      ],
+      "uncommon": {
+        "total": 717,
+        "top": [
+          "extension:1038",
+          "pwa-extension-ng-components:943",
+          "neutral:158",
+          "danger:149",
+          "fill:149",
+          "box:130",
+          "family:124",
+          "cold:118",
+          "font-family:118",
+          "pwa-btn-text:118"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "extension",
+            "count": 1038,
+            "definition": "In mercantile law. An",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "pwa-extension-ng-components",
+            "count": 943,
+            "definition": "In mercantile law. An",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "neutral",
+            "count": 158,
+            "definition": "In International law. In-different; impartial; not engaged on either side; not taking an active part with either of the contending states. In an interna-tion...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "danger",
+            "count": 149,
+            "definition": "Jeopardy; exposure to loss or injury; peril. U. S. v. Mays, 1 Idaho, 770",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "fill",
+            "count": 149,
+            "definition": "To make full; to complete; to sat-isfy or fulfill; to possess and perform the duties of",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 1,
+      "overallRisk": "high",
+      "readability": {
+        "grade": "F",
+        "flesch": -101.21001263778768,
+        "kincaid": 28.36562889720643,
+        "fogIndex": 23.066882365704593
+      },
+      "rights": {
+        "grade": "A",
+        "score": 96,
+        "confidence": 1,
+        "topCategories": [
+          "CONTENT_AND_IP:70",
+          "DATA_PRACTICES:92",
+          "DISPUTE_RESOLUTION:100"
+        ],
+        "userRightsIndex": {
+          "overall": 76
+        }
+      }
+    },
+    {
+      "file": "GitHub Terms of Service - GitHub Docs.html",
+      "url": "tg://curated-tos/GitHub%20Terms%20of%20Service%20-%20GitHub%20Docs.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CONTENT_AND_IP:73",
+        "LIABILITY_AND_REMEDIES:73",
+        "BILLING_AND_AUTORENEWAL:73"
+      ],
+      "uncommon": {
+        "total": 595,
+        "top": [
+          "terms:253",
+          "service:222",
+          "policy:172",
+          "use:144",
+          "site:140",
+          "account:131",
+          "link:122",
+          "heading-link:118",
+          "site-policy:110",
+          "agreement:97"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "terms",
+            "count": 253,
+            "definition": "In English law. Terms, (usually mortgages,) for a long period of years, which are created or kept out-standing for the purpose of attending or waiting upon a...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "service",
+            "count": 222,
+            "definition": "In oontraots. The being' em-ployed to serve another; duty or labor to be rendered by one person to another",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "policy",
+            "count": 172,
+            "definition": "The general prlnclples by •which a government is guided in Its management of publlc affairs, or the legislature in Its measures",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "use",
+            "count": 144,
+            "definition": "A future use",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "site",
+            "count": 140,
+            "definition": "E, or SITE. The sitting or standing on any place; the seat or situation of a cap-ital messuage, or the ground whereon It stands. Jacob",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 65,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": 1.917127018127104,
+        "kincaid": 16.889635706195175,
+        "fogIndex": 16.315944777061958
+      },
+      "rights": {
+        "grade": "C",
+        "score": 70,
+        "confidence": 1,
+        "topCategories": [
+          "CONTENT_AND_IP:73",
+          "LIABILITY_AND_REMEDIES:73",
+          "BILLING_AND_AUTORENEWAL:73"
+        ],
+        "userRightsIndex": {
+          "overall": 77
+        }
+      }
+    },
+    {
+      "file": "google_terms_of_service_en_us.pdf",
+      "url": "tg://curated-tos/google_terms_of_service_en_us.pdf",
+      "status": "skipped",
+      "reason": "unsupported extension .pdf"
+    },
+    {
+      "file": "KTBSOnline User Agreement.txt",
+      "url": "tg://curated-tos/KTBSOnline%20User%20Agreement.txt",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "DISPUTE_RESOLUTION:98",
+        "LIABILITY_AND_REMEDIES:99",
+        "DATA_PRACTICES:99"
+      ],
+      "uncommon": {
+        "total": 577,
+        "top": [
+          "user:544",
+          "information:112",
+          "services:111",
+          "service:90",
+          "agreement:87",
+          "employer:83",
+          "party:79",
+          "use:73",
+          "account:69",
+          "insurance:58"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "user",
+            "count": 544,
+            "definition": "The actual exercise or enjoyment of any right or property. It is particularly used of franchises",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "information",
+            "count": 112,
+            "definition": "In praotice. An ac",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "services",
+            "count": 111,
+            "definition": "A function of the federal courts that takes place at the very start of the criminal justice process – after a person has been arrested and charged with a fed...",
+            "source": "US Courts Glossary"
+          },
+          {
+            "word": "service",
+            "count": 90,
+            "definition": "In oontraots. The being' em-ployed to serve another; duty or labor to be rendered by one person to another",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "agreement",
+            "count": 87,
+            "definition": "A concord of understand-ing and Intention, between two or more par-ties, with respect to the effect upon their relative rights and duties, of certain past or...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 90,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": 35.25497574796594,
+        "kincaid": 14.71673852405041,
+        "fogIndex": 20.959680016143523
+      },
+      "rights": {
+        "grade": "D",
+        "score": 62,
+        "confidence": 1,
+        "topCategories": [
+          "DISPUTE_RESOLUTION:98",
+          "LIABILITY_AND_REMEDIES:99",
+          "DATA_PRACTICES:99"
+        ],
+        "userRightsIndex": {
+          "overall": 87
+        }
+      }
+    },
+    {
+      "file": "Legal - Website Terms of Use - Apple.html",
+      "url": "tg://curated-tos/Legal%20-%20Website%20Terms%20of%20Use%20-%20Apple.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CLASS_ACTIONS:98",
+        "CONTENT_AND_IP:99",
+        "BILLING_AND_AUTORENEWAL:100"
+      ],
+      "uncommon": {
+        "total": 398,
+        "top": [
+          "site:95",
+          "name:79",
+          "use:66",
+          "terms:53",
+          "data:42",
+          "value:35",
+          "support:32",
+          "information:28",
+          "shop:27",
+          "watch:27"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "site",
+            "count": 95,
+            "definition": "E, or SITE. The sitting or standing on any place; the seat or situation of a cap-ital messuage, or the ground whereon It stands. Jacob",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "name",
+            "count": 79,
+            "definition": "The designation of an individual person, or of a firm or corporation. In law a man cannot have more than one Christian name. Rex v. Newman, 1 Ld. Raym. 562. ...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "use",
+            "count": 66,
+            "definition": "A future use",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "terms",
+            "count": 53,
+            "definition": "In English law. Terms, (usually mortgages,) for a long period of years, which are created or kept out-standing for the purpose of attending or waiting upon a...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "data",
+            "count": 42,
+            "definition": "In old practice and conveyancing. The date of a deed; the time when it was given; that Is, executed",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 56,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": 7.639719870627829,
+        "kincaid": 19.732300834480075,
+        "fogIndex": 23.435312921856976
+      },
+      "rights": {
+        "grade": "D",
+        "score": 64,
+        "confidence": 1,
+        "topCategories": [
+          "CLASS_ACTIONS:98",
+          "CONTENT_AND_IP:99",
+          "BILLING_AND_AUTORENEWAL:100"
+        ],
+        "userRightsIndex": {
+          "overall": 82
+        }
+      }
+    },
+    {
+      "file": "Legal terms and conditions _ Mistral AI _ Frontier AI in your hands.html",
+      "url": "tg://curated-tos/Legal%20terms%20and%20conditions%20_%20Mistral%20AI%20_%20Frontier%20AI%20in%20your%20hands.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CONTENT_AND_IP:71",
+        "BILLING_AND_AUTORENEWAL:71",
+        "LIABILITY_AND_REMEDIES:71"
+      ],
+      "uncommon": {
+        "total": 1195,
+        "top": [
+          "extension:1052",
+          "pwa-extension-ng-components:957",
+          "data:458",
+          "services:448",
+          "use:330",
+          "terms:220",
+          "agreement:194",
+          "neutral:160",
+          "personal:160",
+          "fill:149"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "extension",
+            "count": 1052,
+            "definition": "In mercantile law. An",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "pwa-extension-ng-components",
+            "count": 957,
+            "definition": "In mercantile law. An",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "data",
+            "count": 458,
+            "definition": "In old practice and conveyancing. The date of a deed; the time when it was given; that Is, executed",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "services",
+            "count": 448,
+            "definition": "A function of the federal courts that takes place at the very start of the criminal justice process – after a person has been arrested and charged with a fed...",
+            "source": "US Courts Glossary"
+          },
+          {
+            "word": "use",
+            "count": 330,
+            "definition": "A future use",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 207,
+      "overallRisk": "high",
+      "readability": {
+        "grade": "F",
+        "flesch": -4.675174089269433,
+        "kincaid": 15.721224967489068,
+        "fogIndex": 17.366727533687364
+      },
+      "rights": {
+        "grade": "D",
+        "score": 62,
+        "confidence": 1,
+        "topCategories": [
+          "CONTENT_AND_IP:71",
+          "BILLING_AND_AUTORENEWAL:71",
+          "LIABILITY_AND_REMEDIES:71"
+        ],
+        "userRightsIndex": {
+          "overall": 76
+        }
+      }
+    },
+    {
+      "file": "SAM.gov _ Sign Terms of Use.html",
+      "url": "tg://curated-tos/SAM.gov%20_%20Sign%20Terms%20of%20Use.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CONTENT_AND_IP:83",
+        "DATA_PRACTICES:94",
+        "DISPUTE_RESOLUTION:100"
+      ],
+      "uncommon": {
+        "total": 717,
+        "top": [
+          "table:176",
+          "field:148",
+          "data:140",
+          "panel:131",
+          "list:122",
+          "border-radius:105",
+          "view:100",
+          "form:93",
+          "information:82",
+          "ck-balloon-panel:78"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "table",
+            "count": 176,
+            "definition": "A synopsis or condensed state-ment, bringing together numerous items or",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "field",
+            "count": 148,
+            "definition": "This term might well be con-; sidered as definite and certain a description as “close,” and might be used in law; but it is not a usual description in legal ...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "data",
+            "count": 140,
+            "definition": "In old practice and conveyancing. The date of a deed; the time when it was given; that Is, executed",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "panel",
+            "count": 131,
+            "definition": "The roll or slip of parchment returned by the sheriff in obedience to a venire facias, containing the names of the per-sons whom he has summoned to attend th...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "list",
+            "count": 122,
+            "definition": "A docket or calendar of causes ready for trlal or argument, or of motions ready for hearing",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 26,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": -512.9955916215667,
+        "kincaid": 85.15048190027606,
+        "fogIndex": 44.72669775566542
+      },
+      "rights": {
+        "grade": "A",
+        "score": 92,
+        "confidence": 1,
+        "topCategories": [
+          "CONTENT_AND_IP:83",
+          "DATA_PRACTICES:94",
+          "DISPUTE_RESOLUTION:100"
+        ],
+        "userRightsIndex": {
+          "overall": 78
+        }
+      }
+    },
+    {
+      "file": "SAM.gov _ Terms of Use.html",
+      "url": "tg://curated-tos/SAM.gov%20_%20Terms%20of%20Use.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CONTENT_AND_IP:82",
+        "DATA_PRACTICES:94",
+        "DISPUTE_RESOLUTION:100"
+      ],
+      "uncommon": {
+        "total": 1278,
+        "top": [
+          "field:218",
+          "list:194",
+          "table:184",
+          "data:142",
+          "state:142",
+          "panel:132",
+          "form:117",
+          "border-radius:106",
+          "view:100",
+          "switch:98"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "field",
+            "count": 218,
+            "definition": "This term might well be con-; sidered as definite and certain a description as “close,” and might be used in law; but it is not a usual description in legal ...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "list",
+            "count": 194,
+            "definition": "A docket or calendar of causes ready for trlal or argument, or of motions ready for hearing",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "table",
+            "count": 184,
+            "definition": "A synopsis or condensed state-ment, bringing together numerous items or",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "data",
+            "count": 142,
+            "definition": "In old practice and conveyancing. The date of a deed; the time when it was given; that Is, executed",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "state",
+            "count": 142,
+            "definition": "For prov-ing age. A writ which formerly lay to sum-mon a jury in order to determine the age of the heir of a tenant in capite who claimed his estate as heing...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 26,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": -533.6584825305056,
+        "kincaid": 88.06918502434398,
+        "fogIndex": 42.060293599209736
+      },
+      "rights": {
+        "grade": "A",
+        "score": 92,
+        "confidence": 1,
+        "topCategories": [
+          "CONTENT_AND_IP:82",
+          "DATA_PRACTICES:94",
+          "DISPUTE_RESOLUTION:100"
+        ],
+        "userRightsIndex": {
+          "overall": 78
+        }
+      }
+    },
+    {
+      "file": "Splunk General Terms _ Splunk.html",
+      "url": "tg://curated-tos/Splunk%20General%20Terms%20_%20Splunk.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "BILLING_AND_AUTORENEWAL:70",
+        "CONTENT_AND_IP:70",
+        "LIABILITY_AND_REMEDIES:70"
+      ],
+      "uncommon": {
+        "total": 984,
+        "top": [
+          "policy:373",
+          "data:360",
+          "ot-sdk-cookie-policy:316",
+          "consent:166",
+          "onetrust-consent-sdk:145",
+          "margin-top:140",
+          "terms:135",
+          "margin-bottom:134",
+          "item:128",
+          "margin-left:128"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "policy",
+            "count": 373,
+            "definition": "The general prlnclples by •which a government is guided in Its management of publlc affairs, or the legislature in Its measures",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "data",
+            "count": 360,
+            "definition": "In old practice and conveyancing. The date of a deed; the time when it was given; that Is, executed",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "ot-sdk-cookie-policy",
+            "count": 316,
+            "definition": "A mercantile instrument in writing, by which one party, in consideration of a premium, engages to lndemnify another against a contingent loss, by making bim ...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "consent",
+            "count": 166,
+            "definition": "Permission or agreement to something.",
+            "source": "Legal Terms Definitions"
+          },
+          {
+            "word": "onetrust-consent-sdk",
+            "count": 145,
+            "definition": "In English practice. A superseded Instrument, in which a defendant in an action of ejectment specified for what purpose he intended to defend, and un-dertook...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 13,
+      "overallRisk": "high",
+      "readability": {
+        "grade": "F",
+        "flesch": -130.41321744608737,
+        "kincaid": 32.501119043542204,
+        "fogIndex": 24.841789818576373
+      },
+      "rights": {
+        "grade": "C",
+        "score": 74,
+        "confidence": 1,
+        "topCategories": [
+          "BILLING_AND_AUTORENEWAL:70",
+          "CONTENT_AND_IP:70",
+          "LIABILITY_AND_REMEDIES:70"
+        ],
+        "userRightsIndex": {
+          "overall": 76
+        }
+      }
+    },
+    {
+      "file": "Terms of Service - Glider AI.html",
+      "url": "tg://curated-tos/Terms%20of%20Service%20-%20Glider%20AI.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CONTENT_AND_IP:81",
+        "LIABILITY_AND_REMEDIES:83",
+        "DATA_PRACTICES:95"
+      ],
+      "uncommon": {
+        "total": 744,
+        "top": [
+          "confirmation:65",
+          "terms:61",
+          "use:60",
+          "hs-eu-cookie-confirmation:58",
+          "math:53",
+          "information:44",
+          "user:44",
+          "data:37",
+          "services:36",
+          "box:29"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "confirmation",
+            "count": 65,
+            "definition": "A contract by which that which was Infirm, imperfect, or subject to be avoided is made firm and unavoidable",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "terms",
+            "count": 61,
+            "definition": "In English law. Terms, (usually mortgages,) for a long period of years, which are created or kept out-standing for the purpose of attending or waiting upon a...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "use",
+            "count": 60,
+            "definition": "A future use",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "hs-eu-cookie-confirmation",
+            "count": 58,
+            "definition": "A contract by which that which was Infirm, imperfect, or subject to be avoided is made firm and unavoidable",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "math",
+            "count": 53,
+            "definition": "A second mowing; the aftermath",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 31,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": -288.5064503907174,
+        "kincaid": 55.77462046465125,
+        "fogIndex": 31.040479270980974
+      },
+      "rights": {
+        "grade": "B",
+        "score": 84,
+        "confidence": 1,
+        "topCategories": [
+          "CONTENT_AND_IP:81",
+          "LIABILITY_AND_REMEDIES:83",
+          "DATA_PRACTICES:95"
+        ],
+        "userRightsIndex": {
+          "overall": 79
+        }
+      }
+    },
+    {
+      "file": "Terms of Service - Quora.html",
+      "url": "tg://curated-tos/Terms%20of%20Service%20-%20Quora.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "DISPUTE_RESOLUTION:87",
+        "CLASS_ACTIONS:94",
+        "CONTENT_AND_IP:98"
+      ],
+      "uncommon": {
+        "total": 631,
+        "top": [
+          "net:247",
+          "arbitration:176",
+          "terms:135",
+          "use:111",
+          "com:92",
+          "agree:86",
+          "party:74",
+          "policy:73",
+          "agreement:72",
+          "claims:68"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "net",
+            "count": 247,
+            "definition": "The clear weight or quan-tity of an article, without the bag, box, keg, or other thing in which it may be enveloped",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "arbitration",
+            "count": 176,
+            "definition": "A method of dispute resolution outside of court.",
+            "source": "Legal Terms Definitions"
+          },
+          {
+            "word": "terms",
+            "count": 135,
+            "definition": "In English law. Terms, (usually mortgages,) for a long period of years, which are created or kept out-standing for the purpose of attending or waiting upon a...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "use",
+            "count": 111,
+            "definition": "A future use",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "com",
+            "count": 92,
+            "definition": "one who is in the hab-lt of being in a particular place is said to be conversant there. Barnes, 162. Acquainted; familiar",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 131,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": 5.138440373748665,
+        "kincaid": 14.704226528867903,
+        "fogIndex": 13.417568654023519
+      },
+      "rights": {
+        "grade": "F",
+        "score": 52,
+        "confidence": 1,
+        "topCategories": [
+          "DISPUTE_RESOLUTION:87",
+          "CLASS_ACTIONS:94",
+          "CONTENT_AND_IP:98"
+        ],
+        "userRightsIndex": {
+          "overall": 82
+        }
+      }
+    },
+    {
+      "file": "Terms of Service _ Khan Academy.html",
+      "url": "tg://curated-tos/Terms%20of%20Service%20_%20Khan%20Academy.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CONTENT_AND_IP:71",
+        "DISPUTE_RESOLUTION:71",
+        "CLASS_ACTIONS:72"
+      ],
+      "uncommon": {
+        "total": 1043,
+        "top": [
+          "box:819",
+          "webkit-box:376",
+          "policy:364",
+          "ot-sdk-cookie-policy:318",
+          "direction:313",
+          "flex-direction:232",
+          "force:216",
+          "condition:212",
+          "academy:205",
+          "min:196"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "box",
+            "count": 819,
+            "definition": "A case made of wood for receiving ballots",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "webkit-box",
+            "count": 376,
+            "definition": "A case made of wood for receiving ballots",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "policy",
+            "count": 364,
+            "definition": "The general prlnclples by •which a government is guided in Its management of publlc affairs, or the legislature in Its measures",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "ot-sdk-cookie-policy",
+            "count": 318,
+            "definition": "A mercantile instrument in writing, by which one party, in consideration of a premium, engages to lndemnify another against a contingent loss, by making bim ...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "direction",
+            "count": 313,
+            "definition": "1. The act of governing; management; superintendence. Also the body of persons (called “directors”) who are charged with the management and adminis-tration o...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 82,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": -208.85307209530694,
+        "kincaid": 43.153437709376206,
+        "fogIndex": 34.24936890161352
+      },
+      "rights": {
+        "grade": "D",
+        "score": 66,
+        "confidence": 1,
+        "topCategories": [
+          "CONTENT_AND_IP:71",
+          "DISPUTE_RESOLUTION:71",
+          "CLASS_ACTIONS:72"
+        ],
+        "userRightsIndex": {
+          "overall": 74
+        }
+      }
+    },
+    {
+      "file": "Terms of Service _ Pinterest Policy.html",
+      "url": "tg://curated-tos/Terms%20of%20Service%20_%20Pinterest%20Policy.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "DISPUTE_RESOLUTION:70",
+        "CONTENT_AND_IP:70",
+        "LIABILITY_AND_REMEDIES:70"
+      ],
+      "uncommon": {
+        "total": 657,
+        "top": [
+          "policy:355",
+          "ot-sdk-cookie-policy:314",
+          "consent:125",
+          "onetrust-consent-sdk:108",
+          "label:89",
+          "terms:88",
+          "ot-sdk-cookie-policy-v2:84",
+          "border-color:83",
+          "item:83",
+          "auto:78"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "policy",
+            "count": 355,
+            "definition": "The general prlnclples by •which a government is guided in Its management of publlc affairs, or the legislature in Its measures",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "ot-sdk-cookie-policy",
+            "count": 314,
+            "definition": "A mercantile instrument in writing, by which one party, in consideration of a premium, engages to lndemnify another against a contingent loss, by making bim ...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "consent",
+            "count": 125,
+            "definition": "Permission or agreement to something.",
+            "source": "Legal Terms Definitions"
+          },
+          {
+            "word": "onetrust-consent-sdk",
+            "count": 108,
+            "definition": "In English practice. A superseded Instrument, in which a defendant in an action of ejectment specified for what purpose he intended to defend, and un-dertook...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "label",
+            "count": 89,
+            "definition": "Anything appended to a larger writing, as a codicil; a narrow slip of paper or parchment affixed to a deed or writ, in order to hold the appendlng seal",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 8,
+      "overallRisk": "high",
+      "readability": {
+        "grade": "F",
+        "flesch": -218.9428605573861,
+        "kincaid": 44.806887691347654,
+        "fogIndex": 29.998620860932807
+      },
+      "rights": {
+        "grade": "D",
+        "score": 66,
+        "confidence": 1,
+        "topCategories": [
+          "DISPUTE_RESOLUTION:70",
+          "CONTENT_AND_IP:70",
+          "LIABILITY_AND_REMEDIES:70"
+        ],
+        "userRightsIndex": {
+          "overall": 74
+        }
+      }
+    },
+    {
+      "file": "Terms of Service-Youtube.html",
+      "url": "tg://curated-tos/Terms%20of%20Service-Youtube.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CONTENT_AND_IP:75",
+        "LIABILITY_AND_REMEDIES:76",
+        "UNILATERAL_CHANGES:94"
+      ],
+      "uncommon": {
+        "total": 338,
+        "top": [
+          "service:119",
+          "use:47",
+          "agreement:33",
+          "terms:29",
+          "account:17",
+          "law:14",
+          "legal:14",
+          "license:13",
+          "part:13",
+          "party:13"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "service",
+            "count": 119,
+            "definition": "In oontraots. The being' em-ployed to serve another; duty or labor to be rendered by one person to another",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "use",
+            "count": 47,
+            "definition": "A future use",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "agreement",
+            "count": 33,
+            "definition": "A concord of understand-ing and Intention, between two or more par-ties, with respect to the effect upon their relative rights and duties, of certain past or...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "terms",
+            "count": 29,
+            "definition": "In English law. Terms, (usually mortgages,) for a long period of years, which are created or kept out-standing for the purpose of attending or waiting upon a...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "account",
+            "count": 17,
+            "definition": "A detailed statement of the mutual demands in the nature of debt and credit between parties, arising out of con",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 22,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": 43.15795278235697,
+        "kincaid": 13.789426974385972,
+        "fogIndex": 18.500840871625083
+      },
+      "rights": {
+        "grade": "C",
+        "score": 76,
+        "confidence": 1,
+        "topCategories": [
+          "CONTENT_AND_IP:75",
+          "LIABILITY_AND_REMEDIES:76",
+          "UNILATERAL_CHANGES:94"
+        ],
+        "userRightsIndex": {
+          "overall": 85
+        }
+      }
+    },
+    {
+      "file": "Terms of Service.html",
+      "url": "tg://curated-tos/Terms%20of%20Service.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CONTENT_AND_IP:75",
+        "LIABILITY_AND_REMEDIES:76",
+        "UNILATERAL_CHANGES:94"
+      ],
+      "uncommon": {
+        "total": 338,
+        "top": [
+          "service:119",
+          "use:47",
+          "agreement:33",
+          "terms:29",
+          "account:17",
+          "law:14",
+          "legal:14",
+          "license:13",
+          "part:13",
+          "party:13"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "service",
+            "count": 119,
+            "definition": "In oontraots. The being' em-ployed to serve another; duty or labor to be rendered by one person to another",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "use",
+            "count": 47,
+            "definition": "A future use",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "agreement",
+            "count": 33,
+            "definition": "A concord of understand-ing and Intention, between two or more par-ties, with respect to the effect upon their relative rights and duties, of certain past or...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "terms",
+            "count": 29,
+            "definition": "In English law. Terms, (usually mortgages,) for a long period of years, which are created or kept out-standing for the purpose of attending or waiting upon a...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "account",
+            "count": 17,
+            "definition": "A detailed statement of the mutual demands in the nature of debt and credit between parties, arising out of con",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 22,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": 43.15795278235697,
+        "kincaid": 13.789426974385972,
+        "fogIndex": 18.500840871625083
+      },
+      "rights": {
+        "grade": "C",
+        "score": 76,
+        "confidence": 1,
+        "topCategories": [
+          "CONTENT_AND_IP:75",
+          "LIABILITY_AND_REMEDIES:76",
+          "UNILATERAL_CHANGES:94"
+        ],
+        "userRightsIndex": {
+          "overall": 85
+        }
+      }
+    },
+    {
+      "file": "User Agreement - February 15, 2024 - Reddit.html",
+      "url": "tg://curated-tos/User%20Agreement%20-%20February%2015%2C%202024%20-%20Reddit.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CONTENT_AND_IP:73",
+        "LIABILITY_AND_REMEDIES:74",
+        "DATA_PRACTICES:93"
+      ],
+      "uncommon": {
+        "total": 604,
+        "top": [
+          "policy:467",
+          "ot-sdk-cookie-policy:402",
+          "services:177",
+          "reddit:137",
+          "terms:135",
+          "offset:84",
+          "ot-sdk-cookie-policy-v2:84",
+          "consent:82",
+          "use:82",
+          "label:74"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "policy",
+            "count": 467,
+            "definition": "The general prlnclples by •which a government is guided in Its management of publlc affairs, or the legislature in Its measures",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "ot-sdk-cookie-policy",
+            "count": 402,
+            "definition": "A mercantile instrument in writing, by which one party, in consideration of a premium, engages to lndemnify another against a contingent loss, by making bim ...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "services",
+            "count": 177,
+            "definition": "A function of the federal courts that takes place at the very start of the criminal justice process – after a person has been arrested and charged with a fed...",
+            "source": "US Courts Glossary"
+          },
+          {
+            "word": "reddit",
+            "count": 137,
+            "definition": "L. Lat. An old writ which lay where a rent-charge or other rent which was not rent service was granted by fine holding of the grantor. If the tenant would no...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "terms",
+            "count": 135,
+            "definition": "In English law. Terms, (usually mortgages,) for a long period of years, which are created or kept out-standing for the purpose of attending or waiting upon a...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 49,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": -149.16450288936454,
+        "kincaid": 35.4564989895719,
+        "fogIndex": 24.881571910298774
+      },
+      "rights": {
+        "grade": "B",
+        "score": 88,
+        "confidence": 1,
+        "topCategories": [
+          "CONTENT_AND_IP:73",
+          "LIABILITY_AND_REMEDIES:74",
+          "DATA_PRACTICES:93"
+        ],
+        "userRightsIndex": {
+          "overall": 77
+        }
+      }
+    },
+    {
+      "file": "Wikimedia Foundation Terms of Use - Wikimedia Foundation Governance Wiki.html",
+      "url": "tg://curated-tos/Wikimedia%20Foundation%20Terms%20of%20Use%20-%20Wikimedia%20Foundation%20Governance%20Wiki.html",
+      "status": "processed",
+      "stored": true,
+      "cached": true,
+      "rightsTopCategories": [
+        "CONTENT_AND_IP:90",
+        "DISPUTE_RESOLUTION:95",
+        "DATA_PRACTICES:98"
+      ],
+      "uncommon": {
+        "total": 787,
+        "top": [
+          "action:127",
+          "weight:104",
+          "active:96",
+          "use:93",
+          "background-color:88",
+          "terms:83",
+          "menu:82",
+          "search:66",
+          "cdx-menu:63",
+          "box:58"
+        ],
+        "topWithDefinitions": [
+          {
+            "word": "action",
+            "count": 127,
+            "definition": "Conduct; behavior; something done; the condition of acting; an act or series of acts",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "weight",
+            "count": 104,
+            "definition": "A measure of heaviness or ponderosity; and in a metaphorical sense influence, effectiveness, or power to influence judgment or conduct",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "active",
+            "count": 96,
+            "definition": "That is in action; that demands action; actually subsisting; the oppo-site of passive. An active debt is one which draws interest An active trust is a confl-...",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "use",
+            "count": 93,
+            "definition": "A future use",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          },
+          {
+            "word": "background-color",
+            "count": 88,
+            "definition": "An act unjustly done by the countenance of an ofiice, being grounded upon corruption, to which the office is as a shadow and color. Plow. 64",
+            "source": "Black's Law Dictionary 2nd Ed (1910)"
+          }
+        ]
+      },
+      "sections": 22,
+      "overallRisk": "medium-high",
+      "readability": {
+        "grade": "F",
+        "flesch": -93.9933801789542,
+        "kincaid": 27.451589423558605,
+        "fogIndex": 22.998105892584533
+      },
+      "rights": {
+        "grade": "D",
+        "score": 64,
+        "confidence": 1,
+        "topCategories": [
+          "CONTENT_AND_IP:90",
+          "DISPUTE_RESOLUTION:95",
+          "DATA_PRACTICES:98"
+        ],
+        "userRightsIndex": {
+          "overall": 80
+        }
+      }
+    }
+  ]
+}

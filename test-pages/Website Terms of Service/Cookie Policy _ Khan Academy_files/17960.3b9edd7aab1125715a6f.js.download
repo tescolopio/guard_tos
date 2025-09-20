@@ -1,0 +1,1115 @@
+"use strict";(self.webpackChunkstatic=self.webpackChunkstatic||[]).push([[17960],{44952:(e,t,n)=>{n.d(t,{CE:()=>ee,Ch:()=>ne,Ee:()=>_,GP:()=>ue,HZ:()=>Y,Hq:()=>Ce,Kc:()=>ce,MG:()=>me,Ni:()=>$e,RK:()=>he,RN:()=>se,U2:()=>de,Un:()=>Ie,Xj:()=>ae,Xk:()=>X,Zg:()=>te,g4:()=>G,qK:()=>le,vw:()=>pe,xP:()=>ge,xW:()=>ie,yJ:()=>re,yq:()=>oe});var r=n(44119),s=n.n(r),o=n(84807);let a,i,d,l,c,u,p,m,g,h,C,I,$,y,D,P,T,f,b,L,v,S,A,U,k,E,F,x,K,M,w,B,N,q=e=>e;const W=s()(a||(a=q`
+    fragment LearnableContentData on LearnableContent {
+        id
+        contentKind
+        slug
+        translatedTitle
+
+        ... on Article {
+            articleClarificationsEnabled: clarificationsEnabled
+            translatedDescription
+            translatedPerseusContent
+        }
+
+        ... on Challenge {
+            authorList {
+                name
+            }
+            canvasOnly
+            code
+            codeFormat
+            configVersion
+            defaultUrlPath
+            height
+            nodeSlug
+            translatedDescription
+            translatedTests
+            testsFormat
+            testStrings {
+                message
+            }
+            userAuthoredContentType
+            width
+        }
+
+        ... on Exercise {
+            problemTypeKind
+        }
+
+        ... on Interactive {
+            authorList {
+                name
+            }
+            canvasOnly
+            code
+            codeFormat
+            configVersion
+            defaultUrlPath
+            height
+            nodeSlug
+            translatedDescription
+            userAuthoredContentType
+            width
+        }
+
+        ... on Project {
+            authorList {
+                name
+            }
+            canvasOnly
+            code
+            codeFormat
+            configVersion
+            defaultUrlPath
+            height
+            nodeSlug
+            translatedDescription
+            translatedProjectEval
+            translatedProjectEvalTips
+            userAuthoredContentType
+            width
+        }
+
+        ... on Talkthrough {
+            authorList {
+                name
+            }
+            canvasOnly
+            code
+            configVersion
+            defaultUrlPath
+            height
+            nodeSlug
+            playback
+            subtitles {
+                endTime
+                kaIsValid
+                startTime
+                text
+            }
+            translatedDescription
+            translatedMp3Url
+            userAuthoredContentType
+            width
+            youtubeId
+        }
+
+        ... on TopicQuiz {
+            index
+            exerciseLength
+            timeEstimate {
+                lowerBound
+                upperBound
+            }
+            coveredTutorials {
+                id
+                translatedTitle
+                relativeUrl
+                allLearnableContent {
+                    id
+                    contentKind
+                }
+            }
+        }
+
+        ... on TopicUnitTest {
+            exerciseLength
+            timeEstimate {
+                lowerBound
+                upperBound
+            }
+            coveredTutorials {
+                id
+                translatedTitle
+                relativeUrl
+                allLearnableContent {
+                    id
+                    contentKind
+                }
+            }
+        }
+
+        ... on Video {
+            authorNames
+            # Aliased because the schema of authorList is different for the
+            # different content types. We won't need to alias this if in the
+            # future, the GraphQL schemas authorList matched for all content
+            # types.
+            videoAuthorList: authorList {
+                name
+            }
+            clarificationsEnabled
+            dateAdded
+            description
+            downloadUrls
+            duration
+            imageUrl
+            kaUrl
+            kaUserLicense
+            keywords
+            readableId
+            sha
+            thumbnailUrls {
+                category
+                url
+            }
+            translatedDescriptionHtml
+            translatedYoutubeId
+            translatedYoutubeLang
+            youtubeId
+            augmentedTranscript
+            relativeUrl
+            descriptionHtml
+            nodeSlug
+            translatedDescription
+            translatedCustomTitleTag
+            subtitles {
+                endTime
+                kaIsValid
+                startTime
+                text
+            }
+            keyMoments {
+                startOffset
+                endOffset
+                label
+            }
+            educationalLevel
+            learningResourceType
+        }
+    }
+`)),R=s()(i||(i=q`
+    fragment LearnableContentMetadata on LearnableContent {
+        id
+        canonicalUrl: defaultUrlPath
+        contentDescriptor
+        contentKind
+        parentTopic {
+            id
+            parent {
+                id
+                masteryEnabled
+            }
+        }
+        progressKey
+        slug
+        translatedCustomTitleTag
+        translatedDescription
+        translatedTitle
+        urlWithinCurationNode
+        ... on Challenge {
+            userAuthoredContentType
+        }
+        ... on Interactive {
+            userAuthoredContentType
+        }
+        ... on Project {
+            userAuthoredContentType
+        }
+    }
+`)),O=s()(d||(d=q`
+    fragment QuizMetadata on TopicQuiz {
+        ...LearnableContentMetadata
+        exerciseLength
+        index
+        timeEstimate {
+            lowerBound
+            upperBound
+        }
+    }
+
+    ${0}
+`),R),V=s()(l||(l=q`
+    fragment UnitTestMetadata on TopicUnitTest {
+        ...LearnableContentMetadata
+        exerciseLength
+        timeEstimate {
+            lowerBound
+            upperBound
+        }
+    }
+
+    ${0}
+`),R),Q=s()(c||(c=q`
+    fragment LessonData on Lesson {
+        id
+        relativeUrl
+        slug
+        translatedDescription
+        translatedTitle
+        key
+        # NOTE: Need to vet this further. In the Content Library we used
+        # other fields to obtain the children (e.g. childrenWithUnlisted)
+        # Those resolvers, had filters applied to take into account listedness,
+        # include/exclude lists.
+        curatedChildren(includeUnlisted: false) {
+            ... on LearnableContent {
+                ...LearnableContentMetadata
+            }
+            ... on Exercise {
+                exerciseLength
+                isSkillCheck
+                sponsored
+                thumbnailUrl
+                timeEstimate {
+                    lowerBound
+                    upperBound
+                }
+            }
+        }
+    }
+
+    ${0}
+`),R),z=s()(u||(u=q`
+    fragment UnitData on Unit {
+        id
+        iconPath
+        masteryEnabled
+        relativeUrl
+        slug
+        isListedForLearners
+        translatedCustomTitleTag
+        translatedDescription
+        translatedTitle
+        unlistedAncestorIds
+    }
+`)),j=s()(p||(p=q`
+    fragment CourseData on Course {
+        id
+        iconPath
+        masteryEnabled
+        relativeUrl
+        slug
+        translatedTitle
+        translatedDescription
+        isListedForLearners
+        translatedCustomTitleTag
+        contentKind
+        userAuthoredContentTypes
+
+        # Needed for breadcrumbs. We expect that this will always be a Domain.
+        parent {
+            id
+            contentKind
+            relativeUrl
+            slug
+            translatedTitle
+        }
+
+        # Module information for rendering course page.
+        lowerToc
+        curation {
+            hideSubjectIntro
+            hideCommunityQuestions
+            sponsorFooterAttribution {
+                footnoteHtml
+                imageBaselineAligned
+                imageCaption
+                imageUrl
+                taglineHtml
+            }
+            modules {
+                kind
+                untranslatedFields
+
+                # Mappers doesn't have any additional fields.
+                # BrowseProjects doesn't have any additional fields.
+
+                ... on CourseIntroModule {
+                    callToAction
+                    description
+                    link
+                    title
+                    video
+                }
+
+                ... on ActionListModule {
+                    actions {
+                        text
+                        URL: url
+                        contentDescriptor
+                    }
+                    kind
+                    title
+                }
+
+                ... on PartnershipDescriptionModule {
+                    description
+                    imageCaption
+                    imageUrl
+                    isOutro
+                    partnerUrl
+                    partnerUrlText
+                }
+
+                ... on ContentCarouselModule {
+                    referrer
+                    title
+                    contentDescriptors
+                }
+            }
+            excludedChildren
+        }
+        courseChallenge {
+            id
+            contentKind
+            slug
+            contentDescriptor
+            parentTopic {
+                id
+                parent {
+                    id
+                    masteryEnabled
+                }
+            }
+            urlWithinCurationNode
+            exerciseLength
+            timeEstimate {
+                lowerBound
+                upperBound
+            }
+        }
+
+        # we can't use a fragment to get the same fields as CourseChallenge
+        # because they do not share an interface that includes exerciseLength
+        masteryChallenge {
+            id
+            contentKind
+            slug
+            contentDescriptor
+            parentTopic {
+                id
+                parent {
+                    id
+                    masteryEnabled
+                }
+            }
+            urlWithinCurationNode
+            exerciseLength
+            timeEstimate {
+                lowerBound
+                upperBound
+            }
+        }
+    }
+`)),H=s()(m||(m=q`
+    fragment BasicContentItemProgress on ContentItemProgress {
+        bestScore {
+            numAttempted
+            numCorrect
+            completedDate
+        }
+        completionStatus
+        content {
+            id
+            contentKind
+            contentDescriptor
+            progressKey
+        }
+    }
+`)),_=(0,o.Fv)(s()(g||(g=q`
+    query MappedStandardsForContent(
+        $contentDescriptor: String!
+        $locale: String
+        $region: String
+    ) {
+        standards: standardMappingsForContent(
+            contentDescriptor: $contentDescriptor
+            locale: $locale
+            region: $region
+        ) {
+            setId
+            id
+            standardId
+            description
+            relativeUrl
+            setOfStandards {
+                id
+                isDiscoverable
+            }
+        }
+    }
+`))),G=(0,o.Fv)(s()(h||(h=q`
+    query ContentForPath(
+        $path: String!
+        $countryCode: String!
+        $kaLocale: KALocale!
+    ) {
+        publishedContentVersion(kaLocale: $kaLocale) {
+            contentVersion
+        }
+        contentRoute(path: $path, countryCode: $countryCode) {
+            resolvedPath
+
+            # Only populated if "resolvedPath" is listed.
+            listedPathData {
+                course {
+                    ...CourseData
+                    unitChildren {
+                        ...UnitData
+                        allOrderedChildren {
+                            ... on Lesson {
+                                ...LessonData
+                            }
+                            ... on TopicQuiz {
+                                ...QuizMetadata
+                            }
+                            ... on TopicUnitTest {
+                                ...UnitTestMetadata
+                            }
+                        }
+                    }
+                }
+
+                lesson {
+                    ...LessonData
+                }
+
+                content {
+                    ...LearnableContentData
+                }
+            }
+
+            # Only populated if "resolvedPath" is unlisted. Since we support
+            # ability to load unlisted content, we need to request data catered
+            # to rendering these scenarios. When we are on an unlisted page,
+            # we usually render their unlisted children.
+            unlistedPathData {
+                course {
+                    ...CourseData
+                    unitChildren {
+                        ...UnitData
+                        allOrderedChildren {
+                            ... on Lesson {
+                                ...LessonData
+                            }
+                            ... on TopicQuiz {
+                                ...QuizMetadata
+                            }
+                            ... on TopicUnitTest {
+                                ...UnitTestMetadata
+                            }
+                        }
+                    }
+                }
+
+                lesson {
+                    ...LessonData
+                }
+
+                content {
+                    ...LearnableContentData
+                }
+            }
+        }
+    }
+
+    ${0}
+    ${0}
+    ${0}
+    ${0}
+    ${0}
+    ${0}
+`),j,z,Q,W,O,V)),Y=(0,o.Fv)(s()(C||(C=q`
+    query UntranslatedContentCheck($path: String!, $countryCode: String!) {
+        contentRoute(path: $path, countryCode: $countryCode) {
+            resolvedPath
+        }
+    }
+`))),X=(0,o.Fv)(s()(I||(I=q`
+    query ContentForLearnableContent(
+        $id: String!
+        $kind: String!
+        $kaLocale: KALocale!
+    ) {
+        publishedContentVersion(kaLocale: $kaLocale) {
+            contentVersion
+        }
+        learnableContent(id: $id, kind: $kind) {
+            ...LearnableContentData
+        }
+    }
+
+    ${0}
+`),W)),Z=s()($||($=q`
+    fragment AssignmentData on Assignment {
+        id
+        title
+        contents {
+            id
+            contentDescriptor
+            contentKind
+            slug
+            translatedTitle
+            parentTopic {
+                id
+                parent {
+                    id
+                    masteryEnabled
+                    translatedTitle
+                }
+            }
+            topicPaths {
+                path {
+                    id
+                    slug
+                    kind
+                }
+            }
+            urlWithinCurationNode
+            ... on TopicQuiz {
+                index
+            }
+        }
+        courseId
+        domainId
+        dueDate
+        exerciseConfig {
+            itemPickerStrategy
+        }
+        itemCompletionStates {
+            state
+            exerciseAttempts {
+                id
+                isCompleted
+                isRestarted
+                lastAttemptDate
+                numCorrect
+                numAttempted
+            }
+        }
+        key
+        lesson {
+            id
+            parent {
+                id
+                masteryEnabled
+                translatedTitle
+            }
+        }
+        lessonId
+        unit {
+            id
+            masteryEnabled
+            translatedTitle
+        }
+        unitId
+    }
+`)),J=s()(y||(y=q`
+    fragment Classroom on StudentList {
+        cacheId
+        coachKaid
+        descriptor
+        hasAssignments
+        id
+        name
+    }
+`)),ee=(0,o.Fv)(s()(D||(D=q`
+    query ClassroomByCode($classCode: String!) {
+        studentList(classCode: $classCode) {
+            cacheId
+            coachKaid
+            descriptor
+            hasAssignments
+            id
+            name
+        }
+    }
+`))),te=(0,o.Fv)(s()(P||(P=q`
+    query UserAssignmentsPage(
+        $classroomDescriptor: String!
+        $dueAfterISO: DateTime
+        $pageSize: Int!
+        $cursor: ID
+    ) {
+        user {
+            id
+            assignmentsPage(
+                dueAfter: $dueAfterISO
+                orderBy: DUE_DATE_ASC
+                pageSize: $pageSize
+                classroomDescriptor: $classroomDescriptor
+                after: $cursor
+            ) {
+                assignments {
+                    ...AssignmentData
+                }
+                pageInfo {
+                    nextCursor
+                }
+            }
+        }
+    }
+
+    ${0}
+`),Z)),ne=(0,o.Fv)(s()(T||(T=q`
+        query UserNextUpcomingAssignment {
+            user {
+                id
+                assignmentDueNext {
+                    id
+                    studentList {
+                        ...Classroom
+                    }
+                }
+            }
+        }
+
+        ${0}
+    `),J)),re=(0,o.Fv)(s()(f||(f=q`
+    query UserAssignmentsForContent(
+        $classroomDescriptor: String!
+        $contentDescriptors: [String!]!
+    ) {
+        user {
+            id
+            assignmentDueNextForContentDescriptors(
+                classroomDescriptor: $classroomDescriptor
+                contentDescriptors: $contentDescriptors
+            ) {
+                ...AssignmentData
+            }
+        }
+    }
+
+    ${0}
+`),Z)),se=(0,o.Fv)(s()(b||(b=q`
+    query userProgressForLesson(
+        $lessonId: String!
+        $unitId: String!
+        $masteryEnabled: Boolean!
+    ) {
+        user {
+            id
+            contentItemProgresses(queryBy: {parentTopicId: $lessonId}) {
+                ...BasicContentItemProgress
+                ... on ExerciseItemProgress @include(if: $masteryEnabled) {
+                    lastCompletedAttempt {
+                        id
+                        lastAttemptDate
+                        numCorrect
+                        numAttempted
+                    }
+                    updatedMasteryLevel
+                }
+            }
+            latestQuizAttempts(topicId: $unitId) {
+                id
+                numCorrect
+                numAttempted
+                isCompleted
+                positionKey
+            }
+            latestUnitTestAttempts(unitId: $unitId) {
+                id
+                numCorrect
+                numAttempted
+                isCompleted
+                topicId
+            }
+        }
+    }
+
+    ${0}
+`),H)),oe=(0,o.Fv)(s()(L||(L=q`
+    query userProgressForAssignments($contentDescriptors: [String!]!) {
+        user {
+            id
+            contentItemProgresses(
+                queryBy: {contentDescriptors: $contentDescriptors}
+            ) {
+                ...BasicContentItemProgress
+                ... on ExerciseItemProgress {
+                    lastCompletedAttempt {
+                        id
+                        lastAttemptDate
+                        numCorrect
+                        numAttempted
+                    }
+                    updatedMasteryLevel
+                }
+            }
+        }
+    }
+
+    ${0}
+`),H)),ae=(0,o.Fv)(s()(v||(v=q`
+    query isEligibleForMasteryChallenge($courseId: String!) {
+        user {
+            id
+            exerciseData {
+                masteryChallengeStatus(courseId: $courseId) {
+                    isEligible
+                }
+            }
+        }
+    }
+`))),ie=(0,o.Fv)(s()(S||(S=q`
+    mutation clearRecommendationFor321ContentItem(
+        $contentDescriptor: String!
+        $unitId: String!
+    ) {
+        clearRecommendation(
+            contentDescriptor: $contentDescriptor
+            unitId: $unitId
+        ) {
+            wasSuccessful
+        }
+    }
+`))),de=(0,o.Fv)(s()(A||(A=q`
+    query UserPermissionsForContent {
+        user {
+            id
+            canEdit: hasPermission(
+                name: "can_edit_content"
+                scope: ANY_ON_CURRENT_LOCALE
+            )
+        }
+    }
+`))),le=(0,o.Fv)(s()(U||(U=q`
+    query QAExpandKeyInfo($encryptedKey: String) {
+        qaExpandKeyInfo(encryptedQaExpandKey: $encryptedKey) {
+            feedbackType
+            unencryptedKey
+        }
+    }
+`))),ce=(0,o.Fv)(s()(k||(k=q`
+        mutation RestartTask($key: String!) {
+            restartTask(input: {key: $key}) {
+                error {
+                    code
+                    debugMessage
+                }
+                task {
+                    id
+                    ... on PracticeTask {
+                        exerciseLength
+                        taskAttemptHistory {
+                            itemId
+                        }
+                    }
+                    ... on TopicQuizTask {
+                        taskAttemptHistory {
+                            itemId
+                        }
+                    }
+                    ... on TopicUnitTestTask {
+                        taskAttemptHistory {
+                            itemId
+                        }
+                    }
+                }
+            }
+        }
+    `))),ue=(0,o.Fv)(s()(E||(E=q`
+    query userProgressForPrograms($contentDescriptors: [String!]!) {
+        user {
+            id
+            contentItemProgresses(
+                queryBy: {contentDescriptors: $contentDescriptors}
+            ) {
+                completionStatus
+                content {
+                    id
+                    contentKind
+                }
+                ... on ChallengeItemProgress {
+                    currentStep
+                    points
+                    stashedCode
+                }
+                ... on InteractiveItemProgress {
+                    points
+                }
+                ... on ProjectItemProgress {
+                    points
+                    stashedCode
+                }
+                ... on TalkthroughItemProgress {
+                    points
+                    lastMsWatched
+                }
+            }
+        }
+    }
+`))),pe=(0,o.Fv)(s()(F||(F=q`
+    mutation updateChallengeProgress(
+        $currentStep: Int
+        $programId: ID!
+        $lessonId: ID!
+        $stashedCode: String
+        $status: Int
+    ) {
+        updateChallengeProgress(
+            input: {
+                currentStep: $currentStep
+                programId: $programId
+                lessonId: $lessonId
+                stashedCode: $stashedCode
+                status: $status
+            }
+        ) {
+            actionResults {
+                pointsEarned {
+                    points
+                }
+                notificationsAdded {
+                    badges
+                    avatarParts
+                    readable
+                    urgent
+                    toast
+                    continueUrl
+                }
+                tutorialNodeProgress {
+                    contentId
+                    progress
+                }
+                userProfile {
+                    countVideosCompleted
+                    points
+                    countBrandNewNotifications
+                }
+            }
+            programProgress {
+                currentStep
+                completionStatus
+                content {
+                    id
+                    contentKind
+                }
+                points
+                stashedCode
+            }
+            error {
+                code
+            }
+        }
+    }
+`))),me=(0,o.Fv)(s()(x||(x=q`
+    mutation resetChallengeProgress($programId: ID!, $lessonId: ID!) {
+        resetChallengeProgress(
+            input: {programId: $programId, lessonId: $lessonId}
+        ) {
+            programProgress {
+                completionStatus
+                content {
+                    id
+                    contentKind
+                }
+                points
+                stashedCode
+            }
+            error {
+                code
+            }
+        }
+    }
+`))),ge=(0,o.Fv)(s()(K||(K=q`
+    mutation updateInteractiveProgress($programId: ID!, $lessonId: ID!) {
+        updateInteractiveProgress(
+            input: {programId: $programId, lessonId: $lessonId}
+        ) {
+            actionResults {
+                pointsEarned {
+                    points
+                }
+                notificationsAdded {
+                    badges
+                    avatarParts
+                    readable
+                    urgent
+                    toast
+                    continueUrl
+                }
+                tutorialNodeProgress {
+                    contentId
+                    progress
+                }
+                userProfile {
+                    countVideosCompleted
+                    points
+                    countBrandNewNotifications
+                }
+            }
+            programProgress {
+                completionStatus
+            }
+            error {
+                code
+            }
+        }
+    }
+`))),he=(0,o.Fv)(s()(M||(M=q`
+    mutation updateProjectProgress(
+        $programId: ID!
+        $lessonId: ID!
+        $stashedCode: String
+        $status: Int
+    ) {
+        updateProjectProgress(
+            input: {
+                programId: $programId
+                lessonId: $lessonId
+                stashedCode: $stashedCode
+                status: $status
+            }
+        ) {
+            actionResults {
+                pointsEarned {
+                    points
+                }
+                notificationsAdded {
+                    badges
+                    avatarParts
+                    readable
+                    urgent
+                    toast
+                    continueUrl
+                }
+                tutorialNodeProgress {
+                    contentId
+                    progress
+                }
+                userProfile {
+                    countVideosCompleted
+                    points
+                    countBrandNewNotifications
+                }
+            }
+            programProgress {
+                completionStatus
+                content {
+                    id
+                    contentKind
+                }
+                points
+                stashedCode
+            }
+            error {
+                code
+            }
+        }
+    }
+`))),Ce=(0,o.Fv)(s()(w||(w=q`
+    mutation resetProjectProgress($programId: ID!, $lessonId: ID!) {
+        resetProjectProgress(
+            input: {programId: $programId, lessonId: $lessonId}
+        ) {
+            programProgress {
+                completionStatus
+                content {
+                    id
+                    contentKind
+                }
+                points
+                stashedCode
+            }
+            error {
+                code
+            }
+        }
+    }
+`))),Ie=(0,o.Fv)(s()(B||(B=q`
+    mutation updateTalkthroughProgress(
+        $fullyWatched: Boolean!
+        $lastMsWatched: Float!
+        $lessonId: ID!
+        $msDuration: Int!
+        $msWatched: Float!
+        $programId: ID!
+        $updateProgress: Boolean!
+    ) {
+        updateTalkthroughProgress(
+            input: {
+                fullyWatched: $fullyWatched
+                lastMsWatched: $lastMsWatched
+                lessonId: $lessonId
+                msDuration: $msDuration
+                msWatched: $msWatched
+                programId: $programId
+                updateProgress: $updateProgress
+            }
+        ) {
+            actionResults {
+                pointsEarned {
+                    points
+                }
+                notificationsAdded {
+                    badges
+                    avatarParts
+                    readable
+                    urgent
+                    toast
+                    continueUrl
+                }
+                tutorialNodeProgress {
+                    contentId
+                    progress
+                }
+                userProfile {
+                    countVideosCompleted
+                    points
+                    countBrandNewNotifications
+                }
+            }
+            programProgress {
+                completionStatus
+                content {
+                    id
+                    contentKind
+                }
+                points
+                lastMsWatched
+            }
+            error {
+                code
+            }
+        }
+    }
+`))),$e=(0,o.Fv)(s()(N||(N=q`
+    query courseProgressQuery($topicId: String!) {
+        user {
+            id
+            courseProgress(topicId: $topicId) {
+                currentMasteryV2 {
+                    percentage
+                    pointsEarned
+                }
+                masteryMap {
+                    progressKey
+                    status
+                }
+                unitProgresses {
+                    currentMasteryV2 {
+                        percentage
+                        pointsEarned
+                    }
+                    unitId
+                }
+            }
+            exerciseData {
+                masteryChallengeStatus(courseId: $topicId) {
+                    totalQuestions
+                    isEligible
+                    currentAttempt {
+                        id
+                        canResume
+                        timeLeftSeconds
+                        expirationTime
+                        expirationPeriodHours
+                    }
+                }
+            }
+            latestCourseChallengeAttempt(courseId: $topicId) {
+                id
+                numAttempted
+                numCorrect
+                completedDate
+                canResume
+                isCompleted
+            }
+        }
+    }
+`)))}}]);
+//# sourceMappingURL=sourcemaps/en/17960.3b9edd7aab1125715a6f.js.map

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="96" height="96" viewBox="0 0 96 96">
+  <defs>
+    <clipPath id="clip-path">
+      <path d="M48,7A41,41,0,1,0,89,48,40.989,40.989,0,0,0,48,7Z" fill="none"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="12" y1="68" x2="24" y2="68" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9aa0a6" stop-opacity="0"/>
+      <stop offset="0.116" stop-color="#9aa0a6" stop-opacity="0.054"/>
+      <stop offset="0.306" stop-color="#9aa0a6" stop-opacity="0.201"/>
+      <stop offset="0.546" stop-color="#9aa0a6" stop-opacity="0.44"/>
+      <stop offset="0.823" stop-color="#9aa0a6" stop-opacity="0.768"/>
+      <stop offset="1" stop-color="#9aa0a6"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="46" y1="71" x2="46" y2="25" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f29900"/>
+      <stop offset="0.138" stop-color="#f29900" stop-opacity="0.818"/>
+      <stop offset="0.373" stop-color="#f29900" stop-opacity="0.53"/>
+      <stop offset="0.586" stop-color="#f29900" stop-opacity="0.302"/>
+      <stop offset="0.768" stop-color="#f29900" stop-opacity="0.138"/>
+      <stop offset="0.912" stop-color="#f29900" stop-opacity="0.037"/>
+      <stop offset="1" stop-color="#f29900" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="4054.313" y1="576.011" x2="4018.33" y2="577.111" gradientTransform="translate(-623.555 4066.832) rotate(-88.25)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5f6368"/>
+      <stop offset="1" stop-color="#5f6368" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" x1="4006.335" y1="577.477" x2="4022.328" y2="576.988" xlink:href="#linear-gradient-3"/>
+    <linearGradient id="linear-gradient-5" x1="4053.026" y1="568.976" x2="4067.593" y2="582.68" xlink:href="#linear-gradient-3"/>
+  </defs>
+  <title>site_sec_C_02</title>
+  <g style="isolation: isolate">
+    <g id="Content">
+      <g>
+        <path d="M48,7A41,41,0,1,0,89,48,40.989,40.989,0,0,0,48,7Z" fill="#e8eaed"/>
+        <g clip-path="url(#clip-path)">
+          <rect x="12" y="65" width="12" height="6" fill="url(#linear-gradient)" style="mix-blend-mode: multiply"/>
+        </g>
+        <g>
+          <rect x="20" y="25" width="52" height="46" rx="3" ry="3" fill="#fbbc04"/>
+          <rect x="20" y="25" width="52" height="46" rx="3" ry="3" fill="url(#linear-gradient-2)"/>
+          <g>
+            <path d="M46.954,34H37a2,2,0,0,0-2,2v9.954a3,3,0,0,0,.879,2.121l12.4,12.4a3,3,0,0,0,4.243,0l8.954-8.954a3,3,0,0,0,0-4.243l-12.4-12.4A3,3,0,0,0,46.954,34Z" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="3"/>
+            <circle cx="42.148" cy="41.148" r="2.859" fill="#fff"/>
+          </g>
+          <path d="M69,68H23a3,3,0,0,1-3-3v3a3,3,0,0,0,3,3H69a3,3,0,0,0,3-3V65A3,3,0,0,1,69,68Z" fill="#ea8600" opacity="0.75"/>
+        </g>
+        <g>
+          <rect x="58" y="45" width="36" height="10" transform="translate(26 126) rotate(-90)" fill="#9aa0a6"/>
+          <rect x="71" y="32" width="10" height="36" opacity="0.4" fill="url(#linear-gradient-3)" style="mix-blend-mode: multiply"/>
+          <g opacity="0.4" style="mix-blend-mode: multiply">
+            <path d="M68,72a8,8,0,1,0,8-8A8,8,0,0,0,68,72Zm12,0a4,4,0,1,1-4-4A4,4,0,0,1,80,72Z" fill="url(#linear-gradient-4)"/>
+          </g>
+          <rect x="75" y="39.541" width="2" height="22" rx="1" ry="1" fill="#5f6368"/>
+          <path d="M76,64a8,8,0,1,0,8,8A8,8,0,0,0,76,64Zm0,12a4,4,0,1,1,4-4A4,4,0,0,1,76,76Z" fill="#9aa0a6"/>
+          <g>
+            <path d="M79,26a3,3,0,0,1-6,0V16.459a10,10,0,1,0,6,0Z" fill="#9aa0a6"/>
+            <path d="M79,26a3,3,0,0,1-6,0V16.459a10,10,0,1,0,6,0Z" opacity="0.4" fill="url(#linear-gradient-5)" style="mix-blend-mode: multiply"/>
+            <g>
+              <path d="M81,24V17.345a9.937,9.937,0,0,0-2-.886V26a2.967,2.967,0,0,1-.14.86A2.99,2.99,0,0,0,81,24Z" fill="#bdc1c6" opacity="0.4" style="mix-blend-mode: multiply"/>
+              <path d="M78,34a10,10,0,0,1-8.014-15.98A9.993,9.993,0,1,0,83.992,31.992,9.942,9.942,0,0,1,78,34Z" fill="#bdc1c6" opacity="0.4" style="mix-blend-mode: multiply"/>
+            </g>
+          </g>
+        </g>
+        <rect width="96" height="96" fill="none"/>
+      </g>
+    </g>
+  </g>
+</svg>

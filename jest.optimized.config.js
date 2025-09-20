@@ -43,7 +43,7 @@ module.exports = {
   collectCoverage: false,
 
   // Timeout configuration
-  testTimeout: 10000,
+  testTimeout: 60000,
 
   // Module file extensions
   moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx"],

@@ -1,0 +1,1 @@
+define(["librastandardlib/obj-utils/mixin","libra/components/modal-mixin"],function(mixin,ModalMixin){"use strict";var Modal=function(elem){this.$elem=$(elem);this.initModal()};mixin(Modal.prototype,ModalMixin);Libra.Comp.register({name:"modal",initFct:function(elem){new Modal(elem)},initTime:"immediate"});return Modal});

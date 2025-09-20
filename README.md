@@ -258,6 +258,18 @@ Contributions to Terms Guardian are welcome! Please follow these steps:
 - Developer quickstart: docs/dev_quickstart.md
 - QA checklist: docs/qa_checklist.md
 
+### Optional: Train the on-device classifier
+
+We include a minimal Python script to train a small TF‑IDF + Logistic Regression model and export it to the JSON format consumed by `src/ml/clauseClassifier.js`.
+
+Steps:
+
+1. Prepare a CSV/JSONL file with columns `text` and `label` (or `labels`). See `docs/analysis/datasets-and-mapping.md` for sources and mapping.
+2. Run `scripts/train_tfidf_logreg.py` to produce a new model JSON file under `src/data/dictionaries/` (e.g., `tfidf_logreg_v2.json`).
+3. Update `EXT_CONSTANTS.ML.MODEL_VERSION` and `ASSET_PATH` in `src/utils/constants.js` to point to the new asset.
+
+This enables fully local, browser-first ML augmentation behind the feature flag in constants.
+
 ## License
 
 MIT License
@@ -265,3 +277,21 @@ MIT License
 ## Contact
 
 [time@3dtechsolutions.us](mailto:time@3dtechsolutions.us)
+
+## ML pipeline quickstart
+
+- Ensure your Python venv is available at `/mnt/d/guard_tos/.venv` and has the required packages (datasets, scikit-learn, pandas, numpy, tqdm).
+- End-to-end:
+  - `npm run ml:full`
+- Individual steps:
+
+  - `npm run ml:prep` # fetch and prepare datasets into data/clauses.jsonl
+  - `npm run ml:train` # train TF‑IDF+LR and write src/data/dictionaries/tfidf_logreg_v2.json
+  - `npm run ml:calibrate` # generate data/calibration_suggestions.json and docs/analysis/model-calibration.md
+
+- Augment CLASS_ACTION_WAIVER coverage:
+  - Harvest candidates: `python scripts/harvest_class_action_positives.py --input_dir ./tos_folder --out data/harvested_class_action.jsonl`
+  - Option A: manually review and append approved rows into `data/clauses.jsonl`.
+  - Option B: use `npm run ml:prep:aug` to include `data/harvested_class_action.jsonl` automatically, then:
+    - `npm run ml:train`
+    - `npm run ml:calibrate`

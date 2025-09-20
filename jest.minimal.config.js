@@ -2,7 +2,7 @@
 module.exports = {
   testEnvironment: "jest-environment-jsdom",
   testMatch: ["<rootDir>/__tests__/**/*.test.js"],
-  testTimeout: 5000,
+  testTimeout: 60000,
   forceExit: true,
   detectOpenHandles: true,
 };

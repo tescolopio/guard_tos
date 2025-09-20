@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="96" height="96" viewBox="0 0 96 96">
+  <defs>
+    <linearGradient id="linear-gradient" x1="48" y1="71" x2="48" y2="25" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5f6368"/>
+      <stop offset="0.232" stop-color="#5f6368" stop-opacity="0.699"/>
+      <stop offset="0.568" stop-color="#5f6368" stop-opacity="0.32"/>
+      <stop offset="0.836" stop-color="#5f6368" stop-opacity="0.086"/>
+      <stop offset="1" stop-color="#5f6368" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="76" y1="48" x2="86" y2="48" gradientTransform="translate(129 -33) rotate(90)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f29900"/>
+      <stop offset="1" stop-color="#f29900" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="76" y1="15" x2="86" y2="15" gradientTransform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#linear-gradient-2"/>
+  </defs>
+  <title>site_sec_C_04</title>
+  <g style="isolation: isolate">
+    <g id="Content">
+      <g>
+        <path d="M48,7A41,41,0,1,0,89,48,40.989,40.989,0,0,0,48,7Z" fill="#e8eaed"/>
+        <g>
+          <rect x="16" y="25" width="64" height="46" rx="3" ry="3" fill="#fff"/>
+          <rect x="16" y="25" width="64" height="46" rx="3" ry="3" opacity="0.3" fill="url(#linear-gradient)" style="mix-blend-mode: multiply"/>
+          <g>
+            <path d="M30.274,39.983l2.886,2.1a.466.466,0,0,0,.718-.521l-1.1-3.388a.466.466,0,0,1,.173-.524L35.8,35.618a.466.466,0,0,0-.27-.846h-3.5a.466.466,0,0,1-.444-.323l-1.142-3.544a.466.466,0,0,0-.887,0l-1.142,3.544a.466.466,0,0,1-.444.323h-3.5a.466.466,0,0,0-.27.846l2.856,2.032a.466.466,0,0,1,.173.524l-1.1,3.388a.466.466,0,0,0,.718.521l2.886-2.1A.466.466,0,0,1,30.274,39.983Z" fill="#fbbc04"/>
+            <path d="M21,28H39V46H21Z" fill="none"/>
+          </g>
+          <g>
+            <path d="M48.274,39.983l2.886,2.1a.466.466,0,0,0,.718-.521l-1.1-3.388a.466.466,0,0,1,.173-.524L53.8,35.618a.466.466,0,0,0-.27-.846h-3.5a.466.466,0,0,1-.444-.323l-1.142-3.544a.466.466,0,0,0-.887,0l-1.142,3.544a.466.466,0,0,1-.444.323h-3.5a.466.466,0,0,0-.27.846l2.856,2.032a.466.466,0,0,1,.173.524l-1.1,3.388a.466.466,0,0,0,.718.521l2.886-2.1A.466.466,0,0,1,48.274,39.983Z" fill="#fbbc04"/>
+            <path d="M39,28H57V46H39Z" fill="none"/>
+          </g>
+          <g>
+            <path d="M66.274,39.983l2.886,2.1a.466.466,0,0,0,.718-.521l-1.1-3.388a.466.466,0,0,1,.173-.524L71.8,35.618a.466.466,0,0,0-.27-.846h-3.5a.466.466,0,0,1-.444-.323l-1.142-3.544a.466.466,0,0,0-.887,0l-1.142,3.544a.466.466,0,0,1-.444.323h-3.5a.466.466,0,0,0-.27.846l2.856,2.032a.466.466,0,0,1,.173.524l-1.1,3.388a.466.466,0,0,0,.718.521l2.886-2.1A.466.466,0,0,1,66.274,39.983Z" fill="#fbbc04"/>
+            <path d="M57,28H75V46H57Z" fill="none"/>
+          </g>
+          <rect x="25" y="49" width="46" height="3" rx="1.5" ry="1.5" fill="#9aa0a6"/>
+          <rect x="25" y="58" width="36" height="3" rx="1.5" ry="1.5" fill="#9aa0a6"/>
+          <path d="M77,68H19a3,3,0,0,1-3-3v3a3,3,0,0,0,3,3H77a3,3,0,0,0,3-3V65A3,3,0,0,1,77,68Z" fill="#bdc1c6"/>
+          <g>
+            <rect x="78" y="17" width="6" height="10" transform="translate(59 103) rotate(-90)" fill="#e37400"/>
+            <rect x="58" y="43" width="46" height="10" transform="translate(33 129) rotate(-90)" fill="#fbbc04"/>
+            <path d="M76,71H86L81.576,81.618a.624.624,0,0,1-1.152,0Z" fill="#fde293"/>
+            <path d="M79,11h4a3,3,0,0,1,3,3v5a0,0,0,0,1,0,0H76a0,0,0,0,1,0,0V14A3,3,0,0,1,79,11Z" fill="#fbbc04"/>
+            <rect x="58" y="43" width="46" height="10" transform="translate(33 129) rotate(-90)" fill="url(#linear-gradient-2)"/>
+            <path d="M78.5,77l1.924,4.618a.613.613,0,0,0,.569.382h.013a.613.613,0,0,0,.569-.382L83.5,77Z" fill="#fbbc04"/>
+            <path d="M79,11h4a3,3,0,0,1,3,3v5a0,0,0,0,1,0,0H76a0,0,0,0,1,0,0V14A3,3,0,0,1,79,11Z" fill="url(#linear-gradient-3)"/>
+          </g>
+        </g>
+        <rect width="96" height="96" fill="none"/>
+      </g>
+    </g>
+  </g>
+</svg>

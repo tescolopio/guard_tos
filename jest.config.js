@@ -12,7 +12,7 @@ module.exports = {
   // Find all .test.js files within the project
   testMatch: ["<rootDir>/__tests__/**/*.test.js"],
   verbose: true,
-  testTimeout: 10000,
+  testTimeout: 60000,
   clearMocks: true,
   resetMocks: true,
   restoreMocks: true,

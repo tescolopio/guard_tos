@@ -1,0 +1,1 @@
+html{scroll-behavior:smooth}article h1{font:var(--font-title-h1)}article h2{font:var(--font-title-h2)}article h2:before{content:'';display:block;height:calc(var(--shreddit-header-height) + 1rem);margin:calc((var(--shreddit-header-height) + 1rem) * -1) 0 0}article h3{font:var(--font-title-h3)}

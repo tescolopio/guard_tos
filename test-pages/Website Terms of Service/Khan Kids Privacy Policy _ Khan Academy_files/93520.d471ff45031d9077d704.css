@@ -1,0 +1,254 @@
+/* Shared rules, that are always included, related to responsiveness. */
+/* Fall back colors? Eg educator, talks & interviews */
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#khanType {
+  /* Used to style the topic title on a topic page, eg
+  "Introduction to algebra" on /math/algebra/introduction-to-algebra.
+  Also used for the tutorial title on tutorial landing pages.
+  Not restricted to styling the titles of "Topic" entities. */
+}
+.vertical-shadow {
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #aaa;
+  box-shadow: 0 1px 3px #ccc;
+}
+html.page-container-min-width-zero body,
+html.page-container-min-width-zero #page-container {
+  min-width: 0;
+}
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+.visible-phone {
+  display: none !important;
+}
+.visible-tablet {
+  display: none !important;
+}
+.hidden-desktop {
+  display: none !important;
+}
+@media screen and (max-width: 480px) {
+  .visible-phone {
+    display: inherit !important;
+  }
+  .hidden-phone {
+    display: none !important;
+  }
+  .hidden-desktop {
+    display: inherit !important;
+  }
+  .visible-desktop {
+    display: none !important;
+  }
+}
+.visible-on-responsive-page {
+  display: block !important;
+}
+@media screen and (max-width: 480px) {
+  body,
+  #page-container {
+    min-width: 0;
+  }
+  #top-header-container .sitewide-navigation .nav-subheader .nav-link,
+  #top-header-container .nav-search-box {
+    display: none;
+  }
+  #top-header-container .sitewide-navigation {
+    display: block;
+    width: 100%;
+  }
+  #top-header-container .nav-subheader {
+    display: block;
+  }
+  #top-header-container #header-logo {
+    display: block;
+    float: none;
+  }
+  #top-header-container #page_auth {
+    font-size: 90%;
+    position: absolute;
+    right: 0;
+  }
+  #top-header-container #page_auth #user-info > * {
+    display: none;
+  }
+  #top-header-container #page_auth #user-info a {
+    padding: 0 8px;
+    border-right: none;
+  }
+  #top-header-container #page_auth #user-info a.highlight {
+    display: inline;
+  }
+  .container {
+    width: auto;
+  }
+  .row,
+  .thumbnails {
+    margin-left: 0;
+  }
+  .row-fluid {
+    margin-bottom: 0;
+  }
+  .row-fluid [class*="span"] {
+    display: block;
+    float: none;
+    margin-left: 0;
+    margin-bottom: 20px;
+    width: auto;
+  }
+  .row-fluid .span-one-third {
+    margin: 0 auto;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 567px) {
+  .pure-visible-sm {
+    display: none !important;
+  }
+  .pure-visible-md {
+    display: none !important;
+  }
+  .pure-visible-lg {
+    display: none !important;
+  }
+  .pure-visible-xl {
+    display: none !important;
+  }
+  .pure-hidden-xs {
+    display: none !important;
+  }
+  .pure-visible-xs {
+    display: block !important;
+  }
+}
+@media screen and (min-width: 568px) and (max-width: 767px) {
+  .pure-visible-xs {
+    display: none !important;
+  }
+  .pure-visible-md {
+    display: none !important;
+  }
+  .pure-visible-lg {
+    display: none !important;
+  }
+  .pure-visible-xl {
+    display: none !important;
+  }
+  .pure-hidden-sm {
+    display: none !important;
+  }
+  .pure-visible-sm {
+    display: block !important;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .pure-visible-xs {
+    display: none !important;
+  }
+  .pure-visible-sm {
+    display: none !important;
+  }
+  .pure-visible-lg {
+    display: none !important;
+  }
+  .pure-visible-xl {
+    display: none !important;
+  }
+  .pure-hidden-md {
+    display: none !important;
+  }
+  .pure-visible-md {
+    display: block !important;
+  }
+}
+@media screen and (min-width: 1024px) and (max-width: 1199px) {
+  .pure-visible-xs {
+    display: none !important;
+  }
+  .pure-visible-sm {
+    display: none !important;
+  }
+  .pure-visible-md {
+    display: none !important;
+  }
+  .pure-visible-xl {
+    display: none !important;
+  }
+  .pure-hidden-lg {
+    display: none !important;
+  }
+  .pure-visible-lg {
+    display: block !important;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .pure-visible-xs {
+    display: none !important;
+  }
+  .pure-visible-sm {
+    display: none !important;
+  }
+  .pure-visible-md {
+    display: none !important;
+  }
+  .pure-visible-lg {
+    display: none !important;
+  }
+  .pure-hidden-xl {
+    display: none !important;
+  }
+  .pure-visible-xl {
+    display: block !important;
+  }
+}
+.pure-g [class*="pure-u"] {
+  font-family: inherit;
+}
+.responsive-img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+.pure-g.pure-g--gutter {
+  margin-left: -2.56410256%;
+}
+.pure-g.pure-g--gutter > [class*=pure-u] {
+  box-sizing: border-box;
+  padding-left: 2.56410256%;
+}
+.lihp-badges .pure-g.pure-g--gutter {
+  margin-left: 0;
+}
+.lihp-badges .pure-g.pure-g--gutter > [class*=pure-u] {
+  padding-left: 0;
+  padding-right: 2.56410256%;
+}
+

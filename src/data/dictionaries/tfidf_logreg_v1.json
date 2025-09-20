@@ -1,0 +1,28 @@
+{
+  "vocab": {
+    "arbitration": 0,
+    "class": 1,
+    "action": 2,
+    "waiver": 3,
+    "liability": 4,
+    "limit": 5,
+    "unilateral": 6,
+    "changes": 7
+  },
+  "idf": [1, 1, 1, 1, 1, 1, 1, 1],
+  "classes": {
+    "ARBITRATION": { "coef": [2.0, 0, 0, 0, 0, 0, 0, 0], "intercept": -1.0 },
+    "CLASS_ACTION_WAIVER": {
+      "coef": [0, 1.2, 1.2, 1.5, 0, 0, 0, 0],
+      "intercept": -1.2
+    },
+    "LIABILITY_LIMITATION": {
+      "coef": [0, 0, 0, 0, 1.5, 0.8, 0, 0],
+      "intercept": -1.1
+    },
+    "UNILATERAL_CHANGES": {
+      "coef": [0, 0, 0, 0, 0, 0, 1.6, 1.2],
+      "intercept": -1.0
+    }
+  }
+}

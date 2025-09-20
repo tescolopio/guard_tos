@@ -20,6 +20,8 @@ const { EXT_CONSTANTS } = require("../utils/constants");
     logLevels,
     commonWords = [],
     legalTermsDefinitions = {},
+    // Optional ML augmenter for clause detection; used to fuse rule-based and ML signals
+    mlAugmenter,
   }) {
     /**
      * Chunks text into smaller segments
@@ -161,6 +163,88 @@ const { EXT_CONSTANTS } = require("../utils/constants");
       };
     }
 
+    // Optional ML augmentation: fuse rule-based and ML clause signals per chunk
+    async function augmentWithMLIfEnabled(textChunk, res) {
+      try {
+        // Skip in non-browser test environments or when disabled
+        if (typeof window === "undefined") return;
+        const mlCfg = EXT_CONSTANTS && EXT_CONSTANTS.ML;
+        if (!mlCfg || mlCfg.ENABLED !== true) return;
+
+        // Lazy import classifier (let webpack split async chunk in prod build)
+        const mod = await import("../ml/clauseClassifier.js");
+        const sentences = (textChunk.match(/[^.!?]+[.!?]+/g) || [textChunk])
+          .map((s) => s.trim())
+          .filter(Boolean);
+
+        const preds = await mod.classifySentences(sentences);
+        const agg = {};
+        for (const { proba } of preds) {
+          for (const [cls, p] of Object.entries(proba)) {
+            agg[cls] = Math.max(agg[cls] || 0, p);
+          }
+        }
+
+        const T = mlCfg.THRESHOLDS || {};
+        const alpha =
+          typeof mlCfg.FUSE_ALPHA === "number" ? mlCfg.FUSE_ALPHA : 0.65;
+
+        // Derive simple rule probabilities from presence counts in this chunk
+        const ruleP = {
+          ARBITRATION: res?.clauseCounts?.HIGH_RISK?.ARBITRATION > 0 ? 1 : 0,
+          CLASS_ACTION_WAIVER:
+            res?.clauseCounts?.HIGH_RISK?.CLASS_ACTION_WAIVER > 0 ? 1 : 0,
+          LIABILITY_LIMITATION:
+            (res?.clauseCounts?.HIGH_RISK?.LIABILITY_LIMITATION ||
+              res?.clauseCounts?.MEDIUM_RISK?.LIABILITY_LIMITATION) > 0
+              ? 1
+              : 0,
+          UNILATERAL_CHANGES:
+            res?.clauseCounts?.MEDIUM_RISK?.UNILATERAL_CHANGES > 0 ? 1 : 0,
+        };
+
+        function fuseProb(rp, mp) {
+          if (rp == null && mp == null) return null;
+          if (rp == null) return mp;
+          if (mp == null) return rp;
+          return alpha * rp + (1 - alpha) * mp;
+        }
+
+        const fused = {};
+        for (const [cls, pML] of Object.entries(agg)) {
+          fused[cls] = fuseProb(ruleP[cls], pML);
+        }
+
+        // Threshold into counts on this chunk result (so aggregation includes ML bumps)
+        if ((fused.ARBITRATION ?? 0) >= (T.ARBITRATION ?? 0.6)) {
+          res.clauseCounts.HIGH_RISK.ARBITRATION =
+            (res.clauseCounts.HIGH_RISK.ARBITRATION || 0) + 1;
+        }
+        if (
+          (fused.CLASS_ACTION_WAIVER ?? 0) >= (T.CLASS_ACTION_WAIVER ?? 0.6)
+        ) {
+          res.clauseCounts.HIGH_RISK.CLASS_ACTION_WAIVER =
+            (res.clauseCounts.HIGH_RISK.CLASS_ACTION_WAIVER || 0) + 1;
+        }
+        if (
+          (fused.LIABILITY_LIMITATION ?? 0) >= (T.LIABILITY_LIMITATION ?? 0.55)
+        ) {
+          res.clauseCounts.MEDIUM_RISK.LIABILITY_LIMITATION =
+            (res.clauseCounts.MEDIUM_RISK.LIABILITY_LIMITATION || 0) + 1;
+        }
+        if ((fused.UNILATERAL_CHANGES ?? 0) >= (T.UNILATERAL_CHANGES ?? 0.55)) {
+          res.clauseCounts.MEDIUM_RISK.UNILATERAL_CHANGES =
+            (res.clauseCounts.MEDIUM_RISK.UNILATERAL_CHANGES || 0) + 1;
+        }
+      } catch (e) {
+        // ML is optional; swallow errors
+        log &&
+          log(logLevels.DEBUG || 2, "ML augmentation skipped", {
+            error: (e && e.message) || String(e),
+          });
+      }
+    }
+
     /**
      * Identifies uncommon words in text
      * @param {string} text Text to analyze
@@ -241,6 +325,12 @@ const { EXT_CONSTANTS } = require("../utils/constants");
         // Analyze each chunk
         for (const chunk of chunks) {
           const res = analyzeRightsPatterns(chunk);
+          // Optional ML fusion per chunk
+          if (typeof mlAugmenter === "function") {
+            await mlAugmenter(chunk, res, { EXT_CONSTANTS, log, logLevels });
+          } else {
+            await augmentWithMLIfEnabled(chunk, res);
+          }
           totalScore += res.score;
           totalWords += res.wordCount;
           // rough signal count = sum of all clause counts
@@ -260,6 +350,96 @@ const { EXT_CONSTANTS } = require("../utils/constants");
         }
 
         const averageScore = totalScore / Math.max(1, chunks.length);
+        // Derive 8-category User Rights Index from aggregated clause counts
+        const perN = RUBRIC.NORMALIZATION_PER_WORDS || 1000;
+        const normFactor = Math.max(1, totalWords / perN);
+        const weights = RUBRIC.WEIGHTS;
+        // Map clause keys to 8 top-level user rights categories
+        // Assumption v1 categories: Dispute Resolution, Class Actions, Unilateral Changes, Data Practices, Billing & Auto-Renewal, Content & IP, Consent & Transparency, Retention & Deletion
+        const CATEGORY_MAP = {
+          // Dispute Resolution
+          ARBITRATION: "DISPUTE_RESOLUTION",
+          DELEGATION_ARBITRABILITY: "DISPUTE_RESOLUTION",
+          JURY_TRIAL_WAIVER: "DISPUTE_RESOLUTION",
+          ARBITRATION_CARVEOUTS: "DISPUTE_RESOLUTION",
+          // Class Actions
+          CLASS_ACTION_WAIVER: "CLASS_ACTIONS",
+          // Unilateral Changes
+          UNILATERAL_CHANGES: "UNILATERAL_CHANGES",
+          // Data Practices (sale/sharing, transparency, vague consent)
+          DATA_SALE_OR_SHARING: "DATA_PRACTICES",
+          NO_DATA_SALE: "DATA_PRACTICES",
+          VAGUE_CONSENT: "DATA_PRACTICES",
+          LIMITED_RETENTION_DISCLOSURE: "DATA_PRACTICES",
+          TRANSPARENT_RETENTION: "DATA_PRACTICES",
+          // Billing & Auto-Renewal
+          AUTO_RENEWAL_FRICTION: "BILLING_AND_AUTORENEWAL",
+          NEGATIVE_OPTION_BILLING: "BILLING_AND_AUTORENEWAL",
+          // Content & IP
+          MORAL_RIGHTS_WAIVER: "CONTENT_AND_IP",
+          // Liability & Remedies
+          LIABILITY_LIMITATION: "LIABILITY_AND_REMEDIES",
+          // Retention & Deletion (user control)
+          SELF_SERVICE_DELETION: "RETENTION_AND_DELETION",
+          CLEAR_OPT_OUT: "CONSENT_AND_OPT_OUT",
+        };
+        const CATEGORY_ORDER = [
+          "DISPUTE_RESOLUTION",
+          "CLASS_ACTIONS",
+          "UNILATERAL_CHANGES",
+          "DATA_PRACTICES",
+          "BILLING_AND_AUTORENEWAL",
+          "CONTENT_AND_IP",
+          "LIABILITY_AND_REMEDIES",
+          "RETENTION_AND_DELETION",
+          // Additional: CONSENT_AND_OPT_OUT folded into DATA_PRACTICES display but kept separate in map
+          "CONSENT_AND_OPT_OUT",
+          // Fallback bucket for keys without explicit mapping
+          "OTHER",
+        ];
+
+        // Accumulate raw weighted contributions per category
+        const categoryRaw = {};
+        const unmappedKeys = [];
+        function addContribution(key, count, w) {
+          const cat = CATEGORY_MAP[key];
+          if (!cat) {
+            // If no mapping but weight exists, group into OTHER; also record for diagnostics
+            if (typeof w === "number" && w !== 0) {
+              categoryRaw.OTHER = (categoryRaw.OTHER || 0) + count * w;
+            }
+            if (!unmappedKeys.includes(key)) unmappedKeys.push(key);
+            return;
+          }
+          categoryRaw[cat] = (categoryRaw[cat] || 0) + count * (w || 0);
+        }
+        // HIGH_RISK and MEDIUM_RISK are penalties; POSITIVES are bonuses
+        const cc = aggregateClauseCounts;
+        Object.entries(cc.HIGH_RISK || {}).forEach(([k, c]) =>
+          addContribution(k, c, weights.HIGH_RISK[k] || 0),
+        );
+        Object.entries(cc.MEDIUM_RISK || {}).forEach(([k, c]) =>
+          addContribution(k, c, weights.MEDIUM_RISK[k] || 0),
+        );
+        Object.entries(cc.POSITIVES || {}).forEach(([k, c]) =>
+          addContribution(k, c, weights.POSITIVES[k] || 0),
+        );
+
+        // Normalize per N words and clamp similar to global caps but per-category soft bounds
+        const categoryScores = {};
+        CATEGORY_ORDER.forEach((cat) => {
+          if (!(cat in categoryRaw)) return;
+          const adj = categoryRaw[cat] / normFactor;
+          // Soft bounds: negatives capped at -30, positives at +10 for per-category view
+          const clamped = Math.max(-30, Math.min(10, adj));
+          // Convert to 0-100 style contribution relative to neutral 100 baseline
+          const catScore = Math.max(0, Math.min(100, 100 + clamped));
+          categoryScores[cat] = {
+            raw: categoryRaw[cat],
+            adjusted: adj,
+            score: catScore,
+          };
+        });
         const uncommonWords = await identifyUncommonWords(text);
 
         // Grade mapping
@@ -319,6 +499,8 @@ const { EXT_CONSTANTS } = require("../utils/constants");
             clauseSignals: totalSignals,
             wordCount: totalWords,
             clauseCounts: aggregateClauseCounts, // exposed for diagnostics/testing
+            categoryScores,
+            unmappedClauseKeys: unmappedKeys,
             dictionaryTerms,
           },
         };
@@ -340,6 +522,8 @@ const { EXT_CONSTANTS } = require("../utils/constants");
 
     return {
       analyzeContent,
+      // exposed for unit testing/mocking
+      _augmentWithMLIfEnabled: augmentWithMLIfEnabled,
     };
   }
 

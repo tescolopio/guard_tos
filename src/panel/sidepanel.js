@@ -1,23 +1,28 @@
+"use strict";
+
+const { EXT_CONSTANTS } = require("../utils/constants");
+const { createDebugger } = require("../utils/debugger");
+
+// Alias for easier access
+const Constants = EXT_CONSTANTS;
+
 /**
- * @file sidepanel.js
- * @description Manages the Terms Guardian analysis sidepanel UI
- * @version 2.0.0
- * @date 2024-10-29
+ * Represents the sidepanel functionality.
+ * @class
  */
-
-(function (global) {
-  "use strict";
-
-  function createSidepanel({ log, logLevels }) {
-    const { SELECTORS, MESSAGES, CLASSES, DEBUG, STORAGE_KEYS } =
-      global.Constants;
-    let currentContent = null;
+class Sidepanel {
+  constructor() {
+    const { MESSAGES, CLASSES, DEBUG } = Constants;
+    this.currentContent = null;
 
     // Initialize debugging
-    debug.startGroup(DEBUG.MODULES.SIDEPANEL);
-    debug.startTimer("sidepanelInit");
+    const logger = createDebugger(DEBUG.LEVELS.DEBUG);
+    this.debug = logger.debug;
 
-    const state = {
+    this.debug.startGroup && this.debug.startGroup(DEBUG.MODULES.SIDEPANEL);
+    this.debug.startTimer && this.debug.startTimer("sidepanelInit");
+
+    this.state = {
       isLoading: false,
       isError: false,
       lastStatus: null,
@@ -26,7 +31,7 @@
     /**
      * DOM Element Cache
      */
-    const elements = {
+    this.elements = {
       content: document.getElementById("sidepanel-content"),
       diagnostics: document.getElementById("diagnostics"),
       dictMetricHits: document.getElementById("dict-metric-hits"),
@@ -37,8 +42,12 @@
       dictMetricTs: document.getElementById("dict-metric-ts"),
       termsUrl: document.getElementById("terms-url"),
       termsTitle: document.getElementById("terms-title"),
+      overallGrade: document.getElementById("overall-grade"),
       readabilityGrade: document.getElementById("readability-grade"),
       userRightsIndex: document.getElementById("user-rights-index"),
+      documentLevelBtn: document.getElementById("document-level-btn"),
+      bySectionBtn: document.getElementById("by-section-btn"),
+      contentOrganization: document.querySelector(".content-organization"),
       overallSummary: document.getElementById("overall-summary"),
       sectionSummaries: document.getElementById("section-summaries"),
       keyExcerptsList: document.getElementById("key-excerpts-list"),
@@ -51,641 +60,922 @@
     /**
      * Message Handlers
      */
-    const messageHandlers = {
-      [MESSAGES.UPDATE_SIDEPANEL]: updateSidepanelContent,
+    this.messageHandlers = {
+      [MESSAGES.UPDATE_SIDEPANEL]: this.updateSidepanelContent.bind(this),
       [MESSAGES.ANALYSIS_ERROR]: (error) =>
-        errorManager.handle(error, "analysis"),
-      [MESSAGES.CLEAR_PANEL]: clearPanel,
+        this.errorManager.handle(error, "analysis"),
+      [MESSAGES.CLEAR_PANEL]: this.clearPanel.bind(this),
     };
+  }
 
-    /**
-     * Loading State Management
-     */
-    const loadingManager = {
-      start(message = "Loading...") {
-        debug.info("Starting loading state", { message });
-        state.isLoading = true;
-        elements.content.classList.add("loading");
-        elements.loadingIndicator.textContent = message;
-        elements.loadingIndicator.style.display = "block";
-      },
+  /**
+   * Loading State Management
+   */
+  loadingManager = {
+    start: (message = "Loading...") => {
+      this.debug.info && this.debug.info("Starting loading state", { message });
+      this.state.isLoading = true;
+      this.elements.content.classList.add("loading");
+      this.elements.loadingIndicator.textContent = message;
+      this.elements.loadingIndicator.style.display = "block";
+    },
 
-      update(message) {
-        if (state.isLoading) {
-          elements.loadingIndicator.textContent = message;
-        }
-      },
-
-      end() {
-        debug.info("Ending loading state");
-        state.isLoading = false;
-        elements.content.classList.remove("loading");
-        elements.loadingIndicator.style.display = "none";
-      },
-    };
-
-    /**
-     * Status Message Management
-     */
-    const statusManager = {
-      show(message, type = "info", duration = 5000) {
-        debug.info("Showing status message", { message, type });
-
-        state.lastStatus = { message, type };
-        elements.statusMessage.textContent = message;
-        elements.statusMessage.className = `status-message ${type}`;
-
-        if (this.timeout) {
-          clearTimeout(this.timeout);
-        }
-
-        this.timeout = setTimeout(() => {
-          elements.statusMessage.className = "status-message";
-        }, duration);
-      },
-
-      clear() {
-        elements.statusMessage.className = "status-message";
-        state.lastStatus = null;
-      },
-    };
-
-    /**
-     * Error Management
-     */
-    const errorManager = {
-      handle(error, context = "") {
-        debug.error(`Error in ${context}:`, error);
-
-        state.isError = true;
-        elements.content.classList.add("error");
-
-        statusManager.show(
-          error.message || "An error occurred while processing your request",
-          "error",
-        );
-
-        if (context) {
-          const contextElement = document.querySelector(`.${context}`);
-          if (contextElement) {
-            contextElement.classList.add("error");
-          }
-        }
-      },
-
-      clear() {
-        state.isError = false;
-        elements.content.classList.remove("error");
-        document.querySelectorAll(".error").forEach((el) => {
-          el.classList.remove("error");
-        });
-      },
-    };
-
-    /**
-     * Content Update Functions
-     */
-    async function updateSection(sectionName, updateFn) {
-      try {
-        loadingManager.update(`Updating ${sectionName}...`);
-        await updateFn();
-      } catch (error) {
-        errorManager.handle(error, sectionName);
+    update: (message) => {
+      if (this.state.isLoading) {
+        this.elements.loadingIndicator.textContent = message;
       }
-    }
+    },
 
-    function updateDocumentInfo(info) {
-      if (!info) return;
-      elements.termsUrl.href = info.url;
-      elements.termsUrl.textContent = info.url;
-      elements.termsTitle.textContent = info.title;
-    }
+    end: () => {
+      this.debug.info && this.debug.info("Ending loading state");
+      this.state.isLoading = false;
+      this.elements.content.classList.remove("loading");
+      this.elements.loadingIndicator.style.display = "none";
+    },
+  };
 
-    function updateScores(scores) {
-      if (!scores) return;
-      elements.readabilityGrade.textContent =
-        scores.readability?.grade ||
-        (scores.readability?.error ? "Error" : "N/A");
-      elements.userRightsIndex.textContent = scores.rights
-        ? `${(scores.rights * 100).toFixed(0)}%`
-        : scores.rights?.error
-          ? "Error"
-          : "N/A";
+  /**
+   * Status Message Management
+   */
+  statusManager = {
+    show: (message, type = "info", duration = 5000) => {
+      this.debug.info &&
+        this.debug.info("Showing status message", { message, type });
 
-      updatePopupContent("readabilityPopup", scores.readability);
-      updatePopupContent("rightsPopup", scores.rights);
-    }
+      this.state.lastStatus = { message, type };
+      this.elements.statusMessage.textContent = message;
+      this.elements.statusMessage.className = `status-message ${type}`;
 
-    function updateSummary(summary, enhancedData) {
-      if (!summary) return;
-
-      // Update main summary with enhanced formatting
-      if (enhancedData && enhancedData.enhancedSummary) {
-        const summaryHtml = formatEnhancedSummary(
-          enhancedData.enhancedSummary.overall,
-        );
-        elements.overallSummary.innerHTML = summaryHtml;
-
-        // Update risk level display
-        updateRiskDisplay(enhancedData.riskLevel);
-
-        // Update key findings
-        updateKeyFindings(enhancedData.keyFindings);
-
-        // Show risk alert if needed
-        updateRiskAlert(enhancedData.plainLanguageAlert);
-      } else {
-        elements.overallSummary.textContent = summary;
+      if (this.timeout) {
+        clearTimeout(this.timeout);
       }
-    }
 
-    function formatEnhancedSummary(summaryText) {
-      if (!summaryText) return "";
+      this.timeout = setTimeout(() => {
+        this.elements.statusMessage.className = "status-message";
+      }, duration);
+    },
 
-      // Convert markdown-style formatting to HTML
-      let html = summaryText
-        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-        .replace(/📋 \*\*(.*?)\*\*/g, "<h3>📋 $1</h3>")
-        .replace(/⚠️ (.*?)(?=\n|$)/g, '<div class="warning-text">⚠️ $1</div>')
-        .replace(/✅ (.*?)(?=\n|$)/g, '<div class="positive-text">✅ $1</div>')
-        .replace(/💰 (.*?)(?=\n|$)/g, '<div class="money-text">💰 $1</div>')
-        .replace(/🔒 (.*?)(?=\n|$)/g, '<div class="privacy-text">🔒 $1</div>')
-        .replace(/\n\n/g, "</p><p>")
-        .replace(/\n/g, "<br>");
+    clear: () => {
+      this.elements.statusMessage.className = "status-message";
+      this.state.lastStatus = null;
+    },
+  };
 
-      return `<p>${html}</p>`;
-    }
+  /**
+   * Error Management
+   */
+  errorManager = {
+    handle: (error, context = "") => {
+      this.debug.error && this.debug.error(`Error in ${context}:`, error);
 
-    function updateRiskDisplay(riskLevel) {
-      const riskDisplay = document.getElementById("document-risk");
-      const riskBadge = document.getElementById("risk-badge");
+      this.state.isError = true;
+      this.elements.content.classList.add("error");
 
-      if (riskLevel && riskDisplay && riskBadge) {
-        riskBadge.textContent = riskLevel.replace("-", " ").toUpperCase();
-        riskBadge.className = `risk-badge ${riskLevel}`;
-        riskDisplay.style.display = "block";
-      }
-    }
-
-    function updateKeyFindings(keyFindings) {
-      const keyFindingsSection = document.getElementById(
-        "key-findings-section",
+      this.statusManager.show(
+        error.message || "An error occurred while processing your request",
+        "error",
       );
-      const keyFindingsList = document.getElementById("key-findings-list");
 
-      if (!keyFindings || !keyFindings.length) {
-        keyFindingsSection.style.display = "none";
-        return;
-      }
-
-      keyFindingsList.innerHTML = "";
-      keyFindings.forEach((finding) => {
-        const findingDiv = document.createElement("div");
-        findingDiv.className = "key-finding-item";
-
-        // Determine if finding is concerning or positive
-        if (
-          finding.includes("⚠️") ||
-          finding.includes("💰") ||
-          finding.includes("🔒")
-        ) {
-          findingDiv.classList.add("concerning");
-        } else if (finding.includes("✅")) {
-          findingDiv.classList.add("positive");
+      if (context) {
+        const contextElement = document.querySelector(`.${context}`);
+        if (contextElement) {
+          contextElement.classList.add("error");
         }
+      }
+    },
 
-        findingDiv.textContent = finding;
-        keyFindingsList.appendChild(findingDiv);
+    clear: () => {
+      this.state.isError = false;
+      this.elements.content.classList.remove("error");
+      document.querySelectorAll(".error").forEach((el) => {
+        el.classList.remove("error");
       });
+    },
+  };
 
-      keyFindingsSection.style.display = "block";
+  /**
+   * Content Update Functions
+   */
+  async updateSection(sectionName, updateFn) {
+    try {
+      this.loadingManager.update(`Updating ${sectionName}...`);
+      await updateFn();
+    } catch (error) {
+      this.errorManager.handle(error, sectionName);
+    }
+  }
+
+  updateDocumentInfo(info) {
+    if (!info) return;
+    this.elements.termsUrl.href = info.url;
+    this.elements.termsUrl.textContent = info.url;
+    this.elements.termsTitle.textContent = info.title;
+  }
+
+  updateScores(scores) {
+    if (!scores) return;
+
+    // Overall Grade calculation (combination of readability and rights)
+    const overallGrade = this.calculateOverallGrade(
+      scores.readability,
+      scores.rights,
+    );
+    this.elements.overallGrade.textContent = overallGrade || "N/A";
+
+    // Readability Grade
+    this.elements.readabilityGrade.textContent =
+      scores.readability?.grade ||
+      (scores.readability?.error ? "Error" : "N/A");
+
+    // User Rights Index Grade
+    const rightsData = scores.rights;
+    let rightsGradeText = "N/A";
+    if (rightsData && typeof rightsData === "object") {
+      rightsGradeText =
+        rightsData.grade ||
+        this.getGradeFromScore(rightsData.rightsScore || rightsData.score);
+    } else if (typeof rightsData === "number") {
+      rightsGradeText = this.getGradeFromScore(rightsData);
+    }
+    this.elements.userRightsIndex.textContent = rightsGradeText;
+
+    // Update tooltips
+    this.updatePopupContent("overallPopup", {
+      readability: scores.readability,
+      rights: scores.rights,
+    });
+    this.updatePopupContent("readabilityPopup", scores.readability);
+    this.updatePopupContent("rightsPopup", scores.rights);
+  }
+
+  updateSummary(summary, enhancedData) {
+    if (!summary) return;
+
+    // Update main summary with enhanced formatting
+    if (enhancedData && enhancedData.enhancedSummary) {
+      const summaryHtml = this.formatEnhancedSummary(
+        enhancedData.enhancedSummary.overall,
+      );
+      this.elements.overallSummary.innerHTML = summaryHtml;
+
+      // Update risk level display
+      this.updateRiskDisplay(enhancedData.riskLevel);
+
+      // Update key findings
+      this.updateKeyFindings(enhancedData.keyFindings);
+
+      // Show risk alert if needed
+      this.updateRiskAlert(enhancedData.plainLanguageAlert);
+    } else {
+      this.elements.overallSummary.textContent = summary;
+    }
+  }
+
+  formatEnhancedSummary(summaryText) {
+    if (!summaryText) return "";
+
+    // Convert markdown-style formatting to HTML
+    let html = summaryText
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      .replace(/📋 \*\*(.*?)\*\*/g, "<h3>📋 $1</h3>")
+      .replace(/⚠️ (.*?)(?=\n|$)/g, '<div class="warning-text">⚠️ $1</div>')
+      .replace(/✅ (.*?)(?=\n|$)/g, '<div class="positive-text">✅ $1</div>')
+      .replace(/💰 (.*?)(?=\n|$)/g, '<div class="money-text">💰 $1</div>')
+      .replace(/🔒 (.*?)(?=\n|$)/g, '<div class="privacy-text">🔒 $1</div>')
+      .replace(/\n\n/g, "</p><p>")
+      .replace(/\n/g, "<br>");
+
+    return `<p>${html}</p>`;
+  }
+
+  updateRiskDisplay(riskLevel) {
+    const riskDisplay = document.getElementById("document-risk");
+    const riskBadge = document.getElementById("risk-badge");
+
+    if (riskLevel && riskDisplay && riskBadge) {
+      riskBadge.textContent = riskLevel.replace("-", " ").toUpperCase();
+      riskBadge.className = `risk-badge ${riskLevel}`;
+      riskDisplay.style.display = "block";
+    }
+  }
+
+  updateKeyFindings(keyFindings) {
+    const keyFindingsSection = document.getElementById("key-findings-section");
+    const keyFindingsList = document.getElementById("key-findings-list");
+
+    if (!keyFindings || !keyFindings.length) {
+      keyFindingsSection.style.display = "none";
+      return;
     }
 
-    function updateRiskAlert(alertMessage) {
-      const riskAlert = document.getElementById("risk-alert");
-      const riskMessageEl = document.getElementById("risk-message");
+    keyFindingsList.innerHTML = "";
+    keyFindings.forEach((finding) => {
+      const findingDiv = document.createElement("div");
+      findingDiv.className = "key-finding-item";
 
-      if (alertMessage && riskAlert && riskMessageEl) {
-        riskMessageEl.textContent = alertMessage;
-        riskAlert.style.display = "block";
-
-        // Add appropriate risk class based on message content
-        const alertDiv = riskAlert.querySelector(".risk-alert");
-        if (alertMessage.includes("several sections")) {
-          alertDiv.className = "risk-alert high-risk";
-        } else if (alertMessage.includes("some terms")) {
-          alertDiv.className = "risk-alert medium-risk";
-        } else {
-          alertDiv.className = "risk-alert";
-        }
-      } else if (riskAlert) {
-        riskAlert.style.display = "none";
+      // Determine if finding is concerning or positive
+      if (
+        finding.includes("⚠️") ||
+        finding.includes("💰") ||
+        finding.includes("🔒")
+      ) {
+        findingDiv.classList.add("concerning");
+      } else if (finding.includes("✅")) {
+        findingDiv.classList.add("positive");
       }
+
+      findingDiv.textContent = finding;
+      keyFindingsList.appendChild(findingDiv);
+    });
+
+    keyFindingsSection.style.display = "block";
+  }
+
+  updateRiskAlert(alertMessage) {
+    const riskAlert = document.getElementById("risk-alert");
+    const riskMessageEl = document.getElementById("risk-message");
+
+    if (alertMessage && riskAlert && riskMessageEl) {
+      riskMessageEl.textContent = alertMessage;
+      riskAlert.style.display = "block";
+
+      // Add appropriate risk class based on message content
+      const alertDiv = riskAlert.querySelector(".risk-alert");
+      if (alertMessage.includes("several sections")) {
+        alertDiv.className = "risk-alert high-risk";
+      } else if (alertMessage.includes("some terms")) {
+        alertDiv.className = "risk-alert medium-risk";
+      } else {
+        alertDiv.className = "risk-alert";
+      }
+    } else if (riskAlert) {
+      riskAlert.style.display = "none";
+    }
+  }
+
+  updateSections(sections) {
+    this.elements.sectionSummaries.innerHTML = "";
+
+    if (!sections?.length) {
+      this.elements.sectionSummaries.innerHTML =
+        "<p>No section summaries available.</p>";
+      return;
     }
 
-    function updateSections(sections) {
-      elements.sectionSummaries.innerHTML = "";
+    sections.forEach((section, idx) => {
+      const sectionDiv = document.createElement("div");
+      sectionDiv.classList.add(Constants.CLASSES.SECTION_SUMMARY);
+      const anchorId = `section-${idx + 1}`;
+      sectionDiv.id = anchorId;
 
-      if (!sections?.length) {
-        elements.sectionSummaries.innerHTML =
-          "<p>No section summaries available.</p>";
-        return;
+      // Category badges from categoryHints
+      let badgesHtml = "";
+      if (
+        Array.isArray(section.categoryHints) &&
+        section.categoryHints.length
+      ) {
+        const topCats = section.categoryHints.slice(0, 4);
+        const miniScore = (cat) => {
+          const s = section.rights?.categoryScores?.[cat]?.score;
+          return typeof s === "number"
+            ? ` title="${this.formatCategoryName(cat)}: ${s.toFixed(0)}"`
+            : "";
+        };
+        const badgeItems = topCats
+          .map(
+            (cat) =>
+              `<span class="category-badge" data-cat="${cat}"${miniScore(
+                cat,
+              )}>${this.formatCategoryName(cat)}</span>`,
+          )
+          .join(" ");
+        badgesHtml = `<div class="section-category-badges">${badgeItems}</div>`;
       }
 
-      sections.forEach((section) => {
-        const sectionDiv = document.createElement("div");
-        sectionDiv.classList.add(CLASSES.SECTION_SUMMARY);
-
-        // Enhanced section display with risk levels and key points
-        if (section.riskLevel && section.keyPoints) {
-          sectionDiv.innerHTML = `
-            <div class="section-header">
-              <h3 class="section-title">${section.userFriendlyHeading || section.heading}</h3>
-              <span class="section-risk-badge ${section.riskLevel}">${section.riskLevel}</span>
-            </div>
-            <div class="section-content">
-              <div class="section-summary-text">${section.summary}</div>
-              ${
-                section.keyPoints && section.keyPoints.length > 0
-                  ? `
-                <div class="section-key-points">
-                  <h4>Key Points:</h4>
-                  <ul>
-                    ${section.keyPoints.map((point) => `<li>${point}</li>`).join("")}
-                  </ul>
-                </div>
-              `
-                  : ""
-              }
-            </div>
-          `;
-        } else {
-          // Fallback to original format
-          sectionDiv.innerHTML = `
-            <h3>${section.heading}</h3>
-            <p>${section.summary}</p>
-          `;
-        }
-
-        elements.sectionSummaries.appendChild(sectionDiv);
-      });
-    }
-
-    function updateExcerpts(excerpts) {
-      elements.keyExcerptsList.innerHTML = "";
-
-      if (!excerpts?.length) {
-        elements.keyExcerptsList.innerHTML = "<p>No key excerpts found.</p>";
-        return;
-      }
-
-      excerpts.forEach((excerpt, index) => {
-        const listItem = document.createElement("li");
-        listItem.textContent = `"${excerpt}"`;
-        listItem.setAttribute("data-index", index + 1);
-        elements.keyExcerptsList.appendChild(listItem);
-      });
-    }
-
-    function updateTerms(terms) {
-      elements.uncommonTermsList.innerHTML = "";
-
-      if (!terms?.length) {
-        elements.uncommonTermsList.innerHTML =
-          "<p>No uncommon words found.</p>";
-        return;
-      }
-
-      terms.forEach((item) => {
-        const termSpan = document.createElement("span");
-        termSpan.textContent = item.word;
-        termSpan.classList.add(CLASSES.UNCOMMON_TERM);
-        termSpan.setAttribute("data-definition", item.definition);
-        elements.uncommonTermsList.appendChild(termSpan);
-      });
-    }
-
-    function updateDictionaryTerms(dictTerms) {
-      if (!elements.dictionaryTermsList) return; // backward safety if HTML not updated
-      elements.dictionaryTermsList.innerHTML = "";
-      if (!dictTerms || !dictTerms.length) {
-        elements.dictionaryTermsList.innerHTML =
-          "<p>No dictionary terms found.</p>";
-        return;
-      }
-      dictTerms.forEach((item) => {
-        const li = document.createElement("li");
-        li.className = "dictionary-term";
-        li.textContent = `${item.word} (${item.count})`;
-        li.setAttribute("data-definition", item.definition || "");
-        elements.dictionaryTermsList.appendChild(li);
-      });
-    }
-
-    /**
-     * Popup Management
-     */
-    function formatReadabilityPopup(data) {
-      if (!data) return "No readability data available";
-
-      // Handle error case
-      if (data.error) {
-        return `<p class="error">Error: ${data.error}</p>`;
-      }
-
-      const grade = data.averageGrade || data.grade || "N/A";
-      const confidence = (data.confidence * 100).toFixed(0);
-
-      return `
-        <div class="popup-header">
-          <strong>Readability Grade: ${grade}</strong>
-        </div>
-        <div class="popup-metrics">
-          <h4>Individual Scores:</h4>
-          <div class="metric-row">
-            <span class="metric-label">Flesch Reading Ease:</span>
-            <span class="metric-value">${data.flesch?.toFixed(1) || "N/A"}</span>
+      // Enhanced section display with risk levels and key points
+      if (section.riskLevel && section.keyPoints) {
+        sectionDiv.innerHTML = `
+          <div class="section-header">
+            <h3 class="section-title">${
+              section.userFriendlyHeading || section.heading
+            }</h3>
+            <span class="section-risk-badge ${section.riskLevel}">${
+              section.riskLevel
+            }</span>
           </div>
-          <div class="metric-row">
-            <span class="metric-label">Flesch-Kincaid Grade:</span>
-            <span class="metric-value">${data.kincaid?.toFixed(1) || "N/A"}</span>
+          <div class="section-content">
+            ${badgesHtml}
+            <div class="section-summary-text">${section.summary}</div>
+            ${
+              section.keyPoints && section.keyPoints.length > 0
+                ? `
+              <div class="section-key-points">
+                <h4>Key Points:</h4>
+                <ul>
+                  ${section.keyPoints
+                    .map((point) => `<li>${point}</li>`)
+                    .join("")}
+                </ul>
+              </div>
+            `
+                : ""
+            }
           </div>
-          <div class="metric-row">
-            <span class="metric-label">Gunning Fog Index:</span>
-            <span class="metric-value">${data.fogIndex?.toFixed(1) || "N/A"}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">Confidence:</span>
-            <span class="metric-value">${confidence}%</span>
-          </div>
-        </div>
-        <div class="popup-explanation">
-          <p><strong>What this means:</strong></p>
-          <p>${getReadabilityExplanation(grade, data.flesch)}</p>
-        </div>
-      `;
-    }
-
-    function formatRightsPopup(data) {
-      if (!data) return "No rights data available";
-
-      // Handle error case
-      if (data.error) {
-        return `<p class="error">Error: ${data.error}</p>`;
-      }
-
-      const score =
-        typeof data === "number" ? data : data.rightsScore || data.score || 0;
-      const displayScore =
-        typeof score === "number"
-          ? (score > 1 ? score : score * 100).toFixed(0)
-          : "N/A";
-      const grade = data.grade || getGradeFromScore(score);
-      const confidence = data.confidence
-        ? (data.confidence * 100).toFixed(0)
-        : "N/A";
-
-      let clauseInfo = "";
-      if (data.details && data.details.clauseCounts) {
-        const highRisk = data.details.clauseCounts.HIGH_RISK || {};
-        const mediumRisk = data.details.clauseCounts.MEDIUM_RISK || {};
-        const positives = data.details.clauseCounts.POSITIVES || {};
-
-        const highRiskClauses = Object.keys(highRisk).filter(
-          (k) => highRisk[k] > 0,
-        );
-        const mediumRiskClauses = Object.keys(mediumRisk).filter(
-          (k) => mediumRisk[k] > 0,
-        );
-        const positiveClauses = Object.keys(positives).filter(
-          (k) => positives[k] > 0,
-        );
-
-        clauseInfo = `
-          <h4>Detected Clauses:</h4>
-          ${
-            highRiskClauses.length > 0
-              ? `
-            <div class="clause-category high-risk">
-              <strong>High Risk:</strong> ${highRiskClauses.map(formatClauseName).join(", ")}
-            </div>
-          `
-              : ""
-          }
-          ${
-            mediumRiskClauses.length > 0
-              ? `
-            <div class="clause-category medium-risk">
-              <strong>Medium Risk:</strong> ${mediumRiskClauses.map(formatClauseName).join(", ")}
-            </div>
-          `
-              : ""
-          }
-          ${
-            positiveClauses.length > 0
-              ? `
-            <div class="clause-category positive">
-              <strong>User-Friendly:</strong> ${positiveClauses.map(formatClauseName).join(", ")}
-            </div>
-          `
-              : ""
-          }
+        `;
+      } else {
+        // Fallback to original format
+        sectionDiv.innerHTML = `
+          <h3>${section.heading}</h3>
+          ${badgesHtml}
+          <p>${section.summary}</p>
         `;
       }
 
-      return `
-        <div class="popup-header">
-          <strong>Rights Score: ${displayScore}% (Grade ${grade})</strong>
+      this.elements.sectionSummaries.appendChild(sectionDiv);
+    });
+  }
+
+  updateExcerpts(excerpts) {
+    this.elements.keyExcerptsList.innerHTML = "";
+
+    if (!excerpts?.length) {
+      this.elements.keyExcerptsList.innerHTML = "<p>No key excerpts found.</p>";
+      return;
+    }
+
+    excerpts.forEach((excerpt, index) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = `"${excerpt}"`;
+      listItem.setAttribute("data-index", index + 1);
+      this.elements.keyExcerptsList.appendChild(listItem);
+    });
+  }
+
+  updateTerms(terms) {
+    this.elements.uncommonTermsList.innerHTML = "";
+
+    if (!terms?.length) {
+      this.elements.uncommonTermsList.innerHTML =
+        "<p>No uncommon words found.</p>";
+      return;
+    }
+
+    terms.forEach((item) => {
+      const termSpan = document.createElement("span");
+      termSpan.textContent = item.word;
+      termSpan.classList.add(Constants.CLASSES.UNCOMMON_TERM);
+      termSpan.setAttribute("data-definition", item.definition);
+      this.elements.uncommonTermsList.appendChild(termSpan);
+    });
+  }
+
+  updateDictionaryTerms(dictTerms) {
+    if (!this.elements.dictionaryTermsList) return; // backward safety if HTML not updated
+    this.elements.dictionaryTermsList.innerHTML = "";
+    if (!dictTerms || !dictTerms.length) {
+      this.elements.dictionaryTermsList.innerHTML =
+        "<p>No dictionary terms found.</p>";
+      return;
+    }
+    dictTerms.forEach((item) => {
+      const li = document.createElement("li");
+      li.className = "dictionary-term";
+      li.textContent = `${item.word} (${item.count})`;
+      li.setAttribute("data-definition", item.definition || "");
+      this.elements.dictionaryTermsList.appendChild(li);
+    });
+  }
+
+  /**
+   * Popup Management
+   */
+  formatOverallPopup(data) {
+    if (!data || (!data.readability && !data.rights)) {
+      return "No overall assessment data available";
+    }
+
+    const readability = data.readability;
+    const rights = data.rights;
+
+    const readabilityGrade = readability?.grade || "N/A";
+    const rightsGrade =
+      rights?.grade ||
+      this.getGradeFromScore(rights?.rightsScore || rights?.score) ||
+      "N/A";
+    const overallGrade = this.calculateOverallGrade(readability, rights);
+
+    return `
+      <div class="popup-header">
+        <strong>Overall Grade: ${overallGrade}</strong>
+      </div>
+      <div class="popup-metrics">
+        <h4>Component Grades:</h4>
+        <div class="metric-row">
+          <span class="metric-label">Readability Grade:</span>
+          <span class="metric-value">${readabilityGrade}</span>
         </div>
-        <div class="popup-metrics">
-          <div class="metric-row">
-            <span class="metric-label">User Rights Protection:</span>
-            <span class="metric-value">${displayScore}%</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">Confidence:</span>
-            <span class="metric-value">${confidence}%</span>
-          </div>
-          ${
-            data.details?.dictionaryTerms
-              ? `
-          <div class="metric-row">
-            <span class="metric-label">Legal Terms Found:</span>
-            <span class="metric-value">${data.details.dictionaryTerms.length}</span>
-          </div>
-          `
-              : ""
-          }
+        <div class="metric-row">
+          <span class="metric-label">User Rights Index Grade:</span>
+          <span class="metric-value">${rightsGrade}</span>
         </div>
-        ${clauseInfo ? `<div class="popup-clauses">${clauseInfo}</div>` : ""}
-        <div class="popup-explanation">
-          <p><strong>What this means:</strong></p>
-          <p>${getRightsExplanation(score, grade)}</p>
+      </div>
+      <div class="popup-explanation">
+        <p><strong>What this means:</strong></p>
+        <p>The overall grade combines readability (40%) and user rights protection (60%) to give you a comprehensive assessment of this document.</p>
+      </div>
+    `;
+  }
+
+  formatReadabilityPopup(data) {
+    if (!data) return "No readability data available";
+
+    // Handle error case
+    if (data.error) {
+      return `<p class="error">Error: ${data.error}</p>`;
+    }
+
+    const grade = data.grade || data.averageGrade || "N/A";
+    const flesch =
+      typeof data.flesch === "number" ? data.flesch.toFixed(1) : "N/A";
+    const kincaid =
+      typeof data.kincaid === "number" ? data.kincaid.toFixed(1) : "N/A";
+    const fogIndex =
+      typeof data.fogIndex === "number" ? data.fogIndex.toFixed(1) : "N/A";
+
+    // Document statistics
+    const wordCount = data.wordCount || data.totalWords || "N/A";
+    const sentenceCount = data.sentenceCount || data.totalSentences || "N/A";
+    const asl =
+      typeof data.averageSentenceLength === "number"
+        ? data.averageSentenceLength.toFixed(1)
+        : "N/A";
+    const asw =
+      typeof data.averageSyllablesPerWord === "number"
+        ? data.averageSyllablesPerWord.toFixed(1)
+        : "N/A";
+
+    return `
+      <div class="popup-header">
+        <strong>Readability Grade: ${grade}</strong>
+      </div>
+      <div class="popup-metrics">
+        <h4>Reading Metrics:</h4>
+        <div class="metric-row">
+          <span class="metric-label">Flesch Reading Ease:</span>
+          <span class="metric-value">${flesch}</span>
         </div>
+        <div class="metric-row">
+          <span class="metric-label">Flesch-Kincaid Grade Level:</span>
+          <span class="metric-value">${kincaid}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Gunning Fog Index:</span>
+          <span class="metric-value">${fogIndex}</span>
+        </div>
+        <h4>Document Statistics:</h4>
+        <div class="metric-row">
+          <span class="metric-label">Word count:</span>
+          <span class="metric-value">${wordCount}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Sentence count:</span>
+          <span class="metric-value">${sentenceCount}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Average sentence length (ASL):</span>
+          <span class="metric-value">${asl}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Average syllables per word (ASW):</span>
+          <span class="metric-value">${asw}</span>
+        </div>
+      </div>
+      <div class="popup-explanation">
+        <p><strong>What this means:</strong></p>
+        <p>${this.getReadabilityExplanation(grade, data.flesch)}</p>
+      </div>
+    `;
+  }
+
+  formatRightsPopup(data) {
+    if (!data) return "No rights data available";
+
+    // Handle error case
+    if (data.error) {
+      return `<p class="error">Error: ${data.error}</p>`;
+    }
+
+    const score =
+      typeof data === "number" ? data : data.rightsScore || data.score || 0;
+    const displayScore =
+      typeof score === "number"
+        ? (score > 1 ? score : score * 100).toFixed(0)
+        : "N/A";
+    const grade = data.grade || this.getGradeFromScore(score);
+    const confidence = data.confidence
+      ? (data.confidence * 100).toFixed(0)
+      : "N/A";
+
+    let clauseInfo = "";
+    if (data.details && data.details.clauseCounts) {
+      const highRisk = data.details.clauseCounts.HIGH_RISK || {};
+      const mediumRisk = data.details.clauseCounts.MEDIUM_RISK || {};
+      const positives = data.details.clauseCounts.POSITIVES || {};
+
+      const highRiskClauses = Object.keys(highRisk).filter(
+        (k) => highRisk[k] > 0,
+      );
+      const mediumRiskClauses = Object.keys(mediumRisk).filter(
+        (k) => mediumRisk[k] > 0,
+      );
+      const positiveClauses = Object.keys(positives).filter(
+        (k) => positives[k] > 0,
+      );
+
+      clauseInfo = `
+        <h4>Detected Clauses:</h4>
+        ${
+          highRiskClauses.length > 0
+            ? `
+          <div class="clause-category high-risk">
+            <strong>High Risk:</strong> ${highRiskClauses
+              .map(this.formatClauseName)
+              .join(", ")}
+          </div>
+        `
+            : ""
+        }
+        ${
+          mediumRiskClauses.length > 0
+            ? `
+          <div class="clause-category medium-risk">
+            <strong>Medium Risk:</strong> ${mediumRiskClauses
+              .map(this.formatClauseName)
+              .join(", ")}
+          </div>
+        `
+            : ""
+        }
+        ${
+          positiveClauses.length > 0
+            ? `
+          <div class="clause-category positive">
+            <strong>User-Friendly:</strong> ${positiveClauses
+              .map(this.formatClauseName)
+              .join(", ")}
+          </div>
+        `
+            : ""
+        }
       `;
     }
 
-    // Helper functions for explanations
-    function getReadabilityExplanation(grade, fleschScore) {
-      const scoreDescriptions = {
-        A: "This document is very easy to read and understand.",
-        B: "This document is fairly easy to read with some education.",
-        C: "This document requires average reading skills.",
-        D: "This document is somewhat difficult to read.",
-        F: "This document is very difficult to read and may require specialized knowledge.",
+    // Category breakdown (actual available categories)
+    let categoryInfo = "";
+    if (data.details && data.details.categoryScores) {
+      const categories = data.details.categoryScores;
+
+      // Use actual available categories from the data
+      const availableCategories = Object.keys(categories).sort();
+
+      // Category labels mapping for user-friendly display
+      const categoryLabels = {
+        // Clause-based categories from rights assessor
+        ARBITRATION: "Arbitration Requirements",
+        CLASS_ACTION_WAIVER: "Class Action Limitations",
+        UNILATERAL_CHANGES: "Unilateral Changes",
+        DATA_SALE_OR_SHARING: "Data Sale/Sharing",
+        AUTO_RENEWAL_FRICTION: "Auto-Renewal Terms",
+        NEGATIVE_OPTION_BILLING: "Negative Option Billing",
+        DELEGATION_ARBITRABILITY: "Arbitration Delegation",
+        ARBITRATION_CARVEOUTS: "Arbitration Exceptions",
+        VAGUE_CONSENT: "Consent Terms",
+        LIMITED_RETENTION_DISCLOSURE: "Data Retention",
+        MORAL_RIGHTS_WAIVER: "Moral Rights Waiver",
+        JURY_TRIAL_WAIVER: "Jury Trial Waiver",
+        CLEAR_OPT_OUT: "Opt-Out Options",
+        SELF_SERVICE_DELETION: "Data Deletion Rights",
+        NO_DATA_SALE: "Data Sale Restrictions",
+        TRANSPARENT_RETENTION: "Clear Retention Policies",
+        // Heuristic categories from processing script
+        DISPUTE_RESOLUTION: "Dispute Resolution",
+        CLASS_ACTIONS: "Class Actions",
+        DATA_PRACTICES: "Data Practices",
+        BILLING_AND_AUTORENEWAL: "Billing & Auto-Renewal",
+        CONTENT_AND_IP: "Content & IP Rights",
+        LIABILITY_AND_REMEDIES: "Liability & Remedies",
+        RETENTION_AND_DELETION: "Data Retention & Deletion",
       };
 
-      let explanation =
-        scoreDescriptions[grade] || "Reading difficulty varies.";
+      const items = availableCategories
+        .filter((k) => categories[k] && typeof categories[k].score === "number")
+        .map((k) => {
+          const val = categories[k].score;
+          const displayScore = val.toFixed(0);
+          const label = categoryLabels[k] || this.formatCategoryName(k);
+          return `<div class="metric-row"><span class="metric-label">${label}:</span><span class="metric-value">${displayScore}</span></div>`;
+        })
+        .join("");
 
-      if (fleschScore !== undefined) {
-        if (fleschScore >= 90) explanation += " Written at a 5th grade level.";
-        else if (fleschScore >= 80)
-          explanation += " Written at a 6th grade level.";
-        else if (fleschScore >= 70)
-          explanation += " Written at a 7th grade level.";
-        else if (fleschScore >= 60)
-          explanation += " Written at an 8th-9th grade level.";
-        else if (fleschScore >= 50)
-          explanation += " Written at a 10th-12th grade level.";
-        else if (fleschScore >= 30)
-          explanation += " Written at a college level.";
-        else explanation += " Written at a graduate level.";
+      if (items) {
+        categoryInfo = `
+          <div class="popup-metrics">
+            <h4>Category Breakdown:</h4>
+            ${items}
+          </div>
+        `;
+      }
+      if (
+        data.details.unmappedClauseKeys &&
+        data.details.unmappedClauseKeys.length
+      ) {
+        categoryInfo += `
+            <div class="popup-clauses">
+              <div class="clause-category">
+                <strong>Unmapped Clauses:</strong> ${data.details.unmappedClauseKeys
+                  .map(this.formatClauseName)
+                  .join(", ")}
+              </div>
+            </div>
+          `;
       }
 
-      return explanation;
-    }
-
-    function getRightsExplanation(score, grade) {
-      const numScore =
-        typeof score === "number" ? (score > 1 ? score : score * 100) : 0;
-
-      if (numScore >= 80) {
-        return "This document appears to be user-friendly with good protection of user rights.";
-      } else if (numScore >= 60) {
-        return "This document has moderate user protection but may contain some concerning clauses.";
-      } else if (numScore >= 40) {
-        return "This document contains several clauses that may limit user rights.";
-      } else {
-        return "This document contains many clauses that significantly limit user rights. Review carefully.";
-      }
-    }
-
-    function getGradeFromScore(score) {
-      const numScore =
-        typeof score === "number" ? (score > 1 ? score : score * 100) : 0;
-      if (numScore >= 90) return "A";
-      if (numScore >= 80) return "B";
-      if (numScore >= 70) return "C";
-      if (numScore >= 60) return "D";
-      return "F";
-    }
-
-    function formatClauseName(clauseName) {
-      return clauseName
-        .toLowerCase()
-        .split("_")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
-    }
-
-    function updatePopupContent(popupId, data) {
-      const popup = document.getElementById(popupId);
-      if (!popup) return;
-
-      const content = popup.querySelector(".popup-content");
-      if (!content) return;
-
-      switch (popupId) {
-        case "readabilityPopup":
-          content.innerHTML = formatReadabilityPopup(data);
-          break;
-        case "rightsPopup":
-          content.innerHTML = formatRightsPopup(data);
-          break;
-      }
-    }
-
-    /**
-     * Diagnostics (Dictionary Metrics)
-     */
-    let diagInterval = null;
-    async function setDiagnosticsEnabled(enabled) {
+      // Top risk sections by category (uses this.currentContent.sections)
       try {
-        await chrome.storage.local.set({
-          __diag_dictionary_enabled: !!enabled,
-        });
-        const checkbox = document.getElementById("toggle-diagnostics");
-        if (checkbox) checkbox.checked = !!enabled;
-        if (elements.diagnostics) {
-          elements.diagnostics.style.display = enabled ? "" : "none";
-        }
-      } catch (_) {}
-    }
-
-    function enableDiagnosticsIfConfigured() {
-      try {
-        const flag =
-          DEBUG &&
-          DEBUG.FEATURES &&
-          DEBUG.FEATURES.DICTIONARY_METRICS &&
-          DEBUG.FEATURES.DICTIONARY_METRICS.ENABLED;
-        const toggleEl = document.getElementById("toggle-diagnostics");
-        if (toggleEl) {
-          toggleEl.addEventListener("change", (e) =>
-            setDiagnosticsEnabled(e.target.checked),
-          );
-        }
-        if (!elements.diagnostics) return;
-        if (!flag) {
-          elements.diagnostics.style.display = "none";
-          return;
-        }
-        // Populate pattern weights card once
-        try {
-          const grid = document.getElementById("pattern-weights-grid");
-          const countsGrid = document.getElementById(
-            "pattern-clausecounts-grid",
-          );
-          const countsToggle = document.getElementById("toggle-clause-counts");
-          if (countsToggle) {
-            countsToggle.addEventListener("change", (e) => {
-              if (countsGrid) {
-                countsGrid.style.display = e.target.checked ? "grid" : "none";
-                if (e.target.checked) populateClauseCountsGrid();
-              }
-            });
-          }
-          if (grid && grid.childElementCount === 0) {
-            const weights = (global.EXT_CONSTANTS || EXT_CONSTANTS).ANALYSIS
-              .RIGHTS.WEIGHTS;
-            const sections = [
-              ["HIGH_RISK", weights.HIGH_RISK],
-              ["MEDIUM_RISK", weights.MEDIUM_RISK],
-              ["POSITIVES", weights.POSITIVES],
-            ];
-            sections.forEach(([label, map]) => {
-              const header = document.createElement("div");
-              header.className = "diag-subheader";
-              header.textContent = label;
-              header.style.gridColumn = "1 / -1";
-              grid.appendChild(header);
-              Object.entries(map).forEach(([k, v]) => {
-                const keyDiv = document.createElement("div");
-                keyDiv.textContent = k;
-                const valDiv = document.createElement("div");
-                valDiv.textContent = v;
-                grid.appendChild(keyDiv);
-                grid.appendChild(valDiv);
+        if (
+          this.currentContent &&
+          Array.isArray(this.currentContent.sections)
+        ) {
+          const sections = this.currentContent.sections;
+          const byCat = Object.create(null);
+          sections.forEach((s, idx) => {
+            const cs = s?.rights?.categoryScores;
+            if (!cs) return;
+            Object.entries(cs).forEach(([cat, obj]) => {
+              const sc = typeof obj?.score === "number" ? obj.score : NaN;
+              if (isNaN(sc)) return;
+              if (!byCat[cat]) byCat[cat] = [];
+              byCat[cat].push({
+                idx: idx + 1,
+                title:
+                  s.userFriendlyHeading || s.heading || `Section ${idx + 1}`,
+                score: sc,
               });
             });
-            // Caps
-            const capsHeader = document.createElement("div");
-            capsHeader.className = "diag-subheader";
-            capsHeader.textContent = "CAPS";
-            capsHeader.style.gridColumn = "1 / -1";
-            grid.appendChild(capsHeader);
-            Object.entries(weights.CAPS).forEach(([k, v]) => {
+          });
+
+          const order = Object.keys(
+            Constants.ANALYSIS.RIGHTS.WEIGHTS.HIGH_RISK,
+          ).concat(Object.keys(Constants.ANALYSIS.RIGHTS.WEIGHTS.MEDIUM_RISK));
+
+          const orderForTop = order.filter((c) => byCat[c] && byCat[c].length);
+          const blocks = orderForTop
+            .map((cat) => {
+              const list = byCat[cat]
+                .sort((a, b) => a.score - b.score) // lower score = higher risk
+                .slice(0, 3)
+                .map(
+                  (e) =>
+                    `<li><a href="#section-${e.idx}">${
+                      e.title
+                    }</a> — ${e.score.toFixed(0)}</li>`,
+                ) // anchor links
+                .join("");
+              if (!list) return "";
+              return `<div class="top-risk-category"><strong>${this.formatCategoryName(
+                cat,
+              )}:</strong><ul class="top-risk-list">${list}</ul></div>`;
+            })
+            .join("");
+          if (blocks) {
+            categoryInfo += `
+              <div class="popup-top-risk">
+                <h4>Top risk sections by category:</h4>
+                ${blocks}
+              </div>
+            `;
+          }
+        }
+      } catch (e) {
+        // Non-fatal
+      }
+    }
+
+    return `
+      <div class="popup-header">
+        <strong>Rights Score: ${displayScore}% (Grade ${grade})</strong>
+      </div>
+      <div class="popup-metrics">
+        <div class="metric-row">
+          <span class="metric-label">User Rights Protection:</span>
+          <span class="metric-value">${displayScore}%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Confidence:</span>
+          <span class="metric-value">${confidence}%</span>
+        </div>
+        ${
+          data.details?.dictionaryTerms
+            ? `
+        <div class="metric-row">
+          <span class="metric-label">Legal Terms Found:</span>
+          <span class="metric-value">${data.details.dictionaryTerms.length}</span>
+        </div>
+        `
+            : ""
+        }
+      </div>
+      ${categoryInfo}
+      ${clauseInfo ? `<div class="popup-clauses">${clauseInfo}</div>` : ""}
+      <div class="popup-explanation">
+        <p><strong>What this means:</strong></p>
+        <p>${this.getRightsExplanation(score, grade)}</p>
+      </div>
+    `;
+  }
+
+  // Helper functions for explanations
+  getReadabilityExplanation(grade, fleschScore) {
+    const scoreDescriptions = {
+      A: "This document is very easy to read and understand.",
+      B: "This document is fairly easy to read with some education.",
+      C: "This document requires average reading skills.",
+      D: "This document is somewhat difficult to read.",
+      F: "This document is very difficult to read and may require specialized knowledge.",
+    };
+
+    let explanation = scoreDescriptions[grade] || "Reading difficulty varies.";
+
+    if (fleschScore !== undefined) {
+      if (fleschScore >= 90) explanation += " Written at a 5th grade level.";
+      else if (fleschScore >= 80)
+        explanation += " Written at a 6th grade level.";
+      else if (fleschScore >= 70)
+        explanation += " Written at a 7th grade level.";
+      else if (fleschScore >= 60)
+        explanation += " Written at an 8th-9th grade level.";
+      else if (fleschScore >= 50)
+        explanation += " Written at a 10th-12th grade level.";
+      else if (fleschScore >= 30) explanation += " Written at a college level.";
+      else explanation += " Written at a graduate level.";
+    }
+
+    return explanation;
+  }
+
+  getRightsExplanation(score, grade) {
+    const numScore =
+      typeof score === "number" ? (score > 1 ? score : score * 100) : 0;
+
+    if (numScore >= 80) {
+      return "This document appears to be user-friendly with good protection of user rights.";
+    } else if (numScore >= 60) {
+      return "This document has moderate user protection but may contain some concerning clauses.";
+    } else if (numScore >= 40) {
+      return "This document contains several clauses that may limit user rights.";
+    } else {
+      return "This document contains many clauses that significantly limit user rights. Review carefully.";
+    }
+  }
+
+  getGradeFromScore(score) {
+    const numScore =
+      typeof score === "number" ? (score > 1 ? score : score * 100) : 0;
+    if (numScore >= 90) return "A";
+    if (numScore >= 80) return "B";
+    if (numScore >= 70) return "C";
+    if (numScore >= 60) return "D";
+    return "F";
+  }
+
+  calculateOverallGrade(readability, rights) {
+    try {
+      // Get numeric scores
+      let readabilityScore = 0;
+      if (readability?.flesch !== undefined) {
+        // Convert Flesch (0-100) to grade-like score
+        readabilityScore = Math.max(0, Math.min(100, readability.flesch));
+      } else if (readability?.grade) {
+        // Convert letter grade to numeric
+        const gradeMap = { A: 95, B: 85, C: 75, D: 65, F: 50 };
+        readabilityScore = gradeMap[readability.grade] || 50;
+      }
+
+      let rightsScore = 0;
+      if (typeof rights === "number") {
+        rightsScore = rights > 1 ? rights : rights * 100;
+      } else if (rights?.rightsScore !== undefined) {
+        rightsScore = rights.rightsScore;
+      } else if (rights?.score !== undefined) {
+        rightsScore = rights.score > 1 ? rights.score : rights.score * 100;
+      }
+
+      // Weighted combination: 40% readability, 60% rights
+      const combined = readabilityScore * 0.4 + rightsScore * 0.6;
+      return this.getGradeFromScore(combined);
+    } catch (error) {
+      return "N/A";
+    }
+  }
+
+  formatClauseName(clauseName) {
+    return clauseName
+      .toLowerCase()
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
+  formatCategoryName(cat) {
+    return cat
+      .toLowerCase()
+      .split("_")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  }
+
+  updatePopupContent(popupId, data) {
+    const popup = document.getElementById(popupId);
+    if (!popup) return;
+
+    const content = popup.querySelector(".popup-content");
+    if (!content) return;
+
+    switch (popupId) {
+      case "overallPopup":
+        content.innerHTML = this.formatOverallPopup(data);
+        break;
+      case "readabilityPopup":
+        content.innerHTML = this.formatReadabilityPopup(data);
+        break;
+      case "rightsPopup":
+        content.innerHTML = this.formatRightsPopup(data);
+        break;
+    }
+  }
+
+  /**
+   * Diagnostics (Dictionary Metrics)
+   */
+  diagInterval = null;
+  async setDiagnosticsEnabled(enabled) {
+    try {
+      await chrome.storage.local.set({
+        __diag_dictionary_enabled: !!enabled,
+      });
+      const checkbox = document.getElementById("toggle-diagnostics");
+      if (checkbox) checkbox.checked = !!enabled;
+      if (this.elements.diagnostics) {
+        this.elements.diagnostics.style.display = enabled ? "" : "none";
+      }
+    } catch (_) {}
+  }
+
+  enableDiagnosticsIfConfigured() {
+    try {
+      const flag =
+        Constants.DEBUG &&
+        Constants.DEBUG.FEATURES &&
+        Constants.DEBUG.FEATURES.DICTIONARY_METRICS &&
+        Constants.DEBUG.FEATURES.DICTIONARY_METRICS.ENABLED;
+      const toggleEl = document.getElementById("toggle-diagnostics");
+      if (toggleEl) {
+        toggleEl.addEventListener("change", (e) =>
+          this.setDiagnosticsEnabled(e.target.checked),
+        );
+      }
+      if (!this.elements.diagnostics) return;
+      if (!flag) {
+        this.elements.diagnostics.style.display = "none";
+        return;
+      }
+      // Populate pattern weights card once
+      try {
+        const grid = document.getElementById("pattern-weights-grid");
+        const countsGrid = document.getElementById("pattern-clausecounts-grid");
+        const countsToggle = document.getElementById("toggle-clause-counts");
+        if (countsToggle) {
+          countsToggle.addEventListener("change", (e) => {
+            if (countsGrid) {
+              countsGrid.style.display = e.target.checked ? "grid" : "none";
+              if (e.target.checked) this.populateClauseCountsGrid();
+            }
+          });
+        }
+        if (grid && grid.childElementCount === 0) {
+          const weights = EXT_CONSTANTS.ANALYSIS.RIGHTS.WEIGHTS;
+          const sections = [
+            ["HIGH_RISK", weights.HIGH_RISK],
+            ["MEDIUM_RISK", weights.MEDIUM_RISK],
+            ["POSITIVES", weights.POSITIVES],
+          ];
+          sections.forEach(([label, map]) => {
+            const header = document.createElement("div");
+            header.className = "diag-subheader";
+            header.textContent = label;
+            header.style.gridColumn = "1 / -1";
+            grid.appendChild(header);
+            Object.entries(map).forEach(([k, v]) => {
               const keyDiv = document.createElement("div");
               keyDiv.textContent = k;
               const valDiv = document.createElement("div");
@@ -693,550 +983,261 @@
               grid.appendChild(keyDiv);
               grid.appendChild(valDiv);
             });
-          }
-        } catch (e) {
-          debug.warn("Failed to populate pattern weights", e);
-        }
-        if (
-          typeof chrome !== "undefined" &&
-          chrome.storage &&
-          chrome.storage.local
-        ) {
-          chrome.storage.local.get("__diag_dictionary_enabled").then((data) => {
-            setDiagnosticsEnabled(!!data.__diag_dictionary_enabled);
           });
-        } else {
-          setDiagnosticsEnabled(true);
-        }
-        const POLL_MS = DEBUG.FEATURES.DICTIONARY_METRICS.POLL_MS || 10000;
-        const KEY = STORAGE_KEYS.DICTIONARY_METRICS || "dictionaryMetrics";
-
-        const render = (m) => {
-          if (!m) return;
-          elements.dictMetricHits.textContent = m.hits ?? 0;
-          elements.dictMetricMisses.textContent = m.misses ?? 0;
-          elements.dictMetricSize.textContent = m.size ?? 0;
-          elements.dictMetricMax.textContent = m.max ?? 0;
-          elements.dictMetricTtl.textContent = m.ttl ?? 0;
-          const dateStr = m.ts ? new Date(m.ts).toLocaleTimeString() : "-";
-          elements.dictMetricTs.textContent = dateStr;
-        };
-
-        const fetchAndRender = async () => {
-          try {
-            if (
-              typeof chrome !== "undefined" &&
-              chrome.storage &&
-              chrome.storage.local
-            ) {
-              const data = await chrome.storage.local.get(KEY);
-              render(data[KEY]);
-            } else if (
-              typeof globalThis !== "undefined" &&
-              globalThis.__DICTIONARY_METRICS__
-            ) {
-              render(globalThis.__DICTIONARY_METRICS__);
-            }
-          } catch (_) {}
-        };
-
-        // Initial fetch and interval
-        fetchAndRender();
-        diagInterval = setInterval(fetchAndRender, POLL_MS);
-      } catch (_) {}
-    }
-
-    function populateClauseCountsGrid() {
-      try {
-        const countsGrid = document.getElementById("pattern-clausecounts-grid");
-        if (!countsGrid || !currentContent) return;
-        const rights = currentContent?.scores?.rights;
-        const clauseCounts = rights?.details?.clauseCounts;
-        if (!clauseCounts) return;
-        // clear existing
-        while (countsGrid.firstChild)
-          countsGrid.removeChild(countsGrid.firstChild);
-        const sections = [
-          ["HIGH_RISK", clauseCounts.HIGH_RISK || {}],
-          ["MEDIUM_RISK", clauseCounts.MEDIUM_RISK || {}],
-          ["POSITIVES", clauseCounts.POSITIVES || {}],
-        ];
-        sections.forEach(([label, map]) => {
-          const header = document.createElement("div");
-          header.className = "diag-subheader";
-          header.textContent = label + " (counts)";
-          header.style.gridColumn = "1 / -1";
-          countsGrid.appendChild(header);
-          Object.entries(map).forEach(([k, v]) => {
+          // Caps
+          const capsHeader = document.createElement("div");
+          capsHeader.className = "diag-subheader";
+          capsHeader.textContent = "CAPS";
+          capsHeader.style.gridColumn = "1 / -1";
+          grid.appendChild(capsHeader);
+          Object.entries(weights.CAPS).forEach(([k, v]) => {
             const keyDiv = document.createElement("div");
             keyDiv.textContent = k;
             const valDiv = document.createElement("div");
             valDiv.textContent = v;
-            countsGrid.appendChild(keyDiv);
-            countsGrid.appendChild(valDiv);
+            grid.appendChild(keyDiv);
+            grid.appendChild(valDiv);
           });
-        });
+        }
       } catch (e) {
-        debug.warn("Failed to populate clause counts", e);
+        this.debug.warn &&
+          this.debug.warn("Failed to populate pattern weights", e);
       }
-    }
-
-    function showPopup(popupId) {
-      const popup = document.getElementById(popupId);
-      if (popup) popup.style.display = "block";
-    }
-
-    function hidePopup(popupId) {
-      const popup = document.getElementById(popupId);
-      if (popup) popup.style.display = "none";
-    }
-
-    /**
-     * Main Content Update
-     */
-    async function updateSidepanelContent(content) {
-      debug.startTimer("updatePanel");
-
-      try {
-        loadingManager.start("Updating analysis...");
-        errorManager.clear();
-        elements.content.classList.add("updating");
-        currentContent = content;
-
-        if (content.error) {
-          errorManager.handle(new Error(content.error), "analysis");
-          return;
-        }
-
-        await Promise.all([
-          updateSection("documentInfo", () =>
-            updateDocumentInfo(content.documentInfo),
-          ),
-          updateSection("scores", () => updateScores(content.scores)),
-          updateSection("summary", () => updateSummary(content.summary, content)),
-          updateSection("sections", () => updateSections(content.sections)),
-          updateSection("excerpts", () => updateExcerpts(content.excerpts)),
-          updateSection("terms", () => updateTerms(content.terms)),
-          updateSection("dictionaryTerms", () =>
-            updateDictionaryTerms(
-              content?.scores?.rights?.details?.dictionaryTerms ||
-                content?.rights?.details?.dictionaryTerms ||
-                content?.dictionaryTerms,
-            ),
-          ),
-        ]);
-
-        // If counts toggle is active, refresh clause counts grid
-        const countsToggle = document.getElementById("toggle-clause-counts");
-        if (countsToggle && countsToggle.checked) {
-          populateClauseCountsGrid();
-        }
-
-        statusManager.show("Analysis complete", "success");
-        debug.info("Panel update complete");
-      } catch (error) {
-        errorManager.handle(error, "panel-update");
-      } finally {
-        loadingManager.end();
-        elements.content.classList.remove("updating");
-        const duration = debug.endTimer("updatePanel");
-        debug.info("Panel update duration", { duration });
-      }
-    }
-
-    /**
-     * Action Buttons Setup
-     */
-    function setupActionButtons() {
-      const buttons = {
-        contactBtn: () => window.open("mailto:support@termsguardian.com"),
-        reportBtn: () => window.open("https://github.com/termsguardian/issues"),
-        githubBtn: () => window.open("https://github.com/termsguardian"),
-        feedbackBtn: () => window.open("https://termsguardian.com/feedback"),
-        donateBtn: () => window.open("https://termsguardian.com/donate"),
-      };
-
-      Object.entries(buttons).forEach(([id, handler]) => {
-        const button = document.getElementById(id);
-        if (button) {
-          button.addEventListener("click", handler);
-        }
-      });
-    }
-
-    /**
-     * Clear Panel
-     */
-    function clearPanel() {
-      currentContent = null;
-      elements.content.classList.remove("loading", "updating", "error");
-      elements.sectionSummaries.innerHTML = "";
-      elements.keyExcerptsList.innerHTML = "";
-      elements.uncommonTermsList.innerHTML = "";
-      statusManager.clear();
-      errorManager.clear();
-    }
-
-    /**
-     * Event Listeners Setup
-     */
-    function setupEventListeners() {
-      // Popup handlers
-      document.querySelectorAll("[data-popup]").forEach((element) => {
-        const popupId = element.dataset.popup;
-        element.addEventListener("mouseenter", () => showPopup(popupId));
-        element.addEventListener("mouseleave", () => hidePopup(popupId));
-      });
-
-      // Term and excerpt handlers
-      document.addEventListener("mouseover", (event) => {
-        const termSpan = event.target.closest(`.${CLASSES.UNCOMMON_TERM}`);
-        if (termSpan) {
-          const definition = termSpan.getAttribute("data-definition");
-          showPopup(SELECTORS.POPUPS.TERMS);
-          updatePopupContent(SELECTORS.POPUPS.TERMS, [
-            { word: termSpan.textContent, definition },
-          ]);
-        }
-
-        const excerptItem = event.target.closest(
-          `#${SELECTORS.SIDEPANEL.KEY_EXCERPTS_LIST} li`,
-        );
-        if (excerptItem) {
-          const excerptIndex = excerptItem.getAttribute("data-index");
-          showPopup(SELECTORS.POPUPS.EXCERPTS);
-          updatePopupContent(SELECTORS.POPUPS.EXCERPTS, [
-            currentContent.excerpts[excerptIndex - 1],
-          ]);
-        }
-      });
-
-      document.addEventListener("mouseout", (event) => {
-        const termSpan = event.target.closest(`.${CLASSES.UNCOMMON_TERM}`);
-        if (termSpan) hidePopup(SELECTORS.POPUPS.TERMS);
-
-        const excerptItem = event.target.closest(
-          `#${SELECTORS.SIDEPANEL.KEY_EXCERPTS_LIST} li`,
-        );
-        if (excerptItem) hidePopup(SELECTORS.POPUPS.EXCERPTS);
-      });
-
-      setupActionButtons();
-    }
-
-    // Initialize
-    setupEventListeners();
-    enableDiagnosticsIfConfigured();
-    debug.endTimer("sidepanelInit");
-    debug.endGroup();
-
-    /**
-     * Settings Management
-     */
-    const settingsManager = {
-      userPreferenceService: null,
-      enhancedCacheService: null,
-
-      async init() {
-        // Initialize services if available
-        if (typeof UserPreferenceService !== "undefined") {
-          this.userPreferenceService = new UserPreferenceService();
-        }
-
-        this.setupEventListeners();
-        await this.loadSettings();
-        await this.updateCacheStats();
-      },
-
-      setupEventListeners() {
-        // Settings toggle
-        const settingsToggle = document.createElement("button");
-        settingsToggle.className = "settings-toggle";
-        settingsToggle.innerHTML = "⚙️";
-        settingsToggle.title = "Toggle Settings";
-        document.body.appendChild(settingsToggle);
-
-        settingsToggle.addEventListener("click", () => {
-          const settingsSection = document.getElementById("settings");
-          const isVisible = settingsSection.style.display !== "none";
-          settingsSection.style.display = isVisible ? "none" : "block";
-          settingsToggle.classList.toggle("active", !isVisible);
+      if (
+        typeof chrome !== "undefined" &&
+        chrome.storage &&
+        chrome.storage.local
+      ) {
+        chrome.storage.local.get("__diag_dictionary_enabled").then((data) => {
+          this.setDiagnosticsEnabled(!!data.__diag_dictionary_enabled);
         });
+      } else {
+        this.setDiagnosticsEnabled(true);
+      }
+      const POLL_MS =
+        Constants.DEBUG.FEATURES.DICTIONARY_METRICS.POLL_MS || 10000;
+      if (this.diagInterval) clearInterval(this.diagInterval);
+      this.diagInterval = setInterval(
+        () => this.updateDictionaryMetrics(),
+        POLL_MS,
+      );
+      this.updateDictionaryMetrics();
+    } catch (e) {
+      this.debug.warn &&
+        this.debug.warn("Error enabling diagnostics", { error: e });
+    }
+  }
 
-        // Settings controls
-        const enableCaching = document.getElementById("enable-hash-caching");
-        const processingMode = document.getElementById("processing-mode");
-        const cacheRetention = document.getElementById("cache-retention");
-        const autoUpdate = document.getElementById("auto-update");
-        const debugMode = document.getElementById("debug-mode");
+  async updateDictionaryMetrics() {
+    try {
+      const { dictionaryMetrics } =
+        await chrome.storage.local.get("dictionaryMetrics");
+      if (!dictionaryMetrics) return;
+      const { hits, misses, size, max, ttl, ts } = dictionaryMetrics;
+      if (this.elements.dictMetricHits)
+        this.elements.dictMetricHits.textContent = hits || 0;
+      if (this.elements.dictMetricMisses)
+        this.elements.dictMetricMisses.textContent = misses || 0;
+      if (this.elements.dictMetricSize)
+        this.elements.dictMetricSize.textContent = size || 0;
+      if (this.elements.dictMetricMax)
+        this.elements.dictMetricMax.textContent = max || 0;
+      if (this.elements.dictMetricTtl)
+        this.elements.dictMetricTtl.textContent = ttl
+          ? `${(ttl / 36e5).toFixed(2)}h`
+          : "N/A";
+      if (this.elements.dictMetricTs)
+        this.elements.dictMetricTs.textContent = ts
+          ? new Date(ts).toLocaleTimeString()
+          : "N/A";
+    } catch (e) {
+      this.debug.warn &&
+        this.debug.warn("Could not update dictionary metrics", { error: e });
+    }
+  }
 
-        if (enableCaching) {
-          enableCaching.addEventListener("change", async (e) => {
-            await this.saveSetting("enableHashCaching", e.target.checked);
-          });
-        }
+  async populateClauseCountsGrid() {
+    const grid = document.getElementById("pattern-clausecounts-grid");
+    if (!grid) return;
+    grid.innerHTML = ""; // Clear previous
+    try {
+      const { analysisResults } =
+        await chrome.storage.local.get("analysisResults");
+      if (
+        !analysisResults ||
+        !analysisResults.rights ||
+        !analysisResults.rights.details ||
+        !analysisResults.rights.details.clauseCounts
+      ) {
+        grid.textContent = "No clause data available.";
+        return;
+      }
+      const { clauseCounts } = analysisResults.rights.details;
+      const sections = [
+        ["HIGH_RISK", clauseCounts.HIGH_RISK],
+        ["MEDIUM_RISK", clauseCounts.MEDIUM_RISK],
+        ["POSITIVES", clauseCounts.POSITIVES],
+      ];
+      sections.forEach(([label, map]) => {
+        if (!map || Object.keys(map).length === 0) return;
+        const header = document.createElement("div");
+        header.className = "diag-subheader";
+        header.textContent = label;
+        header.style.gridColumn = "1 / -1";
+        grid.appendChild(header);
+        Object.entries(map).forEach(([k, v]) => {
+          const keyDiv = document.createElement("div");
+          keyDiv.textContent = k;
+          const valDiv = document.createElement("div");
+          valDiv.textContent = v;
+          grid.appendChild(keyDiv);
+          grid.appendChild(valDiv);
+        });
+      });
+    } catch (e) {
+      grid.textContent = "Error loading clause data.";
+      this.debug.warn && this.debug.warn("Failed to populate clause counts", e);
+    }
+  }
 
-        if (processingMode) {
-          processingMode.addEventListener("change", async (e) => {
-            await this.saveSetting("processingMode", e.target.value);
-          });
-        }
+  /**
+   * Main Initialization
+   */
+  initialize() {
+    this.debug.info && this.debug.info("Sidepanel initializing...");
+    this.loadingManager.start("Initializing...");
 
-        if (cacheRetention) {
-          cacheRetention.addEventListener("change", async (e) => {
-            const days = parseInt(e.target.value);
-            if (days >= 1 && days <= 365) {
-              await this.saveSetting("cacheRetentionDays", days);
-            }
-          });
-        }
+    this.setupEventListeners();
+    this.requestInitialData();
+    this.enableDiagnosticsIfConfigured();
 
-        if (autoUpdate) {
-          autoUpdate.addEventListener("change", async (e) => {
-            await this.saveSetting("autoUpdateEnabled", e.target.checked);
-          });
-        }
+    this.loadingManager.end();
+    this.debug.endTimer && this.debug.endTimer("sidepanelInit");
+    this.debug.info && this.debug.info("Sidepanel initialized.");
+    this.debug.endGroup && this.debug.endGroup();
+  }
 
-        if (debugMode) {
-          debugMode.addEventListener("change", async (e) => {
-            await this.saveSetting("debugMode", e.target.checked);
-            // Toggle debug mode immediately
-            if (typeof debug !== "undefined") {
-              debug.setLevel(e.target.checked ? "DEBUG" : "INFO");
-            }
-          });
-        }
-
-        // Action buttons
-        const clearCacheBtn = document.getElementById("clear-cache-btn");
-        const refreshStatsBtn = document.getElementById("refresh-stats-btn");
-        const resetSettingsBtn = document.getElementById("reset-settings-btn");
-        const exportSettingsBtn = document.getElementById(
-          "export-settings-btn",
-        );
-
-        if (clearCacheBtn) {
-          clearCacheBtn.addEventListener("click", async () => {
-            if (confirm("Are you sure you want to clear all cached data?")) {
-              await this.clearCache();
-              await this.updateCacheStats();
-            }
-          });
-        }
-
-        if (refreshStatsBtn) {
-          refreshStatsBtn.addEventListener("click", async () => {
-            await this.updateCacheStats();
-          });
-        }
-
-        if (resetSettingsBtn) {
-          resetSettingsBtn.addEventListener("click", async () => {
-            if (confirm("Reset all settings to defaults?")) {
-              await this.resetSettings();
-              await this.loadSettings();
-            }
-          });
-        }
-
-        if (exportSettingsBtn) {
-          exportSettingsBtn.addEventListener("click", async () => {
-            await this.exportSettings();
-          });
-        }
-      },
-
-      async loadSettings() {
-        if (!this.userPreferenceService) return;
-
-        try {
-          const preferences = await this.userPreferenceService.getPreferences();
-
-          const enableCaching = document.getElementById("enable-hash-caching");
-          const processingMode = document.getElementById("processing-mode");
-          const cacheRetention = document.getElementById("cache-retention");
-          const autoUpdate = document.getElementById("auto-update");
-          const debugMode = document.getElementById("debug-mode");
-
-          if (enableCaching)
-            enableCaching.checked = preferences.enableHashCaching;
-          if (processingMode) processingMode.value = preferences.processingMode;
-          if (cacheRetention)
-            cacheRetention.value = preferences.cacheRetentionDays;
-          if (autoUpdate) autoUpdate.checked = preferences.autoUpdateEnabled;
-          if (debugMode) debugMode.checked = preferences.debugMode;
-        } catch (error) {
-          console.error("Failed to load settings:", error);
-        }
-      },
-
-      async saveSetting(key, value) {
-        if (!this.userPreferenceService) return;
-
-        try {
-          const preferences = await this.userPreferenceService.getPreferences();
-          preferences[key] = value;
-          await this.userPreferenceService.setPreferences(preferences);
-          debug.info(`Setting saved: ${key} = ${value}`);
-        } catch (error) {
-          console.error("Failed to save setting:", error);
-        }
-      },
-
-      async updateCacheStats() {
-        try {
-          // Get cache stats from enhanced cache service or fallback to storage
-          let stats = {
-            localHits: 0,
-            cloudHits: 0,
-            misses: 0,
-            totalEntries: 0,
-            hitRate: 0,
-            totalSizeBytes: 0,
-          };
-
-          // Try to get stats from localStorage analysis entries
-          const keys = Object.keys(localStorage).filter((key) =>
-            key.startsWith("tg_analysis_"),
-          );
-          stats.totalEntries = keys.length;
-
-          let totalSize = 0;
-          keys.forEach((key) => {
-            const value = localStorage.getItem(key);
-            if (value) totalSize += value.length;
-          });
-          stats.totalSizeBytes = totalSize;
-
-          // Update UI
-          const elements = {
-            localHits: document.getElementById("cache-local-hits"),
-            cloudHits: document.getElementById("cache-cloud-hits"),
-            misses: document.getElementById("cache-misses"),
-            totalEntries: document.getElementById("cache-total-entries"),
-            hitRate: document.getElementById("cache-hit-rate"),
-            storageUsed: document.getElementById("cache-storage-used"),
-          };
-
-          if (elements.localHits)
-            elements.localHits.textContent = stats.localHits;
-          if (elements.cloudHits)
-            elements.cloudHits.textContent = stats.cloudHits;
-          if (elements.misses) elements.misses.textContent = stats.misses;
-          if (elements.totalEntries)
-            elements.totalEntries.textContent = stats.totalEntries;
-          if (elements.hitRate) {
-            const total = stats.localHits + stats.cloudHits + stats.misses;
-            const rate =
-              total > 0
-                ? (((stats.localHits + stats.cloudHits) / total) * 100).toFixed(
-                    1,
-                  )
-                : 0;
-            elements.hitRate.textContent = `${rate}%`;
-          }
-          if (elements.storageUsed) {
-            const kb = (stats.totalSizeBytes / 1024).toFixed(1);
-            elements.storageUsed.textContent = `${kb} KB`;
-          }
-        } catch (error) {
-          console.error("Failed to update cache stats:", error);
-        }
-      },
-
-      async clearCache() {
-        try {
-          // Clear localStorage cache entries
-          const keys = Object.keys(localStorage).filter((key) =>
-            key.startsWith("tg_analysis_"),
-          );
-          keys.forEach((key) => localStorage.removeItem(key));
-
-          debug.info(`Cleared ${keys.length} cache entries`);
-          return true;
-        } catch (error) {
-          console.error("Failed to clear cache:", error);
-          return false;
-        }
-      },
-
-      async resetSettings() {
-        if (!this.userPreferenceService) return;
-
-        try {
-          await this.userPreferenceService.resetToDefaults();
-          debug.info("Settings reset to defaults");
-        } catch (error) {
-          console.error("Failed to reset settings:", error);
-        }
-      },
-
-      async exportSettings() {
-        if (!this.userPreferenceService) return;
-
-        try {
-          const preferences = await this.userPreferenceService.getPreferences();
-
-          const exportData = {
-            preferences,
-            exportDate: new Date().toISOString(),
-            version: "1.0.0",
-          };
-
-          const blob = new Blob([JSON.stringify(exportData, null, 2)], {
-            type: "application/json",
-          });
-
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = `terms-guardian-settings-${new Date().toISOString().split("T")[0]}.json`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-
-          debug.info("Settings exported successfully");
-        } catch (error) {
-          console.error("Failed to export settings:", error);
-        }
-      },
-    };
-
-    // Initialize settings
-    settingsManager.init().catch((error) => {
-      console.error("Failed to initialize settings:", error);
+  setupEventListeners() {
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+      const handler = this.messageHandlers[message.action];
+      if (handler) {
+        handler(message.data);
+        sendResponse({ status: "ok" });
+      }
+      return true; // Keep message channel open for async response
     });
 
-    // Listen for messages
-    chrome.runtime.onMessage.addListener((message) => {
-      debug.info("Received message", { type: message.type });
-      const handler = messageHandlers[message.type];
-      if (handler) {
-        handler(message.content);
+    this.elements.documentLevelBtn.addEventListener("click", () =>
+      this.toggleView("document"),
+    );
+    this.elements.bySectionBtn.addEventListener("click", () =>
+      this.toggleView("section"),
+    );
+
+    // Event delegation for popups
+    document.body.addEventListener("click", (event) => {
+      const popupTrigger = event.target.closest("[data-popup]");
+      if (popupTrigger) {
+        const popupId = popupTrigger.dataset.popup;
+        const popup = document.getElementById(popupId);
+        if (popup) {
+          // Toggle active class on the popup itself
+          popup.classList.toggle("active");
+
+          // Hide all other popups
+          document
+            .querySelectorAll(".popup.active")
+            .forEach((p) => p !== popup && p.classList.remove("active"));
+        }
+      } else if (!event.target.closest(".popup")) {
+        // If click is outside any popup, hide all
+        document
+          .querySelectorAll(".popup.active")
+          .forEach((p) => p.classList.remove("active"));
       }
     });
-
-    return {
-      updateContent: updateSidepanelContent,
-      loading: loadingManager,
-      status: statusManager,
-      error: errorManager,
-      clearPanel,
-      getState: () => ({ ...state, currentContent }),
-    };
   }
 
-  // Export for Chrome extension environment
-  if (typeof window !== "undefined") {
-    global.Sidepanel = {
-      create: createSidepanel,
-    };
+  toggleView(view) {
+    if (view === "document") {
+      this.elements.overallSummary.style.display = "block";
+      this.elements.sectionSummaries.style.display = "none";
+      this.elements.documentLevelBtn.classList.add("active");
+      this.elements.bySectionBtn.classList.remove("active");
+    } else {
+      this.elements.overallSummary.style.display = "none";
+      this.elements.sectionSummaries.style.display = "block";
+      this.elements.documentLevelBtn.classList.remove("active");
+      this.elements.bySectionBtn.classList.add("active");
+    }
   }
-})(typeof window !== "undefined" ? window : global);
 
-// Initialize the sidepanel
-const sidepanel = global.Sidepanel.create({
-  log: global.debug.log,
-  logLevels: global.debug.levels,
+  requestInitialData() {
+    this.loadingManager.start("Fetching analysis...");
+    chrome.runtime.sendMessage({ action: "getAnalysisResults" }, (response) => {
+      if (chrome.runtime.lastError) {
+        this.errorManager.handle(
+          chrome.runtime.lastError,
+          "getAnalysisResults",
+        );
+        this.loadingManager.end();
+      } else if (response && response.error) {
+        this.errorManager.handle(response.error, "getAnalysisResults");
+        this.loadingManager.end();
+      } else if (response && response.data) {
+        this.updateSidepanelContent(response.data);
+      } else {
+        this.loadingManager.update("No analysis data found.");
+        setTimeout(() => this.loadingManager.end(), 2000);
+      }
+    });
+  }
+
+  clearPanel() {
+    this.updateSidepanelContent(null);
+    this.statusManager.show("Panel cleared.", "info");
+  }
+
+  async updateSidepanelContent(data) {
+    this.loadingManager.start("Updating content...");
+    this.errorManager.clear();
+
+    if (!data) {
+      this.elements.content.classList.add("no-data");
+      this.statusManager.show("No analysis data available.", "warn");
+      this.loadingManager.end();
+      return;
+    }
+
+    this.elements.content.classList.remove("no-data");
+    this.currentContent = data;
+
+    await this.updateSection("document info", () =>
+      this.updateDocumentInfo(data.documentInfo),
+    );
+    await this.updateSection("scores", () => this.updateScores(data.scores));
+    await this.updateSection("summary", () =>
+      this.updateSummary(data.summary, data.enhancedData),
+    );
+    await this.updateSection("sections", () =>
+      this.updateSections(data.sections),
+    );
+    await this.updateSection("excerpts", () =>
+      this.updateExcerpts(data.excerpts),
+    );
+    await this.updateSection("terms", () => this.updateTerms(data.terms));
+    await this.updateSection("dictionary terms", () =>
+      this.updateDictionaryTerms(data.dictionaryTerms),
+    );
+
+    this.loadingManager.end();
+    this.debug.info &&
+      this.debug.info("Sidepanel content updated successfully.");
+  }
+}
+
+// Initialize the sidepanel on DOMContentLoaded
+document.addEventListener("DOMContentLoaded", () => {
+  const sidepanel = new Sidepanel();
+  sidepanel.initialize();
 });

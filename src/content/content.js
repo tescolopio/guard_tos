@@ -426,6 +426,18 @@ try {
                 const cachedAnalysis = this.normalizeAnalysisEntry(
                   cacheResult.data,
                 );
+                const minimal = cachedAnalysis
+                  ? {
+                      rights: cachedAnalysis.rights,
+                      readability: cachedAnalysis.readability,
+                      summary: cachedAnalysis.summary,
+                      sections: cachedAnalysis.sections,
+                      excerpts: cachedAnalysis.excerpts,
+                      rightsDetails: cachedAnalysis.rightsDetails,
+                      uncommonWords: cachedAnalysis.uncommonWords,
+                      timestamp: cachedAnalysis.timestamp,
+                    }
+                  : null;
                 this.log(
                   this.logLevels.INFO,
                   `Cache hit from ${cacheResult.source} for ${url}`,
@@ -433,7 +445,7 @@ try {
                 chrome.runtime.sendMessage({
                   type: "tosDetected",
                   text: text,
-                  analysis: cachedAnalysis,
+                  analysis: minimal || cachedAnalysis,
                 });
                 return;
               }
@@ -445,6 +457,31 @@ try {
 
         // No cache: do analysis
         const analysis = await this.performFullAnalysis(text);
+        const minimal = {
+          documentInfo: {
+            url: window.location.href,
+            title: document.title || "Unknown Document",
+            timestamp: analysis.timestamp,
+          },
+          scores: {
+            readability: analysis.readability, // Full readability object with stats
+            rights: analysis.rightsDetails, // Full rights object with categoryScores
+          },
+          summary: analysis.summary,
+          enhancedSummary: analysis.enhancedSummary,
+          sections: analysis.sections,
+          excerpts: analysis.excerpts,
+          terms: analysis.uncommonWords,
+          // Legacy format for backward compatibility
+          rights: analysis.rights,
+          readability: analysis.readability,
+          rightsDetails: analysis.rightsDetails,
+          uncommonWords: analysis.uncommonWords,
+          riskLevel: analysis.riskLevel,
+          keyFindings: analysis.keyFindings,
+          plainLanguageAlert: analysis.plainLanguageAlert,
+          timestamp: analysis.timestamp,
+        };
 
         // Store in cache
         if (this.enhancedCache && this.hashService) {
@@ -459,7 +496,7 @@ try {
         chrome.runtime.sendMessage({
           type: "tosDetected",
           text: text,
-          analysis: analysis,
+          analysis: minimal,
         });
       } catch (error) {
         this.log(
@@ -487,30 +524,51 @@ try {
     }
 
     /**
-     * Initializes the content script
+     * Performs initial legal detection on page load
      */
-    initialize() {
-      // Inject domManager.js
-      injectScript(chrome.runtime.getURL("src/utils/domManager.js"));
-
-      // Set up a message listener to receive the result from domManager.js
-      chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-        if (request.action === "legalTextResult") {
-          if (request.isLegalText) {
-            this.updateExtensionIcon(true); // Set the badge to "!"
-
-            // Instead of calling detectLegalAgreements directly,
-            // use the cached text and pass it to detectLegalAgreements
-            this.detectLegalAgreements(this.cachedText);
-          } else {
-            this.updateExtensionIcon(false); // Clear the badge
-            // TODO: Handle the case where the page is not a legal text
-          }
+    async performInitialLegalDetection() {
+      try {
+        if (!this.cachedText || this.cachedText.trim().length < 100) {
+          this.log(
+            this.logLevels.DEBUG,
+            "Insufficient text for legal detection",
+          );
+          this.updateExtensionIcon(false);
+          return false;
         }
-      });
 
-      // Cache the initial text content AFTER setting up the message listener
+        // Use the legal text analyzer to check if this is a legal document
+        const isLegal = await this.legalTextAnalyzer.analyze(this.cachedText);
+
+        if (isLegal) {
+          this.log(this.logLevels.INFO, "Legal document detected");
+          this.updateExtensionIcon(true); // Set the badge to "!"
+
+          // Run full analysis
+          this.detectLegalAgreements(this.cachedText);
+          return true;
+        } else {
+          this.log(this.logLevels.DEBUG, "Not detected as a legal document");
+          this.updateExtensionIcon(false); // Clear the badge
+          return false;
+        }
+      } catch (error) {
+        this.log(
+          this.logLevels.ERROR,
+          "Error in initial legal detection:",
+          error,
+        );
+        this.updateExtensionIcon(false);
+        return false;
+      }
+    }
+
+    initialize() {
+      // Cache the initial text content
       this.cachedText = this.extractor.extractText(document.body);
+
+      // Run immediate legal text detection on the current page
+      this.performInitialLegalDetection();
 
       // Set up debounced detection for DOM mutations
       if (!this.debouncedDetect) {
@@ -569,11 +627,82 @@ try {
         const summaryAnalysis =
           await this.enhancedSummarizer.summarizeTos(htmlContent);
 
+        // Section-level rights scoring: analyze each section's content
+        try {
+          if (Array.isArray(summaryAnalysis.sections)) {
+            const analyzedSections = await Promise.all(
+              summaryAnalysis.sections.map(async (section) => {
+                const sectionText =
+                  section.originalText || section.content || "";
+                if (!sectionText || sectionText.length < 20) return section;
+                const secRes = await this.assessor.analyzeContent(sectionText);
+                // Normalize per-section rights shape
+                const catScores = secRes?.details?.categoryScores || {};
+                section.rights = {
+                  categoryScores: catScores,
+                  grade: secRes?.grade,
+                  confidence: secRes?.confidence,
+                  wordCount:
+                    (secRes?.details && secRes.details.wordCount) ||
+                    sectionText.split(/\s+/).filter(Boolean).length,
+                };
+                return section;
+              }),
+            );
+            summaryAnalysis.sections = analyzedSections;
+
+            // Aggregate document-level category scores using word-count-weighted average
+            const totals = Object.create(null);
+            const weights = Object.create(null);
+            for (const s of analyzedSections) {
+              const wc = s?.rights?.wordCount || 0;
+              if (!wc || !s?.rights?.categoryScores) continue;
+              const cs = s.rights.categoryScores;
+              for (const [cat, obj] of Object.entries(cs)) {
+                const score =
+                  typeof obj?.score === "number" ? obj.score : undefined;
+                if (typeof score !== "number") continue;
+                totals[cat] = (totals[cat] || 0) + score * wc;
+                weights[cat] = (weights[cat] || 0) + wc;
+              }
+            }
+            const aggregated = {};
+            for (const [cat, total] of Object.entries(totals)) {
+              const w = weights[cat] || 0;
+              if (w > 0) {
+                const avg = total / w;
+                aggregated[cat] = { raw: null, adjusted: null, score: avg };
+              }
+            }
+            // Preserve original doc-level category scores for diagnostics, then override with aggregated
+            if (rightsAnalysis?.details) {
+              rightsAnalysis.details.originalCategoryScores =
+                rightsAnalysis.details.categoryScores || null;
+              rightsAnalysis.details.categoryScores = aggregated;
+              rightsAnalysis.details.sectionAggregated = true;
+            }
+          }
+        } catch (sectionErr) {
+          this.log(
+            this.logLevels.WARN,
+            "Section-level rights scoring failed:",
+            sectionErr,
+          );
+        }
+
         // Keep legacy summarizer for backward compatibility if needed
         const legacySummary = await this.summarizer.summarizeTos(htmlContent);
 
         const uncommonWords = await this.identifier.identifyUncommonWords(text);
         const keyExcerpts = this.extractKeyExcerpts(text);
+
+        // Ensure rights analysis has the correct score format
+        const normalizedRightsAnalysis = {
+          ...rightsAnalysis,
+          // Ensure score is in 0-100 range for consistency
+          score: rightsAnalysis.rightsScore || 0,
+          rightsScore: rightsAnalysis.rightsScore || 0,
+        };
 
         return {
           rights: rightsAnalysis.rightsScore / 100, // Convert to 0-1 scale for UI
@@ -581,9 +710,9 @@ try {
           summary: summaryAnalysis.overall, // Enhanced plain language summary
           enhancedSummary: summaryAnalysis, // Complete enhanced summary object
           legacySummary: legacySummary.overall, // Original summary for comparison
-          sections: summaryAnalysis.sections, // Enhanced section summaries with risk levels
+          sections: summaryAnalysis.sections, // Enhanced section summaries with risk levels and per-section rights
           excerpts: keyExcerpts, // Key excerpts as array of strings
-          rightsDetails: rightsAnalysis, // Keep full details for diagnostics
+          rightsDetails: normalizedRightsAnalysis, // Keep full details for diagnostics
           uncommonWords: uncommonWords,
           riskLevel: summaryAnalysis.overallRisk, // Overall document risk assessment
           keyFindings: summaryAnalysis.keyFindings, // Important findings for quick review
@@ -704,9 +833,19 @@ try {
         case "analyzeRequest":
           if (message.text) {
             const analysis = await this.performFullAnalysis(message.text);
+            const minimal = {
+              rights: analysis.rights,
+              readability: analysis.readability,
+              summary: analysis.summary,
+              sections: analysis.sections,
+              excerpts: analysis.excerpts,
+              rightsDetails: analysis.rightsDetails,
+              uncommonWords: analysis.uncommonWords,
+              timestamp: analysis.timestamp,
+            };
             chrome.runtime.sendMessage({
               type: "analysisComplete",
-              analysis: analysis,
+              analysis: minimal,
             });
           }
           break;
@@ -780,3 +919,5 @@ try {
     module.exports = ContentController;
   }
 })(typeof window !== "undefined" ? window : global);
+
+window.termsGuardianContentLoaded = true;

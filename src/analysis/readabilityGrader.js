@@ -203,6 +203,19 @@
           return { flesch: 0, kincaid: 0, fogIndex: 0, averageGrade: "N/A" };
         }
 
+        // Calculate document statistics
+        const sentences = splitIntoSentences(text);
+        const wordCount = words.length;
+        const sentenceCount = sentences.length;
+        const syllableCount = countSyllables(text);
+        const complexWordCount = countComplexWords(text);
+
+        // Calculate average sentence length and average syllables per word
+        const averageSentenceLength =
+          sentenceCount > 0 ? wordCount / sentenceCount : 0;
+        const averageSyllablesPerWord =
+          wordCount > 0 ? syllableCount / wordCount : 0;
+
         // Calculate base scores
         const fleschScore = fleschReadingEase(text);
         const kincaidScore = fleschKincaidGradeLevel(text);
@@ -211,10 +224,12 @@
         // Log metrics
         log(logLevels.DEBUG, {
           text: text.substring(0, 100) + "...",
-          wordCount: words.length,
-          sentenceCount: splitIntoSentences(text).length,
-          syllableCount: countSyllables(text),
-          complexWordCount: countComplexWords(text),
+          wordCount,
+          sentenceCount,
+          syllableCount,
+          complexWordCount,
+          averageSentenceLength,
+          averageSyllablesPerWord,
           scores: { fleschScore, kincaidScore, fogIndexScore },
         });
 
@@ -237,9 +252,19 @@
           flesch: fleschScore,
           kincaid: kincaidScore,
           fogIndex: fogIndexScore,
+          grade: grade, // Add 'grade' alias for consistency
           averageGrade: grade,
           normalizedScore: averageScore,
           confidence: Math.min(1, words.length / 100), // Simple confidence metric
+          // Document statistics for sidepanel tooltips
+          wordCount,
+          sentenceCount,
+          totalWords: wordCount, // Alias for compatibility
+          totalSentences: sentenceCount, // Alias for compatibility
+          averageSentenceLength,
+          averageSyllablesPerWord,
+          syllableCount,
+          complexWordCount,
         };
 
         log(logLevels.INFO, "Final readability analysis:", result);

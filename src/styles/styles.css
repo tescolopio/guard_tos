@@ -809,3 +809,51 @@
     gap: 8px;
   }
 }
+
+/* === Category Badges and Top Risk additions === */
+.section-category-badges {
+  margin: 6px 0 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.category-badge {
+  display: inline-block;
+  background: #eef3ff;
+  color: #2c5eff;
+  border: 1px solid #cfd9ff;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 11px;
+  line-height: 1.6;
+  cursor: default;
+}
+
+.category-badge:hover {
+  background: #e3ecff;
+}
+
+.popup-top-risk {
+  margin-top: 10px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 8px;
+}
+
+.top-risk-category {
+  margin: 6px 0;
+}
+
+.top-risk-list {
+  margin: 4px 0 0 0;
+  padding-left: 16px;
+}
+
+.top-risk-list li a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.top-risk-list li a:hover {
+  text-decoration: underline;
+}

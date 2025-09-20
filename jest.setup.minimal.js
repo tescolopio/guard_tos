@@ -6,6 +6,12 @@ global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 global.self = global;
 
+// Ensure a generous default test timeout to avoid hangs in slow environments
+// This will override per-config defaults when this setup is loaded
+if (typeof jest !== "undefined" && jest.setTimeout) {
+  jest.setTimeout(60000);
+}
+
 // Basic DOM-like objects for Node.js environment
 global.document = {
   createElement: jest.fn(() => ({

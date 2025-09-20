@@ -1,0 +1,148 @@
+/* en_us */
+.splunk-header-v2 .splunk-navbar .navbar-right .input-group {
+  width: 100%;
+  padding: 0 15px;
+}
+.search-icon.mobile-search-container .icon-expanded-search-icon,
+.global-header-v2-wrapper .splunk-header-v2-mobile .bottom-links .search-icon-container .search {
+  display: none;
+}
+.global-header-v2-wrapper .splunk-header-v2-mobile .bottom-links .search-icon-container .input-form {
+  display: block;
+}
+.global-header-v2-wrapper .splunk-header-v2-mobile .bottom-links .search-icon-container {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.global-header-v2-wrapper .splunk-header-v2-mobile .bottom-links .search-icon-container .input-form .input-group .sui-search-box__text-input:focus {
+  border: 1px solid #363C44;
+}
+.global-header-v2-wrapper .splunk-header-v2-mobile .bottom-links .search-icon-container .input-form .input-group {
+  position: relative;
+  top: -40px;
+}
+@media (min-width: 768px) and (max-width: 992px) {
+  .splunk-header-v2 .splunk-navbar .nav > li.mega-menu-nav.search-icon-conatiner {
+    position: static;
+  }
+  .splunk-header-v2 .splunk-navbar .nav > li.mega-menu-nav .dropdown-menu {
+    left: 0;
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .search-section .splunk-search-wrapper .splunk-search-form-wrapper wplt-search-bar-web-component {
+    width: 100%;
+  }
+}
+@media (max-width: 360px) {
+  .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .account-and-backNavigation a#loginId {
+    padding-left: 10px;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+}
+/* ja_jp html[lang=ja] */
+@media (max-width: 360px) {
+  html[lang=ja] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .account-and-backNavigation .account-items .loggedOutUserWrapper {
+    padding-left: 16px;
+  }
+  html[lang=ja] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .account-and-backNavigation a#loginId {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  html[lang=ja] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .account-and-backNavigation a#signId {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  html[lang=ja] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .langLinks .mobile-languageDD .language-nav {
+    padding: 0 15px 0 15px;
+  }
+  html[lang=ja] .global-header-v2-wrapper .splunk-header-v2-mobile .bottom-links .search-icon-container {
+    margin-left: -5px;
+    margin-right: 15px;
+  }
+  html[lang=ja] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .search-section .splunk-search-wrapper .splunk-search-form-wrapper {
+    padding-right: 15px;
+  }
+}
+/* de_de html[lang=de] */
+@media (max-width: 767px) {
+  html[lang=de] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .account-and-backNavigation .account-items .loggedOutUserWrapper {
+    padding-left: 10px;
+  }
+  html[lang=de] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .account-and-backNavigation a#loginId {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  html[lang=de] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .account-and-backNavigation a#signId {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  html[lang=de] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .langLinks .mobile-languageDD .language-nav {
+    padding: 0 10px 0 10px;
+  }
+  html[lang=de] .global-header-v2-wrapper .splunk-header-v2-mobile .bottom-links .search-icon-container {
+    margin-left: -5px;
+    margin-right: 15px;
+  }
+  html[lang=de] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .search-section .splunk-search-wrapper .splunk-search-form-wrapper {
+    padding-right: 15px;
+  }
+}
+@media (max-width: 340px) {
+  html[lang=de] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-main {
+    padding: 0 0 0 5px;
+  }
+  html[lang=de] .header-main-freeSplunkButton-wrapper > .splunk-btn {
+    padding: 12px 15px 13px;
+  }
+}
+/* fr_fr html[lang=fr] */
+@media (max-width: 767px) {
+  html[lang=fr] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .account-and-backNavigation .account-items .loggedOutUserWrapper {
+    padding-left: 15px;
+  }
+  html[lang=fr] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .account-and-backNavigation a#loginId {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  html[lang=fr] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .account-and-backNavigation a#signId {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  html[lang=fr] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .langLinks .mobile-languageDD .language-nav {
+    padding: 0 15px 0 15px;
+  }
+  html[lang=fr] .global-header-v2-wrapper .splunk-header-v2-mobile .bottom-links .search-icon-container {
+    margin-left: 0px;
+    margin-right: 15px;
+  }
+  html[lang=fr] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .search-section .splunk-search-wrapper .splunk-search-form-wrapper {
+    padding-right: 15px;
+    justify-content: start;
+  }
+  html[lang=fr] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .search-section .splunk-search-wrapper .splunk-search-form-wrapper wplt-search-bar-web-component {
+    width: 100%;
+  }
+}
+@media (max-width: 340px) {
+  html[lang=fr] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .account-and-backNavigation a#loginId {
+    padding-left: 15px;
+    padding-right: 10px;
+  }
+  html[lang=fr] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .account-and-backNavigation a#signId {
+    padding-left: 10px;
+    padding-right: 15px;
+  }
+  html[lang=fr] .header.base-component .global-header-v2-wrapper .splunk-header-v2-mobile nav.nav-wrapper .header-body .menu-header .top-links .langLinks .mobile-languageDD .language-nav {
+    padding: 0 10px 0 5px;
+  }
+  html[lang=fr] .global-header-v2-wrapper .splunk-header-v2-mobile .bottom-links .search-icon-container {
+    margin-left: -5px;
+    margin-right: 15px;
+  }
+}
+/* ko_kr html[lang=ko] same as en_us */
+/* zh_cn html[lang=zh-CN] same as en_us */
+/* zh_tw html[lang=zh-Hant] same as en_us */

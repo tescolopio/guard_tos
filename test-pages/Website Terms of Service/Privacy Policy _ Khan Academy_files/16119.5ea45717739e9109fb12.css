@@ -1,0 +1,188 @@
+/* Make the size of MathJax-rendered math visually the same as the size of
+ * KaTeX-rendered math. KaTeX defaults the font size to 1.21em (see
+ * dist/katex.css in the "katex" NPM package).
+ *
+ * We need to use CSS to set the font size instead of the CHTML output jax's
+ * `scale` parameter. Setting `scale` sets the font size via the `style`
+ * attribute on the MathJax DOM element, which overrides font-size tweaks
+ * done by Perseus via CSS (e.g. reducing the font size for inline math).
+ *
+ * `mjx-container.MathJax` is needed to override font-size styling added by
+ * MathJax 2 (which is loaded dynamically, and is sometimes present on the page
+ * at the same time as MathJax 3, e.g. when the legacy renderer (KaTeX+MathJax2)
+ * uses the MathJax 2 fallback on /devadmin/tex or in the exercise editor).
+ * MathJax 2 uses the .MathJax selector, so we use a more specific selector
+ * here to override it.
+ */
+mjx-container.MathJax {
+    font-size: 120%;
+}
+
+/* Defeat appshell's global box-sizing reset, which messes with the heights of
+ * stretchy operators (brackets, parens, and braces). The .MathJax class is
+ * needed to give the selector sufficient specificity to override the global
+ * reset.
+ * TODO(benchristel): remove this rule and instead reduce the specificity of
+ * appshell's global box-sizing reset so it doesn't conflict with MathJax's
+ * styles. We can do this once we no longer have to support Safari < 14. See
+ * this thread for context:
+ * https://khanacademy.slack.com/archives/C0918TZ5G/p1693428093059629?thread_ts=1693413262.368939&cid=C0918TZ5G
+ */
+mjx-container.MathJax,
+mjx-container.MathJax * {
+    box-sizing: border-box;
+}
+
+/* Override MathJax's styling for assistive MML. MathJax uses the selector
+ * `mjx-assistive-mml` We scope our selector to the container so it will be more
+ * specific and override MathJax's styles.
+ */
+mjx-container > mjx-assistive-mml {
+    /* Ensure the MML has zero width, so it doesn't cause scrollbars to appear
+     * when the MML contents are wider than the visibly rendered math.
+     * We need to use !important to override MathJax's styles, which also use
+     * !important. */
+    width: 0 !important;
+}
+
+/* HACK(benchristel): these CSS rules are needed to get \text{} to render
+ * nicely on Safari. See this issue:
+ * https://github.com/mathjax/MathJax/issues/2866
+ * The :not(mjx-base) selectors prevent this rule from applying to characters
+ * that have accents or other modifiers (like vector arrows or hats) placed
+ * over them.
+ */
+/* TODO(benchristel): Once we no longer need to support Safari < 14, refactor
+ * this to use :where().
+ */
+:not(mjx-base)
+    > :not(mjx-base)
+    > :not(mjx-base)
+    > :not(mjx-base)
+    > mjx-mn
+    > mjx-c::before,
+:not(mjx-base)
+    > :not(mjx-base)
+    > :not(mjx-base)
+    > :not(mjx-base)
+    > mjx-mtext
+    > mjx-c::before,
+:not(mjx-base)
+    > :not(mjx-base)
+    > :not(mjx-base)
+    > :not(mjx-base)
+    > mjx-mi:not(.mjx-i)
+    > mjx-c::before,
+:not(mjx-base)
+    > :not(mjx-base)
+    > :not(mjx-base)
+    > :not(mjx-base)
+    > mjx-utext
+    > mjx-c::before {
+    padding-top: 0.8em !important;
+}
+/* MathJax inserts extra space under the bar of square roots. This is a visual
+ * difference from KaTeX, and looks bad when combined with the padding hack
+ * above. So we remove the extra space. The ::before pseudo-element with
+ * min-height ensures that the square root is always at least tall enough to
+ * accommodate one line of text.
+ */
+mjx-sqrt > mjx-box {
+    padding-top: 0 !important;
+}
+mjx-sqrt > mjx-box > :first-child:not(mjx-mover, mjx-munder)::before {
+    min-height: 0.8em;
+    width: 0;
+    display: inline-block;
+    content: "";
+}
+/* The fix for square roots results in another problem: if the square root
+ * contains a display-style fraction with only a variable in the numerator, not
+ * enough space is left between the square root bar and the numerator. To fix
+ * this, we make sure that fraction numerators are always at least the height
+ * of a full line of text.
+ */
+mjx-frac[type="d"] > mjx-num::before {
+    min-height: 0.8em;
+    width: 0;
+    display: inline-block;
+    content: "";
+}
+
+/* Add space above parens in display style square roots */
+mjx-table mjx-sqrt > mjx-box > mjx-mo > .mjx-c28,
+mjx-table mjx-sqrt > mjx-box > mjx-mrow > mjx-mo > .mjx-c28 {
+    padding-top: 0.42em;
+}
+/* ...but not in square roots inside fractions */
+mjx-table mjx-frac mjx-sqrt > mjx-box > mjx-mo > .mjx-c28,
+mjx-table mjx-frac mjx-sqrt > mjx-box > mjx-mrow > mjx-mo > .mjx-c28 {
+    padding-top: 0;
+}
+/* ...and if the square root has a fraction inside and the paren is in the
+ * numerator, there's slightly less space added */
+mjx-table
+    mjx-sqrt
+    > mjx-box
+    > mjx-mstyle
+    > mjx-mfrac
+    > mjx-frac
+    > mjx-num
+    > mjx-mrow
+    > mjx-mo
+    > .mjx-c28 {
+    padding-top: 0.2em;
+}
+
+.mathjax-wrapper {
+    position: relative;
+    /* Set z-index in order to create a new stacking context. This lets us set
+     * the z-index of the copyable TeX relative to the rendered math. */
+    z-index: 0;
+    display: inline-block;
+}
+
+.mathjax-selectable {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    user-select: all;
+}
+
+.mathjax-selectable > svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.mathjax-selectable text::selection {
+    /* color: transparent is needed for compatibility with flavors of Linux
+     * that normally force the foreground color of selected text to be white or
+     * black. If we didn't override this, the copyable TeX would be visible when
+     * selected.
+     *
+     * !important is used to override styles from the Dark Reader browser
+     * extension, and similar extensions that change the selection color.
+     */
+    color: transparent !important;
+    stroke: transparent !important;
+    fill: transparent !important;
+    background: Highlight;
+}
+
+/* Ensure that unicode characters in mjx-utext elements aren't double-copied. */
+mjx-utext {
+    user-select: none;
+}
+
+.copy-menu-hack {
+    display: inline-block;
+    width: 0;
+    overflow: hidden;
+}
+

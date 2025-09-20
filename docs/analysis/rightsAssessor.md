@@ -1,6 +1,6 @@
 # rightsAssessor.js
 
-This script implements the rights assessment logic for the Terms Guardian extension. It uses a rule-based rubric with tunable weights and normalization, and is designed to be swapped with a TensorFlow.js model later.
+This script implements the rights assessment logic for the Terms Guardian extension. It uses a rule-based rubric with tunable weights and normalization, and is designed to be augmented or swapped with a learned model later. For the formal methodology and output contract, see `docs/analysis/rights-scoring-spec.md`.
 
 ## Purpose
 
@@ -30,9 +30,8 @@ Chunks the given text into smaller segments for analysis.
 
 Analyzes the text for patterns related to user rights.
 
-- This function is a temporary placeholder until a TensorFlow.js model is integrated.
-- It uses regular expressions to count occurrences of predefined patterns categorized as `POSITIVE`, `NEGATIVE`, and `OBLIGATIONS`.
-- Calculates a normalized score (0-1) based on the pattern counts, where higher scores indicate more positive implications for user rights.
+- Uses compiled clause-level patterns (via a mega-regex with named groups) to count clause signals per chunk.
+- Produces a normalized, capped score on a 0–100 scale (higher is better). See `docs/analysis/rights-scoring-spec.md` for equations, caps, and grading.
 
 #### `identifyUncommonWords(text)`
 
@@ -59,7 +58,7 @@ Performs the main analysis of the text to assess rights implications.
 - Analyzes each chunk using `analyzeRightsPatterns()` and calculates an average score.
 - Identifies uncommon words using `identifyUncommonWords()`.
 - Returns an object with the following information:
-  - `rightsScore`: The average rights score (0-1).
+  - `rightsScore`: The average rights score (0–100).
   - `uncommonWords`: An array of uncommon words with definitions.
   - `details`: Additional details like chunk count, average score, and a placeholder confidence score.
 

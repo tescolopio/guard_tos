@@ -426,6 +426,24 @@ module.exports = { createLegalDictionaryService };
 // When debugging is enabled via constants, periodically persist dictionary metrics for diagnostics
 (function setupDictionaryMetricsDiagnostics() {
   try {
+    // Only enable in browser/extension contexts, not in Node CLI or tests
+    const isBrowser =
+      typeof window !== "undefined" && typeof document !== "undefined";
+    const isTestEnv =
+      (typeof process !== "undefined" &&
+        process &&
+        process.env &&
+        (process.env.JEST_WORKER_ID || process.env.NODE_ENV === "test")) ||
+      (typeof globalThis !== "undefined" && globalThis.__JEST__);
+    const isCli =
+      typeof process !== "undefined" &&
+      process &&
+      process.argv &&
+      Array.isArray(process.argv) &&
+      process.argv.some((arg) => /scripts\/process-curated-tos\.js$/.test(arg));
+    if (!isBrowser || isTestEnv || isCli) {
+      return; // do not start diagnostics polling outside extension UI
+    }
     const { EXT_CONSTANTS } = require("../utils/constants");
     const enabled = !!(
       EXT_CONSTANTS &&
@@ -494,12 +512,6 @@ module.exports = { createLegalDictionaryService };
     }
 
     // Start polling unless running under a Jest/test environment to avoid open handle warnings
-    const isTestEnv =
-      (typeof process !== "undefined" &&
-        process &&
-        process.env &&
-        (process.env.JEST_WORKER_ID || process.env.NODE_ENV === "test")) ||
-      (typeof globalThis !== "undefined" && globalThis.__JEST__);
     if (!isTestEnv) {
       setInterval(pollAndPersist, POLL_MS);
     }

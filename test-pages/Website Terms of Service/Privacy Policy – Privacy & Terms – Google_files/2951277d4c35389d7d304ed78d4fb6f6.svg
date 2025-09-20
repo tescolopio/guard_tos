@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="96" height="96" viewBox="0 0 96 96">
+  <defs>
+    <linearGradient id="linear-gradient" x1="24" y1="77" x2="48" y2="77" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9aa0a6" stop-opacity="0"/>
+      <stop offset="0.116" stop-color="#9aa0a6" stop-opacity="0.054"/>
+      <stop offset="0.306" stop-color="#9aa0a6" stop-opacity="0.201"/>
+      <stop offset="0.546" stop-color="#9aa0a6" stop-opacity="0.44"/>
+      <stop offset="0.823" stop-color="#9aa0a6" stop-opacity="0.768"/>
+      <stop offset="1" stop-color="#9aa0a6"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="48" y1="80" x2="48" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1967d2"/>
+      <stop offset="0.043" stop-color="#1967d2" stop-opacity="0.942"/>
+      <stop offset="0.305" stop-color="#1967d2" stop-opacity="0.611"/>
+      <stop offset="0.54" stop-color="#1967d2" stop-opacity="0.348"/>
+      <stop offset="0.742" stop-color="#1967d2" stop-opacity="0.159"/>
+      <stop offset="0.902" stop-color="#1967d2" stop-opacity="0.043"/>
+      <stop offset="1" stop-color="#1967d2" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="55.444" y1="86.556" x2="86.556" y2="55.444" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#188038"/>
+      <stop offset="1" stop-color="#188038" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <title>site_sec_C_11</title>
+  <g style="isolation: isolate">
+    <g id="Content">
+      <g>
+        <path d="M48,7A41,41,0,1,0,89,48,40.989,40.989,0,0,0,48,7Z" fill="#e8eaed"/>
+        <rect x="24" y="74" width="24" height="6" fill="url(#linear-gradient)" style="mix-blend-mode: multiply"/>
+        <g>
+          <path id="Shield_Shape_512dp" data-name="Shield Shape 512dp" d="M48,80A41.885,41.885,0,0,0,72.115,47.67a61.677,61.677,0,0,0,.532-6.943V23.338L48,16,23.353,23.338v17.39a61.709,61.709,0,0,0,.532,6.943A41.885,41.885,0,0,0,48,80Z" fill="#4285f4"/>
+          <g id="Shield_Shape_512dp-2" data-name="Shield Shape 512dp">
+            <path d="M48,80A41.885,41.885,0,0,0,72.115,47.67a61.677,61.677,0,0,0,.532-6.943V23.338L48,16,23.353,23.338v17.39a61.709,61.709,0,0,0,.532,6.943A41.885,41.885,0,0,0,48,80Z" opacity="0.5" fill="url(#linear-gradient-2)" style="mix-blend-mode: multiply"/>
+          </g>
+          <g id="PRIVACY_512dp" data-name="PRIVACY 512dp">
+            <path d="M35.336,55.655c0-3.4,5.887-6.17,12.664-6.294,6.777.124,12.664,2.892,12.664,6.294v.356a16.34,16.34,0,1,0-25.328,0Z" fill="#185abc"/>
+            <path d="M60.664,55.655c0-3.4-5.887-6.17-12.664-6.294-6.777.124-12.664,2.892-12.664,6.294v.356a16.34,16.34,0,0,0,25.328,0Z" fill="#fff"/>
+            <circle cx="48" cy="39.83" r="6.536" fill="#fff"/>
+          </g>
+        </g>
+        <circle cx="71" cy="71" r="22" fill="#34a853"/>
+        <circle cx="71" cy="71" r="22" opacity="0.3" fill="url(#linear-gradient-3)" style="mix-blend-mode: multiply"/>
+        <polyline points="63 72 69 78 79 64" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+        <rect width="96" height="96" fill="none"/>
+        <path d="M74,90A22,22,0,0,1,57.016,54.016,22,22,0,1,0,87.984,84.984,21.91,21.91,0,0,1,74,90Z" fill="#34a853" opacity="0.3" style="mix-blend-mode: multiply"/>
+      </g>
+    </g>
+  </g>
+</svg>

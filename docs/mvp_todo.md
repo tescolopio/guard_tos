@@ -13,6 +13,7 @@
 9. **COMPLETED**: Comprehensive test suite with cache flow testing
 10. **Fix Terser Issues**: Resolve minification errors for production build
 11. **Bundle Optimization**: Address large dictionary bundle sizes
+12. **Document Training Progress**: Keep `docs/training_progress.md` updated with model/dataset/thresholds
 
 - [x] Dev and prod webpack configs
 - [x] Verify production build bundles (use `npm run build:verify`)
@@ -104,6 +105,8 @@
 - Present results in side panel and update the extension badge
 - Basic stability: no runtime errors in common flows; production build works
 - Core tests pass for critical paths (content <-> background messaging, analysis pipeline, sidepanel render)
+
+Note: ML augmentation is additive and considered Post‑MVP. For MVP we rely on the rule-based rights rubric; the browser ML assists precision/recall when enabled. Progress and thresholds tracked in `docs/training_progress.md`.
 
 ## Status Snapshot
 

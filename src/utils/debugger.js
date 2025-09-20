@@ -423,6 +423,28 @@ const { EXT_CONSTANTS } = require("./constants");
       activeLogGroup = null;
     }
 
+    function setLevel(levelNameOrNumber) {
+      try {
+        if (typeof levelNameOrNumber === "number") {
+          config.DEBUG_LEVEL = levelNameOrNumber;
+        } else if (typeof levelNameOrNumber === "string") {
+          const upper = levelNameOrNumber.toUpperCase();
+          if (logLevels[upper] !== undefined) {
+            config.DEBUG_LEVEL = logLevels[upper];
+          }
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    function enableAll() {
+      config.DEBUG_LEVEL = logLevels.TRACE;
+      config.LOG_TO_CONSOLE = true;
+      config.LOG_TO_STORAGE = true;
+      config.TRACK_PERFORMANCE = true;
+    }
+
     return {
       log,
       trace,
@@ -440,33 +462,21 @@ const { EXT_CONSTANTS } = require("./constants");
       getPerformanceAnalytics,
       logLevels,
       config,
+      setLevel,
+      enableAll,
     };
   }
 
-  // Export for both Chrome extension and test environments
+  // Export for use in other modules
   if (typeof module !== "undefined" && module.exports) {
     module.exports = { createDebugger };
   } else {
-    const debugInstance = createDebugger();
-
-    // Expose main logging functions globally
-    global.debug = {
-      log: debugInstance.log,
-      trace: debugInstance.trace,
-      debug: debugInstance.debug,
-      info: debugInstance.info,
-      warn: debugInstance.warn,
-      error: debugInstance.error,
-      startGroup: debugInstance.startLogGroup,
-      endGroup: debugInstance.endLogGroup,
-      startTimer: debugInstance.startTimer,
-      endTimer: debugInstance.endTimer,
-      clearLogs: debugInstance.clearLogs,
-      exportLogs: debugInstance.exportLogs,
-      getMetrics: debugInstance.getMetrics,
-      getPerformanceAnalytics: debugInstance.getPerformanceAnalytics,
-      levels: debugInstance.logLevels,
-      config: debugInstance.config,
-    };
+    global.createDebugger = createDebugger;
   }
-})(typeof window !== "undefined" ? window : global);
+})(
+  typeof globalThis !== "undefined"
+    ? globalThis
+    : typeof window !== "undefined"
+      ? window
+      : this,
+);

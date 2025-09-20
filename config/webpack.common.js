@@ -9,8 +9,6 @@ module.exports = {
     serviceWorker: "./src/background/serviceWorker.js",
     content: "./src/content/content.js",
     sidepanel: "./src/panel/sidepanel.js",
-    constants: "./src/utils/constants.js",
-    debugger: "./src/utils/debugger.js",
   },
   output: {
     path: path.resolve(__dirname, "../dist"),
@@ -22,6 +20,12 @@ module.exports = {
     modules: ["src", "node_modules"],
     alias: {
       "@": path.resolve(__dirname, "../src"),
+    },
+    fallback: {
+      crypto: require.resolve("crypto-browserify"),
+      stream: require.resolve("stream-browserify"),
+      util: require.resolve("util/"),
+      vm: require.resolve("vm-browserify"),
     },
   },
   module: {
