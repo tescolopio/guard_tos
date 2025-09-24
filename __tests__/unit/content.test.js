@@ -231,7 +231,7 @@ describe("Legal Agreement Detection", () => {
     expect(chrome.runtime.sendMessage).toHaveBeenCalledWith({
       type: "tosDetected",
       text: text,
-      analysis: {
+      analysis: expect.objectContaining({
         rights: 0.65, // 65/100 converted to 0-1 scale
         readability: expect.any(Object),
         summary: expect.any(String),
@@ -244,7 +244,7 @@ describe("Legal Agreement Detection", () => {
         }),
         uncommonWords: ["pursuant", "aforementioned", "hereinafter"],
         timestamp: expect.any(String),
-      },
+      }),
     });
   });
 
@@ -268,7 +268,7 @@ describe("Legal Agreement Detection", () => {
     expect(chrome.runtime.sendMessage).toHaveBeenCalledWith({
       type: "tosDetected",
       text: mockLegalText.complex.text,
-      analysis: {
+      analysis: expect.objectContaining({
         rights: 0.65, // 65/100 converted to 0-1 scale
         readability: expect.any(Object),
         summary: expect.any(String),
@@ -281,7 +281,7 @@ describe("Legal Agreement Detection", () => {
         }),
         uncommonWords: ["pursuant", "aforementioned", "hereinafter"],
         timestamp: expect.any(String),
-      },
+      }),
     });
   });
 
@@ -335,7 +335,7 @@ describe("Legal Agreement Detection", () => {
     expect(chrome.runtime.sendMessage).toHaveBeenCalledWith({
       type: "tosDetected",
       text: mockLegalText.complex.text,
-      analysis: {
+      analysis: expect.objectContaining({
         rights: 0.65, // 65/100 converted to 0-1 scale
         readability: expect.any(Object),
         summary: expect.any(String),
@@ -348,7 +348,7 @@ describe("Legal Agreement Detection", () => {
         }),
         uncommonWords: ["pursuant", "aforementioned", "hereinafter"],
         timestamp: expect.any(String),
-      },
+      }),
     });
   });
 

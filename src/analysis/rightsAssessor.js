@@ -33,7 +33,8 @@ const { EXT_CONSTANTS } = require("../utils/constants");
       try {
         log(logLevels.DEBUG, "Chunking text", { chunkSize });
         const chunks = [];
-        const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
+        // Include segments that may not end with punctuation (e.g., headings)
+        const sentences = text.match(/[^.!?]+(?:[.!?]+|$)/g) || [];
 
         let currentChunk = "";
         for (const sentence of sentences) {

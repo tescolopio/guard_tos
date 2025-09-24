@@ -42,6 +42,14 @@ const LEGAL_PATTERNS = {
     "data sharing",
     "data usage",
   ],
+  DATA_COLLECTION_USE: [
+    "collect",
+    "use your data",
+    "purpose of collection",
+    "data categories",
+    "processing",
+    "consent",
+  ],
   LIABILITY: [
     "liability",
     "indemnify",
@@ -72,6 +80,13 @@ const LEGAL_PATTERNS = {
     "revocation",
     "expiration",
   ],
+  ACCOUNT_MANAGEMENT: [
+    "delete your account",
+    "account deletion",
+    "data export",
+    "two-factor",
+    "security settings",
+  ],
   PAYMENT: [
     "payment terms",
     "fees",
@@ -92,6 +107,12 @@ const LEGAL_PATTERNS = {
     "proprietary rights",
     "use of content",
   ],
+  CONTENT_RIGHTS: [
+    "user content",
+    "license to",
+    "you retain ownership",
+    "grant us a license",
+  ],
   MISCELLANEOUS: [
     "entire agreement",
     "severability",
@@ -102,6 +123,20 @@ const LEGAL_PATTERNS = {
     "notices",
     "third-party beneficiaries",
   ],
+  TERMS_CHANGES: [
+    "we may modify",
+    "we may change",
+    "we reserve the right to modify",
+    "notice of changes",
+    "effective date",
+  ],
+  ALGORITHMIC_DECISIONS: [
+    "automated decision",
+    "algorithmic",
+    "profiling",
+    "recommendation system",
+    "automated processing",
+  ],
   DEFINITIONS:
     /(?:^|\n)\s*["']?\w+["']?\s+(?:shall |means |refers to |is defined as )/im,
   LEGAL_HEADERS:
@@ -110,9 +145,10 @@ const LEGAL_PATTERNS = {
   CLAUSES: {
     HIGH_RISK: {
       ARBITRATION: /(binding\s+)?arbitration|arbitral\s+tribunal/i,
-      CLASS_ACTION_WAIVER: /class\s+action\s+waiver|waive\s+.*class\s+action/i,
+      CLASS_ACTION_WAIVER:
+        /class\s+action\s+waiver|waiver\s+of\s+class\s+action|waiv(?:e|er)\s+.*class\s+action/i,
       UNILATERAL_CHANGES:
-        /we\s+may\s+modify|we\s+reserve\s+the\s+right\s+to\s+change/i,
+        /(we\s+may\s+(modify|change|amend))|(we\s+reserve\s+the\s+right\s+to\s+(modify|change|amend))|((?:the\s+)?(?:company|corporation|service\s+provider|provider)\s+reserve(?:s)?\s+(?:the\s+)?(?:unilateral\s+)?right\s+to\s+(modify|change|amend))/i,
       DATA_SALE_OR_SHARING:
         /sell\s+your\s+data|share\s+your\s+personal\s+data/i,
       AUTO_RENEWAL_FRICTION: /auto-?renew(al)?|automatic\s+renewal/i,
@@ -130,6 +166,11 @@ const LEGAL_PATTERNS = {
         /waive\s+(any|all)\s+moral\s+rights|moral\s+rights\s+waive/i,
       JURY_TRIAL_WAIVER:
         /waive\s+(the\s+)?(right\s+to\s+)?(a\s+)?jury\s+trial|jury\s+trial\s+waiver/i,
+      LIABILITY_LIMITATION:
+        /limitation\s+of\s+liability|limit(?:s|ed)?\s+(our\s+)?liabilit(y|ies)|no\s+liability\s+for/i,
+      // Category penalties when disclosures missing or vague
+      ALGORITHMIC_DECISIONS:
+        /automated\s+(decision|processing)|algorithmic|profiling/i,
     },
     POSITIVES: {
       CLEAR_OPT_OUT: /opt-?out\s+(procedure|process)/i,
@@ -138,6 +179,10 @@ const LEGAL_PATTERNS = {
       NO_DATA_SALE: /we\s+do\s+not\s+sell\s+(your\s+)?(personal\s+)?data/i,
       TRANSPARENT_RETENTION:
         /(retain|store)\s+data\s+for\s+\d+\s+(days|months|years)/i,
+      PLAIN_LANGUAGE:
+        /(plain\s+language|summary|in\s+plain\s+english|readable\s+summary)/i,
+      OWNERSHIP_RETENTION: /you\s+retain\s+ownership\s+of\s+your\s+content/i,
+      DATA_EXPORT: /(export|download)\s+your\s+data/i,
     },
   },
 };

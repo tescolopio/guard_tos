@@ -1,6 +1,6 @@
 # rightsAssessor.js
 
-This script implements the rights assessment logic for the Terms Guardian extension. It uses a rule-based rubric with tunable weights and normalization, and is designed to be augmented or swapped with a learned model later. For the formal methodology and output contract, see `docs/analysis/rights-scoring-spec.md`.
+This script implements the rights assessment logic for the Terms Guardian extension. It uses a rule-based rubric with tunable weights and normalization, and is designed to be augmented or swapped with a learned model later. For the formal methodology and output contract, see `docs/analysis/rights-scoring-spec.md`. For how these outputs feed the 8-category User Rights Index (URI), see `docs/analysis/user-rights-index.md`.
 
 ## Purpose
 
@@ -65,6 +65,16 @@ Performs the main analysis of the text to assess rights implications.
 ## Usage
 
 This script is used by the service worker (`service-worker.js`) to analyze the rights implications of legal documents.
+
+## How this feeds the User Rights Index (URI)
+
+`rightsAssessor` produces category scores and details that the URI combiner consumes to generate the 8-category report and overall grade. Highlights:
+
+- Mapping to URI categories: DISPUTE_RESOLUTION and CLASS_ACTIONS → Dispute Resolution; UNILATERAL_CHANGES → Terms Changes; DATA_PRACTICES → Data Collection & Use; RETENTION_AND_DELETION → User Privacy; CONSENT_AND_OPT_OUT → Clarity & Transparency; CONTENT_AND_IP → Content Rights; LIABILITY_AND_REMEDIES → Clarity & Transparency; ACCOUNT_MANAGEMENT → Account Management; ALGORITHMIC_DECISIONS → Algorithmic Decisions.
+- Readability blend: readability.normalizedScore contributes 30% into Clarity & Transparency (70% from existing category score), reflecting understandability.
+- Overall grade: weighted average across categories using weights from `src/utils/constants.js`.
+
+See `docs/analysis/user-rights-index.md` for the formal spec and output contract.
 
 ## Additional Sections
 

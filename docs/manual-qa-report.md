@@ -1,5 +1,7 @@
 # Terms Guardian - Manual QA Test Report
 
+> Note: This is an example report captured during a pre-release pass. For current test guidance, see `docs/qa/e2e-smoke.md` and the `docs/qa_checklist.md`.
+
 _Generated: September 11, 2025_
 _Updated: Enhanced Tooltip Implementation_
 
@@ -11,7 +13,7 @@ _Updated: Enhanced Tooltip Implementation_
 - **Build Pipeline**: Stable production builds with minification
 - **Performance**: Analysis completes in <1 second
 
-### 🚨 Issues Identified
+### Issues Identified
 
 #### Minor Issues (Non-blocking)
 
@@ -24,7 +26,7 @@ _Updated: Enhanced Tooltip Implementation_
    - **Impact**: None - documentation issue only
    - **Status**: Resolved - all functionality working correctly
 
-### 🏗️ Build Configuration
+### Build Configuration
 
 - **Bundle Sizes**:
   - Essential bundles: ~89KB total
@@ -92,7 +94,7 @@ _Updated: Enhanced Tooltip Implementation_
 
 **Sample Tooltip Content**:
 
-```
+```text
 Readability Grade: B
 Individual Scores:
 ├─ Flesch Reading Ease: 52.6
@@ -270,7 +272,7 @@ _[To be measured during testing]_
 
 ### � Issues Identified
 
-#### Minor Issues (Non-blocking)
+#### Minor Issues (Non-blocking, recap)
 
 1. **Test Environment**: Some Jest test failures due to module loading
 

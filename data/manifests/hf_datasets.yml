@@ -1,0 +1,76 @@
+# Hugging Face dataset selection manifest for Terms Guardian
+# Update date: 2025-09-23
+
+version: 1
+
+categories:
+  data_privacy:
+    notes: Primary sources on HF are limited; prefer external OPP-115/Polisis; supplement with GDPR/CCPA regulatory text for weak supervision.
+    candidates:
+      - name: amentaga-nttd/privacy-policy-qa-classification
+        link: https://hf.co/datasets/amentaga-nttd/privacy-policy-qa-classification
+        license: review
+        status: consider
+  data_sharing:
+    notes: Use ContractNLI subsets on sharing with third parties (license NC/SA caution); supplement with SEC contracts.
+    candidates:
+      - name: mteb/ContractNLISharingWithThirdPartiesLegalBenchClassification
+        link: https://hf.co/datasets/mteb/ContractNLISharingWithThirdPartiesLegalBenchClassification
+        license: cc-by-4.0
+        status: evaluate
+  user_control:
+    notes: Map to access/delete/portability language in privacy policies; likely off-Hub.
+    candidates: []
+  service_terms:
+    notes: Use curated ToS fixtures (repo) + external corpora; LegalBench consumer_contracts_qa for eval.
+    candidates:
+      - name: mteb/legalbench_consumer_contracts_qa
+        link: https://hf.co/datasets/mteb/legalbench_consumer_contracts_qa
+        license: cc-by-nc-4.0
+        status: eval-only
+  liability:
+    notes: Strong coverage via CUAD; pick clause-classification variant for convenience.
+    candidates:
+      - name: dvgodoy/CUAD_v1_Contract_Understanding_clause_classification
+        link: https://hf.co/datasets/dvgodoy/CUAD_v1_Contract_Understanding_clause_classification
+        license: cc-by-4.0
+        status: select
+  dispute_resolution:
+    notes: CUAD + LegalBench tasks (license dependent); add arbitration/class action clauses.
+    candidates:
+      - name: theatticusproject/cuad
+        link: https://hf.co/datasets/theatticusproject/cuad
+        license: cc-by-4.0
+        status: select
+  content_ip:
+    notes: CUAD IP ownership tasks and LEDGAR categories.
+    candidates:
+      - name: MAdAiLab/lex_glue_ledgar
+        link: https://hf.co/datasets/MAdAiLab/lex_glue_ledgar
+        license: review
+        status: evaluate
+  commercial_terms:
+    notes: Use CUAD for fees/termination/assignment; LEDGAR for broader labels.
+    candidates:
+      - name: theatticusproject/cuad-qa
+        link: https://hf.co/datasets/theatticusproject/cuad-qa
+        license: cc-by-4.0
+        status: evaluate
+
+selection:
+  include:
+    - {
+        repo_id: dvgodoy/CUAD_v1_Contract_Understanding_clause_classification,
+        splits: [train],
+      }
+    - { repo_id: MAdAiLab/lex_glue_ledgar, splits: [train, validation, test] }
+  eval_only:
+    - mteb/legalbench_consumer_contracts_qa
+  consider:
+    - theatticusproject/cuad
+    - amentaga-nttd/privacy-policy-qa-classification
+
+download:
+  root_dir: data/raw
+  force: false
+  timeout_sec: 1800

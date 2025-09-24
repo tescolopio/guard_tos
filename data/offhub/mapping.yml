@@ -1,0 +1,26 @@
+# Label mapping template for off-Hub datasets -> internal taxonomy
+# Usage: pass this file via --map-file to scripts/ingest_offhub.py
+# It will map source labels to our internal labels.
+
+labels:
+  # Arbitration related
+  "arbitration": ARBITRATION
+  "mandatory_arbitration": ARBITRATION
+  "arbitration_clause": ARBITRATION
+  # Class action waiver / collective action
+  "class_action_waiver": CLASS_ACTION_WAIVER
+  "no_class_actions": CLASS_ACTION_WAIVER
+  "collective_action_waiver": CLASS_ACTION_WAIVER
+  # Liability limitation
+  "liability_limitation": LIABILITY_LIMITATION
+  "limitation_of_liability": LIABILITY_LIMITATION
+  "limited_liability": LIABILITY_LIMITATION
+  # Unilateral changes / modification rights
+  "unilateral_changes": UNILATERAL_CHANGES
+  "right_to_modify": UNILATERAL_CHANGES
+  "changes_to_terms": UNILATERAL_CHANGES
+# You can add source-specific overrides using nested sections if needed, e.g.:
+# opp115:
+#   labels:
+#     "data_security": null  # drop this label
+#     "arbitration": ARBITRATION

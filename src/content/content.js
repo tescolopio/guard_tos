@@ -15,6 +15,16 @@
  *  - 2024-09-26 | tescolopio | Modified to work with Chrome extension content scripts and globally defined variables.
  */
 
+// Set a flag on the body to indicate the content script has loaded
+// Wait for DOM to be ready first
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.setAttribute("data-terms-guardian-loaded", "true");
+  });
+} else {
+  document.body.setAttribute("data-terms-guardian-loaded", "true");
+}
+
 // Fallback imports for browser environment
 let EXT_CONSTANTS,
   RightsAssessor,
@@ -704,6 +714,25 @@ try {
           rightsScore: rightsAnalysis.rightsScore || 0,
         };
 
+        // Compute User Rights Index (URI)
+        let userRightsIndex = null;
+        try {
+          const {
+            createUserRightsIndex,
+          } = require("../analysis/userRightsIndex");
+          const uri = createUserRightsIndex({
+            log: this.log,
+            logLevels: this.logLevels,
+          });
+          userRightsIndex = uri.compute({
+            readability: readabilityAnalysis,
+            rightsDetails: normalizedRightsAnalysis,
+            sections: summaryAnalysis.sections,
+          });
+        } catch (e) {
+          this.log(this.logLevels.WARN, "URI compute failed", e);
+        }
+
         return {
           rights: rightsAnalysis.rightsScore / 100, // Convert to 0-1 scale for UI
           readability: readabilityAnalysis,
@@ -714,6 +743,7 @@ try {
           excerpts: keyExcerpts, // Key excerpts as array of strings
           rightsDetails: normalizedRightsAnalysis, // Keep full details for diagnostics
           uncommonWords: uncommonWords,
+          userRightsIndex,
           riskLevel: summaryAnalysis.overallRisk, // Overall document risk assessment
           keyFindings: summaryAnalysis.keyFindings, // Important findings for quick review
           plainLanguageAlert: summaryAnalysis.plainLanguageAlert, // User warnings if any
@@ -913,6 +943,9 @@ try {
   } else {
     controller.initialize();
   }
+
+  // Set a flag on the body to indicate the content script has loaded
+  document.body.setAttribute("data-terms-guardian-loaded", "true");
 
   // Export for testing
   if (typeof module !== "undefined" && module.exports) {

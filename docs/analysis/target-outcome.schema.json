@@ -1,0 +1,195 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/target-outcome.schema.json",
+  "title": "Target Outcome Fixture Schema",
+  "description": "Schema describing expected analysis results for a Terms of Service document. This schema is intentionally flexible to allow tolerant assertions in tests.",
+  "type": "object",
+  "required": [
+    "documentInfo",
+    "scores",
+    "summary",
+    "sections",
+    "rightsDetails"
+  ],
+  "properties": {
+    "documentInfo": {
+      "type": "object",
+      "properties": {
+        "url": { "type": "string" },
+        "title": { "type": "string" }
+      },
+      "required": ["url", "title"]
+    },
+    "scores": {
+      "type": "object",
+      "properties": {
+        "readability": {
+          "type": ["object", "null"],
+          "properties": {
+            "grade": { "type": "string", "enum": ["A", "B", "C", "D", "F"] },
+            "flesch": { "type": "number" },
+            "kincaid": { "type": "number" },
+            "fogIndex": { "type": "number" }
+          },
+          "additionalProperties": true
+        },
+        "rights": {
+          "description": "Either a number 0..1 (normalized) or an object with rightsScore 0..100 and details",
+          "oneOf": [
+            { "type": "number", "minimum": 0, "maximum": 1 },
+            {
+              "type": "object",
+              "properties": {
+                "rightsScore": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "grade": {
+                  "type": "string",
+                  "enum": ["A", "B", "C", "D", "F"]
+                },
+                "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+                "details": { "$ref": "#/definitions/rightsDetails" }
+              },
+              "required": ["rightsScore"]
+            }
+          ]
+        }
+      },
+      "required": ["readability", "rights"],
+      "additionalProperties": true
+    },
+    "summary": { "type": "string" },
+    "enhancedData": {
+      "type": ["object", "null"],
+      "properties": {
+        "enhancedSummary": {
+          "type": ["object", "null"],
+          "properties": {
+            "overall": { "type": "string" },
+            "sections": { "type": "array" }
+          },
+          "additionalProperties": true
+        },
+        "riskLevel": { "type": ["string", "null"] },
+        "keyFindings": {
+          "type": ["array", "null"],
+          "items": { "type": "string" }
+        },
+        "plainLanguageAlert": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "heading": { "type": ["string", "null"] },
+          "userFriendlyHeading": { "type": ["string", "null"] },
+          "summary": { "type": ["string", "null"] },
+          "riskLevel": { "type": ["string", "null"] },
+          "keyPoints": {
+            "type": ["array", "null"],
+            "items": { "type": "string" }
+          },
+          "rights": {
+            "type": ["object", "null"],
+            "properties": {
+              "categoryScores": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "score": { "type": "number", "minimum": 0, "maximum": 100 }
+                  },
+                  "required": ["score"],
+                  "additionalProperties": true
+                }
+              }
+            },
+            "additionalProperties": true
+          },
+          "categoryHints": {
+            "type": ["array", "null"],
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "excerpts": { "type": "array", "items": { "type": "string" } },
+    "terms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "word": { "type": "string" },
+          "definition": { "type": ["string", "null"] }
+        },
+        "required": ["word"]
+      }
+    },
+    "dictionaryTerms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "word": { "type": "string" },
+          "count": { "type": "number" },
+          "definition": { "type": ["string", "null"] }
+        },
+        "required": ["word", "count"]
+      }
+    },
+    "rightsDetails": { "$ref": "#/definitions/rightsDetails" }
+  },
+  "definitions": {
+    "rightsDetails": {
+      "type": "object",
+      "properties": {
+        "chunkCount": { "type": ["number", "null"] },
+        "averageScore": { "type": ["number", "null"] },
+        "clauseSignals": { "type": ["number", "null"] },
+        "wordCount": { "type": ["number", "null"] },
+        "clauseCounts": {
+          "type": "object",
+          "properties": {
+            "HIGH_RISK": {
+              "type": "object",
+              "additionalProperties": { "type": "number" }
+            },
+            "MEDIUM_RISK": {
+              "type": "object",
+              "additionalProperties": { "type": "number" }
+            },
+            "POSITIVES": {
+              "type": "object",
+              "additionalProperties": { "type": "number" }
+            }
+          },
+          "required": ["HIGH_RISK", "MEDIUM_RISK", "POSITIVES"]
+        },
+        "categoryScores": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "score": { "type": "number", "minimum": 0, "maximum": 100 }
+            },
+            "required": ["score"],
+            "additionalProperties": true
+          }
+        },
+        "unmappedClauseKeys": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "dictionaryTerms": { "type": "array" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

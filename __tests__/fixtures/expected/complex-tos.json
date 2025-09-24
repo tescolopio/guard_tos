@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "fixture": "complex-tos.html",
+    "description": "Expectation constraints for the complex ToS fixture"
+  },
+  "expectations": {
+    "rightsScoreRange": [25, 95],
+    "expectedGradeOneOf": ["B", "C", "D", "F"],
+    "mustHaveClauses": {
+      "HIGH_RISK": ["ARBITRATION", "CLASS_ACTION_WAIVER", "UNILATERAL_CHANGES"],
+      "MEDIUM_RISK": ["LIABILITY_LIMITATION"]
+    },
+    "expectedCategories": [
+      "DISPUTE_RESOLUTION",
+      "CLASS_ACTIONS",
+      "UNILATERAL_CHANGES",
+      "LIABILITY_AND_REMEDIES",
+      "DATA_PRACTICES",
+      "CONTENT_AND_IP"
+    ],
+    "sectionHeadingRegexes": [
+      "MANDATORY BINDING ARBITRATION|ARBITRATION",
+      "WAIVER OF CLASS ACTION|JURY TRIAL",
+      "LIMITATION OF LIABILITY",
+      "AUTO-RENEWAL|PAYMENT TERMS",
+      "UNILATERAL|MODIF(?:Y|ICATION)|CHANG",
+      "BIOMETRIC|GEOLOCATION|DATA"
+    ]
+  }
+}

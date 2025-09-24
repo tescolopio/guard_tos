@@ -1,4 +1,6 @@
-# Hash-Based Caching and Database Integration Architecture
+# [FUTURE DESIGN] Hash-Based Caching and Database Integration Architecture
+
+> Status: Concept design. The MVP ships with local caching only. Any references to cloud services are aspirational and gated behind settings. In tests we use a lightweight `DatabaseService` test-mode (localStorage/mocks) to validate flows without network access.
 
 ## Overview
 
@@ -23,11 +25,11 @@ This document outlines the architecture for implementing hash-based change detec
 
 ### 1. Content Hashing Service
 
-#### Purpose
+#### Purpose — hashing
 
 Generate unique fingerprints for ToS documents to detect changes and avoid reprocessing.
 
-#### Implementation
+#### Implementation — hashing
 
 ```javascript
 // src/services/contentHashService.js
@@ -77,7 +79,7 @@ class ContentHashService {
 
 ### 2. Database Integration Layer
 
-#### Purpose
+#### Purpose — database
 
 Manage communication with Terms Guardian cloud database for shared processing results.
 
@@ -88,7 +90,7 @@ Manage communication with Terms Guardian cloud database for shared processing re
 - `PUT /api/v1/document/{hash}` - Update existing analysis
 - `GET /api/v1/user/preferences` - Get user processing preferences
 
-#### Implementation
+#### Implementation — database
 
 ```javascript
 // src/services/databaseService.js
@@ -164,11 +166,11 @@ class DatabaseService {
 
 ### 3. User Preference Management
 
-#### Purpose
+#### Purpose — preferences
 
 Manage local vs cloud processing preferences based on user subscription status.
 
-#### Implementation
+#### Implementation — preferences
 
 ```javascript
 // src/services/userPreferenceService.js

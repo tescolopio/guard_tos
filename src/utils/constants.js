@@ -87,6 +87,8 @@ const EXT_CONSTANTS = {
           JURY_TRIAL_WAIVER: -6,
           // Added to align with ML-supported class and scoring rubric
           LIABILITY_LIMITATION: -8,
+          // New: Algorithmic decisions transparency (penalty when undisclosed)
+          ALGORITHMIC_DECISIONS: -5,
         },
         // positives (bonuses)
         POSITIVES: {
@@ -112,6 +114,52 @@ const EXT_CONSTANTS = {
         COVERAGE_WEIGHT: 0.4,
         SIGNAL_WEIGHT: 0.4,
         TYPE_WEIGHT: 0.2,
+      },
+    },
+
+    // User Rights Index (URI) configuration: 8 categories with weights
+    USER_RIGHTS_INDEX: {
+      CATEGORIES: {
+        CLARITY_TRANSPARENCY: {
+          label: "Clarity & Transparency",
+          weight: 0.2,
+        },
+        DATA_COLLECTION_USE: {
+          label: "Data Collection & Use",
+          weight: 0.25,
+        },
+        USER_PRIVACY: {
+          label: "User Privacy",
+          weight: 0.2,
+        },
+        CONTENT_RIGHTS: {
+          label: "Content Rights",
+          weight: 0.15,
+        },
+        ACCOUNT_MANAGEMENT: {
+          label: "Account Management",
+          weight: 0.1,
+        },
+        DISPUTE_RESOLUTION: {
+          label: "Dispute Resolution",
+          weight: 0.1,
+        },
+        TERMS_CHANGES: {
+          label: "Terms Changes",
+          weight: 0.05,
+        },
+        ALGORITHMIC_DECISIONS: {
+          label: "Algorithmic Decisions",
+          weight: 0.05,
+        },
+      },
+      // Grade thresholds for the overall URI score
+      GRADING: {
+        A: { MIN: 85 },
+        B: { MIN: 75 },
+        C: { MIN: 65 },
+        D: { MIN: 50 },
+        F: { MIN: 0 },
       },
     },
   },
@@ -342,8 +390,6 @@ const initializeGlobals = () => {
 
 initializeGlobals();
 
-initializeGlobals();
-
 // Export a function to manually initialize globals if needed
 // export const setupConstants = initializeGlobals;
 
@@ -365,8 +411,19 @@ if (typeof module !== "undefined" && module.exports) {
   };
 }
 
-console.log(
-  "Constants.js loaded, window.Constants:",
-  window && window.Constants,
-);
-console.log("Global Constants:", global && global.Constants);
+// Optional debug logs guarded by environment checks
+try {
+  const debugLevel = EXT_CONSTANTS?.DEBUG?.DEFAULT_LEVEL ?? 2; // INFO by default
+  if (debugLevel >= 4) {
+    if (typeof window !== "undefined") {
+      // eslint-disable-next-line no-console
+      console.log("Constants.js loaded, window.Constants:", window.Constants);
+    }
+    if (typeof globalThis !== "undefined") {
+      // eslint-disable-next-line no-console
+      console.log("Global Constants:", globalThis.Constants);
+    }
+  }
+} catch (e) {
+  // Swallow logging issues silently
+}

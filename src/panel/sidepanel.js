@@ -197,15 +197,49 @@ class Sidepanel {
     } else if (typeof rightsData === "number") {
       rightsGradeText = this.getGradeFromScore(rightsData);
     }
-    this.elements.userRightsIndex.textContent = rightsGradeText;
+    // Prefer new URI grade when available
+    if (scores.userRightsIndex && scores.userRightsIndex.grade) {
+      this.elements.userRightsIndex.textContent = scores.userRightsIndex.grade;
+    } else {
+      this.elements.userRightsIndex.textContent = rightsGradeText;
+    }
 
     // Update tooltips
     this.updatePopupContent("overallPopup", {
       readability: scores.readability,
       rights: scores.rights,
+      userRightsIndex: scores.userRightsIndex,
     });
     this.updatePopupContent("readabilityPopup", scores.readability);
-    this.updatePopupContent("rightsPopup", scores.rights);
+    // Show legacy rights popup; if URI exists, append URI breakdown
+    const rightsHtml = this.formatRightsPopup(scores.rights);
+    let uriHtml = "";
+    if (scores.userRightsIndex && scores.userRightsIndex.categories) {
+      const cats = scores.userRightsIndex.categories;
+      const entries = Object.entries(cats)
+        .map(([k, v]) => {
+          const label =
+            (EXT_CONSTANTS.ANALYSIS.USER_RIGHTS_INDEX.CATEGORIES[k] || {})
+              .label || this.formatCategoryName(k);
+          const sc = typeof v.score === "number" ? v.score.toFixed(0) : "N/A";
+          const sent =
+            v.sentiment > 0
+              ? "positive"
+              : v.sentiment < 0
+                ? "negative"
+                : "neutral";
+          return `<div class="metric-row"><span class="metric-label">${label}:</span><span class="metric-value">${sc} <em class="sent-${sent}">(${sent})</em></span></div>`;
+        })
+        .join("");
+      uriHtml = `
+        <div class="popup-metrics">
+          <h4>User Rights Index (8 categories):</h4>
+          ${entries}
+          <div class="metric-row"><span class="metric-label">Weighted Score:</span><span class="metric-value">${scores.userRightsIndex.weightedScore}</span></div>
+          <div class="metric-row"><span class="metric-label">URI Grade:</span><span class="metric-value">${scores.userRightsIndex.grade}</span></div>
+        </div>`;
+    }
+    this.updatePopupContent("rightsPopup", { __html: rightsHtml + uriHtml });
   }
 
   updateSummary(summary, enhancedData) {
@@ -900,6 +934,15 @@ class Sidepanel {
 
     const content = popup.querySelector(".popup-content");
     if (!content) return;
+
+    if (
+      data &&
+      typeof data === "object" &&
+      Object.prototype.hasOwnProperty.call(data, "__html")
+    ) {
+      content.innerHTML = data.__html || "";
+      return;
+    }
 
     switch (popupId) {
       case "overallPopup":

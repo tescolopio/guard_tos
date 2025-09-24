@@ -69,26 +69,26 @@ Key Points:
 
 **Concerning Patterns Detected:**
 
-- 💰 Refunds may be limited or not available
-- 🔒 Your personal data may be shared with other companies
-- ⚠️ Your account can be terminated without warning
-- 📝 Terms can be changed without notifying you
-- ⚖️ You may be giving up important legal rights
+- Refunds may be limited or not available
+- Your personal data may be shared with other companies
+- Your account can be terminated without warning
+- Terms can be changed without notifying you
+- You may be giving up important legal rights
 
 **Positive Patterns Detected:**
 
-- ✅ You can opt out of data collection or communications
-- ✅ You can request deletion of your personal data
-- ✅ Customer support contact information is provided
-- ✅ There appears to be a trial period or grace period
+- You can opt out of data collection or communications
+- You can request deletion of your personal data
+- Customer support contact information is provided
+- There appears to be a trial period or grace period
 
 ### 5. Plain Language Alerts
 
 **High Risk Alert:**
-"⚠️ This agreement has several sections that significantly limit your rights or increase your responsibilities. Consider reviewing carefully before agreeing."
+"This agreement has several sections that significantly limit your rights or increase your responsibilities. Consider reviewing carefully before agreeing."
 
 **Medium Risk Alert:**  
-"⚠️ This agreement has some terms that affect your rights. Pay special attention to the highlighted sections."
+"This agreement has some terms that affect your rights. Pay special attention to the highlighted sections."
 
 ### 6. User Interface Enhancements
 

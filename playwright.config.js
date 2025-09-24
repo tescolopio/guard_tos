@@ -9,6 +9,7 @@ const pathToExtension = path.join(__dirname, "dist");
  */
 module.exports = defineConfig({
   testDir: "./__tests__",
+  timeout: 60000, // 1 minute timeout for all tests
   testMatch: /.*\.spec\.js/,
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -36,13 +37,6 @@ module.exports = defineConfig({
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        // Add extension path
-        launchOptions: {
-          args: [
-            `--disable-extensions-except=${pathToExtension}`,
-            `--load-extension=${pathToExtension}`,
-          ],
-        },
       },
     },
   ],

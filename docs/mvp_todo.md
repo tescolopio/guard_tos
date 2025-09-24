@@ -1,4 +1,6 @@
-# MVP TODO Checklist — Terms Guardian (as of 2025-09-17)
+# [ARCHIVED] MVP TODO Checklist — Terms Guardian (as of 2025-09-17)
+
+> Status: Archived. This file represents historical planning notes and is superseded by README, docs/launch/mvp.md, and current QA guides.
 
 ## UPDATED NEXT ACTIONS
 

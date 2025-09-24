@@ -1,0 +1,62 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "cuad_v1_contract_understanding_clause_classification",
+  "dataset_size": 5304307,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/dvgodoy/CUAD_v1_Contract_Understanding_clause_classification@2647c92f634569acbdfbd694ad5488293c55b3f7/data/train-00000-of-00001.parquet": {
+      "num_bytes": 1801935,
+      "checksum": null
+    }
+  },
+  "download_size": 1801935,
+  "features": {
+    "file_name": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "clause": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "pages": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "class_id": {
+      "dtype": "int64",
+      "_type": "Value"
+    },
+    "label": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "start_at": {
+      "dtype": "int64",
+      "_type": "Value"
+    },
+    "end_at": {
+      "dtype": "int64",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 7106242,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 5304307,
+      "num_examples": 13155,
+      "dataset_name": "cuad_v1_contract_understanding_clause_classification"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}
