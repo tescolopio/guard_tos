@@ -198,3 +198,22 @@ The `complex-tos.html` fixture demonstrates a comprehensive test covering:
 
 See `__tests__/fixtures/complex-tos.html` and `__tests__/fixtures/expected/complex-tos.json` for the complete example.
 
+## UI pipeline sample and verification
+
+A comprehensive sample payload is provided to validate the side panel rendering end-to-end without running the full extraction pipeline:
+
+- Sample data: `data/sample_analysis.json`
+- Verification test: `__tests__/unit/sidepanel.sample-data.test.js`
+
+Run just this test:
+
+```bash
+npm run -s test -- __tests__/unit/sidepanel.sample-data.test.js
+```
+
+It asserts that:
+
+- Top-level document info and grades render
+- Enhanced summary, risk badge, and risk alert display
+- Section summaries include category badges and key points
+- Excerpts, uncommon terms, and dictionary terms populate correctly

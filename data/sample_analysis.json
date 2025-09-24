@@ -1,0 +1,179 @@
+{
+  "documentInfo": {
+    "url": "https://example.com/terms",
+    "title": "Example Terms of Service"
+  },
+  "scores": {
+    "readability": {
+      "grade": "B",
+      "flesch": 72.3,
+      "kincaid": 7.8,
+      "fogIndex": 9.6,
+      "wordCount": 1543,
+      "sentenceCount": 112,
+      "averageSentenceLength": 13.8,
+      "averageSyllablesPerWord": 1.46
+    },
+    "rights": {
+      "rightsScore": 68,
+      "grade": "C",
+      "confidence": 0.82,
+      "details": {
+        "clauseCounts": {
+          "HIGH_RISK": {
+            "ARBITRATION": 2,
+            "CLASS_ACTION_WAIVER": 1,
+            "UNILATERAL_CHANGES": 1
+          },
+          "MEDIUM_RISK": {
+            "AUTO_RENEWAL_FRICTION": 1,
+            "NEGATIVE_OPTION_BILLING": 1
+          },
+          "POSITIVES": {
+            "CLEAR_OPT_OUT": 1,
+            "SELF_SERVICE_DELETION": 1
+          }
+        },
+        "categoryScores": {
+          "ARBITRATION": { "score": 35 },
+          "CLASS_ACTION_WAIVER": { "score": 42 },
+          "UNILATERAL_CHANGES": { "score": 55 },
+          "AUTO_RENEWAL_FRICTION": { "score": 60 },
+          "NEGATIVE_OPTION_BILLING": { "score": 58 },
+          "DATA_SALE_OR_SHARING": { "score": 70 },
+          "DELEGATION_ARBITRABILITY": { "score": 40 },
+          "ARBITRATION_CARVEOUTS": { "score": 65 },
+          "VAGUE_CONSENT": { "score": 50 },
+          "LIMITED_RETENTION_DISCLOSURE": { "score": 62 },
+          "MORAL_RIGHTS_WAIVER": { "score": 75 },
+          "JURY_TRIAL_WAIVER": { "score": 45 },
+          "CLEAR_OPT_OUT": { "score": 80 },
+          "SELF_SERVICE_DELETION": { "score": 78 },
+          "NO_DATA_SALE": { "score": 82 },
+          "TRANSPARENT_RETENTION": { "score": 85 }
+        },
+        "unmappedClauseKeys": ["LIMITATION_OF_LIABILITY"]
+      }
+    },
+    "userRightsIndex": {
+      "weightedScore": 74,
+      "grade": "B",
+      "categories": {
+        "DATA_PRACTICES": { "score": 72, "sentiment": 0.2 },
+        "CONTENT_AND_IP": { "score": 68, "sentiment": -0.1 },
+        "LIABILITY_AND_REMEDIES": { "score": 45, "sentiment": -0.6 },
+        "DISPUTE_RESOLUTION": { "score": 38, "sentiment": -0.7 },
+        "BILLING_AND_AUTORENEWAL": { "score": 58, "sentiment": -0.2 },
+        "RETENTION_AND_DELETION": { "score": 77, "sentiment": 0.3 },
+        "CONSENT_AND_OPT_OUT": { "score": 70, "sentiment": 0.1 },
+        "CLARITY_AND_TRANSPARENCY": { "score": 81, "sentiment": 0.4 }
+      }
+    }
+  },
+  "summary": "Overall, these terms present moderate risks around dispute resolution and liability, with better transparency and user controls in data practices.",
+  "enhancedData": {
+    "enhancedSummary": {
+      "overall": "**Overview**\n\n⚠️ Arbitration is required for most disputes, and there's a class action waiver.✅ Clear opt-out options exist for certain data uses.💰 Automatic renewal terms require attention.🔒 Data retention policies are documented and deletion options are available."
+    },
+    "riskLevel": "medium",
+    "keyFindings": [
+      "⚠️ Mandatory arbitration with a delegation of arbitrability",
+      "⚠️ Class action waiver present",
+      "✅ Opt-out for certain data sharing",
+      "💰 Auto-renewal defaults to on; cancellation process is non-trivial",
+      "🔒 Clear retention policy and self-service deletion"
+    ],
+    "plainLanguageAlert": "This document contains several sections that may impact your rights. Review arbitration and liability sections carefully."
+  },
+  "sections": [
+    {
+      "heading": "Dispute Resolution",
+      "userFriendlyHeading": "How disputes are handled",
+      "summary": "Most disputes will be resolved via binding arbitration, with limited carveouts.",
+      "riskLevel": "high",
+      "keyPoints": [
+        "⚠️ Binding arbitration is mandatory",
+        "⚠️ Class action waiver applies",
+        "Delegation of arbitrability is specified"
+      ],
+      "categoryHints": [
+        "ARBITRATION",
+        "CLASS_ACTION_WAIVER",
+        "DELEGATION_ARBITRABILITY"
+      ],
+      "rights": {
+        "categoryScores": {
+          "ARBITRATION": { "score": 30 },
+          "CLASS_ACTION_WAIVER": { "score": 35 },
+          "DELEGATION_ARBITRABILITY": { "score": 40 }
+        }
+      }
+    },
+    {
+      "heading": "Data Practices",
+      "userFriendlyHeading": "How your data is used",
+      "summary": "Data is collected for service improvement; opt-outs for certain sharing are offered. Retention periods are disclosed.",
+      "riskLevel": "medium",
+      "keyPoints": [
+        "✅ Opt-out for marketing communications",
+        "🔒 Retention schedules are transparent"
+      ],
+      "categoryHints": [
+        "DATA_SALE_OR_SHARING",
+        "TRANSPARENT_RETENTION",
+        "CLEAR_OPT_OUT"
+      ],
+      "rights": {
+        "categoryScores": {
+          "DATA_SALE_OR_SHARING": { "score": 70 },
+          "TRANSPARENT_RETENTION": { "score": 82 },
+          "CLEAR_OPT_OUT": { "score": 78 }
+        }
+      }
+    },
+    {
+      "heading": "Billing & Auto-Renewal",
+      "userFriendlyHeading": "Subscriptions and billing",
+      "summary": "Subscriptions auto-renew by default; cancellation requires a few steps.",
+      "riskLevel": "medium",
+      "keyPoints": [
+        "💰 Auto-renewal is enabled by default",
+        "Consider setting reminders to cancel"
+      ],
+      "categoryHints": ["AUTO_RENEWAL_FRICTION", "NEGATIVE_OPTION_BILLING"],
+      "rights": {
+        "categoryScores": {
+          "AUTO_RENEWAL_FRICTION": { "score": 58 },
+          "NEGATIVE_OPTION_BILLING": { "score": 60 }
+        }
+      }
+    }
+  ],
+  "excerpts": [
+    "Any dispute arising out of these terms will be resolved by binding arbitration.",
+    "You waive the right to participate in a class action.",
+    "You may opt out of certain data sharing by adjusting your settings."
+  ],
+  "terms": [
+    {
+      "word": "arbitration",
+      "definition": "A process for resolving disputes out of court."
+    },
+    {
+      "word": "delegation",
+      "definition": "Assigning decision authority to an arbitrator."
+    }
+  ],
+  "dictionaryTerms": [
+    {
+      "word": "arbitration",
+      "count": 3,
+      "definition": "Binding dispute resolution outside courts."
+    },
+    {
+      "word": "opt-out",
+      "count": 2,
+      "definition": "A right to decline certain processing."
+    }
+  ]
+}
