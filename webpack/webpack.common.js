@@ -5,7 +5,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
-    serviceWorker: path.resolve(__dirname, "../src/background/serviceWorker.js"),
+    serviceWorker: path.resolve(
+      __dirname,
+      "../src/background/serviceWorker.js",
+    ),
     content: path.resolve(__dirname, "../src/content/content.js"),
     sidepanel: path.resolve(__dirname, "../src/panel/sidepanel.js"),
   },
@@ -44,9 +47,19 @@ module.exports = {
             );
           },
         },
-        { from: path.resolve(__dirname, "../src/panel/sidepanel.html"), to: "sidepanel.html" },
+        {
+          from: path.resolve(__dirname, "../src/panel/sidepanel.html"),
+          to: "sidepanel.html",
+        },
         { from: path.resolve(__dirname, "../images"), to: "images" },
-        { from: path.resolve(__dirname, "../src/data/dictionaries"), to: "dictionaries" },
+        {
+          from: path.resolve(__dirname, "../src/data/dictionaries"),
+          to: "dictionaries",
+        },
+        {
+          from: path.resolve(__dirname, "../data/sample_analysis.json"),
+          to: "sample/sample_analysis.json",
+        },
       ],
     }),
     new MiniCssExtractPlugin({

@@ -47,6 +47,7 @@ class Sidepanel {
       userRightsIndex: document.getElementById("user-rights-index"),
       documentLevelBtn: document.getElementById("document-level-btn"),
       bySectionBtn: document.getElementById("by-section-btn"),
+      loadSampleBtn: document.getElementById("load-sample-btn"),
       contentOrganization: document.querySelector(".content-organization"),
       overallSummary: document.getElementById("overall-summary"),
       sectionSummaries: document.getElementById("section-summaries"),
@@ -439,8 +440,10 @@ class Sidepanel {
 
     excerpts.forEach((excerpt, index) => {
       const listItem = document.createElement("li");
-      listItem.textContent = `"${excerpt}"`;
-      listItem.setAttribute("data-index", index + 1);
+      const num = index + 1;
+      listItem.id = `excerpt-${num}`;
+      listItem.innerHTML = `<span class="excerpt-citation">[${num}]</span> "${excerpt}"`;
+      listItem.setAttribute("data-index", num);
       this.elements.keyExcerptsList.appendChild(listItem);
     });
   }
@@ -1151,6 +1154,10 @@ class Sidepanel {
     this.loadingManager.start("Initializing...");
 
     this.setupEventListeners();
+    // Ensure default view is Document-Level on load
+    try {
+      this.toggleView("document");
+    } catch (_) {}
     this.requestInitialData();
     this.enableDiagnosticsIfConfigured();
 
@@ -1177,6 +1184,12 @@ class Sidepanel {
       this.toggleView("section"),
     );
 
+    if (this.elements.loadSampleBtn) {
+      this.elements.loadSampleBtn.addEventListener("click", () =>
+        this.loadSampleData(),
+      );
+    }
+
     // Event delegation for popups
     document.body.addEventListener("click", (event) => {
       const popupTrigger = event.target.closest("[data-popup]");
@@ -1199,6 +1212,24 @@ class Sidepanel {
           .forEach((p) => p.classList.remove("active"));
       }
     });
+  }
+
+  async loadSampleData() {
+    try {
+      this.statusManager.show("Loading sample data…", "info", 2000);
+      const sampleUrl = chrome.runtime.getURL("sample/sample_analysis.json");
+      const res = await fetch(sampleUrl);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const sample = await res.json();
+      // Persist for panel reloads and diagnostics
+      const key = EXT_CONSTANTS.STORAGE_KEYS.ANALYSIS_RESULTS;
+      await chrome.storage.local.set({ [key]: sample });
+      await this.updateSidepanelContent(sample);
+      this.statusManager.show("Sample data loaded.", "success", 2500);
+      this.toggleView("document");
+    } catch (e) {
+      this.errorManager.handle(e, "loadSample");
+    }
   }
 
   toggleView(view) {

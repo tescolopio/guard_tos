@@ -52,12 +52,12 @@ key excerpts, and uncommon terms.
             <div class="grade-circle">
               <span id="readability-grade">-</span>
             </div>
-            <p>Readability Grade</p>
+            <p>Readability Score</p>
             <div
               id="readabilityPopup"
               class="popup"
               role="tooltip"
-              title="Readability Grade Tooltip"
+              title="Readability Score Tooltip"
             >
               <div class="popup-content"></div>
             </div>
@@ -67,12 +67,12 @@ key excerpts, and uncommon terms.
             <div class="grade-circle">
               <span id="user-rights-index">-</span>
             </div>
-            <p>User Rights Index Grade</p>
+            <p>User Rights Index</p>
             <div
               id="rightsPopup"
               class="popup"
               role="tooltip"
-              title="User Rights Index Grade Tooltip"
+              title="User Rights Index Tooltip"
             >
               <div class="popup-content"></div>
             </div>
@@ -84,7 +84,7 @@ key excerpts, and uncommon terms.
         <div class="loading-indicator">Analyzing document...</div>
 
         <!-- Content Organization Section -->
-        <section class="content-organization" style="display: none">
+        <section class="content-organization">
           <div class="view-toggle">
             <button
               type="button"
@@ -95,6 +95,14 @@ key excerpts, and uncommon terms.
             </button>
             <button type="button" id="by-section-btn" class="toggle-btn">
               By Section
+            </button>
+            <button
+              type="button"
+              id="load-sample-btn"
+              class="toggle-btn demo-btn"
+              title="Load sample analysis into the panel"
+            >
+              Load Sample Data
             </button>
           </div>
         </section>

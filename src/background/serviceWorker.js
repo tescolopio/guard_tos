@@ -144,6 +144,40 @@ function createServiceWorker({ log, logLevels }) {
           sendResponse({ lastWord: result[STORAGE_KEYS.LAST_WORD] });
           break;
         }
+        case "getAnalysisResults": {
+          try {
+            let tabId = sender?.tab?.id;
+            if (!tabId) {
+              const tabs = await chrome.tabs.query({
+                active: true,
+                lastFocusedWindow: true,
+              });
+              if (tabs && tabs.length > 0) tabId = tabs[0].id;
+            }
+            let data = null;
+            if (tabId) {
+              const key = `${STORAGE_KEYS.ANALYSIS_RESULTS}_${tabId}`;
+              const res = await chrome.storage.local.get(key);
+              data = res[key] || null;
+            }
+            if (!data) {
+              const res = await chrome.storage.local.get(
+                STORAGE_KEYS.ANALYSIS_RESULTS,
+              );
+              data = res[STORAGE_KEYS.ANALYSIS_RESULTS] || null;
+            }
+            if (!data) {
+              sendResponse({ error: "No analysis results found" });
+            } else {
+              sendResponse({ data });
+            }
+          } catch (e) {
+            sendResponse({
+              error: e?.message || "Failed to retrieve analysis results",
+            });
+          }
+          break;
+        }
         case "tosDetected": {
           // Added block scope
           await handleTosDetected(message, sender);

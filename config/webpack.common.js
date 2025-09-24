@@ -76,6 +76,11 @@ module.exports = {
             return Buffer.from(html);
           },
         },
+        // Ship sample analysis payload for in-panel demo
+        {
+          from: "./data/sample_analysis.json",
+          to: "sample/sample_analysis.json",
+        },
         { from: "./images", to: "images" },
         { from: "./src/styles/styles.css", to: "styles.css" },
       ],
