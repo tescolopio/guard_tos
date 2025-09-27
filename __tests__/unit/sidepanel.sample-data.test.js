@@ -142,10 +142,6 @@ describe("Sidepanel sample data rendering", () => {
     expect(document.getElementById("readability-grade").textContent).toBe("B");
     // URI grade preferred
     expect(document.getElementById("user-rights-index").textContent).toBe("B");
-    // Overall grade should be computed
-    expect(document.getElementById("overall-grade").textContent).toMatch(
-      /[ABCDF]/,
-    );
   });
 
   it("renders enhanced summary and risk elements", async () => {

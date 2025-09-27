@@ -33,7 +33,8 @@
     "ml:download": "bash -lc '/mnt/d/guard_tos/.venv/bin/python scripts/hf_download.py'",
     "ml:prep:train:calibrate": "npm run ml:prep && npm run ml:train && npm run ml:calibrate",
     "ml:sync-thresholds": "node scripts/sync_thresholds.js",
-    "ml:smoke": "node scripts/smoke_model_load.js"
+    "ml:smoke": "node scripts/smoke_model_load.js",
+    "analyze:fixture": "node scripts/run_analysis_fixture.js __tests__/fixtures/simple-tos.html"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",

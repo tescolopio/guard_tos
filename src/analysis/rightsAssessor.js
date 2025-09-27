@@ -172,18 +172,27 @@ const { EXT_CONSTANTS } = require("../utils/constants");
         const mlCfg = EXT_CONSTANTS && EXT_CONSTANTS.ML;
         if (!mlCfg || mlCfg.ENABLED !== true) return;
 
-        // Lazy import classifier (let webpack split async chunk in prod build)
-        const mod = await import("../ml/clauseClassifier.js");
+        // Lazy import model hub to remain compatible with legacy TF-IDF model and future category models
+        const { getModelHub } = await import("../ml/modelHub.js");
+        const hub = await getModelHub();
         const sentences = (textChunk.match(/[^.!?]+[.!?]+/g) || [textChunk])
           .map((s) => s.trim())
           .filter(Boolean);
 
-        const preds = await mod.classifySentences(sentences);
-        const agg = {};
-        for (const { proba } of preds) {
-          for (const [cls, p] of Object.entries(proba)) {
-            agg[cls] = Math.max(agg[cls] || 0, p);
-          }
+        const { clauseProbabilities, categoryScores } = await hub.predict(
+          sentences,
+          {
+            text: textChunk,
+            ruleCounts: res?.clauseCounts,
+          },
+        );
+
+        const agg = clauseProbabilities || {};
+        if (categoryScores && Object.keys(categoryScores).length > 0) {
+          res.mlCategoryScores = {
+            ...(res.mlCategoryScores || {}),
+            ...categoryScores,
+          };
         }
 
         const T = mlCfg.THRESHOLDS || {};
@@ -316,6 +325,8 @@ const { EXT_CONSTANTS } = require("../utils/constants");
         let totalScore = 0;
         let totalWords = 0;
         let totalSignals = 0;
+        const mlCategoryAccumulator = Object.create(null);
+        const mlCategoryCounts = Object.create(null);
         // aggregate clause counts across chunks for diagnostics & testing
         const aggregateClauseCounts = {
           HIGH_RISK: {},
@@ -339,6 +350,40 @@ const { EXT_CONSTANTS } = require("../utils/constants");
             (acc, m) => acc + Object.values(m).reduce((a, b) => a + b, 0),
             0,
           );
+          if (
+            res.mlCategoryScores &&
+            typeof res.mlCategoryScores === "object"
+          ) {
+            Object.entries(res.mlCategoryScores).forEach(([cat, raw]) => {
+              let probability = null;
+              if (typeof raw === "number" && Number.isFinite(raw)) {
+                probability = raw;
+              } else if (raw && typeof raw === "object") {
+                if (typeof raw.probability === "number") {
+                  probability = raw.probability;
+                } else if (typeof raw.score === "number") {
+                  const normalized =
+                    raw.score > 1 ? raw.score / 100 : raw.score;
+                  probability = 1 - normalized;
+                } else if (typeof raw.value === "number") {
+                  probability = raw.value;
+                }
+              }
+              if (
+                typeof probability !== "number" ||
+                !Number.isFinite(probability)
+              ) {
+                return;
+              }
+              if (probability > 1) {
+                probability = probability / 100;
+              }
+              probability = Math.max(0, Math.min(1, probability));
+              mlCategoryAccumulator[cat] =
+                (mlCategoryAccumulator[cat] || 0) + probability;
+              mlCategoryCounts[cat] = (mlCategoryCounts[cat] || 0) + 1;
+            });
+          }
           // accumulate per-clause counts
           ["HIGH_RISK", "MEDIUM_RISK", "POSITIVES"].forEach((cat) => {
             const m = res.clauseCounts[cat] || {};
@@ -441,6 +486,19 @@ const { EXT_CONSTANTS } = require("../utils/constants");
             score: catScore,
           };
         });
+        const mlCategoryScores = {};
+        Object.entries(mlCategoryAccumulator).forEach(([cat, sum]) => {
+          const count = mlCategoryCounts[cat] || 1;
+          const avg = sum / count;
+          if (!Number.isFinite(avg)) return;
+          const probability = Math.min(1, Math.max(0, avg));
+          const score = Math.round((1 - probability) * 100);
+          mlCategoryScores[cat] = {
+            probability: Number(probability.toFixed(4)),
+            score,
+            observations: count,
+          };
+        });
         const uncommonWords = await identifyUncommonWords(text);
 
         // Grade mapping
@@ -505,6 +563,9 @@ const { EXT_CONSTANTS } = require("../utils/constants");
             dictionaryTerms,
           },
         };
+        if (Object.keys(mlCategoryScores).length > 0) {
+          result.details.mlCategoryScores = mlCategoryScores;
+        }
 
         log(logLevels.INFO, "Analysis complete", result);
         return result;

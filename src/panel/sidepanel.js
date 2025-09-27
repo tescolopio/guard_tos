@@ -1,5 +1,12 @@
 "use strict";
 
+// Ensure webpack publicPath points to extension root for any lazy-loaded chunks
+try {
+  require("../runtime/publicPath");
+} catch (e) {
+  /* noop */
+}
+
 const { EXT_CONSTANTS } = require("../utils/constants");
 const { createDebugger } = require("../utils/debugger");
 
@@ -26,6 +33,7 @@ class Sidepanel {
       isLoading: false,
       isError: false,
       lastStatus: null,
+      excerpts: { neg: [], pos: [] },
     };
 
     /**
@@ -42,7 +50,7 @@ class Sidepanel {
       dictMetricTs: document.getElementById("dict-metric-ts"),
       termsUrl: document.getElementById("terms-url"),
       termsTitle: document.getElementById("terms-title"),
-      overallGrade: document.getElementById("overall-grade"),
+      // overall-grade removed per UX review
       readabilityGrade: document.getElementById("readability-grade"),
       userRightsIndex: document.getElementById("user-rights-index"),
       documentLevelBtn: document.getElementById("document-level-btn"),
@@ -52,6 +60,8 @@ class Sidepanel {
       overallSummary: document.getElementById("overall-summary"),
       sectionSummaries: document.getElementById("section-summaries"),
       keyExcerptsList: document.getElementById("key-excerpts-list"),
+      excerptsNegBtn: document.getElementById("excerpts-neg-btn"),
+      excerptsPosBtn: document.getElementById("excerpts-pos-btn"),
       uncommonTermsList: document.getElementById("uncommon-terms-list"),
       dictionaryTermsList: document.getElementById("dictionary-terms-list"),
       statusMessage: document.getElementById("status-message"),
@@ -176,71 +186,33 @@ class Sidepanel {
   updateScores(scores) {
     if (!scores) return;
 
-    // Overall Grade calculation (combination of readability and rights)
-    const overallGrade = this.calculateOverallGrade(
-      scores.readability,
-      scores.rights,
-    );
-    this.elements.overallGrade.textContent = overallGrade || "N/A";
+    // Overall Grade removed from UI per UX review
 
     // Readability Grade
     this.elements.readabilityGrade.textContent =
       scores.readability?.grade ||
       (scores.readability?.error ? "Error" : "N/A");
 
-    // User Rights Index Grade
-    const rightsData = scores.rights;
-    let rightsGradeText = "N/A";
-    if (rightsData && typeof rightsData === "object") {
-      rightsGradeText =
-        rightsData.grade ||
-        this.getGradeFromScore(rightsData.rightsScore || rightsData.score);
-    } else if (typeof rightsData === "number") {
-      rightsGradeText = this.getGradeFromScore(rightsData);
+    // User Rights Index Grade (primary rights signal in UI)
+    const uriData = scores.userRightsIndex;
+    let uriGradeText = "N/A";
+    if (uriData) {
+      if (uriData.grade) {
+        uriGradeText = uriData.grade;
+      } else if (typeof uriData.weightedScore === "number") {
+        uriGradeText = this.getGradeFromScore(uriData.weightedScore);
+      }
     }
-    // Prefer new URI grade when available
-    if (scores.userRightsIndex && scores.userRightsIndex.grade) {
-      this.elements.userRightsIndex.textContent = scores.userRightsIndex.grade;
-    } else {
-      this.elements.userRightsIndex.textContent = rightsGradeText;
-    }
+    this.elements.userRightsIndex.textContent = uriGradeText;
 
     // Update tooltips
     this.updatePopupContent("overallPopup", {
       readability: scores.readability,
-      rights: scores.rights,
       userRightsIndex: scores.userRightsIndex,
     });
     this.updatePopupContent("readabilityPopup", scores.readability);
-    // Show legacy rights popup; if URI exists, append URI breakdown
-    const rightsHtml = this.formatRightsPopup(scores.rights);
-    let uriHtml = "";
-    if (scores.userRightsIndex && scores.userRightsIndex.categories) {
-      const cats = scores.userRightsIndex.categories;
-      const entries = Object.entries(cats)
-        .map(([k, v]) => {
-          const label =
-            (EXT_CONSTANTS.ANALYSIS.USER_RIGHTS_INDEX.CATEGORIES[k] || {})
-              .label || this.formatCategoryName(k);
-          const sc = typeof v.score === "number" ? v.score.toFixed(0) : "N/A";
-          const sent =
-            v.sentiment > 0
-              ? "positive"
-              : v.sentiment < 0
-                ? "negative"
-                : "neutral";
-          return `<div class="metric-row"><span class="metric-label">${label}:</span><span class="metric-value">${sc} <em class="sent-${sent}">(${sent})</em></span></div>`;
-        })
-        .join("");
-      uriHtml = `
-        <div class="popup-metrics">
-          <h4>User Rights Index (8 categories):</h4>
-          ${entries}
-          <div class="metric-row"><span class="metric-label">Weighted Score:</span><span class="metric-value">${scores.userRightsIndex.weightedScore}</span></div>
-          <div class="metric-row"><span class="metric-label">URI Grade:</span><span class="metric-value">${scores.userRightsIndex.grade}</span></div>
-        </div>`;
-    }
-    this.updatePopupContent("rightsPopup", { __html: rightsHtml + uriHtml });
+    const rightsHtml = this.formatUriPopup(scores.userRightsIndex);
+    this.updatePopupContent("rightsPopup", { __html: rightsHtml });
   }
 
   updateSummary(summary, enhancedData) {
@@ -269,18 +241,78 @@ class Sidepanel {
   formatEnhancedSummary(summaryText) {
     if (!summaryText) return "";
 
-    // Convert markdown-style formatting to HTML
-    let html = summaryText
-      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-      .replace(/📋 \*\*(.*?)\*\*/g, "<h3>📋 $1</h3>")
-      .replace(/⚠️ (.*?)(?=\n|$)/g, '<div class="warning-text">⚠️ $1</div>')
-      .replace(/✅ (.*?)(?=\n|$)/g, '<div class="positive-text">✅ $1</div>')
-      .replace(/💰 (.*?)(?=\n|$)/g, '<div class="money-text">💰 $1</div>')
-      .replace(/🔒 (.*?)(?=\n|$)/g, '<div class="privacy-text">🔒 $1</div>')
-      .replace(/\n\n/g, "</p><p>")
-      .replace(/\n/g, "<br>");
+    const escapeHtml = (str) =>
+      String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
 
-    return `<p>${html}</p>`;
+    const renderInline = (text) => {
+      let result = "";
+      let lastIndex = 0;
+      const boldRegex = /\*\*(.+?)\*\*/g;
+      let match;
+
+      while ((match = boldRegex.exec(text)) !== null) {
+        result += escapeHtml(text.slice(lastIndex, match.index));
+        result += `<strong>${escapeHtml(match[1])}</strong>`;
+        lastIndex = match.index + match[0].length;
+      }
+
+      result += escapeHtml(text.slice(lastIndex));
+      return result;
+    };
+
+    const lines = summaryText.split("\n");
+    const parts = [];
+    let listItems = [];
+
+    const flushList = () => {
+      if (listItems.length) {
+        parts.push(`<ul>${listItems.join("")}</ul>`);
+        listItems = [];
+      }
+    };
+
+    for (let i = 0; i < lines.length; i += 1) {
+      const rawLine = lines[i];
+      const trimmed = rawLine.trim();
+
+      if (!trimmed) {
+        flushList();
+        continue;
+      }
+
+      if (trimmed.startsWith("•")) {
+        const item = trimmed.slice(1).trim();
+        listItems.push(`<li>${renderInline(item)}</li>`);
+        continue;
+      }
+
+      flushList();
+
+      const headingMatch = trimmed.match(/\*\*(.+?)\*\*\s*:?$/);
+      if (headingMatch) {
+        const headingText = headingMatch[1].replace(/:\s*$/, "");
+        parts.push(`<h3>${renderInline(headingText)}</h3>`);
+        continue;
+      }
+
+      const nextLine = lines[i + 1] ? lines[i + 1].trim() : "";
+      if (trimmed.endsWith(":") && nextLine && nextLine.startsWith("•")) {
+        const heading = trimmed.slice(0, -1).trim();
+        parts.push(`<h4>${renderInline(heading)}</h4>`);
+        continue;
+      }
+
+      parts.push(`<p>${renderInline(trimmed)}</p>`);
+    }
+
+    flushList();
+
+    return parts.join("");
   }
 
   updateRiskDisplay(riskLevel) {
@@ -296,34 +328,7 @@ class Sidepanel {
 
   updateKeyFindings(keyFindings) {
     const keyFindingsSection = document.getElementById("key-findings-section");
-    const keyFindingsList = document.getElementById("key-findings-list");
-
-    if (!keyFindings || !keyFindings.length) {
-      keyFindingsSection.style.display = "none";
-      return;
-    }
-
-    keyFindingsList.innerHTML = "";
-    keyFindings.forEach((finding) => {
-      const findingDiv = document.createElement("div");
-      findingDiv.className = "key-finding-item";
-
-      // Determine if finding is concerning or positive
-      if (
-        finding.includes("⚠️") ||
-        finding.includes("💰") ||
-        finding.includes("🔒")
-      ) {
-        findingDiv.classList.add("concerning");
-      } else if (finding.includes("✅")) {
-        findingDiv.classList.add("positive");
-      }
-
-      findingDiv.textContent = finding;
-      keyFindingsList.appendChild(findingDiv);
-    });
-
-    keyFindingsSection.style.display = "block";
+    if (keyFindingsSection) keyFindingsSection.style.display = "none";
   }
 
   updateRiskAlert(alertMessage) {
@@ -431,19 +436,44 @@ class Sidepanel {
   }
 
   updateExcerpts(excerpts) {
-    this.elements.keyExcerptsList.innerHTML = "";
+    // Store in state for toggle filtering. Support either array (legacy) or object { negative:[], positive:[] }
+    if (Array.isArray(excerpts)) {
+      this.state.excerpts = { neg: excerpts.slice(0), pos: [] };
+    } else if (excerpts && typeof excerpts === "object") {
+      const neg = Array.isArray(excerpts.negative)
+        ? excerpts.negative
+        : Array.isArray(excerpts.neg)
+          ? excerpts.neg
+          : [];
+      const pos = Array.isArray(excerpts.positive)
+        ? excerpts.positive
+        : Array.isArray(excerpts.pos)
+          ? excerpts.pos
+          : [];
+      this.state.excerpts = { neg, pos };
+    } else {
+      this.state.excerpts = { neg: [], pos: [] };
+    }
 
-    if (!excerpts?.length) {
+    // Default view is Negative per UX; render top 5
+    this.renderExcerpts("neg");
+  }
+
+  renderExcerpts(view = "neg") {
+    if (!this.elements.keyExcerptsList) return;
+    this.elements.keyExcerptsList.innerHTML = "";
+    const list =
+      view === "pos" ? this.state.excerpts.pos : this.state.excerpts.neg;
+    if (!list || list.length === 0) {
       this.elements.keyExcerptsList.innerHTML = "<p>No key excerpts found.</p>";
       return;
     }
-
-    excerpts.forEach((excerpt, index) => {
+    list.slice(0, 5).forEach((excerpt, index) => {
       const listItem = document.createElement("li");
       const num = index + 1;
-      listItem.id = `excerpt-${num}`;
-      listItem.innerHTML = `<span class="excerpt-citation">[${num}]</span> "${excerpt}"`;
-      listItem.setAttribute("data-index", num);
+      listItem.id = `excerpt-${view}-${num}`;
+      listItem.innerHTML = `<span class=\"excerpt-citation\">[${num}]</span> \"${excerpt}\"`;
+      listItem.setAttribute("data-index", String(num));
       this.elements.keyExcerptsList.appendChild(listItem);
     });
   }
@@ -457,12 +487,18 @@ class Sidepanel {
       return;
     }
 
-    terms.forEach((item) => {
+    terms.forEach((item, idx) => {
       const termSpan = document.createElement("span");
       termSpan.textContent = item.word;
       termSpan.classList.add(Constants.CLASSES.UNCOMMON_TERM);
       termSpan.setAttribute("data-definition", item.definition);
+      termSpan.setAttribute("title", item.definition || "");
       this.elements.uncommonTermsList.appendChild(termSpan);
+      if (idx < terms.length - 1) {
+        this.elements.uncommonTermsList.appendChild(
+          document.createTextNode(" | "),
+        );
+      }
     });
   }
 
@@ -487,19 +523,24 @@ class Sidepanel {
    * Popup Management
    */
   formatOverallPopup(data) {
-    if (!data || (!data.readability && !data.rights)) {
+    if (!data || (!data.readability && !data.userRightsIndex)) {
       return "No overall assessment data available";
     }
 
-    const readability = data.readability;
-    const rights = data.rights;
+    const readability = data.readability || {};
+    const uri = data.userRightsIndex || {};
 
     const readabilityGrade = readability?.grade || "N/A";
-    const rightsGrade =
-      rights?.grade ||
-      this.getGradeFromScore(rights?.rightsScore || rights?.score) ||
-      "N/A";
-    const overallGrade = this.calculateOverallGrade(readability, rights);
+    const uriScore =
+      typeof uri.weightedScore === "number"
+        ? uri.weightedScore.toFixed(0)
+        : null;
+    const uriGrade = uri?.grade
+      ? uri.grade
+      : typeof uri.weightedScore === "number"
+        ? this.getGradeFromScore(uri.weightedScore)
+        : "N/A";
+    const overallGrade = this.calculateOverallGrade(readability, uri);
 
     return `
       <div class="popup-header">
@@ -513,12 +554,12 @@ class Sidepanel {
         </div>
         <div class="metric-row">
           <span class="metric-label">User Rights Index Grade:</span>
-          <span class="metric-value">${rightsGrade}</span>
+          <span class="metric-value">${uriScore !== null ? `${uriGrade} (${uriScore}%)` : uriGrade}</span>
         </div>
       </div>
       <div class="popup-explanation">
         <p><strong>What this means:</strong></p>
-        <p>The overall grade combines readability (40%) and user rights protection (60%) to give you a comprehensive assessment of this document.</p>
+        <p>The overall grade combines readability (40%) and the User Rights Index (60%) to provide a balanced assessment of clarity and user protections.</p>
       </div>
     `;
   }
@@ -885,7 +926,7 @@ class Sidepanel {
     return "F";
   }
 
-  calculateOverallGrade(readability, rights) {
+  calculateOverallGrade(readability, userRightsIndex) {
     try {
       // Get numeric scores
       let readabilityScore = 0;
@@ -898,17 +939,24 @@ class Sidepanel {
         readabilityScore = gradeMap[readability.grade] || 50;
       }
 
-      let rightsScore = 0;
-      if (typeof rights === "number") {
-        rightsScore = rights > 1 ? rights : rights * 100;
-      } else if (rights?.rightsScore !== undefined) {
-        rightsScore = rights.rightsScore;
-      } else if (rights?.score !== undefined) {
-        rightsScore = rights.score > 1 ? rights.score : rights.score * 100;
+      let uriScore = null;
+      if (typeof userRightsIndex === "number") {
+        uriScore = userRightsIndex;
+      } else if (userRightsIndex?.weightedScore !== undefined) {
+        uriScore = userRightsIndex.weightedScore;
+      } else if (userRightsIndex?.score !== undefined) {
+        uriScore = userRightsIndex.score;
       }
 
-      // Weighted combination: 40% readability, 60% rights
-      const combined = readabilityScore * 0.4 + rightsScore * 0.6;
+      const hasUriScore =
+        typeof uriScore === "number" && !Number.isNaN(uriScore);
+
+      if (!hasUriScore) {
+        return this.getGradeFromScore(readabilityScore);
+      }
+
+      // Weighted combination: 40% readability, 60% user rights index
+      const combined = readabilityScore * 0.4 + uriScore * 0.6;
       return this.getGradeFromScore(combined);
     } catch (error) {
       return "N/A";
@@ -1190,6 +1238,24 @@ class Sidepanel {
       );
     }
 
+    // Key Excerpts toggles
+    if (this.elements.excerptsNegBtn) {
+      this.elements.excerptsNegBtn.addEventListener("click", () => {
+        this.elements.excerptsNegBtn.classList.add("active");
+        if (this.elements.excerptsPosBtn)
+          this.elements.excerptsPosBtn.classList.remove("active");
+        this.renderExcerpts("neg");
+      });
+    }
+    if (this.elements.excerptsPosBtn) {
+      this.elements.excerptsPosBtn.addEventListener("click", () => {
+        this.elements.excerptsPosBtn.classList.add("active");
+        if (this.elements.excerptsNegBtn)
+          this.elements.excerptsNegBtn.classList.remove("active");
+        this.renderExcerpts("pos");
+      });
+    }
+
     // Event delegation for popups
     document.body.addEventListener("click", (event) => {
       const popupTrigger = event.target.closest("[data-popup]");
@@ -1214,6 +1280,60 @@ class Sidepanel {
     });
   }
 
+  // Simplified User Rights Index popup per UX: 8 categories + brief explanation
+  formatUriPopup(uri) {
+    if (!uri) return "No User Rights Index data available";
+    const categories = uri.categories || {};
+    const labels =
+      (EXT_CONSTANTS.ANALYSIS &&
+        EXT_CONSTANTS.ANALYSIS.USER_RIGHTS_INDEX &&
+        EXT_CONSTANTS.ANALYSIS.USER_RIGHTS_INDEX.CATEGORIES) ||
+      {};
+
+    const items = Object.entries(categories)
+      .map(([key, val]) => {
+        const label =
+          (labels[key] && labels[key].label) || this.formatCategoryName(key);
+        const sc =
+          typeof val?.score === "number" ? val.score.toFixed(0) : "N/A";
+        return `<div class=\"metric-row\"><span class=\"metric-label\">${label}:</span><span class=\"metric-value\">${sc}</span></div>`;
+      })
+      .join("");
+
+    const weighted =
+      typeof uri.weightedScore === "number" ? uri.weightedScore : "N/A";
+    const grade =
+      uri.grade ||
+      (typeof weighted === "number" ? this.getGradeFromScore(weighted) : "N/A");
+
+    const explanation = this.getUriExplanation(weighted, grade);
+
+    return `
+      <div class=\"popup-header\">
+        <strong>User Rights Index: ${typeof weighted === "number" ? weighted : "N/A"}${typeof weighted === "number" ? "%" : ""} (Grade ${grade})</strong>
+      </div>
+      <div class=\"popup-metrics\">
+        <h4>Categories:</h4>
+        ${items}
+      </div>
+      <div class=\"popup-explanation\">
+        <p><strong>What this means:</strong></p>
+        <p>${explanation}</p>
+      </div>
+    `;
+  }
+
+  getUriExplanation(weightedScore, grade) {
+    const score = typeof weightedScore === "number" ? weightedScore : 0;
+    if (score >= 80)
+      return "Strong user protections with clear terms and fair practices.";
+    if (score >= 65)
+      return "Generally balanced terms with some areas to review.";
+    if (score >= 50)
+      return "Several clauses may impact your rights; proceed with caution.";
+    return "Many terms may limit your rights. Review key sections carefully.";
+  }
+
   async loadSampleData() {
     try {
       this.statusManager.show("Loading sample data…", "info", 2000);
@@ -1227,6 +1347,13 @@ class Sidepanel {
       await this.updateSidepanelContent(sample);
       this.statusManager.show("Sample data loaded.", "success", 2500);
       this.toggleView("document");
+      // Open the referenced sample web page to verify highlights/anchors
+      try {
+        const refUrl = sample?.documentInfo?.url;
+        if (refUrl && chrome?.tabs?.create) {
+          await chrome.tabs.create({ url: refUrl });
+        }
+      } catch (_) {}
     } catch (e) {
       this.errorManager.handle(e, "loadSample");
     }

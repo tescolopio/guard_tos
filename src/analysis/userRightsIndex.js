@@ -13,6 +13,7 @@ const { EXT_CONSTANTS } = require("../utils/constants");
  */
 function createUserRightsIndex({ log = () => {}, logLevels = {} } = {}) {
   const CFG = EXT_CONSTANTS.ANALYSIS.USER_RIGHTS_INDEX;
+  const ML_CFG = CFG.ML_FUSION || {};
   const RIGHTS_CFG = EXT_CONSTANTS.ANALYSIS.RIGHTS;
 
   // Map internal clause/heuristic categories to URI categories
@@ -78,10 +79,81 @@ function createUserRightsIndex({ log = () => {}, logLevels = {} } = {}) {
         const mapped = MAP[k] || null;
         if (!mapped) return;
         const score = typeof obj?.score === "number" ? obj.score : 50;
-        categories[mapped].score = score;
-        categories[mapped].grade = gradeFrom(score);
-        categories[mapped].signals.source = "rightsAssessor";
+        const target = categories[mapped];
+        target.score = score;
+        target.grade = gradeFrom(score);
+        target.signals = target.signals || {};
+        const sources = new Set(target.signals.sources || []);
+        sources.add("rightsAssessor");
+        target.signals.sources = Array.from(sources);
+        target.signals.source = target.signals.sources.join("+");
+        if (typeof obj?.raw === "number") {
+          target.signals.ruleRaw = obj.raw;
+        }
+        if (typeof obj?.adjusted === "number") {
+          target.signals.ruleAdjusted = obj.adjusted;
+        }
+        target.signals.ruleScore = score;
       });
+
+      const mlEnabled = ML_CFG.ENABLED !== false;
+      if (mlEnabled) {
+        const minObs =
+          typeof ML_CFG.MIN_OBSERVATIONS === "number"
+            ? Math.max(1, ML_CFG.MIN_OBSERVATIONS)
+            : 1;
+        const blendWeight =
+          typeof ML_CFG.BLEND_WEIGHT === "number"
+            ? Math.min(1, Math.max(0, ML_CFG.BLEND_WEIGHT))
+            : 0.65;
+        const mlCat = analysis?.rightsDetails?.details?.mlCategoryScores || {};
+        Object.entries(mlCat).forEach(([k, obj]) => {
+          const mapped = MAP[k] || null;
+          if (!mapped) return;
+          const observations = Number(obj?.observations || 0);
+          if (observations < minObs) return;
+          let probability = null;
+          if (typeof obj?.probability === "number") {
+            probability = obj.probability;
+          } else if (typeof obj === "number") {
+            probability = obj;
+          } else if (typeof obj?.score === "number") {
+            const normalized = obj.score > 1 ? obj.score / 100 : obj.score;
+            probability = 1 - normalized;
+          }
+          if (typeof probability === "number") {
+            probability = Math.min(1, Math.max(0, probability));
+          }
+          let mlScore = null;
+          if (typeof obj?.score === "number") {
+            mlScore = obj.score;
+          } else if (typeof probability === "number") {
+            mlScore = Math.round((1 - probability) * 100);
+          }
+          if (typeof mlScore !== "number" || Number.isNaN(mlScore)) return;
+          const target = categories[mapped];
+          if (!target) return;
+          const baseScore =
+            typeof target.score === "number" ? target.score : 50;
+          const fused = Math.round(
+            blendWeight * baseScore + (1 - blendWeight) * mlScore,
+          );
+          target.score = fused;
+          target.grade = gradeFrom(fused);
+          target.signals = target.signals || {};
+          const sources = new Set(target.signals.sources || []);
+          sources.add("ml");
+          target.signals.sources = Array.from(sources);
+          target.signals.source = target.signals.sources.join("+");
+          target.signals.mlScore = mlScore;
+          if (typeof probability === "number") {
+            target.signals.mlProbability = probability;
+          }
+          if (observations) {
+            target.signals.mlObservations = observations;
+          }
+        });
+      }
 
       // Readability contributes to Clarity & Transparency
       const r = analysis?.readability;

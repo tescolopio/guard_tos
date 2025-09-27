@@ -57,7 +57,17 @@ npm run ml:full:aug
 - Optional: publish curated dataset and training scripts for reproducibility
 - Bundle-size follow-up: dictionary chunk splitting already in place; keep model JSON small
 
+## 2025-09-26 Audit Summary
+
+- ✅ Verified TF-IDF/LogReg artifact (`src/data/dictionaries/tfidf_logreg_v2.json`) matches `EXT_CONSTANTS.ML.MODEL_VERSION` and is distributed via the `dictionaries/` bundle.
+- ✅ Confirmed runtime thresholds in `src/utils/constants.js` mirror the latest calibration report (`docs/analysis/model-calibration.md`).
+- ⚠️ Coverage gap: shipped model only predicts `ARBITRATION`, `CLASS_ACTION_WAIVER`, `LIABILITY_LIMITATION`, and `UNILATERAL_CHANGES`; all other URI categories rely solely on rules.
+- ⚠️ Confidence telemetry limited to rule/ML fusion (`FUSE_ALPHA = 0.65`); no per-category confidence exposed yet.
+- ⚠️ Dataset freshness: `data/clauses.jsonl` still at 2,605 rows (2025-09-17); no privacy/data-sharing augments incorporated.
+- 📌 Follow-up items tracked in `docs/ml-enhancement-plan.md` under “Production Readiness Workstreams.”
+
 ## Change Log
 
+- 2025‑09‑26: ML asset audit completed; documented shipped model scope, threshold sync, and outstanding category coverage gaps.
 - 2025‑09‑17: Augmented dataset prepared; model retrained; thresholds recalibrated; constants updated; prod build verified.
 - 2025‑09‑17: Quality pass on harvested data (removed UI/boilerplate; dropped 3 lines); dataset 2,605 rows; retrained and recalibrated; thresholds updated.

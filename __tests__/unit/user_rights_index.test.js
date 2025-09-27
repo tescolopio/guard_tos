@@ -32,4 +32,37 @@ describe("User Rights Index", () => {
     expect(typeof res.weightedScore).toBe("number");
     expect(["A", "B", "C", "D", "F"]).toContain(res.grade);
   });
+
+  it("blends mlCategoryScores into category outputs", () => {
+    const uri = createUserRightsIndex();
+    const analysis = {
+      rightsDetails: {
+        details: {
+          categoryScores: {
+            DISPUTE_RESOLUTION: { score: 80 },
+          },
+          mlCategoryScores: {
+            DISPUTE_RESOLUTION: {
+              probability: 0.8,
+              score: 20,
+              observations: 3,
+            },
+          },
+        },
+      },
+    };
+
+    const res = uri.compute(analysis);
+    const category = res.categories.DISPUTE_RESOLUTION;
+
+    expect(category.score).toBe(59);
+    expect(category.grade).toBeDefined();
+    expect(category.signals).toBeDefined();
+    expect(category.signals.mlScore).toBe(20);
+    expect(category.signals.mlProbability).toBeCloseTo(0.8, 5);
+    expect(category.signals.mlObservations).toBe(3);
+    expect(category.signals.source).toBe("rightsAssessor+ml");
+    expect(category.signals.sources).toContain("ml");
+    expect(category.signals.sources).toContain("rightsAssessor");
+  });
 });

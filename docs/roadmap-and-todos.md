@@ -83,27 +83,49 @@ Acceptance criteria:
 
 References: docs/ml-enhancement-plan.md, docs/legal-corpus-implementation.md, docs/training_progress.md
 
-- Data Pipeline
-  - [ ] Implement legal corpus collectors (GDPR, FTC, SEC, case law) with licenses
-  - [ ] Preprocessing: segmentation, de‑citation, normalization
-  - [ ] Weak supervision labelers per category; export grade labels
-  - [ ] Gold set: small, hand‑labeled ToS corpus for evaluation
-- Models & Training
-  - [ ] PoC: Data Privacy classifier (DistilBERT → distilled/quantized TF.js or lightweight classic model)
-  - [ ] Calibration: per‑category thresholds targeting precision≥0.8
-  - [ ] Model cards and change logs per release
-  - [ ] Size budget: <10MB per category (compressed); prefer <5MB
-- In‑Browser Integration
-  - [ ] Lazy load per category; background warmup
-  - [ ] Web Worker inference; chunk batching
-  - [ ] Fusion with rules via alpha weighting; graceful fallback
-  - [ ] Telemetry‑free counters for user feedback (local only)
+### Workstream Checklist
+
+#### Audit Current ML Assets
+
+- [ ] Inventory TF-IDF/logreg artifacts (`dictionaries/tfidf_logreg_v2.json`), loading paths, and feature flags
+- [ ] Document baseline behavior, thresholds, and gaps in `docs/training_progress.md`
+- [ ] Capture outstanding issues (missing categories, incomplete readability fields, mock/test drift)
+
+#### Design Training Data Pipeline
+
+- [ ] Finalize corpus sources per URI category with licensing notes and storage manifest
+- [ ] Build ingestion/preprocessing scripts (segmentation, citation stripping, normalization)
+- [ ] Define weak supervision labelers + gold annotation guidelines with legal SMEs
+
+#### Implement Category Models
+
+- [ ] Select lightweight architectures and codify reproducible training scripts
+- [ ] Calibrate per-category thresholds (precision ≥0.80) and enforce <10 MB compressed artifacts
+- [ ] Publish model cards/change logs alongside versioned exports
+
+#### Integrate Models in the Extension
+
+- [ ] Extend `rightsAssessor.js` loader for lazy model fetch + feature flag controls
+- [ ] Move inference to Web Workers with chunk batching and rule-only fallback tests
+- [ ] Centralize alpha blending + threshold configuration in `src/utils/constants.js`
+
+#### Validation & Benchmarking
+
+- [ ] Build evaluation harness (precision/recall, confusion matrices, latency) against gold/adversarial corpora
+- [ ] Automate regression comparisons vs rule-only results in CI artifacts
+- [ ] Establish go/no-go promotion checklist (QA + legal review, reproducible notebooks)
+
+#### Ops, Monitoring, Documentation
+
+- [ ] Package artifacts with integrity hashes, CDN pipeline steps, and offline fallback guidance
+- [ ] Update developer + user docs (URI scoring, architecture, release notes) for ML-assisted scoring
+- [ ] Plan telemetry-free health checks, manual feedback loop, and documented re-training cadence
 
 Acceptance criteria:
 
-- Data Privacy ML improves detection vs rule‑only on fixtures
-- Latency overhead <300ms on common pages
-- Feature flag to disable ML; full fallback path validated
+- Category models beat rule-only precision/recall on gold fixtures with documented metrics
+- Latency overhead per 25 kB document <300 ms (worker path) with memory budget respected
+- Feature flags, fallbacks, and model promotion checklist verified in CI + manual QA
 
 ---
 

@@ -73,15 +73,15 @@
   "summary": "Overall, these terms present moderate risks around dispute resolution and liability, with better transparency and user controls in data practices.",
   "enhancedData": {
     "enhancedSummary": {
-      "overall": "**Overview**\n\n⚠️ Arbitration is required for most disputes, and there's a class action waiver.✅ Clear opt-out options exist for certain data uses.💰 Automatic renewal terms require attention.🔒 Data retention policies are documented and deletion options are available."
+      "overall": "**Overview**\n\nArbitration is required for most disputes, and there's a class action waiver. Clear opt-out options exist for certain data uses. Automatic renewal terms require attention. Data retention policies are documented and deletion options are available."
     },
     "riskLevel": "medium",
     "keyFindings": [
-      "⚠️ Mandatory arbitration with a delegation of arbitrability",
-      "⚠️ Class action waiver present",
-      "✅ Opt-out for certain data sharing",
-      "💰 Auto-renewal defaults to on; cancellation process is non-trivial",
-      "🔒 Clear retention policy and self-service deletion"
+      "Mandatory arbitration with a delegation of arbitrability",
+      "Class action waiver present",
+      "Opt-out for certain data sharing",
+      "Auto-renewal defaults to on; cancellation process is non-trivial",
+      "Clear retention policy and self-service deletion"
     ],
     "plainLanguageAlert": "This document contains several sections that may impact your rights. Review arbitration and liability sections carefully."
   },
@@ -92,8 +92,8 @@
       "summary": "Most disputes will be resolved via binding arbitration, with limited carveouts.",
       "riskLevel": "high",
       "keyPoints": [
-        "⚠️ Binding arbitration is mandatory",
-        "⚠️ Class action waiver applies",
+        "Binding arbitration is mandatory",
+        "Class action waiver applies",
         "Delegation of arbitrability is specified"
       ],
       "categoryHints": [
@@ -115,8 +115,8 @@
       "summary": "Data is collected for service improvement; opt-outs for certain sharing are offered. Retention periods are disclosed.",
       "riskLevel": "medium",
       "keyPoints": [
-        "✅ Opt-out for marketing communications",
-        "🔒 Retention schedules are transparent"
+        "Opt-out for marketing communications",
+        "Retention schedules are transparent"
       ],
       "categoryHints": [
         "DATA_SALE_OR_SHARING",
@@ -137,7 +137,7 @@
       "summary": "Subscriptions auto-renew by default; cancellation requires a few steps.",
       "riskLevel": "medium",
       "keyPoints": [
-        "💰 Auto-renewal is enabled by default",
+        "Auto-renewal is enabled by default",
         "Consider setting reminders to cancel"
       ],
       "categoryHints": ["AUTO_RENEWAL_FRICTION", "NEGATIVE_OPTION_BILLING"],

@@ -203,6 +203,48 @@ class CategorySpecificModel:
 
 ---
 
+## 🚀 Production Readiness Workstreams
+
+To ship category-specific models with confidence, we organize the implementation into six end-to-end workstreams. Each stream has clear deliverables, owners, and success criteria that map directly to the URI grading rubric.
+
+### 1. Audit Current ML Assets
+
+- Inventory the shipping TF-IDF/logistic regression bundle (`dictionaries/tfidf_logreg_v2.json`) and confirm how it is loaded in `rightsAssessor.js`.
+- Review `docs/training_progress.md`, `EXT_CONSTANTS.ML` defaults, and existing Jest fixtures to understand baseline behavior.
+- Capture open gaps (missing categories, null readability fields) and document known limitations before introducing new models.
+
+### 2. Design Training Data Pipeline
+
+- Finalize corpus sources per category (GDPR/CCPA, FTC settlements, SEC filings, adversarial ToS examples) with licensing notes.
+- Implement ingestion + preprocessing scripts (segmentation, citation stripping, normalization) and store them under `scripts/corpus/`.
+- Define weak-supervision labelers and gold-standard annotation guidelines with legal SMEs; track datasets via a manifest (size, date, coverage). See `docs/ml/training-data-pipeline.md` for the detailed blueprint and `docs/ml/gold-datasets.md` for gold evaluation dataset requirements.
+
+### 3. Implement Category Models
+
+- Choose lightweight architectures (DistilBERT → distilled TF.js or classic models) and codify training scripts with reproducible seeds.
+- Run hyperparameter sweeps, calibrate thresholds for precision ≥0.80, and constrain model artifacts to <10 MB compressed.
+- Produce model cards and change logs per release so QA/legal can audit behavior. Reference `docs/ml/category-models.md` for artifact requirements and promotion checklist, and use `scripts/ml/calibrate_category_model.py` plus `scripts/ml/export_category_model.py` as the standard tooling.
+
+### 4. Integrate Models in the Extension
+
+- Extend the async loader in `rightsAssessor.js` to fetch category models lazily with feature flags and graceful fallback.
+- Move inference onto Web Workers with chunk batching to keep the UI responsive; ensure rule-only mode stays green.
+- Update configuration (`constants.js`) so alpha blending and per-category thresholds are centrally managed.
+
+### 5. Validation & Benchmarking
+
+- Build an evaluation harness that runs precision/recall, confusion matrices, and latency measurements against gold corpora and adversarial fixtures.
+- Automate regression comparisons between rule-only and ML-augmented analyses; surface deltas in CI artifacts.
+- Establish a promotion checklist (QA sign-off, legal review, reproducible notebooks) before a model ships. See `docs/ml/evaluation-plan.md` for detailed workflow and metrics.
+
+### 6. Ops, Monitoring, and Documentation
+
+- Package model artifacts with integrity hashes, CDN/CD pipeline instructions, and offline fallbacks.
+- Update developer docs (`docs/analysis/user-rights-index.md`, `docs/architecture.md`) plus user-facing messaging for new scores.
+- Plan for telemetry-free health checks, manual feedback loops, and a re-training cadence documented in `docs/training_progress.md`.
+
+---
+
 ## 🏗️ Technical Implementation Plan
 
 ### Phase 1: Proof of Concept (4-6 weeks)

@@ -1,0 +1,20 @@
+{
+  "category": "data_collection_use",
+  "version": "vYYYY.MM.DD",
+  "records": 0,
+  "label_distribution": {
+    "label_name": 0.0
+  },
+  "sources": ["source_id"],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [
+    {
+      "id": "annotator@example",
+      "role": "legal_review",
+      "notes": ""
+    }
+  ],
+  "license": "",
+  "notes": ""
+}

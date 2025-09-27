@@ -105,6 +105,7 @@
   transition: transform var(--transition-speed);
   cursor: pointer;
   position: relative; /* anchor for tooltip */
+  z-index: 1; /* ensure base stacking context */
 }
 
 .score-card:hover {
@@ -177,7 +178,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px var(--shadow-color);
   max-width: 320px;
-  z-index: 1000;
+  z-index: 10000; /* above grade elements */
   border: 1px solid var(--border-color);
 }
 /* Show popup on hover for score cards */

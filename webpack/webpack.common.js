@@ -15,6 +15,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "../dist"),
     filename: "[name].js",
+    // Avoid automatic publicPath detection in content script context; we'll set it at runtime
+    publicPath: "",
     clean: true,
   },
   module: {

@@ -161,6 +161,11 @@ const EXT_CONSTANTS = {
         D: { MIN: 50 },
         F: { MIN: 0 },
       },
+      ML_FUSION: {
+        ENABLED: true,
+        BLEND_WEIGHT: 0.65,
+        MIN_OBSERVATIONS: 1,
+      },
     },
   },
 

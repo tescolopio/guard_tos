@@ -30,21 +30,6 @@ key excerpts, and uncommon terms.
         </div>
 
         <div class="scores">
-          <div class="score-card overall-grade" data-popup="overallPopup">
-            <div class="grade-circle">
-              <span id="overall-grade">-</span>
-            </div>
-            <p>Overall Grade</p>
-            <div
-              id="overallPopup"
-              class="popup"
-              role="tooltip"
-              title="Overall Grade Tooltip"
-            >
-              <div class="popup-content"></div>
-            </div>
-          </div>
-
           <div
             class="score-card readability-score"
             data-popup="readabilityPopup"
@@ -52,7 +37,7 @@ key excerpts, and uncommon terms.
             <div class="grade-circle">
               <span id="readability-grade">-</span>
             </div>
-            <p>Readability Score</p>
+            <p>Readability Grade</p>
             <div
               id="readabilityPopup"
               class="popup"
@@ -67,7 +52,7 @@ key excerpts, and uncommon terms.
             <div class="grade-circle">
               <span id="user-rights-index">-</span>
             </div>
-            <p>User Rights Index</p>
+            <p>User Rights Index Grade</p>
             <div
               id="rightsPopup"
               class="popup"
@@ -82,30 +67,6 @@ key excerpts, and uncommon terms.
 
       <main class="analysis-content">
         <div class="loading-indicator">Analyzing document...</div>
-
-        <!-- Content Organization Section -->
-        <section class="content-organization">
-          <div class="view-toggle">
-            <button
-              type="button"
-              id="document-level-btn"
-              class="toggle-btn active"
-            >
-              Document-Level
-            </button>
-            <button type="button" id="by-section-btn" class="toggle-btn">
-              By Section
-            </button>
-            <button
-              type="button"
-              id="load-sample-btn"
-              class="toggle-btn demo-btn"
-              title="Load sample analysis into the panel"
-            >
-              Load Sample Data
-            </button>
-          </div>
-        </section>
 
         <!-- Risk Alert Section -->
         <section
@@ -134,7 +95,29 @@ key excerpts, and uncommon terms.
         </section>
 
         <section class="column">
-          <h2>📝 Summary Content</h2>
+          <h2>📝 Document Summary</h2>
+          <div class="content-organization">
+            <div class="view-toggle">
+              <button
+                type="button"
+                id="document-level-btn"
+                class="toggle-btn active"
+              >
+                Overall
+              </button>
+              <button type="button" id="by-section-btn" class="toggle-btn">
+                By Section
+              </button>
+              <button
+                type="button"
+                id="load-sample-btn"
+                class="toggle-btn demo-btn"
+                title="Load sample analysis into the panel"
+              >
+                Load Sample Data
+              </button>
+            </div>
+          </div>
           <div id="overall-summary" class="content-section enhanced-summary">
             <div class="placeholder">Loading summary...</div>
           </div>
@@ -149,7 +132,6 @@ key excerpts, and uncommon terms.
         </section>
 
         <section class="column section-breakdown-container">
-          <h2>📑 Section-by-Section Breakdown</h2>
           <div id="section-summaries" class="content-section enhanced-sections">
             <div class="placeholder">Loading sections...</div>
           </div>
@@ -159,6 +141,20 @@ key excerpts, and uncommon terms.
       <aside class="additional-info">
         <section class="key-excerpts" data-popup="excerptsPopup">
           <h2>Key Excerpts</h2>
+          <div class="content-organization">
+            <div class="view-toggle">
+              <button
+                type="button"
+                id="excerpts-neg-btn"
+                class="toggle-btn active"
+              >
+                Negative
+              </button>
+              <button type="button" id="excerpts-pos-btn" class="toggle-btn">
+                Positive
+              </button>
+            </div>
+          </div>
           <div id="key-excerpts-list" class="content-section">
             <div class="placeholder">Loading excerpts...</div>
           </div>

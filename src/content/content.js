@@ -15,6 +15,14 @@
  *  - 2024-09-26 | tescolopio | Modified to work with Chrome extension content scripts and globally defined variables.
  */
 
+// IMPORTANT: set webpack runtime publicPath to the extension base before anything else
+// This prevents "Automatic publicPath is not supported in this browser" errors
+try {
+  require("../runtime/publicPath");
+} catch (e) {
+  /* noop */
+}
+
 // Set a flag on the body to indicate the content script has loaded
 // Wait for DOM to be ready first
 if (document.readyState === "loading") {

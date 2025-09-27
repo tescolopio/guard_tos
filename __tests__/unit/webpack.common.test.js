@@ -16,11 +16,15 @@ describe("webpack.common.js configuration", () => {
   });
 
   test("output configuration is correct", () => {
-    expect(webpackConfig.output).toEqual({
-      path: path.resolve(__dirname, "../../dist"),
-      filename: "[name].js",
-      clean: true,
-    });
+    expect(webpackConfig.output).toEqual(
+      expect.objectContaining({
+        path: path.resolve(__dirname, "../../dist"),
+        filename: "[name].js",
+        clean: true,
+      }),
+    );
+    // Explicit publicPath is set to avoid automatic detection in content scripts
+    expect(webpackConfig.output.publicPath).toBe("");
   });
 
   test("module rules are correct", () => {
