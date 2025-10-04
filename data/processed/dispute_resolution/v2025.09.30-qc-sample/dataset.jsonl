@@ -1,0 +1,4 @@
+{"text": "Any dispute will be resolved by binding arbitration administered by the AAA.", "labels": {"binding_arbitration": 1.0, "class_action_waiver": 0.0, "jury_trial_waiver": 0.0, "venue_selection": 0.0}}
+{"text": "You waive your right to participate in any class action and agree to individual arbitration.", "labels": {"binding_arbitration": 0.5, "class_action_waiver": 1.0, "jury_trial_waiver": 0.0, "venue_selection": 0.0}}
+{"text": "Any dispute will be resolved by binding arbitration administered by the AAA.", "labels": {"binding_arbitration": 1.0, "class_action_waiver": 0.0, "jury_trial_waiver": 0.0, "venue_selection": 0.0}}
+{"text": "Este acuerdo se rige por las leyes de España y el fuero exclusivo será en Madrid.", "labels": {"binding_arbitration": 0.0, "class_action_waiver": 0.0, "jury_trial_waiver": 0.0, "venue_selection": 1.0}}

@@ -1,0 +1,19 @@
+{
+  "category": "user_privacy",
+  "version": "test_integration",
+  "records": 4,
+  "label_distribution": {
+    "access_rights": 0.25,
+    "deletion_offered": 0.25,
+    "privacy_waiver": 0.25,
+    "retention_disclosed": 0.25
+  },
+  "sources": [
+    "pattern_test"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+}

@@ -6,3 +6,5 @@ pandas==2.2.2
 numpy==1.26.4
 scikit-learn==1.4.2
 tqdm==4.66.5
+langdetect==1.0.9
+datasketch==1.5.9

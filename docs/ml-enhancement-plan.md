@@ -217,6 +217,7 @@ To ship category-specific models with confidence, we organize the implementation
 
 - Finalize corpus sources per category (GDPR/CCPA, FTC settlements, SEC filings, adversarial ToS examples) with licensing notes.
 - Implement ingestion + preprocessing scripts (segmentation, citation stripping, normalization) and store them under `scripts/corpus/`.
+- First pass corpus builder: `scripts/corpus/build_category_dataset.py` (see `npm run ml:corpus:build:dr`).
 - Define weak-supervision labelers and gold-standard annotation guidelines with legal SMEs; track datasets via a manifest (size, date, coverage). See `docs/ml/training-data-pipeline.md` for the detailed blueprint and `docs/ml/gold-datasets.md` for gold evaluation dataset requirements.
 
 ### 3. Implement Category Models

@@ -1,0 +1,104 @@
+{
+  "metadata": {
+    "category": "dispute_resolution",
+    "version": "v2025.10.02",
+    "generated_at": "2025-10-04T01:41:09.583456Z",
+    "sources": [
+      "hf_cuad_v1",
+      "weak_supervision"
+    ],
+    "thresholds": {
+      "max_duplicate_ratio": 0.12,
+      "max_non_primary_language": 0.7,
+      "min_tokens": 8,
+      "max_tokens": 3000,
+      "minhash_similarity_threshold": 0.8
+    }
+  },
+  "integrity": {
+    "status": "pass",
+    "errors": []
+  },
+  "structure": {
+    "status": "pass",
+    "issues": []
+  },
+  "length": {
+    "char_stats": {
+      "count": 39,
+      "min": 130,
+      "max": 1959,
+      "mean": 408.85,
+      "median": 327
+    },
+    "token_stats": {
+      "count": 39,
+      "min": 22,
+      "max": 316,
+      "mean": 66.26,
+      "median": 48
+    },
+    "flags": []
+  },
+  "language": {
+    "primary": "en",
+    "breakdown": {
+      "de": 0.0183,
+      "en": 0.9817
+    },
+    "flags": [
+      "1.83% of tokens attributed to non-English languages (examples: 4)"
+    ],
+    "classification": {
+      "de": 0.0256,
+      "en": 0.9744
+    },
+    "confidence_summary": {
+      "mean": 0.993,
+      "median": 1.0,
+      "min": 0.714
+    }
+  },
+  "dedupe": {
+    "duplicate_ratio": 0.0,
+    "sample_pairs": [],
+    "flags": [],
+    "similarity_threshold": 0.8
+  },
+  "labels": {
+    "totals": {
+      "binding_arbitration": 5,
+      "class_action_waiver": 0,
+      "jury_trial_waiver": 1,
+      "venue_selection": 33
+    },
+    "warnings": []
+  },
+  "manifest": {
+    "category": "dispute_resolution",
+    "version": "v2025.10.02",
+    "records": 39,
+    "label_distribution": {
+      "binding_arbitration": 0.1282,
+      "class_action_waiver": 0.0,
+      "jury_trial_waiver": 0.0256,
+      "venue_selection": 0.8462
+    },
+    "sources": [
+      "hf_cuad_v1",
+      "weak_supervision"
+    ],
+    "qa_sample_size": 0,
+    "qa_accuracy": 0.0,
+    "annotators": [],
+    "license": "pending",
+    "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+  },
+  "gates": {
+    "summary": "pass",
+    "failed_checks": [],
+    "warnings": [
+      "1.83% of tokens attributed to non-English languages (examples: 4)"
+    ]
+  }
+}

@@ -34,6 +34,7 @@
     "ml:prep:train:calibrate": "npm run ml:prep && npm run ml:train && npm run ml:calibrate",
     "ml:sync-thresholds": "node scripts/sync_thresholds.js",
     "ml:smoke": "node scripts/smoke_model_load.js",
+    "ml:corpus:build:dr": "bash -lc \"/mnt/d/guard_tos/.venv/bin/python scripts/corpus/build_category_dataset.py --category dispute_resolution --input data/clauses.jsonl --output-dir data/processed/dispute_resolution/v$(date +%Y.%m.%d) --sources harvested_clauses\"",
     "analyze:fixture": "node scripts/run_analysis_fixture.js __tests__/fixtures/simple-tos.html"
   },
   "dependencies": {

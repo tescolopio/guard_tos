@@ -23,11 +23,8 @@ import numpy as np  # type: ignore
 
 from transformers import AutoModelForSequenceClassification, AutoTokenizer  # type: ignore
 
-from evaluate_category_model import (  # type: ignore
-    CATEGORY_REGISTRY,
-    build_dataset,
-    compute_predictions,
-)
+from scripts.ml.category_config import CATEGORY_REGISTRY
+from scripts.ml.evaluate_category_model import build_dataset, compute_predictions
 
 
 def derive_thresholds(y_true: np.ndarray, y_proba: np.ndarray) -> Dict[str, float]:

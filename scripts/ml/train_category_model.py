@@ -34,7 +34,6 @@ import argparse
 import json
 import logging
 import os
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -52,54 +51,10 @@ except ImportError as exc:  # pragma: no cover - guidance for users without deps
         "`pip install -r scripts/requirements.txt` before running training."
     ) from exc
 
+from scripts.ml.category_config import CATEGORY_REGISTRY, CategoryConfig
+
+
 LOGGER = logging.getLogger("train_category_model")
-
-
-@dataclass
-class CategoryConfig:
-    """Per-category metadata used to configure training and reporting."""
-
-    name: str
-    label_list: List[str]
-    description: str
-    max_length: int = 512
-
-
-CATEGORY_REGISTRY: Dict[str, CategoryConfig] = {
-    "data_collection": CategoryConfig(
-        name="data_collection",
-        label_list=[
-            "data_collection_extensive",
-            "data_collection_minimal",
-            "consent_explicit",
-            "consent_implied",
-            "purpose_specific",
-            "purpose_broad",
-        ],
-        description="Data collection, consent, and purpose limitation clauses",
-    ),
-    "content_rights": CategoryConfig(
-        name="content_rights",
-        label_list=[
-            "license_assignment",
-            "ip_retained",
-            "moral_rights_waiver",
-            "commercial_use_claim",
-        ],
-        description="User-generated content and IP control clauses",
-    ),
-    "dispute_resolution": CategoryConfig(
-        name="dispute_resolution",
-        label_list=[
-            "binding_arbitration",
-            "class_action_waiver",
-            "jury_trial_waiver",
-            "venue_selection",
-        ],
-        description="Dispute resolution mechanics",
-    ),
-    # TODO: populate remaining categories (account_management, terms_changes, etc.)
-}
 
 
 def parse_args() -> argparse.Namespace:

@@ -1,0 +1,20 @@
+{
+  "category": "dispute_resolution",
+  "version": "v2025.10.02_ledgar",
+  "records": 3285,
+  "label_distribution": {
+    "binding_arbitration": 0.2076,
+    "class_action_waiver": 0.0037,
+    "jury_trial_waiver": 0.2782,
+    "venue_selection": 0.6374
+  },
+  "sources": [
+    "hf_ledgar",
+    "weak_supervision"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+}

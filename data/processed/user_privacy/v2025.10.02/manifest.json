@@ -1,0 +1,20 @@
+{
+  "category": "user_privacy",
+  "version": "v2025.10.02",
+  "records": 8738,
+  "label_distribution": {
+    "access_rights": 0.0171,
+    "deletion_offered": 1.0,
+    "privacy_waiver": 0.0,
+    "retention_disclosed": 0.007
+  },
+  "sources": [
+    "hf_privacy_policy_qa",
+    "weak_supervision"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+}

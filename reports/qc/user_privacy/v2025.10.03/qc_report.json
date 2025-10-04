@@ -1,0 +1,96 @@
+{
+  "metadata": {
+    "category": "user_privacy",
+    "version": "v2025.10.03",
+    "generated_at": "2025-10-04T01:03:43.475023Z",
+    "sources": [
+      "hf_privacy_policy_qa"
+    ],
+    "thresholds": {
+      "max_duplicate_ratio": 0.08,
+      "max_non_primary_language": 0.98,
+      "min_tokens": 5,
+      "max_tokens": 3000,
+      "minhash_similarity_threshold": 0.85
+    }
+  },
+  "integrity": {
+    "status": "pass",
+    "errors": []
+  },
+  "structure": {
+    "status": "pass",
+    "issues": []
+  },
+  "length": {
+    "char_stats": {
+      "count": 26,
+      "min": 153,
+      "max": 509,
+      "mean": 277.19,
+      "median": 253.5
+    },
+    "token_stats": {
+      "count": 26,
+      "min": 26,
+      "max": 81,
+      "mean": 44.42,
+      "median": 40.0
+    },
+    "flags": []
+  },
+  "language": {
+    "primary": "en",
+    "breakdown": {
+      "en": 1.0
+    },
+    "flags": [],
+    "classification": {
+      "en": 1.0
+    },
+    "confidence_summary": {
+      "mean": 1.0,
+      "median": 1.0,
+      "min": 1.0
+    }
+  },
+  "dedupe": {
+    "duplicate_ratio": 0.0,
+    "sample_pairs": [],
+    "flags": [],
+    "similarity_threshold": 0.85
+  },
+  "labels": {
+    "totals": {
+      "retention_disclosed": 5,
+      "deletion_offered": 3,
+      "access_rights": 18,
+      "privacy_waiver": 0
+    },
+    "warnings": []
+  },
+  "manifest": {
+    "category": "user_privacy",
+    "version": "v2025.10.03",
+    "records": 26,
+    "label_distribution": {
+      "access_rights": 0.6923,
+      "deletion_offered": 0.1154,
+      "privacy_waiver": 0.0,
+      "retention_disclosed": 0.1923
+    },
+    "sources": [
+      "hf_privacy_policy_qa"
+    ],
+    "qa_sample_size": 0,
+    "qa_accuracy": 0.0,
+    "annotators": [],
+    "license": "pending",
+    "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+  },
+  "gates": {
+    "summary": "pass",
+    "failed_checks": [],
+    "warnings": []
+  }
+}

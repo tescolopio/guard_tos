@@ -1,56 +1,84 @@
 # Hugging Face dataset selection manifest for Terms Guardian
-# Update date: 2025-09-23
+# Update date: 2025-10-02
 
-version: 1
+version: 2
 
 categories:
-  data_privacy:
-    notes: Primary sources on HF are limited; prefer external OPP-115/Polisis; supplement with GDPR/CCPA regulatory text for weak supervision.
+  data_collection_use:
+    notes: Privacy policies, GDPR/CCPA clauses, data collection practices
+    priority: HIGH
     candidates:
       - name: amentaga-nttd/privacy-policy-qa-classification
         link: https://hf.co/datasets/amentaga-nttd/privacy-policy-qa-classification
         license: review
-        status: consider
-  data_sharing:
-    notes: Use ContractNLI subsets on sharing with third parties (license NC/SA caution); supplement with SEC contracts.
-    candidates:
-      - name: mteb/ContractNLISharingWithThirdPartiesLegalBenchClassification
-        link: https://hf.co/datasets/mteb/ContractNLISharingWithThirdPartiesLegalBenchClassification
-        license: cc-by-4.0
-        status: evaluate
-  user_control:
-    notes: Map to access/delete/portability language in privacy policies; likely off-Hub.
-    candidates: []
-  service_terms:
-    notes: Use curated ToS fixtures (repo) + external corpora; LegalBench consumer_contracts_qa for eval.
-    candidates:
-      - name: mteb/legalbench_consumer_contracts_qa
-        link: https://hf.co/datasets/mteb/legalbench_consumer_contracts_qa
-        license: cc-by-nc-4.0
-        status: eval-only
-  liability:
-    notes: Strong coverage via CUAD; pick clause-classification variant for convenience.
-    candidates:
-      - name: dvgodoy/CUAD_v1_Contract_Understanding_clause_classification
-        link: https://hf.co/datasets/dvgodoy/CUAD_v1_Contract_Understanding_clause_classification
+        status: select
+      - name: pile-of-law/pile-of-law
+        link: https://hf.co/datasets/pile-of-law/pile-of-law
         license: cc-by-4.0
         status: select
+        config: eu_legislation
+  
+  user_privacy:
+    notes: User privacy rights, data access/deletion, retention policies
+    priority: HIGH
+    candidates:
+      - name: amentaga-nttd/privacy-policy-qa-classification
+        link: https://hf.co/datasets/amentaga-nttd/privacy-policy-qa-classification
+        license: review
+        status: select
+  
   dispute_resolution:
-    notes: CUAD + LegalBench tasks (license dependent); add arbitration/class action clauses.
+    notes: Arbitration clauses, class action waivers, venue selection
+    priority: HIGH
     candidates:
       - name: theatticusproject/cuad
         link: https://hf.co/datasets/theatticusproject/cuad
         license: cc-by-4.0
         status: select
+      - name: dvgodoy/CUAD_v1_Contract_Understanding_clause_classification
+        link: https://hf.co/datasets/dvgodoy/CUAD_v1_Contract_Understanding_clause_classification
+        license: cc-by-4.0
+        status: select
+
+  data_sharing:
+    notes: Use ContractNLI subsets on sharing with third parties (license NC/SA caution); supplement with SEC contracts.
+    priority: MEDIUM
+    candidates:
+      - name: mteb/ContractNLISharingWithThirdPartiesLegalBenchClassification
+        link: https://hf.co/datasets/mteb/ContractNLISharingWithThirdPartiesLegalBenchClassification
+        license: cc-by-4.0
+        status: evaluate
+  
+  service_terms:
+    notes: Use curated ToS fixtures (repo) + external corpora; LegalBench consumer_contracts_qa for eval.
+    priority: MEDIUM
+    candidates:
+      - name: mteb/legalbench_consumer_contracts_qa
+        link: https://hf.co/datasets/mteb/legalbench_consumer_contracts_qa
+        license: cc-by-nc-4.0
+        status: eval-only
+  
+  liability:
+    notes: Strong coverage via CUAD; pick clause-classification variant for convenience.
+    priority: MEDIUM
+    candidates:
+      - name: dvgodoy/CUAD_v1_Contract_Understanding_clause_classification
+        link: https://hf.co/datasets/dvgodoy/CUAD_v1_Contract_Understanding_clause_classification
+        license: cc-by-4.0
+        status: select
+  
   content_ip:
     notes: CUAD IP ownership tasks and LEDGAR categories.
+    priority: LOW
     candidates:
       - name: MAdAiLab/lex_glue_ledgar
         link: https://hf.co/datasets/MAdAiLab/lex_glue_ledgar
         license: review
         status: evaluate
+  
   commercial_terms:
     notes: Use CUAD for fees/termination/assignment; LEDGAR for broader labels.
+    priority: LOW
     candidates:
       - name: theatticusproject/cuad-qa
         link: https://hf.co/datasets/theatticusproject/cuad-qa
@@ -59,18 +87,46 @@ categories:
 
 selection:
   include:
+    # High-priority categories for initial training
     - {
         repo_id: dvgodoy/CUAD_v1_Contract_Understanding_clause_classification,
         splits: [train],
+        categories: [dispute_resolution, liability]
       }
-    - { repo_id: MAdAiLab/lex_glue_ledgar, splits: [train, validation, test] }
+    - { 
+        repo_id: theatticusproject/cuad, 
+        splits: [train],
+        categories: [dispute_resolution]
+      }
+    - {
+        repo_id: amentaga-nttd/privacy-policy-qa-classification,
+        splits: [train],
+        categories: [data_collection_use, user_privacy]
+      }
+    # Additional legal corpus for context
+    - { 
+        repo_id: MAdAiLab/lex_glue_ledgar, 
+        splits: [train, validation, test],
+        categories: [content_ip, dispute_resolution]
+      }
   eval_only:
     - mteb/legalbench_consumer_contracts_qa
   consider:
-    - theatticusproject/cuad
-    - amentaga-nttd/privacy-policy-qa-classification
+    - pile-of-law/pile-of-law  # Large legal corpus with EU legislation
+    - mteb/ContractNLISharingWithThirdPartiesLegalBenchClassification
 
 download:
   root_dir: data/raw
   force: false
-  timeout_sec: 1800
+  timeout_sec: 3600
+  
+ingestion:
+  # Configuration for converting raw HF datasets to training corpus format
+  output_dir: data/corpus
+  min_text_length: 50
+  max_text_length: 5000
+  language: en
+  deduplicate: true
+  formats:
+    - jsonl  # One document per line for efficient streaming
+

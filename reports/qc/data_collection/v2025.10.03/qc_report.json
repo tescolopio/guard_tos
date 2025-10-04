@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "category": "data_collection",
+    "version": "v2025.10.03",
+    "generated_at": "2025-10-04T01:05:26.887511Z",
+    "sources": [
+      "hf_privacy_policy_qa"
+    ],
+    "thresholds": {
+      "max_duplicate_ratio": 0.99,
+      "max_non_primary_language": 0.98,
+      "min_tokens": 10,
+      "max_tokens": 3000,
+      "minhash_similarity_threshold": 0.95
+    }
+  },
+  "integrity": {
+    "status": "pass",
+    "errors": []
+  },
+  "structure": {
+    "status": "pass",
+    "issues": []
+  },
+  "length": {
+    "char_stats": {
+      "count": 42,
+      "min": 135,
+      "max": 771,
+      "mean": 283.57,
+      "median": 244.5
+    },
+    "token_stats": {
+      "count": 42,
+      "min": 21,
+      "max": 119,
+      "mean": 45.07,
+      "median": 40.0
+    },
+    "flags": []
+  },
+  "language": {
+    "primary": "en",
+    "breakdown": {
+      "en": 1.0
+    },
+    "flags": [],
+    "classification": {
+      "en": 1.0
+    },
+    "confidence_summary": {
+      "mean": 1.0,
+      "median": 1.0,
+      "min": 1.0
+    }
+  },
+  "dedupe": {
+    "duplicate_ratio": 0.0,
+    "sample_pairs": [],
+    "flags": [],
+    "similarity_threshold": 0.95
+  },
+  "labels": {
+    "totals": {
+      "data_collection_extensive": 27,
+      "data_collection_minimal": 3,
+      "consent_explicit": 4,
+      "consent_implied": 1,
+      "purpose_specific": 0,
+      "purpose_broad": 8
+    },
+    "warnings": []
+  },
+  "manifest": {
+    "category": "data_collection",
+    "version": "v2025.10.03",
+    "records": 42,
+    "label_distribution": {
+      "consent_explicit": 0.0952,
+      "consent_implied": 0.0238,
+      "data_collection_extensive": 0.6429,
+      "data_collection_minimal": 0.0714,
+      "purpose_broad": 0.1905,
+      "purpose_specific": 0.0
+    },
+    "sources": [
+      "hf_privacy_policy_qa"
+    ],
+    "qa_sample_size": 0,
+    "qa_accuracy": 0.0,
+    "annotators": [],
+    "license": "pending",
+    "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+  },
+  "gates": {
+    "summary": "pass",
+    "failed_checks": [],
+    "warnings": []
+  }
+}

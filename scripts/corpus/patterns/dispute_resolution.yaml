@@ -1,0 +1,253 @@
+# Dispute Resolution Pattern Configuration
+# Used by scripts/corpus/build_category_dataset.py for weak-supervision labeling
+
+metadata:
+  category: dispute_resolution
+  version: "1.0.0"
+  description: "Patterns for identifying dispute resolution mechanisms, arbitration clauses, waivers, and venue selection"
+  created: "2025-10-01"
+  updated: "2025-10-01"
+
+preprocessing:
+  min_tokens: 8
+  max_tokens: 1500
+  lowercase: true
+  normalize_whitespace: true
+
+# Shared keyword lists for efficiency
+shared_keywords:
+  arbitration_orgs:
+    - "AAA"
+    - "American Arbitration Association"
+    - "JAMS"
+    - "Judicial Arbitration"
+    - "ICC"
+    - "International Chamber of Commerce"
+    - "LCIA"
+    - "arbitral tribunal"
+  
+  dispute_terms:
+    - "dispute"
+    - "controversy"
+    - "claim"
+    - "disagreement"
+    - "conflict"
+  
+  court_alternatives:
+    - "small claims court"
+    - "carve-out"
+    - "carveout"
+    - "except for"
+
+# Label patterns with regex definitions and confidence weights
+labels:
+  binding_arbitration:
+    description: "Mandatory arbitration as exclusive or primary dispute resolution mechanism"
+    positive_patterns:
+      - pattern: '\b(binding|mandatory|final)\s+(and\s+binding\s+)?arbitration\b'
+        weight: 1.0
+        examples:
+          - "binding arbitration"
+          - "final and binding arbitration"
+          - "mandatory arbitration"
+      
+      - pattern: '\b(submit|resolve|settled?)\s+(to|by|through)\s+(binding\s+)?arbitration\b'
+        weight: 0.95
+        examples:
+          - "submit to arbitration"
+          - "resolve by arbitration"
+          - "settled through binding arbitration"
+      
+      - pattern: '\b(exclusive(ly)?|sole)\s+(remedy|forum|means|resolution)\s+(is|shall\s+be)\s+arbitration\b'
+        weight: 1.0
+        examples:
+          - "exclusive remedy is arbitration"
+          - "sole forum shall be arbitration"
+      
+      - pattern: '\barbitrat(e|ion|or)\b.{0,100}\b(AAA|JAMS|ICC|LCIA|arbitral\s+tribunal)\b'
+        weight: 0.9
+        examples:
+          - "arbitration under AAA rules"
+          - "arbitrator appointed by JAMS"
+      
+      - pattern: '\b(waive|forgo|give\s+up).{0,50}(right|ability).{0,50}(to\s+sue|court|judicial\s+proceedings?|litigation)\b'
+        weight: 0.85
+        examples:
+          - "waive the right to sue in court"
+          - "give up the right to judicial proceedings"
+      
+      - pattern: '\barbitration\s+agreement\b'
+        weight: 0.8
+        examples:
+          - "arbitration agreement"
+          - "this arbitration agreement"
+      
+      - pattern: '\b(disputes?|controversies|claims?).{0,80}(arbitrat(e|ed|ion)|binding\s+arbitration)\b'
+        weight: 0.75
+        examples:
+          - "disputes shall be arbitrated"
+          - "claims resolved by binding arbitration"
+
+    negative_patterns:
+      - pattern: '\b(may|optional(ly)?|at\s+your\s+option).{0,30}arbitration\b'
+        weight: -0.5
+        examples:
+          - "may elect arbitration"
+          - "at your option, arbitration"
+      
+      - pattern: '\bmediation\b(?!.{0,50}\barbitration\b)'
+        weight: -0.3
+        examples:
+          - "mediation process"
+          - "resolved through mediation"
+
+  class_action_waiver:
+    description: "Waiver of right to participate in class, collective, or representative actions"
+    positive_patterns:
+      - pattern: '\bclass\s+action\s+waiver\b'
+        weight: 1.0
+        examples:
+          - "class action waiver"
+          - "includes a class action waiver"
+      
+      - pattern: '\b(waive|waiver|give\s+up|forfeit|relinquish).{0,50}(right|ability).{0,50}(class|collective|representative)\s+(action|proceeding|lawsuit|litigation)\b'
+        weight: 1.0
+        examples:
+          - "waive your right to class action"
+          - "waiver of collective action rights"
+      
+      - pattern: '\bno\s+(class|collective|representative)\s+(action|proceeding|claims?)(\s+permitted|\s+allowed)?\b'
+        weight: 0.95
+        examples:
+          - "no class action permitted"
+          - "no collective proceedings allowed"
+      
+      - pattern: '\b(all\s+)?(disputes?|claims?|controversies).{0,50}(brought|prosecuted|pursued).{0,50}individual(ly)?\s+(basis|capacity)\b'
+        weight: 0.9
+        examples:
+          - "claims must be brought on an individual basis"
+          - "disputes pursued in individual capacity"
+      
+      - pattern: '\b(class|collective|representative).{0,50}(action|proceeding).{0,50}(prohibited|not\s+permitted|waived)\b'
+        weight: 0.95
+        examples:
+          - "class actions are prohibited"
+          - "collective proceedings not permitted"
+      
+      - pattern: '\b(agree\s+not\s+to|shall\s+not).{0,50}(participate|join).{0,50}(class|collective|representative)\s+(action|proceeding)\b'
+        weight: 0.9
+        examples:
+          - "agree not to participate in class action"
+          - "shall not join any collective proceeding"
+
+    negative_patterns:
+      - pattern: '\b(opt[\s-]?out|except|carve[\s-]?out).{0,50}(class|collective)\s+action\b'
+        weight: -0.6
+        examples:
+          - "opt-out of class action waiver"
+          - "except for certain class actions"
+
+  jury_trial_waiver:
+    description: "Waiver of right to trial by jury"
+    positive_patterns:
+      - pattern: '\bjury\s+trial\s+waiver\b'
+        weight: 1.0
+        examples:
+          - "jury trial waiver"
+          - "includes a jury trial waiver"
+      
+      - pattern: '\b(waive|waiver|give\s+up|forfeit|relinquish).{0,50}(right|entitlement).{0,50}(trial\s+by\s+)?jury(\s+trial)?\b'
+        weight: 1.0
+        examples:
+          - "waive the right to jury trial"
+          - "waiver of trial by jury"
+      
+      - pattern: '\b(hereby|knowingly|voluntarily).{0,30}(waive|relinquish).{0,30}jury(\s+trial)?\b'
+        weight: 0.95
+        examples:
+          - "hereby waive jury trial"
+          - "voluntarily relinquish right to jury"
+      
+      - pattern: '\b(no|without)\s+(jury|trial\s+by\s+jury)\b'
+        weight: 0.85
+        examples:
+          - "without a jury"
+          - "no trial by jury"
+      
+      - pattern: '\b(bench\s+trial|trial\s+by\s+judge).{0,50}(only|exclusive)\b'
+        weight: 0.75
+        examples:
+          - "bench trial only"
+          - "trial by judge exclusively"
+      
+      - pattern: '\b(agree|consent).{0,50}(trial\s+by\s+judge|bench\s+trial).{0,50}(instead\s+of|in\s+lieu\s+of).{0,30}jury\b'
+        weight: 0.9
+        examples:
+          - "agree to trial by judge instead of jury"
+          - "consent to bench trial in lieu of jury"
+
+    negative_patterns:
+      - pattern: '\bretain.{0,30}right.{0,30}jury\s+trial\b'
+        weight: -0.8
+        examples:
+          - "retain the right to jury trial"
+      
+      - pattern: '\bexcept.{0,50}jury\s+trial\b'
+        weight: -0.5
+        examples:
+          - "except for jury trial rights"
+
+  venue_selection:
+    description: "Designation of exclusive or preferred jurisdiction/venue for disputes"
+    positive_patterns:
+      - pattern: '\b(exclusive|sole)\s+(jurisdiction|venue|forum)\b'
+        weight: 0.95
+        examples:
+          - "exclusive jurisdiction"
+          - "sole venue"
+      
+      - pattern: '\b(submit|consent|agree).{0,50}(exclusive\s+)?(jurisdiction|venue).{0,50}(court|tribunal)\b'
+        weight: 0.9
+        examples:
+          - "submit to exclusive jurisdiction of courts"
+          - "consent to venue in specified tribunal"
+      
+      - pattern: '\bgoverning\s+law.{0,100}(jurisdiction|venue|forum)\b'
+        weight: 0.75
+        examples:
+          - "governing law and jurisdiction"
+          - "governing law, venue shall be"
+      
+      - pattern: '\b(venue|jurisdiction)\s+(shall\s+be|is|will\s+be).{0,100}(in|at|of)\s+[A-Z][a-z]+(\s+[A-Z][a-z]+)?\b'
+        weight: 0.85
+        examples:
+          - "venue shall be in Delaware"
+          - "jurisdiction is at New York County"
+      
+      - pattern: '\b(only|exclusively).{0,50}(courts?|tribunals?).{0,50}(of|in|located\s+in)\s+[A-Z][a-z]+'
+        weight: 0.9
+        examples:
+          - "only courts of California"
+          - "exclusively in courts located in London"
+      
+      - pattern: '\b(any\s+)?(legal\s+)?(action|proceeding|suit|litigation).{0,50}(brought|filed|instituted).{0,50}(in|at).{0,50}[A-Z][a-z]+'
+        weight: 0.7
+        examples:
+          - "legal action must be brought in New York"
+          - "proceedings filed in Delaware courts"
+
+    negative_patterns:
+      - pattern: '\b(non[\s-]?exclusive|concurrent)\s+(jurisdiction|venue)\b'
+        weight: -0.6
+        examples:
+          - "non-exclusive jurisdiction"
+          - "concurrent venue"
+
+# Review checklist for SME validation
+review_tasks:
+  - "Verify patterns capture AAA, JAMS, ICC references correctly"
+  - "Confirm class action waiver patterns distinguish between mandatory and optional waivers"
+  - "Check venue patterns don't over-trigger on general 'governing law' mentions"
+  - "Validate jury trial waiver patterns cover both explicit and implicit language"
+  - "Test against gold dataset samples to tune weights"
+  - "Ensure negative patterns correctly filter out non-mandatory or opt-out clauses"

@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "category": "user_privacy",
+    "version": "v2025.10.02",
+    "generated_at": "2025-10-03T02:41:13.575868Z",
+    "sources": [],
+    "thresholds": {
+      "max_duplicate_ratio": 0.08,
+      "max_non_primary_language": 0.08,
+      "min_tokens": 5,
+      "max_tokens": 3000,
+      "minhash_similarity_threshold": 0.85
+    }
+  },
+  "integrity": {
+    "status": "pass",
+    "errors": []
+  },
+  "structure": {
+    "status": "pass",
+    "issues": []
+  },
+  "length": {
+    "char_stats": {
+      "count": 8738,
+      "min": 2557,
+      "max": 3657,
+      "mean": 2719.34,
+      "median": 2697.0
+    },
+    "token_stats": {
+      "count": 8738,
+      "min": 386,
+      "max": 570,
+      "mean": 408.38,
+      "median": 405.0
+    },
+    "flags": []
+  },
+  "language": {
+    "primary": "mixed",
+    "breakdown": {
+      "en": 0.0002,
+      "mixed": 0.9998
+    },
+    "flags": [
+      "99.98% of tokens attributed to non-English languages (examples: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)",
+      "Detected low-confidence English classifications (examples: 6611, 7703)"
+    ],
+    "classification": {
+      "en": 0.0002,
+      "mixed": 0.9998
+    },
+    "confidence_summary": {}
+  },
+  "dedupe": {
+    "duplicate_ratio": 0.0,
+    "sample_pairs": [],
+    "flags": [
+      "datasketch not installed; near-duplicate detection limited to exact matches."
+    ],
+    "similarity_threshold": 0.85
+  },
+  "labels": {
+    "totals": {
+      "retention_disclosed": 61,
+      "deletion_offered": 8738,
+      "access_rights": 149,
+      "privacy_waiver": 0
+    },
+    "warnings": []
+  },
+  "manifest": {},
+  "gates": {
+    "summary": "fail",
+    "failed_checks": [
+      "language_mix"
+    ],
+    "warnings": [
+      "datasketch not installed; near-duplicate detection limited to exact matches.",
+      "99.98% of tokens attributed to non-English languages (examples: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)",
+      "Detected low-confidence English classifications (examples: 6611, 7703)"
+    ]
+  }
+}

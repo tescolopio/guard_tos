@@ -1,0 +1,194 @@
+metadata:
+  category: user_privacy
+  version: "1.0.0"
+  created: "2025-09-28"
+  updated: "2025-10-01"
+  description: "Patterns for identifying user privacy rights including data access, deletion, retention policies, and privacy waivers"
+  notes:
+    - "Aligned with GDPR Chapter III (Data Subject Rights) and CCPA consumer rights"
+    - "Patterns prioritize precision to support high-quality training data"
+
+preprocessing:
+  min_tokens: 10
+  max_tokens: 400
+  lowercase: true
+  normalize_whitespace: true
+
+shared_keywords:
+  rights_terms:
+    - "right to"
+    - "you may"
+    - "you can"
+    - "entitled to"
+    - "request"
+  
+  data_subject_actions:
+    - "access"
+    - "delete"
+    - "erase"
+    - "correct"
+    - "rectify"
+    - "port"
+    - "export"
+    - "withdraw"
+    - "object"
+  
+  privacy_concepts:
+    - "personal data"
+    - "personal information"
+    - "privacy"
+    - "data protection"
+    - "confidentiality"
+
+labels:
+  retention_disclosed:
+    description: "Clear disclosure of data retention periods or deletion schedules"
+    positive_patterns:
+      - pattern: '\b(retain|store|keep).{0,80}(personal\s+)?(data|information).{0,80}(for|until).{0,80}(\d+\s+(day|week|month|year)s?|[a-z]+\s+(period|time))\b'
+        weight: 0.95
+        examples:
+          - "retain personal data for 12 months"
+          - "store information until the end of the retention period"
+      
+      - pattern: '\b(data|information)\s+retention\s+(period|policy|schedule)\b'
+        weight: 0.85
+        examples:
+          - "data retention period"
+          - "information retention policy"
+      
+      - pattern: '\b(delete|erase|remove).{0,50}(automatically|after).{0,50}(\d+\s+(day|week|month|year)s?)\b'
+        weight: 0.9
+        examples:
+          - "delete automatically after 30 days"
+          - "erase data after 6 months"
+      
+      - pattern: '\bretention\s+(criteria|standards|requirements)\b'
+        weight: 0.75
+        examples:
+          - "retention criteria"
+          - "retention standards"
+
+    negative_patterns:
+      - pattern: '\b(indefinitely|permanently|as\s+long\s+as|until\s+you\s+request)\b'
+        weight: -0.4
+        examples:
+          - "retain indefinitely"
+          - "store permanently"
+
+  deletion_offered:
+    description: "User can request deletion or erasure of their personal data"
+    positive_patterns:
+      - pattern: '\b(right\s+to|you\s+(can|may)).{0,50}(request|ask\s+for|demand).{0,50}(deletion|erasure|removal)\b'
+        weight: 1.0
+        examples:
+          - "right to request deletion"
+          - "you can ask for erasure"
+      
+      - pattern: '\b(delete|erase|remove).{0,50}(your\s+)?(account|data|information)\b.{0,80}(settings?|account\s+page|portal|dashboard|contact\s+us)\b'
+        weight: 0.95
+        examples:
+          - "delete your account in settings"
+          - "erase your data from your account page"
+      
+      - pattern: '\b(self[\s-]?service|automated).{0,50}(deletion|erasure|account\s+removal)\b'
+        weight: 0.9
+        examples:
+          - "self-service deletion"
+          - "automated account removal"
+      
+      - pattern: '\b(data\s+subject|consumer).{0,50}(deletion|erasure).{0,50}(request|right)\b'
+        weight: 0.95
+        examples:
+          - "data subject deletion request"
+          - "consumer erasure right"
+      
+      - pattern: '\b(request|submit).{0,50}(deletion|erasure)\b.{0,80}(via|by|through).{0,50}(email|form|portal)\b'
+        weight: 0.85
+        examples:
+          - "request deletion via email"
+          - "submit erasure through our portal"
+
+    negative_patterns:
+      - pattern: '\b(cannot|unable\s+to|do\s+not|will\s+not).{0,50}(delete|erase|remove)\b'
+        weight: -0.8
+        examples:
+          - "cannot delete certain data"
+          - "will not erase archived records"
+
+  access_rights:
+    description: "User can access, review, or obtain a copy of their personal data"
+    positive_patterns:
+      - pattern: '\b(right\s+to|you\s+(can|may)).{0,50}(access|view|review|obtain|receive).{0,50}(copy\s+of\s+)?(your\s+)?(personal\s+)?(data|information)\b'
+        weight: 1.0
+        examples:
+          - "right to access your personal data"
+          - "you can obtain a copy of your information"
+      
+      - pattern: '\bdata\s+subject\s+access\s+(request|right|DSAR)\b'
+        weight: 0.95
+        examples:
+          - "data subject access request"
+          - "DSAR"
+      
+      - pattern: '\b(download|export|port).{0,50}(your\s+)?(data|information)\b'
+        weight: 0.9
+        examples:
+          - "download your data"
+          - "export your information"
+      
+      - pattern: '\b(access|view).{0,50}(your\s+)?(data|information).{0,80}(via|through|in).{0,50}(settings?|account\s+page|portal|dashboard)\b'
+        weight: 0.85
+        examples:
+          - "access your data via settings"
+          - "view your information in the account page"
+
+    negative_patterns:
+      - pattern: '\b(no\s+obligation|not\s+required).{0,50}provide.{0,50}(access|copy)\b'
+        weight: -0.7
+        examples:
+          - "no obligation to provide access"
+          - "not required to provide a copy"
+
+  privacy_waiver:
+    description: "User waives privacy rights or consents to monitoring/intrusive practices"
+    positive_patterns:
+      - pattern: '\b(waive|waiver|forfeit|surrender|relinquish).{0,50}(right|expectation).{0,50}(privacy|confidential(ity)?)\b'
+        weight: 1.0
+        examples:
+          - "waive your right to privacy"
+          - "waiver of privacy expectations"
+      
+      - pattern: '\b(consent|agree).{0,50}(monitoring|surveillance|tracking).{0,50}(all|any|your).{0,50}(activity|communication|usage)\b'
+        weight: 0.9
+        examples:
+          - "consent to monitoring of all activity"
+          - "agree to surveillance of your communications"
+      
+      - pattern: '\b(no\s+)?(reasonable\s+)?expectation\s+of\s+privacy\b'
+        weight: 0.95
+        examples:
+          - "no expectation of privacy"
+          - "no reasonable expectation of privacy"
+      
+      - pattern: '\b(acknowledge|understand).{0,80}(may\s+(be\s+)?)?monitor(ed|ing)\b'
+        weight: 0.75
+        examples:
+          - "acknowledge that communications may be monitored"
+          - "understand monitoring may occur"
+
+    negative_patterns:
+      - pattern: '\b(security|fraud\s+prevention|legal\s+compliance).{0,50}monitor(ing)?\b'
+        weight: -0.5
+        examples:
+          - "security monitoring"
+          - "monitoring for legal compliance"
+
+# Review checklist for SME validation
+review_tasks:
+  - "Verify retention patterns capture both absolute and relative time periods"
+  - "Confirm deletion patterns distinguish self-service vs email-based requests"
+  - "Validate access rights patterns capture DSAR/CCPA request language"
+  - "Check waiver patterns don't over-trigger on legitimate security disclosures"
+  - "Test against GDPR Article 15-17 language samples"
+  - "Validate weights using gold dataset precision/recall metrics"
+

@@ -18,7 +18,7 @@ import argparse
 import json
 import logging
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, Iterable, List
 
 try:
     from datasets import Dataset  # type: ignore
@@ -30,7 +30,7 @@ except ImportError as exc:  # pragma: no cover
         "`pip install -r scripts/requirements.txt`."
     ) from exc
 
-from train_category_model import CATEGORY_REGISTRY, CategoryConfig, load_jsonl  # type: ignore
+from scripts.ml.category_config import CATEGORY_REGISTRY, CategoryConfig
 
 LOGGER = logging.getLogger("evaluate_category_model")
 
@@ -46,8 +46,16 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def load_jsonl(path: Path) -> Iterable[Dict[str, object]]:
+    with path.open("r", encoding="utf-8") as handle:
+        for line in handle:
+            line = line.strip()
+            if line:
+                yield json.loads(line)
+
+
 def build_dataset(path: Path, config: CategoryConfig) -> Dataset:
-    records = load_jsonl(path)
+    records = list(load_jsonl(path))
     if not records:
         raise ValueError(f"Dataset {path} is empty")
 

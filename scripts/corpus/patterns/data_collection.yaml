@@ -1,0 +1,287 @@
+metadata:
+  category: data_collection_use
+  version: "1.0.0"
+  created: "2025-09-28"
+  updated: "2025-10-01"
+  description: "Patterns for identifying data collection scope, consent mechanisms, purpose limitation, and retention practices"
+  notes:
+    - "Patterns prioritize precision to minimize false positives in training data"
+    - "Aligned with GDPR, CCPA, and common privacy framework terminology"
+
+preprocessing:
+  min_tokens: 10
+  max_tokens: 500
+  lowercase: true
+  normalize_whitespace: true
+
+shared_keywords:
+  data_types:
+    - "personal data"
+    - "personal information"
+    - "personally identifiable information"
+    - "PII"
+    - "sensitive data"
+    - "biometric"
+    - "financial information"
+    - "health information"
+    - "location data"
+    - "browsing history"
+    - "device information"
+  
+  collection_verbs:
+    - "collect"
+    - "gather"
+    - "obtain"
+    - "acquire"
+    - "receive"
+    - "capture"
+  
+  processing_verbs:
+    - "process"
+    - "use"
+    - "share"
+    - "disclose"
+    - "transfer"
+    - "sell"
+  
+  consent_terms:
+    - "consent"
+    - "permission"
+    - "authorization"
+    - "approval"
+
+labels:
+  data_collection_extensive:
+    description: "Broad or invasive data collection practices covering multiple categories or third-party sharing"
+    positive_patterns:
+      - pattern: '\b(collect|gather|obtain).{0,100}(all|any|full|complete|comprehensive|extensive)\s+(data|information)\b'
+        weight: 0.9
+        examples:
+          - "collect all data"
+          - "gather comprehensive information"
+      
+      - pattern: '\b(collect|obtain).{0,150}(including\s+but\s+not\s+limited\s+to|such\s+as).{0,150}((personal|device|location|financial|health|biometric).{0,30}){3,}'
+        weight: 0.95
+        examples:
+          - "collect information including but not limited to personal data, device information, and location data"
+      
+      - pattern: '\b(share|disclose|transfer|provide).{0,80}(personal\s+)?(data|information).{0,80}(third[\s-]?part(y|ies)|affiliate|partner|vendor|service\s+provider)\b'
+        weight: 0.85
+        examples:
+          - "share personal data with third parties"
+          - "disclose information to our partners"
+      
+      - pattern: '\btrack(ing)?.{0,80}(across|on).{0,50}(websites|apps|services|devices|platforms)\b'
+        weight: 0.8
+        examples:
+          - "tracking across websites"
+          - "track your activity on multiple platforms"
+      
+      - pattern: '\b(automatically|passively)\s+(collect|gather|obtain).{0,100}(device|usage|behavioral|browsing)\s+(data|information)\b'
+        weight: 0.75
+        examples:
+          - "automatically collect device data"
+          - "passively gather browsing information"
+
+    negative_patterns:
+      - pattern: '\b(only|solely|exclusively|limited\s+to).{0,50}(necessary|required|essential)\b'
+        weight: -0.5
+        examples:
+          - "only necessary data"
+          - "limited to required information"
+      
+      - pattern: '\b(anonym(ized|ous)|aggregated|de[\s-]?identified)\b'
+        weight: -0.3
+        examples:
+          - "anonymized data"
+          - "aggregated information"
+
+  data_collection_minimal:
+    description: "Data collection explicitly limited to necessary or essential information"
+    positive_patterns:
+      - pattern: '\b(only|solely|exclusively)\s+(collect|gather|obtain).{0,80}(necessary|required|essential|needed|minimal)\s+(data|information)\b'
+        weight: 1.0
+        examples:
+          - "only collect necessary data"
+          - "solely gather essential information"
+      
+      - pattern: '\b(limit|restrict|minimize).{0,50}(collection|use).{0,50}(personal\s+)?(data|information)\b'
+        weight: 0.9
+        examples:
+          - "limit collection of personal data"
+          - "minimize data usage"
+      
+      - pattern: '\bdata\s+minimization\b'
+        weight: 0.95
+        examples:
+          - "data minimization principle"
+      
+      - pattern: '\b(collect|gather).{0,80}(only|just).{0,50}(what|information|data).{0,50}(necessary|required|needed|essential)\b'
+        weight: 0.9
+        examples:
+          - "collect only what is necessary"
+          - "gather just the data needed"
+
+    negative_patterns:
+      - pattern: '\b(extensive|comprehensive|all|any|full)\s+(data|information)\b'
+        weight: -0.6
+        examples:
+          - "collect all data"
+          - "comprehensive information"
+
+  consent_explicit:
+    description: "Explicit opt-in consent requirement before data collection or processing"
+    positive_patterns:
+      - pattern: '\bexplicit\s+consent\b'
+        weight: 1.0
+        examples:
+          - "explicit consent"
+          - "require explicit consent"
+      
+      - pattern: '\b(opt[\s-]?in|affirmative).{0,50}(consent|permission|authorization)\b'
+        weight: 0.95
+        examples:
+          - "opt-in consent"
+          - "affirmative permission"
+      
+      - pattern: '\b(ask|request|obtain|require).{0,50}(your\s+)?(express|specific|clear)\s+(consent|permission|authorization)\b'
+        weight: 0.9
+        examples:
+          - "ask for your express consent"
+          - "obtain specific permission"
+      
+      - pattern: '\b(check|tick|select).{0,50}(box|checkbox|option).{0,50}(consent|agree|authorize)\b'
+        weight: 0.85
+        examples:
+          - "check the box to consent"
+          - "tick the checkbox to agree"
+      
+      - pattern: '\b(before|prior\s+to).{0,50}(collect|process|share|use).{0,50}(ask|request|obtain|require).{0,50}consent\b'
+        weight: 0.8
+        examples:
+          - "before collecting data, we ask for consent"
+          - "prior to processing, we obtain consent"
+
+    negative_patterns:
+      - pattern: '\b(implied|deemed|presumed|automatic|default)\s+(consent|permission)\b'
+        weight: -0.7
+        examples:
+          - "implied consent"
+          - "deemed permission"
+      
+      - pattern: '\bby\s+(using|continuing|accessing).{0,50}(you\s+)?(consent|agree)\b'
+        weight: -0.6
+        examples:
+          - "by using the service you consent"
+          - "by continuing you agree"
+
+  consent_implied:
+    description: "Implied consent through continued use or access"
+    positive_patterns:
+      - pattern: '\bby\s+(using|accessing|continuing|visiting).{0,80}(you\s+)?(consent|agree|accept|acknowledge)\b'
+        weight: 1.0
+        examples:
+          - "by using the service you consent"
+          - "by accessing you agree"
+      
+      - pattern: '\b(continued|ongoing)\s+(use|access).{0,50}(constitutes|indicates|implies|represents)\s+(consent|agreement|acceptance)\b'
+        weight: 0.95
+        examples:
+          - "continued use constitutes consent"
+          - "ongoing access implies agreement"
+      
+      - pattern: '\b(deemed|considered|presumed|assumed)\s+(to\s+have\s+)?(consent(ed)?|agreed?|accepted)\b'
+        weight: 0.9
+        examples:
+          - "deemed to have consented"
+          - "presumed agreed"
+      
+      - pattern: '\b(default|automatic(ally)?).{0,50}(consent|permission|authorization)\b'
+        weight: 0.85
+        examples:
+          - "default consent"
+          - "automatically authorized"
+
+    negative_patterns:
+      - pattern: '\b(opt[\s-]?in|explicit|express|affirmative|active)\s+(consent|permission)\b'
+        weight: -0.7
+        examples:
+          - "opt-in consent"
+          - "explicit permission"
+
+  purpose_specific:
+    description: "Data use restricted to a clearly defined, specific purpose"
+    positive_patterns:
+      - pattern: '\b(only|solely|exclusively)\s+(use|process).{0,80}(for|to).{0,80}(provide|deliver|operate|improve).{0,50}(the\s+)?service\b'
+        weight: 0.9
+        examples:
+          - "only use data to provide the service"
+          - "solely process for operating our service"
+      
+      - pattern: '\bpurpose\s+limitation\b'
+        weight: 1.0
+        examples:
+          - "purpose limitation principle"
+      
+      - pattern: '\b(use|process).{0,50}(personal\s+)?(data|information).{0,50}(only|solely).{0,50}(stated|specified|identified|disclosed)\s+purpose\b'
+        weight: 0.95
+        examples:
+          - "use personal data only for stated purposes"
+          - "process information solely for specified purposes"
+      
+      - pattern: '\b(not|never).{0,50}(use|process|share).{0,50}(for|to).{0,50}(unrelated|different|other)\s+purpose\b'
+        weight: 0.85
+        examples:
+          - "not use for unrelated purposes"
+          - "never process for different purposes"
+
+    negative_patterns:
+      - pattern: '\b(any|all|various|multiple|other).{0,50}purpose\b'
+        weight: -0.6
+        examples:
+          - "for any purpose"
+          - "various purposes"
+
+  purpose_broad:
+    description: "Data use allowed for broad, undefined, or multiple purposes"
+    positive_patterns:
+      - pattern: '\b(any|all|various|multiple|other).{0,50}purpose\b'
+        weight: 0.9
+        examples:
+          - "for any purpose"
+          - "use for other purposes"
+      
+      - pattern: '\b(use|process|share).{0,80}(for|to).{0,80}(marketing|advertising|commercial|business)\s+(purpose|use)\b'
+        weight: 0.85
+        examples:
+          - "use for marketing purposes"
+          - "process for commercial use"
+      
+      - pattern: '\b(including\s+but\s+not\s+limited\s+to|such\s+as|for\s+example).{0,100}(purpose|use)\b'
+        weight: 0.75
+        examples:
+          - "including but not limited to various purposes"
+          - "such as marketing and other purposes"
+      
+      - pattern: '\b(unrestricted|unlimited|unspecified|broad|general).{0,50}(purpose|use)\b'
+        weight: 0.9
+        examples:
+          - "unrestricted purposes"
+          - "broad use"
+
+    negative_patterns:
+      - pattern: '\b(only|solely|exclusively|limited\s+to).{0,50}(stated|specified|defined)\s+purpose\b'
+        weight: -0.7
+        examples:
+          - "only for stated purposes"
+          - "limited to specified purposes"
+
+# Review checklist for SME validation
+review_tasks:
+  - "Validate patterns against GDPR Article 5 (purpose limitation) language"
+  - "Test consent patterns on CCPA opt-in/opt-out examples"
+  - "Ensure collection patterns distinguish between active and passive collection"
+  - "Verify purpose patterns capture laundry-list vs specific-purpose clauses"
+  - "Check for false positives on legitimized sharing (e.g., legal compliance)"
+  - "Test against gold dataset samples to tune weights"
+

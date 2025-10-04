@@ -1,0 +1,17 @@
+{
+  "category": "dispute_resolution",
+  "version": "v2025.09.30-qc-sample",
+  "records": 4,
+  "label_distribution": {
+    "binding_arbitration": 2,
+    "class_action_waiver": 1,
+    "jury_trial_waiver": 0,
+    "venue_selection": 1
+  },
+  "sources": ["demo"],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "demo",
+  "notes": "Demo manifest for QC validation"
+}

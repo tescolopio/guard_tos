@@ -1,0 +1,24 @@
+# QC threshold configuration for corpus datasets.
+# Values can be overridden per category. CLI flags still take precedence.
+
+defaults:
+  max_duplicate_ratio: 0.05
+  max_non_primary_language: 0.10
+  min_tokens: 5
+  max_tokens: 3000
+  minhash_similarity_threshold: 0.85
+
+categories:
+  dispute_resolution:
+    max_duplicate_ratio: 0.12
+    max_non_primary_language: 0.70
+    min_tokens: 8
+    minhash_similarity_threshold: 0.80
+  data_collection:
+    max_non_primary_language: 0.98
+    max_duplicate_ratio: 0.99
+    min_tokens: 10
+    minhash_similarity_threshold: 0.95
+  user_privacy:
+    max_duplicate_ratio: 0.08
+    max_non_primary_language: 0.98

@@ -1,0 +1,19 @@
+{
+  "category": "dispute_resolution",
+  "version": "test_integration",
+  "records": 4,
+  "label_distribution": {
+    "binding_arbitration": 0.25,
+    "class_action_waiver": 0.25,
+    "jury_trial_waiver": 0.25,
+    "venue_selection": 0.25
+  },
+  "sources": [
+    "pattern_test"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+}

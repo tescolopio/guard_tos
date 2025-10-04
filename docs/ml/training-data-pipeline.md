@@ -2,7 +2,7 @@
 
 Last updated: 2025-09-26
 
-This document defines the end-to-end pipeline for sourcing, cleaning, labeling, and packaging training data that powers the category-specific ML models used in the Terms Guardian User Rights Index.
+This document defines the end-to-end pipeline for sourcing, cleaning, labeling, and packaging training data that powers the category-specific ML models used in the Terms Guardian User Rights Index. For a rollout-level view of goals, timelines, and ownership, see `docs/ml/data-expansion-plan.md`.
 
 ## 🎯 Objectives
 
@@ -53,13 +53,16 @@ graph TD
 
 ### Scripts & CLI Entrypoints (planned)
 
-| Command                                                                    | Description                      | Output                                    |
-| -------------------------------------------------------------------------- | -------------------------------- | ----------------------------------------- |
-| `npm run ml:harvest -- --source gdpr`                                      | Download and stage GDPR corpus   | `data/raw/gdpr/<date>/`                   |
-| `npm run ml:normalize -- --input data/raw/gdpr --category data_collection` | Convert raw docs to cleaned text | `data/normalized/gdpr/*.txt`              |
-| `npm run ml:chunk -- --input data/normalized --chunk-size 500`             | Segment documents into spans     | `data/chunks/<category>/*.jsonl`          |
-| `npm run ml:label -- --category data_collection`                           | Apply weak supervision rules     | `data/labeled/<category>/<version>.jsonl` |
-| `npm run ml:qc -- --category data_collection`                              | Run dedupe & quality gates       | `reports/qc/<category>/<date>.json`       |
+| Command                                                                    | Description                                | Output                                            |
+| -------------------------------------------------------------------------- | ------------------------------------------ | ------------------------------------------------- |
+| `npm run ml:harvest -- --source gdpr`                                      | Download and stage GDPR corpus             | `data/raw/gdpr/<date>/`                           |
+| `npm run ml:normalize -- --input data/raw/gdpr --category data_collection` | Convert raw docs to cleaned text           | `data/normalized/gdpr/*.txt`                      |
+| `npm run ml:chunk -- --input data/normalized --chunk-size 500`             | Segment documents into spans               | `data/chunks/<category>/*.jsonl`                  |
+| `npm run ml:label -- --category data_collection`                           | Apply weak supervision rules               | `data/labeled/<category>/<version>.jsonl`         |
+| `npm run ml:corpus:build:dr`                                               | Convert clause harvests into DR dataset    | `data/processed/dispute_resolution/vYYYY.MM.DD/`  |
+| `python scripts/corpus/seed_gold_dataset.py --category <cat>`              | Generate SME review queue for gold dataset | `data/gold/<category>/gold_eval.todo.jsonl`       |
+| `python scripts/ml/log_dataset_metrics.py --category <cat>`                | Snapshot dataset stats for reporting       | `reports/eval/history/<category>/<version>*.json` |
+| `npm run ml:qc -- --category data_collection`                              | Run dedupe & quality gates                 | `reports/qc/<category>/<date>.json`               |
 
 > Scripts will live under `scripts/corpus/` with shared utilities in `scripts/corpus/lib/`.
 

@@ -18,6 +18,13 @@ This document specifies how we validate the category models and ensure regressio
 | Regression Fixtures | Snapshot of production ToS analyses for regression diffing | `__tests__/fixtures/`                  |
 | Adversarial Set     | Edge-case clauses crafted by legal SMEs                    | `data/adversarial/<category>.jsonl`    |
 
+**Current availability:**
+
+- Dispute Resolution draft seed prepared (`data/gold/dispute_resolution/gold_eval.todo.jsonl`)
+  with manifest `data/gold/dispute_resolution/manifest.json` (pending SME review).
+- Baseline dataset metrics logged under
+  `reports/eval/history/dispute_resolution/v2025.09.27_dataset.json`.
+
 Each dataset must ship with a manifest (records, label distribution, QA accuracy) consistent with `docs/ml/training-data-pipeline.md` and the schema described in `docs/ml/gold-datasets.md`.
 
 ## 🧪 Metrics

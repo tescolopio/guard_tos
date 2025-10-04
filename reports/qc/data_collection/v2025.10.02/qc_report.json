@@ -1,0 +1,164 @@
+{
+  "metadata": {
+    "category": "data_collection",
+    "version": "v2025.10.02",
+    "generated_at": "2025-10-03T04:16:53.741421Z",
+    "sources": [],
+    "thresholds": {
+      "max_duplicate_ratio": 0.99,
+      "max_non_primary_language": 0.98,
+      "min_tokens": 10,
+      "max_tokens": 3000,
+      "minhash_similarity_threshold": 0.95
+    }
+  },
+  "integrity": {
+    "status": "pass",
+    "errors": []
+  },
+  "structure": {
+    "status": "pass",
+    "issues": []
+  },
+  "length": {
+    "char_stats": {
+      "count": 450,
+      "min": 2597,
+      "max": 3249,
+      "mean": 2755.04,
+      "median": 2725.0
+    },
+    "token_stats": {
+      "count": 450,
+      "min": 387,
+      "max": 491,
+      "mean": 413.75,
+      "median": 410.0
+    },
+    "flags": []
+  },
+  "language": {
+    "primary": "mixed",
+    "breakdown": {
+      "mixed": 1.0
+    },
+    "flags": [
+      "100.00% of tokens attributed to non-English languages (examples: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)"
+    ],
+    "classification": {
+      "mixed": 1.0
+    },
+    "confidence_summary": {}
+  },
+  "dedupe": {
+    "duplicate_ratio": 0.7556,
+    "sample_pairs": [
+      [
+        22,
+        307
+      ],
+      [
+        66,
+        103
+      ],
+      [
+        67,
+        68
+      ],
+      [
+        115,
+        206
+      ],
+      [
+        223,
+        297
+      ],
+      [
+        51,
+        352
+      ],
+      [
+        124,
+        184
+      ],
+      [
+        94,
+        421
+      ],
+      [
+        52,
+        177
+      ],
+      [
+        53,
+        142
+      ],
+      [
+        67,
+        315
+      ],
+      [
+        103,
+        399
+      ],
+      [
+        18,
+        273
+      ],
+      [
+        231,
+        310
+      ],
+      [
+        64,
+        151
+      ],
+      [
+        118,
+        360
+      ],
+      [
+        10,
+        180
+      ],
+      [
+        24,
+        353
+      ],
+      [
+        72,
+        164
+      ],
+      [
+        152,
+        282
+      ]
+    ],
+    "flags": [
+      "Near-duplicate pairs above 0.95 similarity: (1,67), (1,68), (1,174), (1,197), (1,277), (1,419), (2,166), (2,381), (3,388), (4,28), (4,110), (5,20), (5,67), (5,68), (5,70), (5,84), (5,131), (5,138), (5,174), (5,197)"
+    ],
+    "similarity_threshold": 0.95
+  },
+  "labels": {
+    "totals": {
+      "data_collection_extensive": 304,
+      "data_collection_minimal": 32,
+      "consent_explicit": 48,
+      "consent_implied": 6,
+      "purpose_specific": 0,
+      "purpose_broad": 66
+    },
+    "warnings": []
+  },
+  "manifest": {},
+  "gates": {
+    "summary": "fail",
+    "failed_checks": [
+      "language_mix"
+    ],
+    "warnings": [
+      "Near-duplicate pairs above 0.95 similarity: (1,67), (1,68), (1,174), (1,197), (1,277), (1,419), (2,166), (2,381), (3,388), (4,28), (4,110), (5,20), (5,67), (5,68), (5,70), (5,84), (5,131), (5,138), (5,174), (5,197)",
+      "100.00% of tokens attributed to non-English languages (examples: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)"
+    ]
+  }
+}

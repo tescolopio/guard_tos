@@ -1,0 +1,21 @@
+{
+  "category": "data_collection",
+  "version": "v2025.10.03",
+  "records": 42,
+  "label_distribution": {
+    "consent_explicit": 0.0952,
+    "consent_implied": 0.0238,
+    "data_collection_extensive": 0.6429,
+    "data_collection_minimal": 0.0714,
+    "purpose_broad": 0.1905,
+    "purpose_specific": 0.0
+  },
+  "sources": [
+    "hf_privacy_policy_qa"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+}

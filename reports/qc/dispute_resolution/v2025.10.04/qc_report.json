@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "category": "dispute_resolution",
+    "version": "v2025.10.04",
+    "generated_at": "2025-10-04T03:06:56.461407Z",
+    "sources": [
+      "harvested_clauses"
+    ],
+    "thresholds": {
+      "max_duplicate_ratio": 0.12,
+      "max_non_primary_language": 0.7,
+      "min_tokens": 8,
+      "max_tokens": 3000,
+      "minhash_similarity_threshold": 0.8
+    }
+  },
+  "integrity": {
+    "status": "pass",
+    "errors": []
+  },
+  "structure": {
+    "status": "pass",
+    "issues": []
+  },
+  "length": {
+    "char_stats": {
+      "count": 1517,
+      "min": 62,
+      "max": 5074,
+      "mean": 988.02,
+      "median": 775
+    },
+    "token_stats": {
+      "count": 1517,
+      "min": 12,
+      "max": 848,
+      "mean": 156.43,
+      "median": 122
+    },
+    "flags": []
+  },
+  "language": {
+    "primary": "en",
+    "breakdown": {
+      "de": 0.0005,
+      "en": 0.9995
+    },
+    "flags": [
+      "0.05% of tokens attributed to non-English languages (examples: 4)"
+    ],
+    "classification": {
+      "de": 0.0007,
+      "en": 0.9993
+    },
+    "confidence_summary": {
+      "mean": 1.0,
+      "median": 1.0,
+      "min": 0.714
+    }
+  },
+  "dedupe": {
+    "duplicate_ratio": 0.0218,
+    "sample_pairs": [
+      [
+        22,
+        1368
+      ],
+      [
+        672,
+        1090
+      ],
+      [
+        542,
+        585
+      ],
+      [
+        257,
+        644
+      ],
+      [
+        135,
+        794
+      ],
+      [
+        695,
+        1479
+      ],
+      [
+        179,
+        304
+      ],
+      [
+        318,
+        922
+      ],
+      [
+        519,
+        585
+      ],
+      [
+        743,
+        1037
+      ],
+      [
+        1167,
+        1491
+      ],
+      [
+        129,
+        530
+      ],
+      [
+        1272,
+        1369
+      ],
+      [
+        56,
+        767
+      ],
+      [
+        387,
+        838
+      ],
+      [
+        85,
+        857
+      ],
+      [
+        448,
+        529
+      ]
+    ],
+    "flags": [
+      "Near-duplicate pairs above 0.80 similarity: (22,1368), (56,767), (85,857), (129,530), (135,794), (179,304), (257,644), (318,922), (387,838), (448,529), (519,585), (542,585), (672,1090), (695,1479), (743,1037), (1167,1491), (1272,1369)"
+    ],
+    "similarity_threshold": 0.8
+  },
+  "labels": {
+    "totals": {
+      "binding_arbitration": 1512,
+      "class_action_waiver": 7,
+      "jury_trial_waiver": 65,
+      "venue_selection": 113
+    },
+    "warnings": []
+  },
+  "manifest": {
+    "category": "dispute_resolution",
+    "version": "v2025.10.04",
+    "records": 1517,
+    "label_distribution": {
+      "binding_arbitration": 0.9967,
+      "class_action_waiver": 0.0046,
+      "jury_trial_waiver": 0.0428,
+      "venue_selection": 0.0745
+    },
+    "sources": [
+      "harvested_clauses"
+    ],
+    "qa_sample_size": 0,
+    "qa_accuracy": 0.0,
+    "annotators": [],
+    "license": "pending",
+    "notes": "Automated build via scripts/corpus/build_category_dataset.py (deduped + similarity filtered)"
+  },
+  "gates": {
+    "summary": "pass",
+    "failed_checks": [],
+    "warnings": [
+      "Near-duplicate pairs above 0.80 similarity: (22,1368), (56,767), (85,857), (129,530), (135,794), (179,304), (257,644), (318,922), (387,838), (448,529), (519,585), (542,585), (672,1090), (695,1479), (743,1037), (1167,1491), (1272,1369)",
+      "0.05% of tokens attributed to non-English languages (examples: 4)"
+    ]
+  }
+}

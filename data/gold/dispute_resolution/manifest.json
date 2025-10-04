@@ -1,0 +1,17 @@
+{
+  "category": "dispute_resolution",
+  "version": "v2025.09.27-draft",
+  "records": 155,
+  "label_distribution": {
+    "binding_arbitration": 0.9613,
+    "class_action_waiver": 0.1032,
+    "jury_trial_waiver": 0.4194,
+    "venue_selection": 0.1742
+  },
+  "sources": ["processed_dispute_resolution_v2025.09.27"],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Seed sample awaiting SME review (generated via scripts/corpus/seed_gold_dataset.py on 2025-09-27)."
+}

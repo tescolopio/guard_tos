@@ -1,0 +1,15 @@
+{
+  "count": 155,
+  "label_totals": {
+    "binding_arbitration": 149,
+    "jury_trial_waiver": 65,
+    "venue_selection": 27,
+    "class_action_waiver": 16
+  },
+  "label_distribution": {
+    "binding_arbitration": 0.9613,
+    "class_action_waiver": 0.1032,
+    "jury_trial_waiver": 0.4194,
+    "venue_selection": 0.1742
+  }
+}

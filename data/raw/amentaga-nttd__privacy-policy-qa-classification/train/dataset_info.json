@@ -1,0 +1,52 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "privacy-policy-qa-classification",
+  "dataset_size": 29885367,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/amentaga-nttd/privacy-policy-qa-classification@aebfe1ada78aaed11f27c654e90871cbde6afb92/data/train-00000-of-00001.parquet": {
+      "num_bytes": 2993568,
+      "checksum": null
+    },
+    "hf://datasets/amentaga-nttd/privacy-policy-qa-classification@aebfe1ada78aaed11f27c654e90871cbde6afb92/data/validation-00000-of-00001.parquet": {
+      "num_bytes": 755970,
+      "checksum": null
+    }
+  },
+  "download_size": 3749538,
+  "features": {
+    "text": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "label": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 33634905,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 23910240,
+      "num_examples": 8738,
+      "dataset_name": "privacy-policy-qa-classification"
+    },
+    "validation": {
+      "name": "validation",
+      "num_bytes": 5975127,
+      "num_examples": 2185,
+      "dataset_name": "privacy-policy-qa-classification"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

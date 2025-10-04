@@ -1,0 +1,19 @@
+{
+  "category": "dispute_resolution",
+  "version": "v2025.09.27",
+  "records": 1872,
+  "label_distribution": {
+    "binding_arbitration": 0.9968,
+    "class_action_waiver": 0.0085,
+    "jury_trial_waiver": 0.0502,
+    "venue_selection": 0.0144
+  },
+  "sources": [
+    "harvested_clauses"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+}

@@ -1,0 +1,4 @@
+{"text": "We retain your personal data for 24 months after your last interaction with our service.", "labels": {"retention_disclosed": 1.0, "deletion_offered": 0.0, "access_rights": 0.0, "privacy_waiver": 0.0}}
+{"text": "You have the right to request deletion of your personal information by contacting privacy@example.com.", "labels": {"retention_disclosed": 0.0, "deletion_offered": 1.0, "access_rights": 0.0, "privacy_waiver": 0.0}}
+{"text": "You may access and download a copy of your personal data through your account settings.", "labels": {"retention_disclosed": 0.0, "deletion_offered": 0.0, "access_rights": 1.0, "privacy_waiver": 0.0}}
+{"text": "By using this service, you waive any expectation of privacy and consent to monitoring of all communications.", "labels": {"retention_disclosed": 0.0, "deletion_offered": 0.0, "access_rights": 0.0, "privacy_waiver": 1.0}}
