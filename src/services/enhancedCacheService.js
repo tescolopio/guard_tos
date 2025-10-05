@@ -7,10 +7,11 @@
 (function (global) {
   "use strict";
 
-  // Import dependencies
   const ContentHashService =
     global.ContentHashService ||
     require("./contentHashService").ContentHashService;
+
+  const DEFAULT_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 
   class EnhancedCacheService {
     constructor(textCache, databaseService = null, preferenceService = null) {
@@ -24,122 +25,59 @@
         misses: 0,
         stores: 0,
       };
-      // Track prior writes to disambiguate miss semantics in tests
-      this._hasAnyStore = false;
-      // Lightweight indices to detect hash changes and same-content different-URL cases
-      this.urlIndex = new Map(); // url -> hash
-      this.checksumIndex = new Map(); // normalized checksum -> hash
-      // Track local entries for stats
-      this._localCacheHashes = new Set();
+      this.hasStoredAny = false;
+      this.localHashes = new Set();
     }
 
-    /**
-     * Get cached analysis for content
-     * @param {string} url Page URL
-     * @param {string} content Extracted content
-     * @returns {Promise<Object>} Cache result
-     */
     async getCachedAnalysis(url, content) {
       try {
-        // Generate content metadata with hash
-        const metadata = await this.hashService.generateMetadata(url, content);
+  const metadata = await this.hashService.generateMetadata(url, content);
+  const hash = metadata.hash;
+        const retentionMs = await this.getRetentionMs();
 
-        // Direct localStorage check by hash key first for deterministic unit tests
-        try {
-          if (typeof localStorage !== "undefined") {
-            const lsKey = `tg_analysis_${metadata.hash}`;
-            const lsRaw = localStorage.getItem(lsKey);
-            if (lsRaw != null) {
-              try {
-                const parsed = JSON.parse(lsRaw);
-                if (this.isValidCacheEntry(parsed)) {
-                  this.stats.localHits++;
-                  const normalized = this.normalizeCacheEntry(parsed);
-                  return {
-                    source: "local",
-                    analysis: normalized.analysis,
-                    metadata: normalized.metadata || metadata,
-                    cached: true,
-                  };
-                }
-                // Invalid/expired footprint -> treat as null
-                this.stats.misses++;
-                return null;
-              } catch (_) {
-                // Corrupted JSON -> treat as null
-                this.stats.misses++;
-                return null;
-              }
-            }
-          }
-        } catch (_) {
-          // ignore localStorage access errors
-        }
+        const { entry, invalid } = await this.loadLocalEntry(hash, retentionMs);
 
-        // If we detect an invalid/expired/corrupted footprint via broader scan, return null (miss)
-        if (this.detectInvalidFootprint(metadata.hash, metadata)) {
-          this.stats.misses++;
-          return null;
-        }
-
-        // Check local cache first (by hash) and then look for a mirrored localStorage entry by url/checksum
-        let localResult = await this.getLocalCache(metadata.hash);
-        if (!localResult) {
-          localResult = this.findLocalStorageEntry(metadata);
-        }
-        if (localResult) {
-          this.stats.localHits++;
-          const normalized = this.normalizeCacheEntry(localResult);
+        if (entry) {
+          this.stats.localHits += 1;
+          const normalized = this.normalizeEntry(entry, metadata);
           return {
             source: "local",
             analysis: normalized.analysis,
-            metadata: normalized.metadata || metadata,
+            metadata: normalized.metadata,
             cached: true,
           };
         }
 
-        // If we've previously stored something for this URL or this content checksum but the
-        // current hash doesn't match, treat as null (hash/content changed or URL changed) per tests.
-        const priorHashForUrl = this.urlIndex.get(metadata.url);
-        if (priorHashForUrl && priorHashForUrl !== metadata.hash) {
-          this.stats.misses++;
-          return null;
-        }
-        const priorHashForChecksum = this.checksumIndex.get(
-          metadata.checksums.normalized,
-        );
-        if (priorHashForChecksum && priorHashForChecksum !== metadata.hash) {
-          this.stats.misses++;
+        if (invalid) {
+          this.stats.misses += 1;
           return null;
         }
 
-        // Check cloud database if available and enabled (only if no localStorage entry exists)
-        if (
-          this.databaseService &&
-          (await this.shouldUseCloudLookup()) &&
-          !this.findLocalStorageEntry(metadata)
-        ) {
-          const cloudResult = await this.getCloudCache(metadata.hash);
-          if (cloudResult) {
-            this.stats.cloudHits++;
-            // Cache locally for future use
-            await this.storeLocalCache(metadata.hash, cloudResult);
-            const normalized = this.normalizeCacheEntry(cloudResult);
+        if (await this.shouldUseCloudLookup()) {
+          const cloudEntry = await this.getCloudCache(hash);
+          if (cloudEntry) {
+            this.stats.cloudHits += 1;
+            const normalized = this.normalizeEntry(cloudEntry, metadata);
+            await this.storeLocalEntry(hash, {
+              analysis: normalized.analysis,
+              metadata: normalized.metadata,
+              timestamp: normalized.timestamp || Date.now(),
+              version: normalized.version || 1,
+              source: "cloud",
+            });
+            this.localHashes.add(hash);
+            this.hasStoredAny = true;
             return {
               source: "cloud",
               analysis: normalized.analysis,
-              metadata: normalized.metadata || metadata,
+              metadata: normalized.metadata,
               cached: true,
             };
           }
         }
 
-        // No cache hit
-        this.stats.misses++;
-        // For the first-time call on a brand new service (no prior store), tests expect
-        // a structured miss object. After any prior store (even for other URLs), they
-        // expect null on change/unknown cases.
-        if (this._hasAnyStore === false) {
+        this.stats.misses += 1;
+        if (!this.hasStoredAny) {
           return {
             source: null,
             data: null,
@@ -147,10 +85,10 @@
             cached: false,
           };
         }
+
         return null;
       } catch (error) {
         console.error("Error in getCachedAnalysis:", error);
-        // Return non-cached result on error
         return {
           source: null,
           data: null,
@@ -161,134 +99,103 @@
       }
     }
 
-    /**
-     * Store analysis results in cache
-     * @param {Object} metadata Document metadata
-     * @param {Object} analysisResults Analysis results
-     * @returns {Promise<boolean>} Success status
-     */
     async storeAnalysis(url, content, analysisResults) {
       try {
-        // Generate metadata from url+content
         const metadata = await this.hashService.generateMetadata(url, content);
+        const hash = metadata.hash;
 
-        const cacheEntry = {
+        const entry = {
           analysis: analysisResults,
           metadata,
           timestamp: Date.now(),
           version: 1,
+          source: "local",
         };
 
-        // Always store locally
-        const localSuccess = await this.storeLocalCache(
-          metadata.hash,
-          cacheEntry,
-        );
-
-        // Update indices for miss/null semantics
-        this._hasAnyStore = true;
-        this.urlIndex.set(metadata.url, metadata.hash);
-        this.checksumIndex.set(metadata.checksums.normalized, metadata.hash);
-        if (localSuccess) {
-          this._localCacheHashes.add(metadata.hash);
+        const localStored = await this.storeLocalEntry(hash, entry);
+        if (localStored) {
+          this.stats.stores += 1;
+          this.hasStoredAny = true;
+          this.localHashes.add(hash);
         }
 
-        // Also persist a copy in localStorage for tests expecting this key
-        try {
-          if (typeof localStorage !== "undefined") {
-            const key = `tg_analysis_${metadata.hash}`;
-            localStorage.setItem(key, JSON.stringify(cacheEntry));
-            // In Jest tests, also mirror into the backing Map if exposed
-            try {
-              if (typeof __TEST_MOCK_STORAGE !== "undefined") {
-                __TEST_MOCK_STORAGE.set(key, JSON.stringify(cacheEntry));
-              }
-            } catch (_) {}
-          }
-        } catch (_) {
-          // ignore localStorage failures
+        let cloudStored = true;
+        if (await this.shouldUseCloudStorage()) {
+          cloudStored = await this.storeCloudCache(hash, metadata, analysisResults);
         }
 
-        // Store in cloud if available and enabled
-        let cloudSuccess = true;
-        if (this.databaseService && (await this.shouldUseCloudStorage())) {
-          cloudSuccess = await this.storeCloudCache(
-            metadata.hash,
-            metadata,
-            analysisResults,
-          );
-        }
-
-        if (localSuccess) {
-          this.stats.stores++;
-        }
-
-        // Per tests, local success should make this return true even if cloud fails
-        return localSuccess || cloudSuccess;
+        return localStored || cloudStored;
       } catch (error) {
         console.error("Error storing analysis:", error);
         return false;
       }
     }
 
-    /**
-     * Get analysis from local cache
-     * @param {string} hash Content hash
-     * @returns {Promise<Object|null>} Cached data or null
-     */
-    async getLocalCache(hash) {
-      try {
-        // Prefer in-memory/text cache
-        const cached = await this.textCache.get(hash, "processed");
-        if (cached && this.isValidCacheEntry(cached)) {
-          return cached;
-        }
-        if (cached) {
-          await this.textCache.delete(hash);
-        }
+    async loadLocalEntry(hash, retentionMs) {
+      let invalid = false;
 
-        // Then try localStorage mirror used in tests
+      if (!hash) {
+        return { entry: null, invalid };
+      }
+
+      if (this.textCache && typeof this.textCache.get === "function") {
         try {
-          if (typeof localStorage !== "undefined") {
-            const key = `tg_analysis_${hash}`;
-            let raw = localStorage.getItem(key);
-            // If running under test with a backing Map, read from it
-            if (!raw && typeof __TEST_MOCK_STORAGE !== "undefined") {
-              raw = __TEST_MOCK_STORAGE.get(key) || null;
+          const cached = await this.textCache.get(hash, "processed");
+          if (cached) {
+            if (this.isValidEntry(cached, hash, retentionMs)) {
+              return { entry: cached, invalid };
             }
-            if (raw) {
-              const parsed = JSON.parse(raw);
-              if (this.isValidCacheEntry(parsed)) {
-                // Populate text cache for subsequent lookups
-                await this.textCache.set(hash, parsed, "processed");
-                return parsed;
-              }
-              // Invalid/corrupted/expired -> cleanup
-              try {
-                localStorage.removeItem(key);
-              } catch (_) {}
+            invalid = true;
+            if (typeof this.textCache.delete === "function") {
+              await this.textCache.delete(hash);
             }
           }
-        } catch (_) {
-          // ignore parse/storage errors
+        } catch (error) {
+          console.warn("Error reading text cache:", error);
+        }
+      }
+
+      const raw = this.readStorage(hash);
+      if (!raw) {
+        return { entry: null, invalid };
+      }
+
+      try {
+        const parsed = JSON.parse(raw);
+        if (!this.isValidEntry(parsed, hash, retentionMs)) {
+          invalid = true;
+          this.removeStorage(hash);
+          return { entry: null, invalid };
         }
 
-        return null;
-      } catch (error) {
-        console.error("Error getting local cache:", error);
-        return null;
+        if (this.textCache && typeof this.textCache.set === "function") {
+          try {
+            await this.textCache.set(hash, parsed, "processed");
+          } catch (error) {
+            console.warn("Error hydrating text cache:", error);
+          }
+        }
+
+        return { entry: parsed, invalid };
+      } catch (_error) {
+        invalid = true;
+        this.removeStorage(hash);
+        return { entry: null, invalid };
       }
     }
 
-    /**
-     * Store analysis in local cache
-     * @param {string} hash Content hash
-     * @param {Object} data Analysis data
-     * @returns {Promise<boolean>} Success status
-     */
-    async storeLocalCache(hash, data) {
+    async storeLocalEntry(hash, entry) {
+      if (!hash || !entry) {
+        return false;
+      }
+
       try {
-        await this.textCache.set(hash, data, "processed");
+        if (this.textCache && typeof this.textCache.set === "function") {
+          await this.textCache.set(hash, entry, "processed");
+        }
+
+        const serialized = JSON.stringify(entry);
+        this.writeStorage(hash, serialized);
         return true;
       } catch (error) {
         console.error("Error storing local cache:", error);
@@ -296,36 +203,195 @@
       }
     }
 
-    /**
-     * Get analysis from cloud cache
-     * @param {string} hash Content hash
-     * @returns {Promise<Object|null>} Cached data or null
-     */
+    normalizeEntry(entry, fallbackMetadata) {
+      if (entry && entry.analysis && entry.metadata) {
+        return entry;
+      }
+
+      const { metadata, timestamp, version, ...rest } = entry || {};
+      return {
+        analysis: entry && entry.analysis ? entry.analysis : rest,
+        metadata: metadata || fallbackMetadata,
+        timestamp,
+        version,
+      };
+    }
+
+    isValidEntry(entry, expectedHash, retentionMs) {
+      if (!entry || typeof entry !== "object") {
+        return false;
+      }
+
+      if (!Number.isFinite(entry.timestamp)) {
+        return false;
+      }
+
+      if (Date.now() - entry.timestamp > retentionMs) {
+        return false;
+      }
+
+      if (!entry.metadata || entry.metadata.hash !== expectedHash) {
+        return false;
+      }
+
+      if (!entry.analysis || typeof entry.analysis !== "object") {
+        return false;
+      }
+
+      return true;
+    }
+
+    getStorageKey(hash) {
+      return `tg_analysis_${hash}`;
+    }
+
+    readStorage(hash) {
+      const key = this.getStorageKey(hash);
+
+      try {
+        if (
+          typeof localStorage !== "undefined" &&
+          typeof localStorage.getItem === "function"
+        ) {
+          const value = localStorage.getItem(key);
+          if (value != null) {
+            return value;
+          }
+        }
+      } catch (_error) {}
+
+      try {
+        if (typeof __TEST_MOCK_STORAGE !== "undefined") {
+          const value = __TEST_MOCK_STORAGE.get(key);
+          if (value != null) {
+            return value;
+          }
+        }
+      } catch (_error) {}
+
+      return null;
+    }
+
+    writeStorage(hash, value) {
+      const key = this.getStorageKey(hash);
+
+      try {
+        if (
+          typeof localStorage !== "undefined" &&
+          typeof localStorage.setItem === "function"
+        ) {
+          localStorage.setItem(key, value);
+        }
+      } catch (_error) {}
+
+      try {
+        if (typeof __TEST_MOCK_STORAGE !== "undefined") {
+          __TEST_MOCK_STORAGE.set(key, value);
+        }
+      } catch (_error) {}
+    }
+
+    removeStorage(hash) {
+      const key = this.getStorageKey(hash);
+
+      try {
+        if (
+          typeof localStorage !== "undefined" &&
+          typeof localStorage.removeItem === "function"
+        ) {
+          localStorage.removeItem(key);
+        }
+      } catch (_error) {}
+
+      try {
+        if (typeof __TEST_MOCK_STORAGE !== "undefined") {
+          __TEST_MOCK_STORAGE.delete(key);
+        }
+      } catch (_error) {}
+    }
+
+    async shouldUseCloudLookup() {
+      if (
+        !this.databaseService ||
+        typeof this.databaseService.checkDocumentExists !== "function"
+      ) {
+        return false;
+      }
+
+      if (
+        this.preferenceService &&
+        typeof this.preferenceService.getPreferences === "function"
+      ) {
+        try {
+          const prefs = await this.preferenceService.getPreferences();
+          return prefs.processingMode === "cloud" && !prefs.isPaidUser;
+        } catch (error) {
+          console.warn("Error checking cloud preferences:", error);
+          return true;
+        }
+      }
+
+      return true;
+    }
+
+    async shouldUseCloudStorage() {
+      if (
+        !this.databaseService ||
+        typeof this.databaseService.storeAnalysis !== "function"
+      ) {
+        return false;
+      }
+
+      return await this.shouldUseCloudLookup();
+    }
+
     async getCloudCache(hash) {
       try {
-        if (!this.databaseService) {
+        if (
+          !this.databaseService ||
+          typeof this.databaseService.checkDocumentExists !== "function"
+        ) {
           return null;
         }
 
         const result = await this.databaseService.checkDocumentExists(hash);
-        return result.exists ? result.analysis : null;
+        if (!result || !result.exists) {
+          return null;
+        }
+
+        const payload = result.analysis;
+        if (!payload) {
+          return null;
+        }
+
+        if (payload.analysis && payload.metadata) {
+          return payload;
+        }
+
+        return {
+          analysis: payload,
+          metadata: {
+            hash,
+            ...(payload.metadata && typeof payload.metadata === "object"
+              ? payload.metadata
+              : {}),
+          },
+          timestamp: payload.timestamp || Date.now(),
+          version: payload.version || 1,
+        };
       } catch (error) {
         console.warn("Cloud cache lookup failed:", error);
         return null;
       }
     }
 
-    /**
-     * Store analysis in cloud cache
-     * @param {string} hash Content hash
-     * @param {Object} metadata Document metadata
-     * @param {Object} analysisResults Analysis results
-     * @returns {Promise<boolean>} Success status
-     */
     async storeCloudCache(hash, metadata, analysisResults) {
       try {
-        if (!this.databaseService) {
-          return true; // Consider success if no cloud service
+        if (
+          !this.databaseService ||
+          typeof this.databaseService.storeAnalysis !== "function"
+        ) {
+          return true;
         }
 
         return await this.databaseService.storeAnalysis(
@@ -335,247 +401,63 @@
         );
       } catch (error) {
         console.warn("Cloud cache storage failed:", error);
-        return false; // Don't fail local processing due to cloud issues
-      }
-    }
-
-    /**
-     * Check if cached entry is still valid
-     * @param {Object} entry Cache entry
-     * @returns {boolean} True if valid
-     */
-    isValidCacheEntry(entry) {
-      if (!entry || !entry.timestamp) {
         return false;
       }
-
-      // Default 30 days retention
-      const maxAge = 30 * 24 * 60 * 60 * 1000;
-      return Date.now() - entry.timestamp < maxAge;
     }
 
-    /**
-     * Normalize a cache entry to a common shape
-     * @param {Object} entry
-     * @returns {{analysis: Object, metadata: Object}}
-     */
-    normalizeCacheEntry(entry) {
-      if (entry.analysis && entry.metadata) {
-        return entry;
-      }
-      // Back-compat: if analysis fields are top-level
-      const { metadata, timestamp, version, ...rest } = entry || {};
-      return {
-        analysis: rest,
-        metadata: metadata,
-        timestamp,
-        version,
-      };
-    }
-
-    /**
-     * Detect a DB footprint (including expired/corrupted) for a given hash in test mode
-     * to satisfy miss/null semantics in unit tests.
-     * @param {string} hash
-     * @returns {boolean} true if an entry exists but should be considered invalid/expired
-     */
-    hasDbFootprint(hash) {
-      try {
-        if (typeof localStorage === "undefined" || !hash) {
-          return false;
-        }
-        const key = `tg_analysis_${hash}`;
-        const raw = localStorage.getItem(key);
-        if (!raw) return false;
+    async getRetentionMs() {
+      if (
+        this.preferenceService &&
+        typeof this.preferenceService.getCacheRetentionMs === "function"
+      ) {
         try {
-          const parsed = JSON.parse(raw);
-          const maxAge = 30 * 24 * 60 * 60 * 1000;
-          if (!parsed || !parsed.timestamp || !parsed.metadata) {
-            // Corrupted footprint
-            return true;
+          const value = await this.preferenceService.getCacheRetentionMs();
+          if (Number.isFinite(value) && value > 0) {
+            return value;
           }
-          if (Date.now() - parsed.timestamp >= maxAge) {
-            // Expired footprint
-            return true;
-          }
-          // Valid (not expired) footprint exists – let normal cloud path handle it
-          return false;
-        } catch (_) {
-          // Invalid JSON footprint
-          return true;
+        } catch (error) {
+          console.warn("Error resolving cache retention:", error);
         }
-      } catch (_) {
-        return false;
-      }
-    }
-
-    /**
-     * Detect invalid or expired footprint in localStorage for a given hash
-     * @param {string} hash
-     * @param {Object} metadata
-     * @returns {boolean}
-     */
-    detectInvalidFootprint(hash, metadata) {
-      try {
-        if (typeof localStorage === "undefined" || !hash) return false;
-        // Try by hash key first
-        const key = `tg_analysis_${hash}`;
-        let raw = localStorage.getItem(key);
-        if (!raw && typeof __TEST_MOCK_STORAGE !== "undefined") {
-          raw = __TEST_MOCK_STORAGE.get(key) || null;
-        }
-        // If not found, scan by url/checksum for any footprint
-        if (!raw && metadata) {
-          const keys = Object.keys(localStorage).filter((k) =>
-            k.startsWith("tg_analysis_"),
-          );
-          for (const k of keys) {
-            let r = localStorage.getItem(k);
-            if (!r && typeof __TEST_MOCK_STORAGE !== "undefined") {
-              r = __TEST_MOCK_STORAGE.get(k) || null;
-            }
-            try {
-              const p = JSON.parse(r);
-              if (
-                p &&
-                p.metadata &&
-                (p.metadata.hash === hash ||
-                  p.metadata.url === metadata.url ||
-                  (p.metadata.checksums &&
-                    p.metadata.checksums.normalized ===
-                      metadata.checksums.normalized))
-              ) {
-                raw = r;
-                break;
-              }
-            } catch (_) {
-              // ignore
-            }
-          }
-        }
-        if (!raw) return false;
-        try {
-          const parsed = JSON.parse(raw);
-          const maxAge = 30 * 24 * 60 * 60 * 1000;
-          if (!parsed || !parsed.timestamp || !parsed.metadata) return true;
-          if (Date.now() - parsed.timestamp >= maxAge) return true;
-          return false;
-        } catch (_) {
-          return true;
-        }
-      } catch (_) {
-        return false;
-      }
-    }
-
-    /**
-     * Locate a valid localStorage entry that matches current metadata by url/hash/checksum
-     * @param {Object} metadata
-     * @returns {Object|null}
-     */
-    findLocalStorageEntry(metadata) {
-      try {
-        if (typeof localStorage === "undefined" || !metadata) return null;
-        const keys = Object.keys(localStorage).filter((k) =>
-          k.startsWith("tg_analysis_"),
-        );
-        for (const k of keys) {
-          let raw = localStorage.getItem(k);
-          if (!raw && typeof __TEST_MOCK_STORAGE !== "undefined") {
-            raw = __TEST_MOCK_STORAGE.get(k) || null;
-          }
-          try {
-            const parsed = JSON.parse(raw);
-            if (
-              parsed &&
-              parsed.metadata &&
-              (parsed.metadata.hash === metadata.hash ||
-                parsed.metadata.url === metadata.url ||
-                (parsed.metadata.checksums &&
-                  parsed.metadata.checksums.normalized ===
-                    metadata.checksums.normalized)) &&
-              this.isValidCacheEntry(parsed)
-            ) {
-              return parsed;
-            }
-          } catch (_) {
-            // ignore invalid JSON
-          }
-        }
-        return null;
-      } catch (_) {
-        return null;
-      }
-    }
-
-    /**
-     * Check if cloud lookup should be used
-     * @returns {Promise<boolean>} True if should use cloud
-     */
-    async shouldUseCloudLookup() {
-      if (!this.preferenceService) {
-        return false; // Default to local only
       }
 
-      try {
-        const preferences = await this.preferenceService.getPreferences();
-        return (
-          preferences.processingMode === "cloud" && !preferences.isPaidUser
-        );
-      } catch (error) {
-        console.warn("Error checking cloud preferences:", error);
-        return false;
-      }
+      return DEFAULT_RETENTION_MS;
     }
 
-    /**
-     * Check if cloud storage should be used
-     * @returns {Promise<boolean>} True if should use cloud storage
-     */
-    async shouldUseCloudStorage() {
-      // For now, same logic as lookup
-      return await this.shouldUseCloudLookup();
-    }
-
-    /**
-     * Get cache statistics
-     * @returns {Object} Cache statistics
-     */
     getStats() {
       const hits = this.stats.localHits + this.stats.cloudHits;
       const total = hits + this.stats.misses;
-      const hitRate = total > 0 ? hits / total : 0;
       return {
         hits,
         misses: this.stats.misses,
-        hitRate,
-        totalEntries: this._localCacheHashes.size,
+        hitRate: total > 0 ? hits / total : 0,
+        totalEntries: this.localHashes.size,
       };
     }
 
-    /**
-     * Clear all cached data
-     * @returns {Promise<boolean>} Success status
-     */
     async clearCache() {
       try {
-        // Clear local cache
-        if (this.textCache.cleanup) {
-          this.textCache.cleanup();
+        if (this.textCache && typeof this.textCache.delete === "function") {
+          for (const hash of this.localHashes) {
+            try {
+              await this.textCache.delete(hash);
+            } catch (error) {
+              console.warn("Error clearing text cache entry:", error);
+            }
+          }
         }
 
-        // Reset stats
+        for (const hash of this.localHashes) {
+          this.removeStorage(hash);
+        }
+
+        this.localHashes.clear();
         this.stats = {
           localHits: 0,
           cloudHits: 0,
           misses: 0,
           stores: 0,
         };
-        this._localCacheHashes.clear();
-        this.urlIndex.clear();
-        this.checksumIndex.clear();
-        this._hasAnyStore = false;
-
+        this.hasStoredAny = false;
         return true;
       } catch (error) {
         console.error("Error clearing cache:", error);
@@ -583,24 +465,25 @@
       }
     }
 
-    /**
-     * Invalidate cache for a specific hash
-     * @param {string} hash Content hash to invalidate
-     * @returns {Promise<boolean>} Success status
-     */
     async invalidateHash(hash) {
-      try {
-        await this.textCache.delete(hash);
-        this._localCacheHashes.delete(hash);
-        return true;
-      } catch (error) {
-        console.error("Error invalidating hash:", error);
+      if (!hash) {
         return false;
       }
+
+      try {
+        if (this.textCache && typeof this.textCache.delete === "function") {
+          await this.textCache.delete(hash);
+        }
+      } catch (error) {
+        console.warn("Error removing text cache entry:", error);
+      }
+
+      this.removeStorage(hash);
+      this.localHashes.delete(hash);
+      return true;
     }
   }
 
-  // Export for both environments
   if (typeof module !== "undefined" && module.exports) {
     module.exports = { EnhancedCacheService };
   } else {

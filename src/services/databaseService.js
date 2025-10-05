@@ -27,6 +27,11 @@
       };
     }
 
+    getStorageKey(hash) {
+      const prefix = this.isTestMode ? "tg_db_analysis_" : "tg_analysis_";
+      return `${prefix}${hash}`;
+    }
+
     /**
      * Check if document analysis exists in database
      * @param {string} hash Content hash
@@ -159,7 +164,7 @@
      */
     getStoredAnalysis(hash) {
       try {
-        const key = `tg_analysis_${hash}`;
+        const key = this.getStorageKey(hash);
         const stored = localStorage.getItem(key);
 
         if (stored) {
@@ -188,7 +193,7 @@
      */
     setStoredAnalysis(hash, data) {
       try {
-        const key = `tg_analysis_${hash}`;
+        const key = this.getStorageKey(hash);
         localStorage.setItem(key, JSON.stringify(data));
       } catch (error) {
         console.error("Error setting stored analysis:", error);

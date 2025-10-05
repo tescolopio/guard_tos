@@ -25,7 +25,6 @@
 
       // Create hash input: URL + normalized content + version salt
       const hashInput = `${url}:${normalizedContent}:${this.saltKey}`;
-
       try {
         // Try browser Web Crypto API first
         if (typeof crypto !== "undefined" && crypto.subtle) {

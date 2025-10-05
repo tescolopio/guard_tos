@@ -5,13 +5,15 @@
 const fs = require("fs");
 const path = require("path");
 
+const cheerio = require("cheerio");
+const nlp = require("compromise");
+
 // Local imports mirroring content script wiring
 const { EXT_CONSTANTS } = require("../src/utils/constants");
 const { createRightsAssessor } = require("../src/analysis/rightsAssessor");
 const {
   createReadabilityGrader,
 } = require("../src/analysis/readabilityGrader");
-const { createLegalTextAnalyzer } = require("../src/analysis/isLegalText");
 const { createSummarizer } = require("../src/analysis/summarizeTos");
 const {
   createEnhancedSummarizer,
@@ -24,17 +26,10 @@ const { legalTermsDefinitions } = require("../src/data/legalTermsDefinitions");
 const { commonWords } = require("../src/data/commonWords");
 const { createUserRightsIndex } = require("../src/analysis/userRightsIndex");
 
-const cheerio = require("cheerio");
-const nlp = require("compromise");
-
-const log = (...args) => {}; // quiet
+const log = () => {};
 const logLevels = EXT_CONSTANTS.DEBUG.LEVELS;
 
-async function run(filePath) {
-  const abs = path.resolve(filePath);
-  const html = fs.readFileSync(abs, "utf8");
-
-  // Initialize modules
+function createPipeline() {
   const extractor = createTextExtractor({
     log,
     logLevels,
@@ -60,106 +55,171 @@ async function run(filePath) {
     legalTermsDefinitions,
   });
   const readability = createReadabilityGrader({ log, logLevels });
-  const identifier = createUncommonWordsIdentifier({
-    log,
-    logLevels,
-    commonWords,
-    legalTermsDefinitions,
-  });
+  let identifierPromise = null;
+
+  function ensureIdentifier() {
+    if (!identifierPromise) {
+      identifierPromise = createUncommonWordsIdentifier({
+        log,
+        logLevels,
+        commonWords,
+        legalTermsDefinitions,
+      });
+    }
+    return identifierPromise;
+  }
   const uri = createUserRightsIndex({ log, logLevels });
 
-  // Extract text from HTML
-  const extracted = await extractor.extract(html, "html");
-  const text =
-    extracted && extracted.text
-      ? extracted.text
-      : html.replace(/<[^>]*>/g, " ");
+  async function analyzeHtml(html, { source } = {}) {
+    const extracted = await extractor.extract(html, "html");
+    const text =
+      extracted && extracted.text
+        ? extracted.text
+        : html.replace(/<[^>]*>/g, " ");
 
-  // Run analyzers
-  const rightsDetails = await assessor.analyzeContent(text);
-  const readabilityResult = await readability.calculateReadabilityGrade(text);
+    const rightsDetails = await assessor.analyzeContent(text);
+    const readabilityResult =
+      await readability.calculateReadabilityGrade(text);
   const enhanced = await enhancedSummarizer.summarizeTos(html);
   const legacy = await summarizer.summarizeTos(html);
+  const identifier = await ensureIdentifier();
   const uncommon = await identifier.identifyUncommonWords(text);
 
-  // Compute URI combining readability and rights signals (sections from enhanced)
-  const uriResult = uri.compute({
-    readability: readabilityResult,
-    rightsDetails,
-    sections: enhanced.sections,
-  });
+    const uriResult = uri.compute({
+      readability: readabilityResult,
+      rightsDetails,
+      sections: enhanced.sections,
+    });
 
-  // Key excerpts: reuse content logic — fallback simple sentence pick
-  const sentences = text
-    .split(/[.!?]+/)
-    .map((s) => s.trim())
-    .filter((s) => s.length > 20);
-  const keywords = [
-    /arbitration/i,
-    /class action/i,
-    /liability/i,
-    /refund/i,
-    /termination/i,
-    /privacy/i,
-    /jurisdiction/i,
-  ];
-  const excerpts = [];
-  for (const s of sentences) {
-    if (keywords.some((k) => k.test(s))) excerpts.push(s);
-    if (excerpts.length >= 8) break;
+    const sentences = text
+      .split(/[.!?]+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 20);
+    const keywords = [
+      /arbitration/i,
+      /class action/i,
+      /liability/i,
+      /indemn(ify|ity)/i,
+      /dispute/i,
+      /jurisdiction/i,
+      /binding/i,
+      /warranty/i,
+    ];
+    const keywordMatches = sentences.filter((sentence) =>
+      keywords.some((regex) => regex.test(sentence)),
+    );
+    const excerpts = keywordMatches.length > 0 ? keywordMatches : sentences;
+
+    const sections = (enhanced.sections || []).map((section) => ({
+      heading: section.heading,
+      type: section.type,
+      riskLevel: section.riskLevel,
+      summary:
+        typeof section.summary === "string"
+          ? section.summary.slice(0, 300)
+          : undefined,
+      categoryHints: section.categoryHints,
+    }));
+
+    const keyFindings = sections
+      .filter((section) => section.summary)
+      .slice(0, 5)
+      .map((section) => ({
+        title: section.heading,
+        summary: section.summary,
+        riskLevel: section.riskLevel,
+        categoryHints: section.categoryHints,
+      }));
+
+    const riskLevels = sections
+      .map((section) => section.riskLevel)
+      .filter(Boolean);
+    const riskLevel = riskLevels.includes("high")
+      ? "high"
+      : riskLevels.includes("medium")
+        ? "medium"
+        : riskLevels.includes("low")
+          ? "low"
+          : undefined;
+
+    const words = text
+      .split(/\s+/)
+      .map((token) => token.trim())
+      .filter(Boolean).length;
+
+    return {
+      metadata: {
+        source: source || null,
+        words,
+        sentences: sentences.length,
+        analyzedAt: new Date().toISOString(),
+      },
+      readability: {
+        grade: readabilityResult.grade,
+        scores: {
+          flesch: readabilityResult.flesch,
+          kincaid: readabilityResult.kincaid,
+          fogIndex: readabilityResult.fogIndex,
+        },
+      },
+      rights: {
+        grade: rightsDetails.grade,
+        score: rightsDetails.rightsScore,
+        confidence: rightsDetails.confidence,
+        categoryScores:
+          rightsDetails.details && rightsDetails.details.categoryScores,
+        clauseCounts:
+          rightsDetails.details && rightsDetails.details.clauseCounts,
+      },
+      userRightsIndex: {
+        grade: uriResult.grade,
+        weightedScore: uriResult.weightedScore,
+        categories: uriResult.categories,
+      },
+      summaries: {
+        enhanced: {
+          overview: enhanced.overview || enhanced.summary,
+          sections,
+        },
+        legacy,
+      },
+      riskLevel,
+      keyFindings,
+      excerpts: excerpts.slice(0, 8),
+      uncommonTerms: uncommon.slice(0, 20),
+    };
   }
 
-  const report = {
-    file: abs,
-    metadata: {
-      words: (text.match(/\b\w+\b/g) || []).length,
-      sentences: sentences.length,
-      extractedSource:
-        extracted && extracted.metadata ? extracted.metadata.source : "parsed",
-    },
-    overall: enhanced.overall || legacy.overall,
-    riskLevel: enhanced.overallRisk || null,
-    keyFindings: enhanced.keyFindings || [],
-    plainLanguageAlert: enhanced.plainLanguageAlert || null,
-    readability: {
-      grade: readabilityResult.grade,
-      normalizedScore: readabilityResult.normalizedScore,
-      flesch: readabilityResult.flesch,
-      kincaid: readabilityResult.kincaid,
-      fogIndex: readabilityResult.fogIndex,
-    },
-    rights: {
-      grade: rightsDetails.grade,
-      score: rightsDetails.rightsScore,
-      confidence: rightsDetails.confidence,
-      categoryScores:
-        rightsDetails.details && rightsDetails.details.categoryScores,
-      clauseCounts: rightsDetails.details && rightsDetails.details.clauseCounts,
-    },
-    userRightsIndex: {
-      grade: uriResult.grade,
-      weightedScore: uriResult.weightedScore,
-      categories: uriResult.categories,
-    },
-    sections: (enhanced.sections || []).map((s) => ({
-      heading: s.heading,
-      type: s.type,
-      riskLevel: s.riskLevel,
-      summary: s.summary && s.summary.slice(0, 300),
-      categoryHints: s.categoryHints,
-    })),
-    excerpts: excerpts.slice(0, 8),
-    uncommonTerms: uncommon.slice(0, 20),
-  };
+  async function analyzeFile(filePath) {
+    const abs = path.resolve(filePath);
+    const html = fs.readFileSync(abs, "utf8");
+    return analyzeHtml(html, { source: abs });
+  }
 
-  // Print concise JSON output
-  console.log(JSON.stringify(report, null, 2));
+  return { analyzeHtml, analyzeFile };
 }
 
-const input =
-  process.argv[2] ||
-  path.resolve(__dirname, "../__tests__/fixtures/simple-tos.html");
-run(input).catch((err) => {
-  console.error("Analysis run failed:", err);
-  process.exit(1);
-});
+const pipeline = createPipeline();
+
+async function run(filePath) {
+  return pipeline.analyzeFile(filePath);
+}
+
+module.exports = {
+  run,
+  analyzeHtml: pipeline.analyzeHtml,
+};
+
+if (require.main === module) {
+  const input =
+    process.argv[2] ||
+    path.resolve(__dirname, "../__tests__/fixtures/simple-tos.html");
+  run(input)
+    .then((report) => {
+      console.log(JSON.stringify(report, null, 2));
+    })
+    .catch((err) => {
+      console.error("Analysis run failed:", err);
+      process.exit(1);
+    });
+}

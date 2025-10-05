@@ -38,7 +38,25 @@
       (global && global.Constants) ||
       (global && global.EXT_CONSTANTS) ||
       require("../utils/constants").EXT_CONSTANTS;
-    const { ANALYSIS, ERROR_TYPES } = constantsSource;
+    const { ANALYSIS, ERROR_TYPES, SELECTORS = {} } = constantsSource;
+    const MAIN_CONTENT_SELECTORS = Array.from(
+      new Set([
+        ...(Array.isArray(SELECTORS.LEGAL_SECTIONS)
+          ? SELECTORS.LEGAL_SECTIONS
+          : []),
+        "main",
+        "article",
+        "section",
+        'div[class*="tos"]',
+        'div[id*="tos"]',
+        'div[class*="legal"]',
+        'div[id*="legal"]',
+        'div[class*="policy"]',
+        'div[id*="policy"]',
+        'div[class*="content"]',
+        'div[id*="content"]',
+      ]),
+    );
 
     async function handleExtractionError(error, errorType) {
       log(logLevels.ERROR, `Extraction error (${errorType}):`, error);
@@ -76,6 +94,120 @@
 
     const cacheConfig = new TextCacheConfig();
     const textCache = new TextCacheWithRecovery(cacheConfig, log, logLevels);
+
+    function describeNode(node) {
+      if (!node || typeof node !== "object") return null;
+      const tagName =
+        typeof node.tagName === "string" ? node.tagName.toLowerCase() : null;
+      const classes =
+        node.classList && typeof node.classList === "object"
+          ? Array.from(node.classList)
+          : [];
+      const textPreview =
+        typeof node.textContent === "string"
+          ? node.textContent.trim().slice(0, 120)
+          : null;
+      return {
+        tag: tagName,
+        id: node.id || null,
+        classes,
+        textPreview,
+      };
+    }
+
+    function scoreCandidateNode(node) {
+      if (!node || typeof node.textContent !== "string") return 0;
+      const text = node.textContent;
+      const words = splitIntoWords(text);
+      const wordCount = words.length;
+      if (!wordCount) return 0;
+
+      const uniqueWordCount = new Set(words).size;
+      let headingCount = 0;
+      let listCount = 0;
+      let linkCount = 0;
+      if (typeof node.querySelectorAll === "function") {
+        headingCount = node.querySelectorAll("h1, h2, h3, h4, h5, h6").length;
+        listCount = node.querySelectorAll("li").length;
+        linkCount = node.querySelectorAll("a").length;
+      }
+
+      const linkPenalty = Math.min(0.4, linkCount / Math.max(1, wordCount));
+      const listPenalty = Math.min(0.3, listCount / Math.max(1, wordCount));
+      const diversityBonus = uniqueWordCount / Math.max(1, wordCount);
+
+      const baseScore = wordCount * (1 - linkPenalty - listPenalty);
+      const headingBonus = headingCount * 45;
+      const diversityScore = diversityBonus * 120;
+
+      return baseScore + headingBonus + diversityScore;
+    }
+
+    function selectPrimaryContentRoot(doc) {
+      if (!doc || typeof doc.querySelectorAll !== "function") {
+        return { primary: doc?.body || null, secondary: [] };
+      }
+
+      const seen = new WeakSet();
+      const candidates = [];
+
+      function addCandidate(node) {
+        if (!node || typeof node !== "object") return;
+        if (seen.has(node)) return;
+        seen.add(node);
+        candidates.push(node);
+      }
+
+      MAIN_CONTENT_SELECTORS.forEach((selector) => {
+        try {
+          doc.querySelectorAll(selector).forEach(addCandidate);
+        } catch (e) {
+          log(logLevels.DEBUG || 3, "Selector failed", { selector, error: e });
+        }
+      });
+
+      if (doc.body) addCandidate(doc.body);
+
+      const scored = candidates
+        .map((node) => ({ node, score: scoreCandidateNode(node) }))
+        .filter(({ score }) => score > 0)
+        .sort((a, b) => b.score - a.score);
+
+      if (!scored.length) {
+        return { primary: doc.body || null, secondary: [] };
+      }
+
+      const primary = scored[0].node;
+      const secondary = [];
+      const primaryScore = scored[0].score || 1;
+
+      for (let i = 1; i < scored.length && secondary.length < 2; i += 1) {
+        const candidate = scored[i];
+        if (!candidate || candidate.score < primaryScore * 0.55) continue;
+        const node = candidate.node;
+        if (!node || typeof node.contains !== "function") continue;
+        if (node.contains(primary) || primary.contains(node)) continue;
+        secondary.push(node);
+      }
+
+      return { primary, secondary };
+    }
+
+    function mergeTextSegments(segments) {
+      if (!Array.isArray(segments) || !segments.length) return "";
+      const deduped = [];
+      const seen = new Set();
+      segments.forEach((segment) => {
+        if (typeof segment !== "string") return;
+        const trimmed = segment.trim();
+        if (!trimmed) return;
+        const key = trimmed.toLowerCase();
+        if (seen.has(key)) return;
+        seen.add(key);
+        deduped.push(trimmed);
+      });
+      return deduped.join("\n\n");
+    }
 
     async function extract(input, type) {
       try {
@@ -209,27 +341,42 @@
         const structure = analyzeHTMLStructure(doc.body);
 
         // Remove unwanted elements
-        const excludeSelectors = [
-          "script",
-          "style",
-          "noscript",
-          "iframe",
-          "svg",
-          "header",
-          "footer",
-          "nav",
-          '[role="navigation"]',
-          ".cookie-banner",
-          ".ad",
-          ".advertisement",
-          "meta",
-          "link",
-          "head",
-        ];
+        const excludeSelectors = Array.from(
+          new Set([
+            "script",
+            "style",
+            "noscript",
+            "iframe",
+            "svg",
+            "header",
+            "footer",
+            "nav",
+            '[role="navigation"]',
+            ".cookie-banner",
+            ".ad",
+            ".advertisement",
+            "meta",
+            "link",
+            "head",
+            ...(Array.isArray(SELECTORS.EXCLUDE_ELEMENTS)
+              ? SELECTORS.EXCLUDE_ELEMENTS
+              : []),
+          ]),
+        );
 
         excludeSelectors.forEach((selector) => {
           doc.querySelectorAll(selector).forEach((el) => el.remove());
         });
+
+        const { primary, secondary } = selectPrimaryContentRoot(doc);
+        const extractionTargets = [primary, ...secondary].filter(Boolean);
+
+        structure.primaryContent = describeNode(primary);
+        structure.secondaryContent = secondary.map(describeNode);
+
+        if (!extractionTargets.length && doc.body) {
+          extractionTargets.push(doc.body);
+        }
 
         // Extract text while preserving structure
         function extractNodeText(node) {
@@ -267,9 +414,17 @@
           return "";
         }
 
+        const rawSegments = extractionTargets.map((node) =>
+          typeof node === "object" && node
+            ? extractNodeText(node)
+            : "",
+        );
+        const mergedText = mergeTextSegments(rawSegments);
+        const fallbackText = doc.body ? extractNodeText(doc.body) : "";
+
         return {
           success: true,
-          text: extractNodeText(doc.body),
+          text: mergedText || fallbackText,
           structure,
         };
       } catch (error) {
@@ -286,6 +441,14 @@
      * @returns {Object} Structure analysis
      */
     function analyzeHTMLStructure(root) {
+      if (!root || typeof root.querySelectorAll !== "function") {
+        return {
+          headings: [],
+          sections: [],
+          lists: { ordered: 0, unordered: 0, definition: 0 },
+          paragraphs: 0,
+        };
+      }
       return {
         headings: Array.from(
           root.querySelectorAll("h1, h2, h3, h4, h5, h6"),
@@ -316,7 +479,44 @@
      */
     function preprocessText(text) {
       log(logLevels.DEBUG, "Preprocessing text");
-      const preprocessedText = text.replace(/\s+/g, " ").trim().toLowerCase();
+      if (!text) return "";
+
+      const normalizedWhitespace = text.replace(/\r\n/g, "\n");
+      const navLinePatterns = [
+        /^back to top$/i,
+        /^menu$/i,
+        /^home$/i,
+        /^accept$/i,
+        /^decline$/i,
+        /^close$/i,
+      ];
+      const lines = normalizedWhitespace
+        .split(/\n+/)
+        .map((line) => line.trim())
+        .filter(
+          (line) =>
+            Boolean(line) &&
+            !navLinePatterns.some((pattern) => pattern.test(line)),
+        );
+
+      const deduped = [];
+      lines.forEach((line) => {
+        if (!line) return;
+        const normalized = line.toLowerCase();
+        const isShort = normalized.split(/\s+/).length < 4;
+        const lastLine = deduped[deduped.length - 1];
+        if (lastLine && lastLine.toLowerCase() === normalized) return;
+        deduped.push(line);
+      });
+
+      const cleaned = deduped
+        .map((line) => line.replace(/\s{2,}/g, " "))
+        .join("\n")
+        .replace(/\s+\n/g, "\n")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+
+      const preprocessedText = cleaned.toLowerCase();
       log(logLevels.DEBUG, "Text preprocessed", {
         originalText: text,
         preprocessedText,

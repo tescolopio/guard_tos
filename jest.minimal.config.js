@@ -5,4 +5,7 @@ module.exports = {
   testTimeout: 60000,
   forceExit: true,
   detectOpenHandles: true,
+  moduleNameMapper: {
+    "^cheerio$": "cheerio/slim",
+  },
 };

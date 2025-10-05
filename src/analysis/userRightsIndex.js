@@ -37,6 +37,74 @@ function createUserRightsIndex({ log = () => {}, logLevels = {} } = {}) {
     ALGORITHMIC_DECISIONS: "ALGORITHMIC_DECISIONS",
   };
 
+  const CRITICAL_CATEGORIES = new Set([
+    "DATA_COLLECTION_USE",
+    "USER_PRIVACY",
+    "DISPUTE_RESOLUTION",
+    "TERMS_CHANGES",
+  ]);
+
+  function computeWeightedScore(categories, weights) {
+    let sum = 0;
+    let wsum = 0;
+    Object.entries(weights).forEach(([k, { weight }]) => {
+      const s = categories[k]?.score;
+      const numericScore = typeof s === "number" ? s : 50;
+      sum += numericScore * weight;
+      wsum += weight;
+    });
+    return wsum > 0 ? sum / wsum : 50;
+  }
+
+  function applyHighRiskGuardrail(baseScore, categories) {
+    const criticalScores = [];
+    CRITICAL_CATEGORIES.forEach((key) => {
+      const score = categories[key]?.score;
+      if (typeof score === "number") {
+        criticalScores.push(score);
+      }
+    });
+
+    if (!criticalScores.length) {
+      return { score: baseScore, penalty: 0, cap: null, applied: false };
+    }
+
+    const minScore = Math.min(...criticalScores);
+    const avgScore =
+      criticalScores.reduce((acc, value) => acc + value, 0) /
+      criticalScores.length;
+
+    if (minScore >= 75) {
+      return { score: baseScore, penalty: 0, cap: null, applied: false };
+    }
+
+    const shortfall = criticalScores.reduce((acc, value) => {
+      if (value >= 70) return acc;
+      return acc + (70 - value);
+    }, 0);
+
+    const penalty = shortfall > 0 ? Math.round(shortfall * 0.65) : 0;
+    const softCap = Math.min(avgScore + 20, minScore + 25, 82);
+
+    let adjustedScore = baseScore;
+    if (penalty) {
+      adjustedScore = Math.max(0, adjustedScore - penalty);
+    }
+    if (Number.isFinite(softCap)) {
+      adjustedScore = Math.min(adjustedScore, softCap);
+    }
+
+    return {
+      score: adjustedScore,
+      penalty,
+      cap: Number.isFinite(softCap) ? softCap : null,
+      applied: penalty > 0 || adjustedScore < baseScore,
+      shortfall,
+      minScore,
+      avgScore,
+    };
+  }
+
   function normalize01(x) {
     if (typeof x !== "number" || Number.isNaN(x)) return 0.5;
     return Math.max(0, Math.min(1, x));
@@ -192,18 +260,36 @@ function createUserRightsIndex({ log = () => {}, logLevels = {} } = {}) {
       });
 
       // Weighted overall
-      let sum = 0;
-      let wsum = 0;
-      Object.entries(weights).forEach(([k, { weight }]) => {
-        const s = categories[k]?.score ?? 50;
-        sum += s * weight;
-        wsum += weight;
-      });
-      const weightedScore =
-        wsum > 0 ? Math.round((sum / wsum) * 100) / 100 : 50;
+      const baseWeighted = computeWeightedScore(categories, weights);
+      const guardrail = applyHighRiskGuardrail(baseWeighted, categories);
+      const weightedScore = Math.round(guardrail.score * 100) / 100;
       const grade = gradeFrom(weightedScore);
 
-      return { categories, weightedScore, grade };
+      if (guardrail.applied) {
+        CRITICAL_CATEGORIES.forEach((key) => {
+          if (!categories[key]) return;
+          categories[key].signals = categories[key].signals || {};
+          categories[key].signals.guardrail = {
+            penalty: guardrail.penalty,
+            cap: guardrail.cap,
+            baseScore: Math.round(baseWeighted * 100) / 100,
+          };
+        });
+      }
+
+      const result = { categories, weightedScore, grade };
+      if (guardrail.applied) {
+        result.guardrail = {
+          applied: true,
+          penalty: guardrail.penalty,
+          cap: guardrail.cap,
+          baseScore: Math.round(baseWeighted * 100) / 100,
+          minCriticalScore: guardrail.minScore,
+          avgCriticalScore: Math.round(guardrail.avgScore * 100) / 100,
+        };
+      }
+
+      return result;
     } catch (e) {
       log(logLevels.ERROR || 3, "UserRightsIndex compute error", e);
       return {

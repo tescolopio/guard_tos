@@ -61,7 +61,21 @@
       : legalTerms;
     const validLegalTermsDefinitions = providedLegalTermsDefinitions || {};
 
-    const textExtractor = createTextExtractor({ log, logLevels, utilities });
+    const resolvedUtilities =
+      utilities ||
+      {
+        splitIntoWords(text) {
+          return text
+            ? text.toLowerCase().split(/\W+/).filter(Boolean)
+            : [];
+        },
+      };
+
+    const textExtractor = createTextExtractor({
+      log,
+      logLevels,
+      utilities: resolvedUtilities,
+    });
     let dictionaryService = null; // Lazy initialization
 
     // Helper function to get dictionary service only when needed
