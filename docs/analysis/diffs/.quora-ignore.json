@@ -1,0 +1,7 @@
+[
+  "^Table of Contents$",
+  "^Last Updated\\s*:\\s*",
+  "^©\\s*20\\d{2}",
+  "^Follow us on",
+  "^All rights reserved$"
+]

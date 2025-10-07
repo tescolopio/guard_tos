@@ -1,0 +1,180 @@
+{
+  "generated_at": "2025-10-07T03:34:45.403Z",
+  "documents": [
+    {
+      "metadata": {
+        "primary_domain": "sam.gov",
+        "document_type": "Terms of Use",
+        "jurisdiction_notes": "U.S. Federal system; sovereign immunity; statutory privacy & monitoring obligations",
+        "last_updated": "(No effective date displayed in captured pages)",
+        "capture_batch_id": "2025-10-06T23-06-08-726Z",
+        "capture_provenance": "",
+        "notes": "Dynamic capture verified; enumerated sections extracted; no effective date disclosed."
+      },
+      "user_rights_index": {
+        "categories": [
+          {
+            "name": "terms"
+          },
+          {
+            "name": "sign"
+          },
+          {
+            "name": "Flesch Reading Ease",
+            "score": 34,
+            "grade": "Difficult"
+          },
+          {
+            "name": "Flesch-Kincaid Grade",
+            "score": 13,
+            "grade": "College"
+          },
+          {
+            "name": "Artifact Pollution",
+            "score": 0,
+            "grade": "Low"
+          },
+          {
+            "name": "Clarity & Transparency",
+            "score": 70,
+            "grade": "C-",
+            "key_evidence": "Enumerated sections + explanatory lead-ins; absent effective date & changelog."
+          },
+          {
+            "name": "Data Collection & Use",
+            "score": 70,
+            "grade": "C-",
+            "key_evidence": "Statutory mission focus; monitoring + analytics disclosed; limited user-configurable controls."
+          },
+          {
+            "name": "User Privacy",
+            "score": 55,
+            "grade": "F",
+            "key_evidence": "Persistent monitoring; CUI/PII responsibility shifted to user; cookie opt-out only."
+          },
+          {
+            "name": "Content & IP Rights",
+            "score": 78,
+            "grade": "C",
+            "key_evidence": "Federal works public domain; D&B data carve-out clearly bounded; no perpetual user content license."
+          },
+          {
+            "name": "Account Management",
+            "score": 65,
+            "grade": "D",
+            "key_evidence": "Admin role eligibility constraints + 90-day API/password rotation; appeal paths not defined."
+          },
+          {
+            "name": "Dispute Resolution",
+            "score": 80,
+            "grade": "B-",
+            "key_evidence": "No arbitration; remedies still constrained by sovereign immunity."
+          },
+          {
+            "name": "Terms Changes",
+            "score": 60,
+            "grade": "D-",
+            "key_evidence": "Implied update by posting; no version archive; no effective date."
+          },
+          {
+            "name": "Algorithmic Decisions",
+            "score": 50,
+            "grade": "F",
+            "key_evidence": "Screening / exclusion automation not transparent; no published appeal SLA."
+          }
+        ],
+        "overall_score": 66
+      },
+      "document_title": "SAM.gov Terms of Use",
+      "source_path": "test-pages/all-mocks/test-pages/curated-tos/SAM.gov _ Terms of Use.html",
+      "collection_date": "2025-10-06",
+      "review_date": "2025-10-06"
+    },
+    {
+      "metadata": {
+        "primary_domain": "familysearch.org",
+        "document_type": "Terms of Use",
+        "jurisdiction_notes": "Utah law; exclusive state/federal courts in Salt Lake County; no arbitration or class waiver",
+        "last_updated": "September 1, 2023",
+        "business_model": "Free nonprofit genealogy platform (data collaboration with commercial partners)"
+      },
+      "user_rights_index": {
+        "categories": [
+          {
+            "name": "Flesch Reading Ease (raw HTML)",
+            "score": -101,
+            "grade": "F"
+          },
+          {
+            "name": "Flesch-Kincaid Grade (raw)",
+            "score": 28,
+            "grade": "Post-graduate"
+          },
+          {
+            "name": "Gunning Fog (raw)",
+            "score": 23,
+            "grade": "Post-graduate"
+          },
+          {
+            "name": "Adjusted Flesch (manual estimate)",
+            "score": 15,
+            "grade": "Very Difficult"
+          },
+          {
+            "name": "Clarity & Transparency",
+            "score": 70,
+            "grade": "C-",
+            "key_evidence": "Explicit headings; mission framing; perpetual license plainly disclosed; artifact pollution obscures raw metrics."
+          },
+          {
+            "name": "Data Collection & Use",
+            "score": 65,
+            "grade": "D",
+            "key_evidence": "Commercial partner collaboration stated; no opt-out; cross-border transfers acknowledged without minimization commitments."
+          },
+          {
+            "name": "User Privacy",
+            "score": 60,
+            "grade": "D-",
+            "key_evidence": "Living person data sharing; deletion pathways externalized; perpetual license survival ambiguity; limited granular controls."
+          },
+          {
+            "name": "Content & IP Rights",
+            "score": 40,
+            "grade": "F",
+            "key_evidence": "Perpetual, irrevocable, sublicensable, derivative rights 'for any and all purposes' with no attribution or reversion."
+          },
+          {
+            "name": "Account Management",
+            "score": 70,
+            "grade": "C-",
+            "key_evidence": "Standard credential obligations; vague suspension triggers; no appeal; termination effect on data unclear."
+          },
+          {
+            "name": "Dispute Resolution",
+            "score": 85,
+            "grade": "B",
+            "key_evidence": "No arbitration, no class waiver, but Utah exclusive forum + $0 effective liability cap."
+          },
+          {
+            "name": "Terms Changes",
+            "score": 60,
+            "grade": "D-",
+            "key_evidence": "Unilateral change via continued use acceptance; no materiality threshold; no direct notice requirement."
+          },
+          {
+            "name": "Algorithmic Decisions",
+            "score": 55,
+            "grade": "F",
+            "key_evidence": "Opaque genealogical matching; mandatory binary sex data model; no explanation of ML training or reversal mechanics."
+          }
+        ],
+        "overall_score": 62
+      },
+      "document_title": "FamilySearch Terms of Use",
+      "source_path": "test-pages/all-mocks/test-pages/Website Terms of Service/FamilySearch Terms of Use. Everything you need to know, in one place..html",
+      "collection_date": "2025-10-06",
+      "review_date": "2025-10-06"
+    }
+  ]
+}

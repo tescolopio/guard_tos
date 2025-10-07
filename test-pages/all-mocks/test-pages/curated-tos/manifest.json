@@ -1,0 +1,345 @@
+{
+  "source": "/mnt/d/guard_tos/test-pages/all-mocks/test-pages/Website Terms of Service",
+  "output": "/mnt/d/guard_tos/test-pages/all-mocks/test-pages/curated-tos",
+  "timestamp": "2025-10-05T04:45:42.898Z",
+  "counts": {
+    "included": 20,
+    "excluded": 63
+  },
+  "included": [
+    {
+      "file": "AWS Learner Terms & Conditions.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "Conditions of Use - Amazon Customer Service.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "DuckDuckGo Terms of Service.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "FamilySearch Terms of Use. Everything you need to know, in one place..html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "GitHub Terms of Service - GitHub Docs.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "KTBSOnline User Agreement.txt",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "Legal - Website Terms of Use - Apple.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "Legal terms and conditions _ Mistral AI _ Frontier AI in your hands.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "SAM.gov _ Sign Terms of Use.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "SAM.gov _ Terms of Use.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "Splunk General Terms _ Splunk.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "Terms of Service - Glider AI.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "Terms of Service - Quora.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "Terms of Service _ Khan Academy.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "Terms of Service _ Pinterest Policy.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "Terms of Service-Youtube.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "Terms of Service.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "User Agreement - February 15, 2024 - Reddit.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "Wikimedia Foundation Terms of Use - Wikimedia Foundation Governance Wiki.html",
+      "reason": "matched include patterns"
+    },
+    {
+      "file": "google_terms_of_service_en_us.pdf",
+      "reason": "matched include patterns"
+    }
+  ],
+  "excluded": [
+    {
+      "file": "AWS Learner Terms & Conditions_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Acceptable Use Policy - Quora.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Acceptable Use Policy - Quora_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Amazon.com Privacy Notice - Amazon Customer Service.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Amazon.com Privacy Notice - Amazon Customer Service_files",
+      "reason": "directory"
+    },
+    {
+      "file": "BankofAmerica.pdf",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Conditions of Use - Amazon Customer Service_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Content Policy - Reddit.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Content Policy - Reddit_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Cookie Policy _ Khan Academy.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Cookie Policy _ Khan Academy_files",
+      "reason": "directory"
+    },
+    {
+      "file": "DataAnnotation.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "DataAnnotation_files",
+      "reason": "directory"
+    },
+    {
+      "file": "DuckDuckGo Privacy Policy.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "DuckDuckGo Privacy Policy_files",
+      "reason": "directory"
+    },
+    {
+      "file": "DuckDuckGo Terms of Service_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Facebook Terms and Policies.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Facebook Terms and Policies_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Facebook.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Facebook_files",
+      "reason": "directory"
+    },
+    {
+      "file": "FamilySearch Terms of Use. Everything you need to know, in one place._files",
+      "reason": "directory"
+    },
+    {
+      "file": "GitHub Candidate Privacy Policy - GitHub Docs.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "GitHub Candidate Privacy Policy - GitHub Docs_files",
+      "reason": "directory"
+    },
+    {
+      "file": "GitHub Terms of Service - GitHub Docs_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Khan Kids Privacy Policy _ Khan Academy.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Khan Kids Privacy Policy _ Khan Academy_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Legal - Apple Privacy Policy - Apple.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Legal - Apple Privacy Policy - Apple_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Legal - Website Terms of Use - Apple_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Legal terms and conditions _ Mistral AI _ Frontier AI in your hands_files",
+      "reason": "directory"
+    },
+    {
+      "file": "M365 Security and Compliance Administrator _ Voluntary Disclosures.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "M365 Security and Compliance Administrator _ Voluntary Disclosures_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Microsoft Ignite - About me.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Microsoft Ignite - About me_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Neo4j",
+      "reason": "directory"
+    },
+    {
+      "file": "Platform Policies – Quora Help Center.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Platform Policies – Quora Help Center_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Privacy Policy - Quora.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Privacy Policy - Quora_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Privacy Policy _ Glider AI.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Privacy Policy _ Glider AI_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Privacy Policy _ Khan Academy.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Privacy Policy _ Khan Academy_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Privacy Policy – Privacy & Terms – Google.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Privacy Policy – Privacy & Terms – Google_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Reddit Privacy Policy.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Reddit Privacy Policy_files",
+      "reason": "directory"
+    },
+    {
+      "file": "SAM.gov _ Sign Terms of Use_files",
+      "reason": "directory"
+    },
+    {
+      "file": "SAM.gov _ Terms of Use_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Spaces Policies – Quora Help Center.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "Spaces Policies – Quora Help Center_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Splunk General Terms _ Splunk_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Terms of Service - Glider AI_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Terms of Service - Quora_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Terms of Service _ Khan Academy_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Terms of Service _ Pinterest Policy_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Terms of Service-Youtube_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Terms of Service_files",
+      "reason": "directory"
+    },
+    {
+      "file": "User Agreement - February 15, 2024 - Reddit_files",
+      "reason": "directory"
+    },
+    {
+      "file": "Wikimedia Foundation Terms of Use - Wikimedia Foundation Governance Wiki_files",
+      "reason": "directory"
+    },
+    {
+      "file": "YouTube Community Guidelines & Policies - How YouTube Works.html",
+      "reason": "did not match include or matched exclude patterns"
+    },
+    {
+      "file": "YouTube Community Guidelines & Policies - How YouTube Works_files",
+      "reason": "directory"
+    },
+    {
+      "file": "splunk-privacy-policy-sept-2024.pdf",
+      "reason": "did not match include or matched exclude patterns"
+    }
+  ]
+}

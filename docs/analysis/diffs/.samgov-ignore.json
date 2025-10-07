@@ -1,0 +1,19 @@
+[
+  "^\\[Skip to main content\\]$",
+  "^Skip to main content$",
+  "^!\\[SAM",
+  "^An official website of the United States government$",
+  "^Here’s how you know$",
+  "^You have [0-9]+ new alerts$",
+  "^\\[Show / Hide Alerts\\]$",
+  "^Menu$",
+  "^Close$",
+  "^Feedback$",
+  "^Our Website$",
+  "^Our Partners$",
+  "^Policies$",
+  "^Customer Service$",
+  "^WARNING$",
+  "^SAM.gov$",
+  "^Navigate To About This Site Menu$"
+]

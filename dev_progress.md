@@ -10,6 +10,7 @@
 
 - ✅ Single-pass mega-regex for rights clause detection (named capture groups; fewer scans)
 - ✅ Extended clause rubric (delegation of arbitrability, negative option billing, jury trial waiver, moral rights waiver)
+- ✅ Manual ToS review drafted for Khan Academy (readability grade F, manual rights score 52) with section alignment and dataset sync
 - ✅ Deterministic word count + performance ceilings in integration test
 - ✅ Sidepanel diagnostics: live clause counts + dictionary cache metrics
 - ✅ Dictionary term frequency scanning with definitions surfaced in rights.details.dictionaryTerms

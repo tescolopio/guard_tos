@@ -1,0 +1,9 @@
+[
+  "^Table of Contents$",
+  "^Last updated:?",
+  "^Was this page helpful",
+  "^Thank you for your feedback",
+  "^©\\s*20\\d{2}",
+  "^All rights reserved$",
+  "^On this page"
+]

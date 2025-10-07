@@ -14,7 +14,7 @@ This plan defines the end-to-end (E2E) testing tasks to validate the Chrome exte
 
 - Node/npm installed; repo dependencies installed
 - Production build available (or dev build flow) to load the extension
-- Curated ToS fixtures available under `test-pages/` or `docs/fixtures/`
+- Curated ToS fixtures available under `test-pages/all-mocks/test-pages/` or `docs/fixtures/`
 
 ---
 
@@ -41,7 +41,7 @@ Acceptance:
 Why: Playwright can’t grant `file://` permissions; serve fixtures via HTTP for realistic context.
 
 - [ ] Add a tiny static server (Node/Express or http-server) to host fixtures
-  - [ ] Serve `test-pages/` and `docs/fixtures/` under a known base URL (e.g., http://localhost:5173)
+  - [ ] Serve `test-pages/all-mocks/test-pages/` and `docs/fixtures/` under a known base URL (e.g., http://localhost:5173)
   - [ ] Provide npm scripts to start/stop server
   - [ ] Ensure CORS/offline behavior mirrored if needed
 - [ ] Add Playwright setup to start server before tests and stop after
@@ -166,4 +166,4 @@ Acceptance:
 - QA checklist: `docs/qa_checklist.md`
 - Grade spec: `docs/grade-based-implementation.md`
 - ML plan: `docs/ml-enhancement-plan.md` and `docs/training_progress.md`
-- Curated ToS pages: `test-pages/` and `docs/fixtures/`
+- Curated ToS pages: `test-pages/all-mocks/test-pages/` and `docs/fixtures/`

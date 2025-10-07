@@ -97,7 +97,7 @@ def harvest(input_dir: Path) -> List[Tuple[str, str, str]]:
 
 def main():
     ap = argparse.ArgumentParser(description='Harvest clause candidate sentences from curated ToS files.')
-    ap.add_argument('--input', default='test-pages/curated-tos', help='Input folder of curated ToS files')
+    ap.add_argument('--input', default='test-pages/all-mocks/test-pages/curated-tos', help='Input folder of curated ToS files')
     ap.add_argument('--output', default='data/harvested_candidates.jsonl', help='Output JSONL path')
     args = ap.parse_args()
 

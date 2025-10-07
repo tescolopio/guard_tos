@@ -1,0 +1,16 @@
+[
+  {
+    "name": "terms",
+    "url": "https://sam.gov/content/about/terms-of-use",
+    "selector_used": null,
+    "status": "error",
+    "notes": "page.waitForTimeout is not a function"
+  },
+  {
+    "name": "sign",
+    "url": "https://sam.gov/workspace/profile/sign-terms-of-use?mode=new",
+    "selector_used": null,
+    "status": "error",
+    "notes": "page.waitForTimeout is not a function"
+  }
+]

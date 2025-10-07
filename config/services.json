@@ -1,0 +1,96 @@
+{
+  "sam-gov": {
+    "label": "SAM.gov",
+    "capture": {
+      "outputRoot": "data/captures/sam-gov",
+      "targets": [
+        {
+          "name": "terms",
+          "url": "https://sam.gov/content/about/terms-of-use",
+          "candidateSelectors": [
+            "main",
+            "div[class*='terms']",
+            "section[class*='terms']",
+            "article",
+            "body"
+          ]
+        }
+      ]
+    },
+    "diff": {
+      "defaultPolicy": "terms",
+      "policies": {
+        "terms": {
+          "markdownFile": "terms.md",
+          "diffPrefix": "sam-gov",
+          "ignorePatternFile": "docs/analysis/diffs/.samgov-ignore.json",
+          "versionHistoryFile": "docs/analysis/diffs/sam-gov-version-history.json",
+          "metaName": "terms"
+        }
+      }
+    }
+  },
+  "quora": {
+    "label": "Quora",
+    "capture": {
+      "outputRoot": "data/captures/quora",
+      "targets": [
+        {
+          "name": "main",
+          "url": "https://www.quora.com/about/tos",
+          "candidateSelectors": [
+            "main",
+            "article",
+            "div[class*='Content']",
+            "div[id*='content']",
+            "div[class*='Page']",
+            "#root"
+          ]
+        }
+      ]
+    },
+    "diff": {
+      "defaultPolicy": "terms",
+      "policies": {
+        "terms": {
+          "markdownFile": "terms.md",
+          "diffPrefix": "quora",
+          "ignorePatternFile": "docs/analysis/diffs/.quora-ignore.json",
+          "versionHistoryFile": "docs/analysis/diffs/quora-version-history.json",
+          "metaName": "main"
+        }
+      }
+    }
+  },
+  "github": {
+    "label": "GitHub",
+    "capture": {
+      "outputRoot": "data/captures/github",
+      "targets": [
+        {
+          "name": "terms",
+          "url": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+          "candidateSelectors": [
+            "main",
+            "article",
+            "div.markdown-body",
+            "div[class*='Layout']",
+            "#__next"
+          ]
+        }
+      ]
+    },
+    "diff": {
+      "defaultPolicy": "terms",
+      "policies": {
+        "terms": {
+          "markdownFile": "terms.md",
+          "diffPrefix": "github",
+          "ignorePatternFile": "docs/analysis/diffs/.github-ignore.json",
+          "versionHistoryFile": "docs/analysis/diffs/github-version-history.json",
+          "metaName": "terms"
+        }
+      }
+    }
+  }
+}

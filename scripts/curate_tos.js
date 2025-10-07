@@ -4,9 +4,12 @@ const path = require("path");
 
 const SRC_DIR = path.resolve(
   __dirname,
-  "../test-pages/Website Terms of Service",
+  "../test-pages/all-mocks/test-pages/Website Terms of Service",
 );
-const OUT_DIR = path.resolve(__dirname, "../test-pages/curated-tos");
+const OUT_DIR = path.resolve(
+  __dirname,
+  "../test-pages/all-mocks/test-pages/curated-tos",
+);
 
 // Patterns for inclusion/exclusion based on filenames
 const includePatterns = [

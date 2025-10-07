@@ -131,7 +131,7 @@ This document is fairly easy to read with some education. Written at a 10th-12th
 
 #### 1. Sample ToS Page (Local Test)
 
-**URL**: `file:///mnt/d/guard_tos/test-pages/sample-tos.html`
+**URL**: `file:///mnt/d/guard_tos/test-pages/all-mocks/test-pages/sample-tos.html`
 **Content**: Contains arbitration, liability limitation, data collection clauses
 **Expected Results**:
 

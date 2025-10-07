@@ -1,0 +1,28 @@
+[
+  {
+    "name": "terms",
+    "url": "https://sam.gov/content/about/terms-of-use",
+    "selector_used": "[class*='terms']",
+    "status": "success",
+    "notes": "",
+    "sha256_raw": "a2185140a5a73cebe370a6467ac505b6a0824391ede3e9d562d69f92b9a17aee",
+    "sha256_sanitized": "f8cefdc7d46bf5733e5b8c3b84b06a5c82e5c15488a18822bdf6fc1ea71337c9",
+    "sha256_md": "6ae38d0f8d23f9cc62d26d9320ed92ce52c88c809feb0d0bc39c0e8952abafae",
+    "bytes_raw": 96120,
+    "bytes_sanitized": 91287,
+    "bytes_md": 31817
+  },
+  {
+    "name": "sign",
+    "url": "https://sam.gov/workspace/profile/sign-terms-of-use?mode=new",
+    "selector_used": "sam-frontend-content-terms-of-use",
+    "status": "success",
+    "notes": "",
+    "sha256_raw": "5063fd9e73d0d4c5ad56aae9d1a3778b1600f6fa085f58409c9f7668704cfe46",
+    "sha256_sanitized": "5063fd9e73d0d4c5ad56aae9d1a3778b1600f6fa085f58409c9f7668704cfe46",
+    "sha256_md": "5b832f320a20b6dcdadc7b9dbf737f56fdf2f434fedf61b403b85325aabdd189",
+    "bytes_raw": 39593,
+    "bytes_sanitized": 39593,
+    "bytes_md": 26510
+  }
+]

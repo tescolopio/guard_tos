@@ -66,7 +66,7 @@ If some classes (e.g., CLASS_ACTION_WAIVER, UNILATERAL_CHANGES) have too few pos
 1. Harvest candidates from curated ToS pages
 
 ```bash
-python scripts/harvest_clause_candidates.py --input test-pages/curated-tos --output data/harvested_candidates.jsonl
+python scripts/harvest_clause_candidates.py --input test-pages/all-mocks/test-pages/curated-tos --output data/harvested_candidates.jsonl
 ```
 
 1. Manually review and accept positives into a cleaned file (or use your own review flow), then run:
