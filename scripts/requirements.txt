@@ -1,12 +1,27 @@
-# Minimal requirements for dataset collection scripts
+# Requirements for dataset collection and model training
 # Pin exact versions for reproducibility. Update cautiously.
+
+# Core ML & Data Processing
 datasets==2.20.0
 pyyaml==6.0.2
 pandas==2.2.2
 numpy==1.26.4
 scikit-learn==1.4.2
 tqdm==4.66.5
+
+# Deep Learning & Transformers
+torch==2.1.0
+transformers==4.35.0
+accelerate==0.24.0
+evaluate==0.4.1
+
+# Text Processing & Utilities
 langdetect==1.0.9
 datasketch==1.5.9
 beautifulsoup4==4.12.3
 requests==2.31.0
+
+# Optional: Model Export & Deployment
+# sentencepiece==0.1.99  # For certain tokenizers
+# onnx==1.15.0  # For model export to ONNX
+# onnxruntime==1.16.0  # For ONNX inference
