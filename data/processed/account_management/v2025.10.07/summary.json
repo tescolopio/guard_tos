@@ -1,0 +1,9 @@
+{
+  "records": 11,
+  "label_totals": {
+    "easy_termination": 5,
+    "auto_renewal_friction": 3,
+    "manual_cancellation": 0,
+    "grace_period": 3
+  }
+}

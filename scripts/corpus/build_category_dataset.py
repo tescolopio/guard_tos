@@ -57,6 +57,21 @@ FALLBACK_LABEL_PATTERNS: Dict[str, Dict[str, Sequence[re.Pattern[str]]]] = {
             re.compile(r"venue\s+shall\s+be", re.IGNORECASE),
             re.compile(r"governing\s+law", re.IGNORECASE),
         ),
+    },
+    "content_rights": {
+        "license_assignment": (
+            re.compile(r"\bgrant(?:s|ed|ing)?\s+(?:us|the\s+(?:company|service|platform|provider))\b.*\blicense", re.IGNORECASE),
+            re.compile(r"\bnon[- ]exclusive\s+royalty[- ]free\s+license", re.IGNORECASE),
+        ),
+        "ip_retained": (
+            re.compile(r"\byou\s+retain\s+(?:all\s+)?ownership\s+(?:rights?|of)\s+(?:your\s+)?content", re.IGNORECASE),
+        ),
+        "moral_rights_waiver": (
+            re.compile(r"\bwaiv(?:e|er).{0,40}moral\s+rights", re.IGNORECASE),
+        ),
+        "commercial_use_claim": (
+            re.compile(r"\buse\s+(?:your\s+)?content\s+for\s+(?:advertising|marketing|promotion|commercial)", re.IGNORECASE),
+        ),
     }
 }
 
@@ -66,7 +81,13 @@ SOURCE_LABEL_MAP: Dict[str, Dict[str, Dict[str, float]]] = {
         "CLASS_ACTION_WAIVER": {"class_action_waiver": 1.0},
         "LIABILITY_LIMITATION": {},  # not part of DR label list
         "UNILATERAL_CHANGES": {},
-    }
+    },
+    "content_rights": {
+        "LICENSE_ASSIGNMENT": {"license_assignment": 1.0},
+        "IP_RETAINED": {"ip_retained": 1.0},
+        "MORAL_RIGHTS_WAIVER": {"moral_rights_waiver": 1.0},
+        "COMMERCIAL_USE_CLAIM": {"commercial_use_claim": 1.0},
+    },
 }
 
 

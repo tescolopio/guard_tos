@@ -1,0 +1,20 @@
+{
+  "category": "algorithmic_decisions",
+  "version": "v2025.10.07b",
+  "records": 200,
+  "label_distribution": {
+    "automated_decision": 0.335,
+    "human_review": 0.335,
+    "transparency_statement": 0.33
+  },
+  "label_counts": {
+    "automated_decision": 67,
+    "human_review": 67,
+    "transparency_statement": 66
+  },
+  "sources": [
+    "synthetic"
+  ],
+  "created": "2025-10-07T20:50:40.687439",
+  "notes": "Expanded synthetic dataset - 200 balanced examples (~67 per label)"
+}

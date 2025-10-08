@@ -1,0 +1,104 @@
+category: algorithmic_decisions
+description: |
+  Patterns for detecting algorithmic decision-making clauses in Terms of Service.
+  Focuses on automated decisions, human review rights, and transparency about algorithms.
+
+labels:
+  automated_decision:
+    description: "Service uses automated systems to make decisions affecting users"
+    positive_patterns:
+      - pattern: '\b(automat|algorithm|machine\s+learning|AI|artificial\s+intelligence).{0,50}(decision|determin|evaluat|assess|process)'
+        weight: 0.9
+        examples:
+          - "automated decision-making systems"
+          - "algorithmic determination of content"
+      
+      - pattern: '\b(decision|determin|evaluat).{0,50}(made|processed|handled).{0,30}(automat|without\s+human)'
+        weight: 0.85
+        examples:
+          - "decisions made automatically"
+          - "processed without human review"
+      
+      - pattern: '\b(system|platform|service).{0,50}(may|can|will).{0,50}(automat|algorithm).{0,50}(analyz|evaluat|assess|determin|decid)'
+        weight: 0.8
+        examples:
+          - "system may automatically analyze"
+          - "platform will algorithmically determine"
+      
+      - pattern: '\bautomated\s+processing\b'
+        weight: 0.9
+        examples:
+          - "automated processing of data"
+
+    negative_patterns:
+      - pattern: '\b(manual|human).{0,30}(review|oversight|decision)\b'
+        weight: -0.6
+        examples:
+          - "manual review by staff"
+
+  human_review:
+    description: "Users have right to human review of automated decisions"
+    positive_patterns:
+      - pattern: '\b(right|may|can|able).{0,50}(request|ask\s+for|demand|obtain).{0,50}(human|manual|person).{0,50}(review|intervention|oversight|decision)'
+        weight: 1.0
+        examples:
+          - "right to request human review"
+          - "may ask for manual intervention"
+      
+      - pattern: '\bhuman\s+(review|oversight|intervention).{0,50}(available|provided|offered)'
+        weight: 0.95
+        examples:
+          - "human review available upon request"
+          - "human intervention provided"
+      
+      - pattern: '\b(appeal|challenge|contest).{0,50}(automat|algorithm).{0,50}decision'
+        weight: 0.9
+        examples:
+          - "appeal automated decisions"
+          - "challenge algorithmic determinations"
+      
+      - pattern: '\bmanual\s+review.{0,30}(available|option|possible)'
+        weight: 0.85
+        examples:
+          - "manual review available"
+
+    negative_patterns:
+      - pattern: '\b(no|not|without).{0,30}human\s+(review|intervention|oversight)\b'
+        weight: -0.9
+        examples:
+          - "without human review"
+
+  transparency_statement:
+    description: "Service explains how algorithms work or what factors they consider"
+    positive_patterns:
+      - pattern: '\b(our|the).{0,30}(algorithm|system|AI).{0,50}(consider|use|analyz|evaluat|take\s+into\s+account).{0,50}(factor|criteri|data|signal|information)'
+        weight: 0.9
+        examples:
+          - "our algorithm considers multiple factors"
+          - "system uses various criteria"
+      
+      - pattern: '\b(explain|describ|disclos|inform).{0,50}how.{0,50}(algorithm|automat|system|AI).{0,50}(work|function|operat|process)'
+        weight: 0.95
+        examples:
+          - "explain how algorithms work"
+          - "disclose how automated systems operate"
+      
+      - pattern: '\b(transparent|transparency).{0,50}(about|regarding|concerning).{0,50}(algorithm|automat|decision|AI)'
+        weight: 0.9
+        examples:
+          - "transparency about algorithmic decisions"
+      
+      - pattern: '\b(algorithm|system|AI).{0,50}(based\s+on|relies\s+on|uses).{0,50}(such\s+as|including|like)'
+        weight: 0.75
+        examples:
+          - "algorithm based on factors such as"
+          - "system relies on data including"
+
+    negative_patterns:
+      - pattern: '\b(proprietary|confidential|secret|undisclosed).{0,30}(algorithm|method|process)\b'
+        weight: -0.8
+        examples:
+          - "proprietary algorithms"
+
+multilabel: true
+min_confidence: 0.7

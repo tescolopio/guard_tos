@@ -1,0 +1,9 @@
+{
+  "records": 712,
+  "label_totals": {
+    "binding_arbitration": 623,
+    "class_action_waiver": 12,
+    "jury_trial_waiver": 74,
+    "venue_selection": 137
+  }
+}

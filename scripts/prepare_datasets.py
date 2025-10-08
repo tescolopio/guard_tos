@@ -25,7 +25,11 @@ TARGETS = {
     'CLASS_ACTION_WAIVER',
     'LIABILITY_LIMITATION',
     'UNILATERAL_CHANGES',
-    # Optional next: 'JURY_TRIAL_WAIVER', 'MORAL_RIGHTS_WAIVER',
+    'LICENSE_ASSIGNMENT',
+    'IP_RETAINED',
+    'MORAL_RIGHTS_WAIVER',
+    'COMMERCIAL_USE_CLAIM',
+    # Optional next: 'JURY_TRIAL_WAIVER',
 }
 
 RE_UNILATERAL = re.compile(
@@ -36,6 +40,26 @@ RE_UNILATERAL = re.compile(
 RE_CLASS_ACTION = re.compile(r"class\s+action\s+waiver|waive\s+.*class\s+action", re.I)
 RE_ARBITRATION = re.compile(r"arbitrat", re.I)
 RE_LIABILITY_PHRASE = re.compile(r"limitation\s+of\s+liability", re.I)
+RE_LICENSE_GRANT = re.compile(
+    r"\bgrant(?:s|ed|ing)?\s+(?:to\s+)?(?:us|the\s+(?:company|service|platform|provider|licensor|licensee))\b.*\blicense",
+    re.I,
+)
+RE_IP_RETENTION = re.compile(
+    r"\byou\s+(?:retain|keep|maintain)\s+(?:all\s+)?(?:rights?|ownership|title)\s+(?:of|in)\s+(?:your\s+)?content",
+    re.I,
+)
+RE_MORAL_RIGHTS = re.compile(
+    r"\b(?:moral\s+rights?|rights?\s+of\s+(?:attribution|integrity))\b.*\b(waiv(?:e|er)|not\s+assert|irrevocably)",
+    re.I,
+)
+RE_COMMERCIAL_USE = re.compile(
+    r"\b(?:use|license)\s+(?:your\s+)?content\b.*\b(advertising|marketing|promotion|commercial|publicity|syndication|monetiz)",
+    re.I,
+)
+RE_COMMERCIAL_USE_ALT = re.compile(
+    r"\b(advertising|marketing|promotion|commercial|publicity|syndication|monetiz)\b.*\b(?:your\s+)?content",
+    re.I,
+)
 
 
 def _pick_text_and_label_columns(df: pd.DataFrame, label_features=None) -> Tuple[Optional[str], Optional[str]]:
@@ -110,6 +134,14 @@ def from_cuad() -> pd.DataFrame:
         if 'amend' in l or 'modif' in l or 'change' in l or 'update' in l:
             # require unilateral phrasing
             return 'UNILATERAL_CHANGES' if RE_UNILATERAL.search(txt or '') else ''
+        if 'moral right' in l:
+            return 'MORAL_RIGHTS_WAIVER'
+        if 'license' in l:
+            if RE_IP_RETENTION.search(txt or ''):
+                return 'IP_RETAINED'
+            return 'LICENSE_ASSIGNMENT'
+        if 'ip ownership' in l or 'joint ip ownership' in l:
+            return 'LICENSE_ASSIGNMENT'
         if RE_CLASS_ACTION.search(txt or ''):
             return 'CLASS_ACTION_WAIVER'
         # Text fallbacks
@@ -119,6 +151,14 @@ def from_cuad() -> pd.DataFrame:
             return 'LIABILITY_LIMITATION'
         if RE_UNILATERAL.search(txt or ''):
             return 'UNILATERAL_CHANGES'
+        if RE_MORAL_RIGHTS.search(txt or ''):
+            return 'MORAL_RIGHTS_WAIVER'
+        if RE_LICENSE_GRANT.search(txt or ''):
+            return 'LICENSE_ASSIGNMENT'
+        if RE_IP_RETENTION.search(txt or ''):
+            return 'IP_RETAINED'
+        if RE_COMMERCIAL_USE.search(txt or '') or RE_COMMERCIAL_USE_ALT.search(txt or ''):
+            return 'COMMERCIAL_USE_CLAIM'
         return ''
 
     df['label'] = [map_label(lbl, txt) for lbl, txt in zip(df['raw_label'], df['text'])]
@@ -153,6 +193,12 @@ def from_ledgar() -> pd.DataFrame:
             return 'LIABILITY_LIMITATION'
         if 'amend' in l or 'modif' in l or 'change' in l or 'update' in l:
             return 'UNILATERAL_CHANGES' if RE_UNILATERAL.search(txt or '') else ''
+        if 'moral right' in l:
+            return 'MORAL_RIGHTS_WAIVER'
+        if 'license' in l or 'intellectual property' in l:
+            if RE_IP_RETENTION.search(txt or ''):
+                return 'IP_RETAINED'
+            return 'LICENSE_ASSIGNMENT'
         if RE_CLASS_ACTION.search(txt or ''):
             return 'CLASS_ACTION_WAIVER'
         # Text fallbacks
@@ -162,6 +208,14 @@ def from_ledgar() -> pd.DataFrame:
             return 'LIABILITY_LIMITATION'
         if RE_UNILATERAL.search(txt or ''):
             return 'UNILATERAL_CHANGES'
+        if RE_MORAL_RIGHTS.search(txt or ''):
+            return 'MORAL_RIGHTS_WAIVER'
+        if RE_LICENSE_GRANT.search(txt or ''):
+            return 'LICENSE_ASSIGNMENT'
+        if RE_IP_RETENTION.search(txt or ''):
+            return 'IP_RETAINED'
+        if RE_COMMERCIAL_USE.search(txt or '') or RE_COMMERCIAL_USE_ALT.search(txt or ''):
+            return 'COMMERCIAL_USE_CLAIM'
         return ''
 
     df['label'] = [map_label(lbl, txt) for lbl, txt in zip(df['raw_label'], df['text'])]

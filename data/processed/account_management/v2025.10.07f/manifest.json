@@ -1,0 +1,19 @@
+{
+  "category": "account_management",
+  "version": "v2025.10.07f",
+  "records": 78,
+  "label_distribution": {
+    "auto_renewal_friction": 0.359,
+    "easy_termination": 0.3462,
+    "grace_period": 0.0897,
+    "manual_cancellation": 0.2308
+  },
+  "sources": [
+    "synthetic_expanded"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Expanded synthetic with improved grace_period patterns"
+}

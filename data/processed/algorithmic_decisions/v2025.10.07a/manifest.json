@@ -1,0 +1,18 @@
+{
+  "category": "algorithmic_decisions",
+  "version": "v2025.10.07a",
+  "records": 38,
+  "label_distribution": {
+    "automated_decision": 0.8421,
+    "human_review": 0.2368,
+    "transparency_statement": 0.2105
+  },
+  "sources": [
+    "synthetic"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Initial algorithmic decisions dataset - synthetic examples only"
+}

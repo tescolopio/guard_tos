@@ -1,0 +1,20 @@
+{
+  "category": "account_management",
+  "version": "v2025.10.07c",
+  "records": 36,
+  "label_distribution": {
+    "auto_renewal_friction": 0.5556,
+    "easy_termination": 0.1389,
+    "grace_period": 0.2222,
+    "manual_cancellation": 0.0833
+  },
+  "sources": [
+    "platform_tos",
+    "synthetic"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+}

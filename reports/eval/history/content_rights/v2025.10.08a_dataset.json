@@ -1,0 +1,43 @@
+{
+  "category": "content_rights",
+  "dataset_path": "data/processed/content_rights/v2025.10.08a/dataset.jsonl",
+  "records": 1379,
+  "label_totals": {
+    "license_assignment": 1295,
+    "ip_retained": 53,
+    "moral_rights_waiver": 3,
+    "commercial_use_claim": 28
+  },
+  "label_distribution": {
+    "license_assignment": 0.9391,
+    "ip_retained": 0.0384,
+    "moral_rights_waiver": 0.0022,
+    "commercial_use_claim": 0.0203
+  },
+  "length_stats": {
+    "avg_chars": 462.16,
+    "median_chars": 347,
+    "avg_tokens": 71.25
+  },
+  "manifest": {
+    "category": "content_rights",
+    "version": "v2025.10.08a",
+    "records": 1379,
+    "label_distribution": {
+      "commercial_use_claim": 0.0203,
+      "ip_retained": 0.0384,
+      "license_assignment": 0.9391,
+      "moral_rights_waiver": 0.0022
+    },
+    "sources": [
+      "hf_cuad",
+      "hf_ledgar",
+      "synthetic_ip_retained"
+    ],
+    "qa_sample_size": 0,
+    "qa_accuracy": 0.0,
+    "annotators": [],
+    "license": "pending",
+    "notes": "Includes synthetic IP retention augmentation v2025.10.08"
+  }
+}

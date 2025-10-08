@@ -1,0 +1,50 @@
+{
+  "category": "data_collection",
+  "dataset_path": "data/processed/data_collection/v2025.10.07c/dataset.jsonl",
+  "records": 177,
+  "label_totals": {
+    "data_collection_extensive": 61,
+    "data_collection_minimal": 23,
+    "consent_explicit": 14,
+    "consent_implied": 3,
+    "purpose_specific": 5,
+    "purpose_broad": 91
+  },
+  "label_distribution": {
+    "data_collection_extensive": 0.3446,
+    "data_collection_minimal": 0.1299,
+    "consent_explicit": 0.0791,
+    "consent_implied": 0.0169,
+    "purpose_specific": 0.0282,
+    "purpose_broad": 0.5141
+  },
+  "length_stats": {
+    "avg_chars": 1904.5,
+    "median_chars": 1962,
+    "avg_tokens": 294.0
+  },
+  "manifest": {
+    "category": "data_collection",
+    "version": "v2025.10.07c",
+    "records": 177,
+    "label_distribution": {
+      "consent_explicit": 0.0791,
+      "consent_implied": 0.0169,
+      "data_collection_extensive": 0.3446,
+      "data_collection_minimal": 0.1299,
+      "purpose_broad": 0.5141,
+      "purpose_specific": 0.0282
+    },
+    "sources": [
+      "gdpr",
+      "ccpa",
+      "privacy_policy_qa",
+      "platform_tos"
+    ],
+    "qa_sample_size": 0,
+    "qa_accuracy": 0.0,
+    "annotators": [],
+    "license": "pending",
+    "notes": "Full harvest: GDPR + CCPA + 500 privacy policy clauses + 220 platform ToS chunks"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "category": "terms_changes",
+  "version": "v2025.10.07d",
+  "records": 38,
+  "label_distribution": {
+    "advance_notice": 0.6579,
+    "opt_out_provided": 0.1579,
+    "unilateral_change": 0.1842
+  },
+  "sources": [
+    "corpus",
+    "synthetic"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Fixed advance_notice patterns to handle passive voice"
+}

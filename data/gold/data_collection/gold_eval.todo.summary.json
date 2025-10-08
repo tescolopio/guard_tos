@@ -1,0 +1,19 @@
+{
+  "count": 96,
+  "label_totals": {
+    "data_collection_extensive": 35,
+    "data_collection_minimal": 23,
+    "purpose_broad": 35,
+    "consent_explicit": 14,
+    "consent_implied": 3,
+    "purpose_specific": 5
+  },
+  "label_distribution": {
+    "data_collection_extensive": 0.3646,
+    "data_collection_minimal": 0.2396,
+    "consent_explicit": 0.1458,
+    "consent_implied": 0.0312,
+    "purpose_specific": 0.0521,
+    "purpose_broad": 0.3646
+  }
+}

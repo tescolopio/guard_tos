@@ -1,0 +1,15 @@
+{
+  "count": 49,
+  "label_totals": {
+    "retention_disclosed": 17,
+    "access_rights": 25,
+    "deletion_offered": 17,
+    "privacy_waiver": 0
+  },
+  "label_distribution": {
+    "retention_disclosed": 0.3469,
+    "deletion_offered": 0.3469,
+    "access_rights": 0.5102,
+    "privacy_waiver": 0.0
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "category": "user_privacy",
+  "dataset_path": "data/processed/user_privacy/v2025.10.07/dataset.jsonl",
+  "records": 75,
+  "label_totals": {
+    "retention_disclosed": 17,
+    "deletion_offered": 17,
+    "access_rights": 51,
+    "privacy_waiver": 0
+  },
+  "label_distribution": {
+    "retention_disclosed": 0.2267,
+    "deletion_offered": 0.2267,
+    "access_rights": 0.68,
+    "privacy_waiver": 0.0
+  },
+  "length_stats": {
+    "avg_chars": 1764.43,
+    "median_chars": 1916,
+    "avg_tokens": 276.15
+  },
+  "manifest": {
+    "category": "user_privacy",
+    "version": "v2025.10.07",
+    "records": 75,
+    "label_distribution": {
+      "access_rights": 0.68,
+      "deletion_offered": 0.2267,
+      "privacy_waiver": 0.0,
+      "retention_disclosed": 0.2267
+    },
+    "sources": [
+      "gdpr",
+      "ccpa",
+      "privacy_policy_qa",
+      "platform_tos"
+    ],
+    "qa_sample_size": 0,
+    "qa_accuracy": 0.0,
+    "annotators": [],
+    "license": "pending",
+    "notes": "Reused data_collection corpus: GDPR + CCPA + 500 privacy policy clauses + 220 platform ToS chunks"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "category": "content_rights",
+  "version": "v2025.10.08a",
+  "records": 1379,
+  "label_distribution": {
+    "commercial_use_claim": 0.0203,
+    "ip_retained": 0.0384,
+    "license_assignment": 0.9391,
+    "moral_rights_waiver": 0.0022
+  },
+  "sources": [
+    "hf_cuad",
+    "hf_ledgar",
+    "synthetic_ip_retained"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "qa_reports": [
+    "reports/qa/content_rights_v2025.10.08a_synthetic_ip_retained_qa.md"
+  ],
+  "annotators": [],
+  "license": "pending",
+  "notes": "Includes synthetic IP retention augmentation (v2025.10.08), which passed qualitative review."
+}

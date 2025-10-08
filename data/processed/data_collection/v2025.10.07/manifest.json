@@ -1,0 +1,26 @@
+{
+  "category": "data_collection",
+  "version": "v2025.10.07",
+  "records": 54,
+  "label_distribution": {
+    "consent_explicit": 0.1481,
+    "consent_implied": 0.0,
+    "data_collection_extensive": 0.3519,
+    "data_collection_minimal": 0.2778,
+    "purpose_broad": 0.4444,
+    "purpose_specific": 0.0926
+  },
+  "sources": [
+    "gdpr",
+    "ccpa"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Initial GDPR + CCPA harvest with weak supervision patterns. consent_implied label has 0 examples as expected - regulatory texts advocate for explicit consent and do not contain 'by using you agree' language. Future iterations should include Terms of Service documents to populate this label.",
+  "known_limitations": [
+    "consent_implied label not populated - requires Terms of Service documents, not regulatory texts",
+    "Limited to regulatory compliance language; does not cover real-world ToS practices"
+  ]
+}

@@ -1,15 +1,15 @@
 {
-  "count": 155,
+  "count": 148,
   "label_totals": {
-    "binding_arbitration": 149,
-    "jury_trial_waiver": 65,
-    "venue_selection": 27,
-    "class_action_waiver": 16
+    "binding_arbitration": 110,
+    "jury_trial_waiver": 53,
+    "venue_selection": 63,
+    "class_action_waiver": 12
   },
   "label_distribution": {
-    "binding_arbitration": 0.9613,
-    "class_action_waiver": 0.1032,
-    "jury_trial_waiver": 0.4194,
-    "venue_selection": 0.1742
+    "binding_arbitration": 0.7432,
+    "class_action_waiver": 0.0811,
+    "jury_trial_waiver": 0.3581,
+    "venue_selection": 0.4257
   }
 }

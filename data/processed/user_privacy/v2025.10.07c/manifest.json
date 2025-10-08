@@ -1,0 +1,22 @@
+{
+  "category": "user_privacy",
+  "version": "v2025.10.07c",
+  "records": 238,
+  "label_distribution": {
+    "retention_disclosed": 0.5294117647058824,
+    "deletion_offered": 0.5294117647058824,
+    "access_rights": 0.3865546218487395,
+    "privacy_waiver": 0.5756302521008403
+  },
+  "label_counts": {
+    "retention_disclosed": 126,
+    "deletion_offered": 126,
+    "access_rights": 92,
+    "privacy_waiver": 137
+  },
+  "sources": [
+    "synthetic"
+  ],
+  "created": "2025-10-07T21:03:05.301649",
+  "notes": "Direct import of pre-labeled synthetic data"
+}

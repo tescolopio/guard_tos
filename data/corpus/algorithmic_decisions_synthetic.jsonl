@@ -1,0 +1,44 @@
+{"text": "Our platform uses automated systems to moderate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Our platform uses automated systems to evaluate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Our platform uses automated systems to assess user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "We employ algorithmic decision-making to moderate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "We employ algorithmic decision-making to evaluate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "We employ algorithmic decision-making to assess user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Automated processing may be used to moderate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Automated processing may be used to evaluate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Automated processing may be used to assess user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Machine learning algorithms help us moderate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Machine learning algorithms help us evaluate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Machine learning algorithms help us assess user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "AI systems automatically moderate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "AI systems automatically evaluate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "AI systems automatically assess user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Content decisions may be made automatically without human review.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Our algorithms determine {target} based on various factors.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Automated systems process and evaluate {target}.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "We use artificial intelligence to moderate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "We use artificial intelligence to evaluate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "We use artificial intelligence to assess user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Algorithmic systems analyze and moderate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Algorithmic systems analyze and evaluate user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Algorithmic systems analyze and assess user content.", "labels": ["automated_decision"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "You have the right to request human review of automated decisions affecting your account.", "labels": ["human_review"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Users may appeal algorithmic decisions and obtain manual review by our staff.", "labels": ["human_review"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "If you disagree with an automated decision, you can request human intervention.", "labels": ["human_review"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Human review is available upon request for all automated determinations.", "labels": ["human_review"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "You can challenge any algorithmic decision by contacting our support team for manual review.", "labels": ["human_review"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "We provide the option to appeal automated decisions to a human reviewer.", "labels": ["human_review"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Users may request that automated content moderation decisions be reviewed by staff.", "labels": ["human_review"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "If an AI system made a decision about your content, you may ask for human oversight.", "labels": ["human_review"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Manual review by trained personnel is available for any automated determination.", "labels": ["human_review"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "You can contest automated decisions by requesting human review within 30 days.", "labels": ["human_review"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Our algorithm considers factors such as user engagement, content quality, and community standards.", "labels": ["transparency_statement"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "We aim to be transparent about how our algorithmic systems work.", "labels": ["transparency_statement"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "The automated system relies on criteria including user engagement and content quality.", "labels": ["transparency_statement"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Our AI uses signals like user engagement, content quality, and interaction history to make determinations.", "labels": ["transparency_statement"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "We explain how our algorithms process information: they analyze user engagement and content quality.", "labels": ["transparency_statement"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "The system takes into account multiple factors such as user engagement, content quality, and user history.", "labels": ["transparency_statement"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Our algorithmic decision-making is based on user engagement, content quality, and other relevant data.", "labels": ["transparency_statement"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "We provide transparency regarding our automated systems, which consider user engagement and content quality.", "labels": ["transparency_statement"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "The platform's algorithm evaluates user engagement, content quality, and safety considerations when making decisions.", "labels": ["transparency_statement"], "source": "synthetic", "category": "algorithmic_decisions"}
+{"text": "Our AI systems use various criteria including user engagement, content quality, and engagement patterns.", "labels": ["transparency_statement"], "source": "synthetic", "category": "algorithmic_decisions"}

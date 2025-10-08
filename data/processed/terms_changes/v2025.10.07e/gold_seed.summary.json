@@ -1,0 +1,13 @@
+{
+  "count": 150,
+  "label_totals": {
+    "advance_notice": 50,
+    "unilateral_change": 50,
+    "opt_out_provided": 50
+  },
+  "label_distribution": {
+    "advance_notice": 0.3333,
+    "unilateral_change": 0.3333,
+    "opt_out_provided": 0.3333
+  }
+}

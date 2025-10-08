@@ -1,0 +1,23 @@
+{
+  "category": "user_privacy",
+  "version": "v2025.10.07b",
+  "records": 81,
+  "label_distribution": {
+    "access_rights": 0.6296,
+    "deletion_offered": 0.2099,
+    "privacy_waiver": 0.0741,
+    "retention_disclosed": 0.2099
+  },
+  "sources": [
+    "gdpr",
+    "ccpa",
+    "hf_privacy_policy_qa",
+    "platform_tos",
+    "synthetic_problematic"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+}

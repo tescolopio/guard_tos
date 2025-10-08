@@ -1,0 +1,43 @@
+{
+  "category": "content_rights",
+  "dataset_path": "data/processed/content_rights/v2025.10.07a/dataset.jsonl",
+  "records": 1331,
+  "label_totals": {
+    "license_assignment": 1295,
+    "ip_retained": 5,
+    "moral_rights_waiver": 3,
+    "commercial_use_claim": 28
+  },
+  "label_distribution": {
+    "license_assignment": 0.973,
+    "ip_retained": 0.0038,
+    "moral_rights_waiver": 0.0023,
+    "commercial_use_claim": 0.021
+  },
+  "length_stats": {
+    "avg_chars": 469.37,
+    "median_chars": 359,
+    "avg_tokens": 72.39
+  },
+  "manifest": {
+    "category": "content_rights",
+    "version": "v2025.10.07a",
+    "records": 1331,
+    "label_distribution": {
+      "commercial_use_claim": 0.021,
+      "ip_retained": 0.0038,
+      "license_assignment": 0.973,
+      "moral_rights_waiver": 0.0023
+    },
+    "sources": [
+      "cuad",
+      "ledgar",
+      "manual_aug"
+    ],
+    "qa_sample_size": 0,
+    "qa_accuracy": 0.0,
+    "annotators": [],
+    "license": "pending",
+    "notes": "Automated build via scripts/corpus/build_category_dataset.py (license+content rights heuristics + manual ip retained seed)"
+  }
+}

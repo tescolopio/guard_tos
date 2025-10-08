@@ -1,0 +1,23 @@
+{
+  "category": "data_collection",
+  "version": "v2025.10.07b",
+  "records": 77,
+  "label_distribution": {
+    "consent_explicit": 0.1299,
+    "consent_implied": 0.013,
+    "data_collection_extensive": 0.4545,
+    "data_collection_minimal": 0.2078,
+    "purpose_broad": 0.3506,
+    "purpose_specific": 0.0649
+  },
+  "sources": [
+    "gdpr",
+    "ccpa",
+    "privacy_policy_qa"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Expanded harvest: GDPR + CCPA + 500 privacy policy clauses from Hugging Face"
+}

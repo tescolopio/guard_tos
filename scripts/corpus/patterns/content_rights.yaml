@@ -1,0 +1,133 @@
+metadata:
+  category: content_rights
+  version: "1.0.0"
+  created: "2025-10-07"
+  updated: "2025-10-07"
+  description: "Patterns for identifying user content ownership, license grants, moral rights waivers, and commercial usage claims"
+  notes:
+    - "Focus on user-generated content clauses common in SaaS and social platforms"
+    - "Prioritize precision by requiring explicit ownership or license language"
+
+preprocessing:
+  min_tokens: 8
+  max_tokens: 800
+  lowercase: true
+  normalize_whitespace: true
+
+shared_keywords:
+  license_terms:
+    - "license"
+    - "right to use"
+    - "royalty-free"
+    - "perpetual"
+    - "worldwide"
+    - "sublicensable"
+    - "irrevocable"
+  ownership_terms:
+    - "retain ownership"
+    - "remain yours"
+    - "your property"
+    - "title to"
+    - "ownership rights"
+  commercial_terms:
+    - "advertising"
+    - "marketing"
+    - "promotion"
+    - "commercial purposes"
+    - "publicity"
+    - "syndication"
+  moral_rights_terms:
+    - "moral rights"
+    - "rights of attribution"
+    - "droit moral"
+
+labels:
+  license_assignment:
+    description: "Clauses granting the service a license or assignment to use user content"
+    positive_patterns:
+      - pattern: '\\byou\\s+(?:grant|license)\\s+(?:to\\s+)?(?:us|the\\s+(?:company|service|platform|provider))\\s+(?:an?\\s+)?(?:irrevocable|perpetual|worldwide|royalty-?free|non[- ]?exclusive|sublicensable)?\\s*(?:right|license)'
+        weight: 1.0
+        examples:
+          - "You grant us a worldwide, royalty-free license"
+          - "You license the platform to use your content"
+      - pattern: '\\byou\\s+hereby\\s+(?:assign|transfer)\\s+(?:all\\s+)?rights?\\s+(?:in|to)\\s+(?:your\\s+)?content'
+        weight: 0.95
+        examples:
+          - "You hereby assign all rights to your content"
+      - pattern: '\\blicense\\s+includes\\s+the\\s+right\\s+to\\s+(?:use|reproduce|modify|distribute|display)\\s+(?:your\\s+)?content'
+        weight: 0.85
+        examples:
+          - "This license includes the right to reproduce your content"
+    negative_patterns:
+      - pattern: '\\bnot\\s+(?:grant|license)\\s+(?:us|the\\s+service)'
+        weight: -0.6
+        examples:
+          - "We do not grant a license"
+
+  ip_retained:
+    description: "Statements affirming the user retains ownership of their content"
+    positive_patterns:
+      - pattern: '\\byou\\s+(?:retain|keep|maintain)\\s+(?:all\\s+)?ownership\\s+(?:rights?|of)\\s+(?:in\\s+)?(?:your\\s+)?content'
+        weight: 1.0
+        examples:
+          - "You retain ownership of your content"
+      - pattern: '\\byour\\s+content\\s+(?:remains|stays)\\s+(?:yours|your\\s+property)'
+        weight: 0.9
+        examples:
+          - "Your content remains yours"
+      - pattern: '\\bretain\\s+title\\s+to\\s+(?:your\\s+)?content'
+        weight: 0.85
+        examples:
+          - "You retain title to your content"
+    negative_patterns:
+      - pattern: '\\bwe\\s+retain\\s+ownership\\s+of\\s+(?:your\\s+)?content'
+        weight: -0.7
+        examples:
+          - "We retain ownership of your content"
+
+  moral_rights_waiver:
+    description: "Waiver of moral rights or rights of attribution/integrity"
+    positive_patterns:
+      - pattern: '\\bwaiv(?:e|er)\\s+(?:any\\s+and\\s+all\\s+)?moral\\s+rights'
+        weight: 1.0
+        examples:
+          - "You waive all moral rights"
+      - pattern: '(?:moral\\s+rights|rights\\s+of\\s+attribution|droit\\s+moral).{0,80}(?:waiv(?:e|er)|not\\s+assert|irrevocably\\s+waive)'
+        weight: 0.95
+        examples:
+          - "You irrevocably waive any claims of moral rights"
+      - pattern: '\\birrevocably\\s+waive\\s+.*\\bmoral\\s+rights'
+        weight: 0.9
+        examples:
+          - "You irrevocably waive moral rights in your content"
+
+  commercial_use_claim:
+    description: "Clauses allowing the service to use user content for commercial, advertising, or promotional purposes"
+    positive_patterns:
+      - pattern: '\\buse\\s+(?:your\\s+)?content\\s+for\\s+(?:advertising|marketing|promotion|commercial\\s+purposes|publicity|syndication)'
+        weight: 1.0
+        examples:
+          - "We may use your content for advertising"
+      - pattern: '\\blicense\\s+(?:us|third\\s+parties)\\s+to\\s+use\\s+(?:your\\s+)?content\\s+for\\s+(?:advertising|marketing|promotion|commercial\\s+purposes)'
+        weight: 0.9
+        examples:
+          - "License us to use your content for marketing"
+      - pattern: '\\bcommercial\\s+(?:use|exploitation)\\s+of\\s+(?:user|your)\\s+content'
+        weight: 0.85
+        examples:
+          - "Commercial use of user content"
+      - pattern: '\\bmonetiz(?:e|ation)\\s+of\\s+(?:your\\s+)?content'
+        weight: 0.8
+        examples:
+          - "Monetization of your content"
+    negative_patterns:
+      - pattern: '\\bnot\\s+use\\s+(?:your\\s+)?content\\s+for\\s+(?:advertising|marketing|promotion|commercial\\s+purposes)'
+        weight: -0.7
+        examples:
+          - "We do not use your content for advertising"
+
+review_tasks:
+  - "Validate license patterns against high-traffic social media ToS"
+  - "Ensure ownership retention patterns avoid provider-owned language"
+  - "Double-check moral rights waivers across EU vs US terminology"
+  - "Test commercial use claims against datasets with explicit marketing rights"

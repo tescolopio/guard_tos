@@ -1,0 +1,24 @@
+{
+  "category": "data_collection",
+  "version": "v2025.10.07c",
+  "records": 177,
+  "label_distribution": {
+    "consent_explicit": 0.0791,
+    "consent_implied": 0.0169,
+    "data_collection_extensive": 0.3446,
+    "data_collection_minimal": 0.1299,
+    "purpose_broad": 0.5141,
+    "purpose_specific": 0.0282
+  },
+  "sources": [
+    "gdpr",
+    "ccpa",
+    "privacy_policy_qa",
+    "platform_tos"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Full harvest: GDPR + CCPA + 500 privacy policy clauses + 220 platform ToS chunks"
+}

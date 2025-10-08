@@ -1,0 +1,14 @@
+{
+  "category": "terms_changes",
+  "version": "v2025.10.07",
+  "records": 0,
+  "label_distribution": {},
+  "sources": [
+    "platform_tos"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+}

@@ -1,0 +1,15 @@
+{
+  "count": 91,
+  "label_totals": {
+    "license_assignment": 30,
+    "ip_retained": 30,
+    "moral_rights_waiver": 3,
+    "commercial_use_claim": 28
+  },
+  "label_distribution": {
+    "license_assignment": 0.3297,
+    "ip_retained": 0.3297,
+    "moral_rights_waiver": 0.033,
+    "commercial_use_claim": 0.3077
+  }
+}

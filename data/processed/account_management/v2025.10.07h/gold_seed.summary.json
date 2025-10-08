@@ -1,0 +1,15 @@
+{
+  "count": 200,
+  "label_totals": {
+    "easy_termination": 50,
+    "auto_renewal_friction": 50,
+    "manual_cancellation": 50,
+    "grace_period": 50
+  },
+  "label_distribution": {
+    "easy_termination": 0.25,
+    "auto_renewal_friction": 0.25,
+    "manual_cancellation": 0.25,
+    "grace_period": 0.25
+  }
+}

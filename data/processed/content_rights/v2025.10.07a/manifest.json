@@ -1,0 +1,21 @@
+{
+  "category": "content_rights",
+  "version": "v2025.10.07a",
+  "records": 1331,
+  "label_distribution": {
+    "commercial_use_claim": 0.021,
+    "ip_retained": 0.0038,
+    "license_assignment": 0.973,
+    "moral_rights_waiver": 0.0023
+  },
+  "sources": [
+    "cuad",
+    "ledgar",
+    "manual_aug"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Automated build via scripts/corpus/build_category_dataset.py (license+content rights heuristics + manual ip retained seed)"
+}

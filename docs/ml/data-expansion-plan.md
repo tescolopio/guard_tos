@@ -1,6 +1,6 @@
 # URI Data Expansion Program
 
-Last updated: 2025-09-27
+Last updated: 2025-10-08
 
 ## 1. Objectives & Success Criteria
 
@@ -20,9 +20,9 @@ Last updated: 2025-09-27
 | Category               | Processed Dataset | Gold Dataset                           | Last Action                      | Next Required Step                                    |
 | ---------------------- | ----------------- | -------------------------------------- | -------------------------------- | ----------------------------------------------------- |
 | Dispute Resolution     | ✅ `v2025.09.27`  | ⚠️ Draft seed (`gold_eval.todo.jsonl`) | Automated build + metrics logged | SME review + finalize gold set + QA metrics           |
-| Data Collection & Use  | ❌                | ❌                                     | None                             | Harvest sources (GDPR/CCPA/etc.), run pipeline        |
-| User Privacy           | ❌                | ❌                                     | None                             | Define weak supervision patterns, harvest regulators  |
-| Content Rights         | ❌                | ❌                                     | None                             | Pull CUAD/LEDGAR clauses, run preprocessing           |
+| Data Collection & Use  | ✅ `v2025.10.07c` | ⚠️ Draft seed (`gold_eval.todo.jsonl`) | Expanded harvest (177 records, 96 gold seed) | SME review + finalize gold set + QA metrics           |
+| User Privacy           | ✅ `v2025.10.07`  | ⚠️ Draft seed (`gold_eval.todo.jsonl`) | Reused data_collection corpus (75 records, 49 gold seed) | Address privacy_waiver gap; SME review + finalize gold set |
+| Content Rights         | ✅ `v2025.10.08a`  | ⚠️ Draft seed (`gold_eval.todo.jsonl`) | Gold set seed created            | SME review + finalize gold set + QA metrics           |
 | Account Management     | ❌                | ❌                                     | None                             | Harvest subscription agreements, annotate termination |
 | Terms Changes          | ❌                | ❌                                     | None                             | Collect change-log clauses, build heuristics          |
 | Algorithmic Decisions  | ❌                | ❌                                     | None                             | Source AI transparency statements, craft patterns     |

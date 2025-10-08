@@ -1,0 +1,8 @@
+{
+  "records": 38,
+  "label_totals": {
+    "automated_decision": 32,
+    "human_review": 9,
+    "transparency_statement": 8
+  }
+}

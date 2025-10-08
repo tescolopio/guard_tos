@@ -1,0 +1,22 @@
+{
+  "category": "account_management",
+  "version": "v2025.10.07g",
+  "records": 200,
+  "label_distribution": {
+    "easy_termination": 0.25,
+    "manual_cancellation": 0.25,
+    "auto_renewal_friction": 0.25,
+    "grace_period": 0.25
+  },
+  "label_counts": {
+    "easy_termination": 50,
+    "manual_cancellation": 50,
+    "auto_renewal_friction": 50,
+    "grace_period": 50
+  },
+  "sources": [
+    "synthetic"
+  ],
+  "created": "2025-10-07T20:41:08.474181",
+  "notes": "Direct import of 200 balanced synthetic examples (50 per label)"
+}

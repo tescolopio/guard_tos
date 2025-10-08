@@ -1,0 +1,20 @@
+{
+  "category": "terms_changes",
+  "version": "v2025.10.07e",
+  "records": 200,
+  "label_distribution": {
+    "advance_notice": 0.335,
+    "unilateral_change": 0.335,
+    "opt_out_provided": 0.33
+  },
+  "label_counts": {
+    "advance_notice": 67,
+    "unilateral_change": 67,
+    "opt_out_provided": 66
+  },
+  "sources": [
+    "synthetic"
+  ],
+  "created": "2025-10-07T20:45:06.001897",
+  "notes": "Expanded synthetic dataset - 200 balanced examples (~67 per label)"
+}

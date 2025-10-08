@@ -1,0 +1,18 @@
+{
+  "category": "terms_changes",
+  "version": "v2025.10.07c",
+  "records": 13,
+  "label_distribution": {
+    "advance_notice": 0.0,
+    "opt_out_provided": 0.4615,
+    "unilateral_change": 0.5385
+  },
+  "sources": [
+    "synthetic"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Automated build via scripts/corpus/build_category_dataset.py"
+}

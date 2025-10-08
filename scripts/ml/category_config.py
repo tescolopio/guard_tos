@@ -59,5 +59,33 @@ CATEGORY_REGISTRY: Dict[str, CategoryConfig] = {
         ],
         description="User privacy rights including data access, deletion, retention, and waivers",
     ),
-    # TODO: populate remaining categories (account_management, terms_changes, etc.)
+    "account_management": CategoryConfig(
+        name="account_management",
+        label_list=[
+            "easy_termination",
+            "auto_renewal_friction",
+            "manual_cancellation",
+            "grace_period",
+        ],
+        description="Account termination, cancellation, auto-renewal, and grace period mechanics",
+    ),
+    "terms_changes": CategoryConfig(
+        name="terms_changes",
+        label_list=[
+            "advance_notice",
+            "unilateral_change",
+            "opt_out_provided",
+        ],
+        description="Terms modification notice requirements, unilateral changes, and user opt-out rights",
+    ),
+    "algorithmic_decisions": CategoryConfig(
+        name="algorithmic_decisions",
+        label_list=[
+            "automated_decision",
+            "human_review",
+            "transparency_statement",
+        ],
+        description="Algorithmic decision-making, automated processing, human review rights, and transparency",
+    ),
+    # NOTE: clarity_transparency is a derived metric, not a separate category
 }

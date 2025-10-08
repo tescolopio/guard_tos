@@ -1,0 +1,38 @@
+{"text": "Our platform uses automated systems to evaluate user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "Our platform uses automated systems to assess user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "We employ algorithmic decision-making to moderate user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "We employ algorithmic decision-making to evaluate user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "We employ algorithmic decision-making to assess user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "Automated processing may be used to moderate user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "Automated processing may be used to evaluate user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "Automated processing may be used to assess user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "Machine learning algorithms help us evaluate user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "Machine learning algorithms help us assess user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "AI systems automatically evaluate user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "AI systems automatically assess user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "Content decisions may be made automatically without human review.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "Our algorithms determine {target} based on various factors.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "Automated systems process and evaluate {target}.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "We use artificial intelligence to evaluate user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "We use artificial intelligence to assess user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "Algorithmic systems analyze and evaluate user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "Algorithmic systems analyze and assess user content.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "You have the right to request human review of automated decisions affecting your account.", "labels": {"automated_decision": 1.0, "human_review": 1.0, "transparency_statement": 0.0}}
+{"text": "Users may appeal algorithmic decisions and obtain manual review by our staff.", "labels": {"automated_decision": 1.0, "human_review": 1.0, "transparency_statement": 0.0}}
+{"text": "If you disagree with an automated decision, you can request human intervention.", "labels": {"automated_decision": 1.0, "human_review": 1.0, "transparency_statement": 0.0}}
+{"text": "Human review is available upon request for all automated determinations.", "labels": {"automated_decision": 1.0, "human_review": 1.0, "transparency_statement": 0.0}}
+{"text": "You can challenge any algorithmic decision by contacting our support team for manual review.", "labels": {"automated_decision": 1.0, "human_review": 1.0, "transparency_statement": 0.0}}
+{"text": "We provide the option to appeal automated decisions to a human reviewer.", "labels": {"automated_decision": 1.0, "human_review": 1.0, "transparency_statement": 0.0}}
+{"text": "Users may request that automated content moderation decisions be reviewed by staff.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "If an AI system made a decision about your content, you may ask for human oversight.", "labels": {"automated_decision": 1.0, "human_review": 1.0, "transparency_statement": 0.0}}
+{"text": "Manual review by trained personnel is available for any automated determination.", "labels": {"automated_decision": 1.0, "human_review": 1.0, "transparency_statement": 0.0}}
+{"text": "You can contest automated decisions by requesting human review within 30 days.", "labels": {"automated_decision": 1.0, "human_review": 1.0, "transparency_statement": 0.0}}
+{"text": "Our algorithm considers factors such as user engagement, content quality, and community standards.", "labels": {"automated_decision": 0.0, "human_review": 0.0, "transparency_statement": 1.0}}
+{"text": "We aim to be transparent about how our algorithmic systems work.", "labels": {"automated_decision": 0.0, "human_review": 0.0, "transparency_statement": 1.0}}
+{"text": "The automated system relies on criteria including user engagement and content quality.", "labels": {"automated_decision": 0.0, "human_review": 0.0, "transparency_statement": 1.0}}
+{"text": "Our AI uses signals like user engagement, content quality, and interaction history to make determinations.", "labels": {"automated_decision": 0.0, "human_review": 0.0, "transparency_statement": 1.0}}
+{"text": "We explain how our algorithms process information: they analyze user engagement and content quality.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 1.0}}
+{"text": "Our algorithmic decision-making is based on user engagement, content quality, and other relevant data.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 1.0}}
+{"text": "We provide transparency regarding our automated systems, which consider user engagement and content quality.", "labels": {"automated_decision": 0.0, "human_review": 0.0, "transparency_statement": 1.0}}
+{"text": "The platform's algorithm evaluates user engagement, content quality, and safety considerations when making decisions.", "labels": {"automated_decision": 1.0, "human_review": 0.0, "transparency_statement": 0.0}}
+{"text": "Our AI systems use various criteria including user engagement, content quality, and engagement patterns.", "labels": {"automated_decision": 0.0, "human_review": 0.0, "transparency_statement": 1.0}}

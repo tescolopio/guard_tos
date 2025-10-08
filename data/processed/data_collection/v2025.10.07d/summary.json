@@ -1,0 +1,11 @@
+{
+  "records": 192,
+  "label_totals": {
+    "data_collection_extensive": 61,
+    "data_collection_minimal": 23,
+    "consent_explicit": 14,
+    "consent_implied": 18,
+    "purpose_specific": 5,
+    "purpose_broad": 91
+  }
+}

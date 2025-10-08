@@ -1,0 +1,26 @@
+{
+  "category": "data_collection",
+  "version": "v2025.10.07e",
+  "records": 364,
+  "label_distribution": {
+    "data_collection_extensive": 0.5274725274725275,
+    "data_collection_minimal": 0.6236263736263736,
+    "consent_explicit": 0.6483516483516484,
+    "consent_implied": 0.6373626373626373,
+    "purpose_specific": 0.6730769230769231,
+    "purpose_broad": 0.5274725274725275
+  },
+  "label_counts": {
+    "data_collection_extensive": 192,
+    "data_collection_minimal": 227,
+    "consent_explicit": 236,
+    "consent_implied": 232,
+    "purpose_specific": 245,
+    "purpose_broad": 192
+  },
+  "sources": [
+    "synthetic"
+  ],
+  "created": "2025-10-07T20:59:16.366015",
+  "notes": "Phase 2 expansion: combined existing 192 + new synthetic 172 = 364 total"
+}

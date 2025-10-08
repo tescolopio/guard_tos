@@ -1,0 +1,152 @@
+# Terms Changes Pattern Configuration
+# Used by scripts/corpus/build_category_dataset.py for weak-supervision labeling
+
+metadata:
+  category: terms_changes
+  version: "1.0.0"
+  description: "Patterns for identifying advance notice requirements, unilateral changes, and opt-out provisions for terms modifications"
+  created: "2025-10-07"
+  updated: "2025-10-07"
+
+preprocessing:
+  min_tokens: 8
+  max_tokens: 1500
+  lowercase: true
+  normalize_whitespace: true
+
+# Label patterns with regex definitions and confidence weights
+labels:
+  advance_notice:
+    description: "Service provider commits to advance notice before terms changes"
+    positive_patterns:
+      - pattern: '\b\d+\s+(day|week|month)s?\s+(before|prior|in\s+advance)'
+        weight: 0.9
+        examples:
+          - "30 days before"
+          - "two weeks in advance"
+          
+      - pattern: '\b(advanc|before|prior).{0,30}(notice|notification)'
+        weight: 0.7
+        examples:
+          - "advance notice"
+          - "notice before changes"
+      
+      - pattern: '\b(announc|notify|inform|post|publish).{0,80}(before|prior).{0,50}(effect|becom|tak)'
+        weight: 0.85
+        examples:
+          - "announced before becoming effective"
+          - "notify before taking effect"
+      
+      - pattern: '\b(reasonable|adequate|sufficient).{0,20}notice'
+        weight: 0.8
+        examples:
+          - "reasonable notice"
+          - "adequate advance notice"
+
+    negative_patterns:
+      - pattern: '\b(immediate(ly)?|without\s+notice|no\s+notice)\b'
+        weight: -0.8
+        examples:
+          - "immediately effective"
+          - "without notice"
+
+  unilateral_change:
+    description: "Service provider reserves right to make unilateral changes without user consent"
+    positive_patterns:
+      - pattern: '\b(we|the\s+company|platform).{0,50}(reserve|retain).{0,50}right.{0,50}(to\s+)?(chang|modif|updat|amend|alter|revise).{0,50}(these\s+)?terms\b'
+        weight: 1.0
+        examples:
+          - "we reserve the right to change these terms"
+          - "the company retains the right to modify the agreement"
+      
+      - pattern: '\bmay\s+(chang|modif|updat|amend|alter|revise).{0,50}(these\s+)?(terms|agreement|policy).{0,50}(at\s+any\s+time|at\s+our\s+(sole\s+)?discretion)\b'
+        weight: 0.95
+        examples:
+          - "may change these terms at any time"
+          - "may modify the agreement at our sole discretion"
+      
+      - pattern: '\b(sole|absolute|unfettered)\s+discretion.{0,50}(to\s+)?(chang|modif|updat|amend)\b'
+        weight: 1.0
+        examples:
+          - "sole discretion to change terms"
+          - "absolute discretion to modify"
+      
+      - pattern: '\bfrom\s+time\s+to\s+time.{0,50}(chang|modif|updat|amend|alter|revise).{0,50}(these\s+)?(terms|agreement)\b'
+        weight: 0.85
+        examples:
+          - "from time to time change these terms"
+          - "may from time to time modify the agreement"
+      
+      - pattern: '\bwithout\s+(your\s+)?(consent|approval|permission).{0,50}(chang|modif|updat|amend)\b'
+        weight: 0.9
+        examples:
+          - "without your consent modify"
+          - "change without approval"
+      
+      - pattern: '\b(unilateral(ly)?|one[- ]sided(ly)?).{0,50}(chang|modif|updat|amend)\b'
+        weight: 1.0
+        examples:
+          - "unilaterally change"
+          - "one-sided modifications"
+
+    negative_patterns:
+      - pattern: '\b(require|need|must\s+obtain).{0,30}(your\s+)?(consent|approval|agreement).{0,30}(before|prior\s+to).{0,30}(chang|modif)\b'
+        weight: -0.9
+        examples:
+          - "require your consent before changes"
+          - "must obtain agreement prior to modifications"
+
+  opt_out_provided:
+    description: "Users can opt out or terminate if they disagree with terms changes"
+    positive_patterns:
+      - pattern: '\b(if|when).{0,50}(you\s+)?disagree.{0,50}(you\s+)?(may|can).{0,50}(terminat|cancel|stop\s+using|discontinue)\b'
+        weight: 1.0
+        examples:
+          - "if you disagree you may terminate"
+          - "when you disagree you can stop using"
+      
+      - pattern: '\b(you\s+)?(may|can|have\s+the\s+right\s+to).{0,50}(terminat|cancel|close).{0,50}(if|when).{0,50}(disagree|object|do\s+not\s+accept).{0,50}(chang|modif)\b'
+        weight: 1.0
+        examples:
+          - "you may terminate if you disagree with changes"
+          - "can cancel when you object to modifications"
+      
+      - pattern: '\bcontinued\s+use.{0,50}(after|following).{0,50}(chang|modif).{0,50}(constitutes|means|indicates).{0,50}(acceptance|agreement)\b'
+        weight: 0.85
+        examples:
+          - "continued use after changes constitutes acceptance"
+          - "use following modifications means agreement"
+      
+      - pattern: '\b(opt[- ]?out|reject|refuse).{0,50}(by\s+)?(terminat|cancel|discontinu|stop\s+using)\b'
+        weight: 0.9
+        examples:
+          - "opt-out by terminating"
+          - "refuse by discontinuing use"
+      
+      - pattern: '\b(if|when).{0,50}(unacceptable|do\s+not\s+agree).{0,50}(you\s+)?(should|must).{0,50}(stop|discontinue|cease).{0,50}using\b'
+        weight: 0.95
+        examples:
+          - "if unacceptable you should stop using"
+          - "when you do not agree must cease using"
+
+    negative_patterns:
+      - pattern: '\b(must|required\s+to|have\s+to).{0,30}(accept|agree\s+to).{0,30}(chang|modif)\b'
+        weight: -0.7
+        examples:
+          - "must accept changes"
+          - "required to agree to modifications"
+      
+      - pattern: '\b(no|without).{0,30}(opt[- ]?out|alternative|choice)\b'
+        weight: -0.8
+        examples:
+          - "no opt-out available"
+          - "without alternative"
+
+# Review checklist for SME validation
+review_tasks:
+  - "Verify advance_notice patterns capture meaningful notice periods (not just 'we may notify')"
+  - "Confirm unilateral_change patterns correctly identify one-sided modification rights"
+  - "Check opt_out_provided patterns distinguish between true opt-out and forced acceptance"
+  - "Validate that 'continued use = acceptance' is correctly classified as opt_out_provided (implicit consent)"
+  - "Test negative patterns filter out user-friendly consent requirements"
+  - "Ensure patterns capture both explicit notice periods and qualitative 'reasonable notice' language"

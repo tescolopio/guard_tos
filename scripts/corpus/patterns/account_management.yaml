@@ -1,0 +1,215 @@
+# Account Management Pattern Configuration
+# Used by scripts/corpus/build_category_dataset.py for weak-supervision labeling
+
+metadata:
+  category: account_management
+  version: "1.0.0"
+  description: "Patterns for identifying account termination, deletion, auto-renewal, and grace period clauses"
+  created: "2025-10-07"
+  updated: "2025-10-07"
+
+preprocessing:
+  min_tokens: 8
+  max_tokens: 1500
+  lowercase: true
+  normalize_whitespace: true
+
+# Label patterns with regex definitions and confidence weights
+labels:
+  easy_termination:
+    description: "User can easily terminate/delete account with minimal friction"
+    positive_patterns:
+      - pattern: '\b(you\s+may|users?\s+can|users?\s+may|you\s+can|you\s+have|self[- ]service).{0,50}(terminat|delet|clos|cancel|end|stop|discontinue).{0,50}(your\s+)?(account|subscription|plan|service|membership)\b'
+        weight: 0.9
+        examples:
+          - "you may terminate your account at any time"
+          - "users can delete their account"
+          - "you can cancel your subscription"
+      
+      - pattern: '\b(cancel|terminat|clos|delet|end).{0,50}(your\s+)?(account|subscription|plan|service|membership).{0,50}(at\s+any\s+time|anytime|instantly|immediately|24/7|whenever)\b'
+        weight: 0.95
+        examples:
+          - "cancel your subscription at any time"
+          - "terminate anytime from your dashboard"
+      
+      - pattern: '\b(account|subscription|plan|service|membership).{0,50}(may\s+be|can\s+be).{0,50}(terminat|cancel|clos|delet|end)ed.{0,50}(at\s+any\s+time|anytime|online|through)\b'
+        weight: 0.9
+        examples:
+          - "subscription may be cancelled at any time"
+          - "account can be deleted online"
+      
+      - pattern: '\b(to\s+)?(cancel|terminat|clos|end|stop).{0,20}(just|simply|only).{0,50}(visit|click|go\s+to|from).{0,50}(settings|dashboard|portal|account)\b'
+        weight: 0.95
+        examples:
+          - "to cancel just visit your settings"
+          - "simply click from your dashboard"
+      
+      - pattern: '\b(no|without).{0,30}(fee|charge|penalty|phone\s+call|contacting|written\s+notice|explanation).{0,50}(to\s+)?(terminat|cancel|clos|delet|end)\b'
+        weight: 0.9
+        examples:
+          - "no phone call required to cancel"
+          - "cancel without contacting support"
+
+    negative_patterns:
+      - pattern: '\b(we\s+may|we\s+can|we\s+reserve).{0,50}(terminat|suspend|delet|clos).{0,50}(your\s+)?account\b'
+        weight: -0.3
+        examples:
+          - "we may terminate your account"
+          - "we reserve the right to delete your account"
+      
+      - pattern: '\b(must|required\s+to).{0,50}(contact|email|call|submit).{0,50}(to\s+)?(terminat|cancel|delet|clos)\b'
+        weight: -0.6
+        examples:
+          - "must contact support to terminate"
+          - "required to email us to cancel"
+
+  auto_renewal_friction:
+    description: "Automatic renewal with friction/obstacles to cancellation"
+    positive_patterns:
+      - pattern: '\b(automatic(ally)?|auto).{0,30}(renew|renewal|rebill|charge)\b'
+        weight: 0.85
+        examples:
+          - "automatically renew"
+          - "auto-renewal"
+          - "automatic rebilling"
+      
+      - pattern: '\b(subscription|plan|service).{0,50}(renew|continue).{0,50}(automatic(ally)?|unless\s+cancelled)\b'
+        weight: 0.9
+        examples:
+          - "subscription will renew automatically"
+          - "service continues unless cancelled"
+      
+      - pattern: '\b(must|need\s+to|required\s+to).{0,50}cancel.{0,50}(before|prior\s+to|in\s+advance\s+of).{0,50}(renewal|billing|end\s+of\s+period)\b'
+        weight: 1.0
+        examples:
+          - "must cancel before renewal date"
+          - "required to cancel prior to billing"
+      
+      - pattern: '\bno\s+refund.{0,50}(after|once).{0,50}(renew|rebill|charge)\b'
+        weight: 0.8
+        examples:
+          - "no refund after renewal"
+          - "no refund once charged"
+      
+      - pattern: '\bcancel.{0,50}(at\s+least|minimum\s+of).{0,50}\d+\s+(day|hour|week).{0,50}(before|prior|in\s+advance)\b'
+        weight: 0.95
+        examples:
+          - "cancel at least 24 hours before"
+          - "minimum of 7 days prior"
+
+    negative_patterns:
+      - pattern: '\b(cancel|opt[- ]out).{0,30}(anytime|any\s+time|at\s+any\s+time)\b'
+        weight: -0.7
+        examples:
+          - "cancel anytime"
+          - "opt-out at any time"
+      
+      - pattern: '\bno\s+(automatic|auto).{0,30}(renew|rebill)\b'
+        weight: -0.9
+        examples:
+          - "no automatic renewal"
+          - "no auto-rebilling"
+
+  manual_cancellation:
+    description: "Cancellation requires manual steps (contact support, forms, etc.)"
+    positive_patterns:
+      - pattern: '\b(contact|call|email|write\s+to|send|submit).{0,50}(us|support|customer\s+service|customer\s+support|member\s+services|account\s+services|cancellation\s+department).{0,50}(to\s+)?(cancel|terminat|delet|clos|end|stop)\b'
+        weight: 1.0
+        examples:
+          - "contact us to cancel"
+          - "email support to terminate"
+          - "call customer service to delete"
+      
+      - pattern: '\b(must|required\s+to|you\s+must|only\s+by).{0,50}(contact|call|email|write|send).{0,50}(to\s+)?(cancel|terminat|process|stop)\b'
+        weight: 0.95
+        examples:
+          - "must contact to cancel"
+          - "required to call to terminate"
+          - "only by emailing can you cancel"
+      
+      - pattern: '\b(written|physical|formal|cancellation).{0,30}(notice|request|letter|form).{0,30}(required|must|necessary|to\s+cancel)\b'
+        weight: 1.0
+        examples:
+          - "written notice required"
+          - "cancellation form must be submitted"
+      
+      - pattern: '\b(online\s+cancellation|self[- ]service).{0,30}(is\s+)?not\s+available\b'
+        weight: 0.95
+        examples:
+          - "online cancellation not available"
+          - "self-service is not available"
+      
+      - pattern: '\bcancel(lation)?.{0,30}(is\s+)?only\s+available\s+(by|via|through).{0,30}(contact|call|email|phone)\b'
+        weight: 1.0
+        examples:
+          - "cancellation only available by calling"
+          - "cancel only via email"
+
+    negative_patterns:
+      - pattern: '\b(online|self[- ]service|portal|dashboard).{0,50}(cancel|terminat|delet)\b'
+        weight: -0.8
+        examples:
+          - "online cancellation available"
+          - "self-service account deletion"
+
+  grace_period:
+    description: "Grace period offered after cancellation/termination"
+    positive_patterns:
+      - pattern: '\bgrace\s+period\b'
+        weight: 1.0
+        examples:
+          - "grace period of 30 days"
+          - "we offer a grace period"
+      
+      - pattern: '\b(you\s+)?(?:have|can|may).{0,50}(reactivat|restore|reinstat|recover|resurrect).{0,50}(your\s+)?(account|subscription|plan|service).{0,50}(within|for).{0,50}(\d+\s+(day|month|week)|30\s+days|60\s+days|90\s+days)\b'
+        weight: 0.9
+        examples:
+          - "you can reactivate your account within 30 days"
+          - "may restore subscription for 60 days"
+      
+      - pattern: '\b(data|content|account|subscription|profile|information).{0,50}(will\s+be|are|is|remains?).{0,50}(retain|kept|stored|preserved|held|accessible).{0,50}(for).{0,50}(\d+\s+(day|month|week)|30\s+days|two\s+weeks).{0,50}(after|following|post[-]?).{0,50}(terminat|cancel|delet|closure)\b'
+        weight: 0.85
+        examples:
+          - "data will be retained for 30 days after termination"
+          - "account is kept for 90 days following cancellation"
+          - "profile remains accessible for two weeks after deletion"
+      
+      - pattern: '\b(you\s+)?(?:can|may|have\s+the\s+option\s+to).{0,50}(recover|retrieve|restore|reverse|reactivat).{0,50}(if\s+you\s+change|within).{0,50}(\d+\s+(day|month|week)|your\s+mind)\b'
+        weight: 0.9
+        examples:
+          - "you can recover within 14 days"
+          - "may reverse if you change your mind"
+      
+      - pattern: '\b(window|period|timeframe).{0,30}(is\s+provided|provided|available).{0,30}(to|for).{0,30}(reactivat|restore|recover)\b'
+        weight: 0.85
+        examples:
+          - "window is provided to reactivate"
+          - "period provided for restoration"
+      
+      - pattern: '\b(after|following|post[-]?).{0,30}(cancel|terminat|deletion).{0,30}(you\s+have|there\s+is).{0,30}(\d+\s+(day|month|week)|a\s+grace).{0,30}(to|period)\b'
+        weight: 0.9
+        examples:
+          - "after cancellation you have 30 days to restore"
+          - "following termination there is a grace period"
+
+    negative_patterns:
+      - pattern: '\b(immediate(ly)?|instant(ly)?).{0,30}(delet|remov|terminat).{0,30}(permanent|irreversibl)\b'
+        weight: -0.7
+        examples:
+          - "immediately deleted permanently"
+          - "instant irreversible termination"
+      
+      - pattern: '\bno\s+(grace|recovery).{0,30}period\b'
+        weight: -0.9
+        examples:
+          - "no grace period"
+          - "no recovery period"
+
+# Review checklist for SME validation
+review_tasks:
+  - "Verify easy_termination patterns capture self-service deletion without false positives from platform termination rights"
+  - "Confirm auto_renewal patterns distinguish between user-friendly 'cancel anytime' and friction-heavy advance notice requirements"
+  - "Check manual_cancellation patterns correctly identify contact-required processes"
+  - "Validate grace_period patterns capture reactivation windows and data retention periods"
+  - "Test negative patterns filter out platform's right to terminate vs. user's right to terminate"
+  - "Ensure patterns don't confuse 'easy termination' with 'we may terminate' clauses"

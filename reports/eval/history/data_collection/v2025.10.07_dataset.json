@@ -1,0 +1,48 @@
+{
+  "category": "data_collection",
+  "dataset_path": "data/processed/data_collection/v2025.10.07/dataset.jsonl",
+  "records": 54,
+  "label_totals": {
+    "data_collection_extensive": 19,
+    "data_collection_minimal": 15,
+    "consent_explicit": 8,
+    "consent_implied": 0,
+    "purpose_specific": 5,
+    "purpose_broad": 24
+  },
+  "label_distribution": {
+    "data_collection_extensive": 0.3519,
+    "data_collection_minimal": 0.2778,
+    "consent_explicit": 0.1481,
+    "consent_implied": 0.0,
+    "purpose_specific": 0.0926,
+    "purpose_broad": 0.4444
+  },
+  "length_stats": {
+    "avg_chars": 2607.72,
+    "median_chars": 2594.5,
+    "avg_tokens": 400.0
+  },
+  "manifest": {
+    "category": "data_collection",
+    "version": "v2025.10.07",
+    "records": 54,
+    "label_distribution": {
+      "consent_explicit": 0.1481,
+      "consent_implied": 0.0,
+      "data_collection_extensive": 0.3519,
+      "data_collection_minimal": 0.2778,
+      "purpose_broad": 0.4444,
+      "purpose_specific": 0.0926
+    },
+    "sources": [
+      "gdpr",
+      "ccpa"
+    ],
+    "qa_sample_size": 0,
+    "qa_accuracy": 0.0,
+    "annotators": [],
+    "license": "pending",
+    "notes": "Initial GDPR + CCPA harvest with weak supervision patterns"
+  }
+}
