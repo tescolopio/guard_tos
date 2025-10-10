@@ -72,20 +72,9 @@ module.exports = {
             // rewrite asset paths for dist root
             let html = content.toString();
             html = html.replace("../styles/styles.css", "./styles.css");
-            html = html.replace("../utils/constants.js", "./constants.js");
-            html = html.replace("../utils/debugger.js", "./debugger.js");
             html = html.replace("sidepanel.js", "./sidepanel.js");
             return Buffer.from(html);
           },
-        },
-        // Copy utility files needed by sidepanel.html
-        {
-          from: "./src/utils/constants.js",
-          to: "constants.js",
-        },
-        {
-          from: "./src/utils/debugger.js",
-          to: "debugger.js",
         },
         // Ship sample analysis payload for in-panel demo
         {

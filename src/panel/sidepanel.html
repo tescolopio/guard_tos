@@ -329,11 +329,7 @@ key excerpts, and uncommon terms.
       </section>
     </div>
 
-    <!-- Load constants first to set window.EXT_CONSTANTS -->
-    <script src="constants.js"></script>
-    <!-- Logger utilities (uses window.EXT_CONSTANTS) -->
-    <script src="debugger.js"></script>
-    <!-- Finally, load the sidepanel controller which consumes the above -->
+    <!-- Sidepanel controller (includes constants and debugger via webpack bundle) -->
     <script src="sidepanel.js"></script>
   </body>
 </html>
