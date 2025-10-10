@@ -1,30 +1,31 @@
 /*
   Ensure Webpack loads split chunks from the extension package instead of the page.
   This must run before any other imports in entry bundles that use dynamic imports.
+  
+  For Chrome extensions, content scripts need special handling because they run in
+  the page context but load resources from the extension.
 */
 /* eslint-disable no-undef */
 (function setWebpackPublicPath() {
   try {
-    // Compute base URL for the extension (works in Chrome/Firefox MV3)
-    const getURL =
-      typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.getURL
-        ? chrome.runtime.getURL
-        : typeof browser !== "undefined" &&
-            browser.runtime &&
-            browser.runtime.getURL
-          ? browser.runtime.getURL
-          : null;
-
-    const base = getURL ? getURL("/") : "/";
-    const normalized = base.endsWith("/") ? base : base + "/";
-
-    // Override webpack public path at runtime
-    // Webpack replaces this global at build time; assigning updates __webpack_require__.p
-    // eslint-disable-next-line camelcase
-    __webpack_public_path__ = normalized;
+    // Check if we're in an extension context
+    const isExtension = typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.id;
+    
+    if (isExtension) {
+      // For content scripts, use chrome.runtime.getURL to get the extension base
+      const extensionUrl = chrome.runtime.getURL("/");
+      
+      // Set webpack's public path to the extension URL
+      // eslint-disable-next-line camelcase
+      __webpack_public_path__ = extensionUrl;
+    } else {
+      // Fallback for non-extension contexts (shouldn't happen, but safe)
+      // eslint-disable-next-line camelcase
+      __webpack_public_path__ = "/";
+    }
   } catch (e) {
-    // Fallback to root; relative loads may fail but won't crash the runtime
+    // If anything fails, use relative path (may cause issues but won't crash)
     // eslint-disable-next-line camelcase
-    __webpack_public_path__ = "/";
+    __webpack_public_path__ = "";
   }
 })();
