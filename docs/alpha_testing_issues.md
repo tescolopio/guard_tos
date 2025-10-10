@@ -58,6 +58,26 @@ Removed the separate `<script src="constants.js"></script>` tag from `sidepanel.
 
 ---
 
+## Issue #4: require() Not Defined in Browser ✅ RESOLVED
+
+**Problem:**
+Side panel console showing error:
+```
+Uncaught ReferenceError: require is not defined at debugger.js:1:22
+```
+
+**Root Cause:**
+`debugger.js` was using Node.js CommonJS syntax `require("./constants")` which doesn't work in the browser context. When loaded as a `<script>` tag, there is no `require()` function available.
+
+**Solution:**
+1. Modified `debugger.js` to use `window.EXT_CONSTANTS` (which is set by `constants.js`) instead of `require()`
+2. Added fallback to `require()` for Node.js test environments
+3. Restored separate `<script src="constants.js">` in `sidepanel.html` to load BEFORE `debugger.js`
+
+**Status:** Fixed in commit 6dfdd50
+
+---
+
 ## How to Apply All Fixes
 
 **If you already loaded the extension:**
