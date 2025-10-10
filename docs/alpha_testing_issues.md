@@ -40,6 +40,24 @@ Webpack was trying to automatically detect the publicPath in the content script 
 
 ---
 
+## Issue #3: Duplicate EXT_CONSTANTS Declaration ✅ RESOLVED
+
+**Problem:**
+Side panel console showing error:
+```
+Uncaught SyntaxError: Identifier 'EXT_CONSTANTS' has already been declared (at debugger.js:1:1)
+```
+
+**Root Cause:**
+`sidepanel.html` was loading both `constants.js` AND `debugger.js` as separate `<script>` tags. However, `debugger.js` already requires/imports `constants.js` internally, so `EXT_CONSTANTS` was being declared twice.
+
+**Solution:**
+Removed the separate `<script src="constants.js"></script>` tag from `sidepanel.html`, keeping only `debugger.js` which includes constants via its internal require.
+
+**Status:** Fixed in commit d8c3a16
+
+---
+
 ## How to Apply All Fixes
 
 **If you already loaded the extension:**
