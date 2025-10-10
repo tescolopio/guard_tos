@@ -1,0 +1,582 @@
+[
+  {
+    "text": "We provide 60 days advance notice of any amendments to these Terms.",
+    "text_length": 67,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6245871782302856,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.33567774295806885,
+        "correct": false
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14803215861320496,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Terms changes will be announced 45 days before becoming effective.",
+    "text_length": 66,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6710491180419922,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.3002924919128418,
+        "correct": false
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.15779492259025574,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "We provide 10 business days advance notice of any amendments to these Terms.",
+    "text_length": 76,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6430355310440063,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.3127784729003906,
+        "correct": false
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16137370467185974,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Non-acceptance of changes requires you to stop using the platform.",
+    "text_length": 66,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18728947639465332,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16689735651016235,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7384552359580994,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "We will notify you at least 7 days before any changes to these Terms take effect.",
+    "text_length": 81,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.5864511728286743,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.299251914024353,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1738242506980896,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Non-acceptance of changes requires you to stop using the platform.",
+    "text_length": 66,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18728947639465332,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16689735651016235,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7384552359580994,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Continued use after changes constitutes acceptance. You may opt out by discontinuing use.",
+    "text_length": 89,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1882956624031067,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17156769335269928,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7396530508995056,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "The effective date will be at least three weeks after notice is provided.",
+    "text_length": 73,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6634184718132019,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.26624423265457153,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.19379542768001556,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "We can modify these Terms unilaterally at our discretion.",
+    "text_length": 57,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.21307197213172913,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7745030522346497,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.19082796573638916,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "If changes are unacceptable, you can discontinue your account.",
+    "text_length": 62,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17746946215629578,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17909803986549377,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7531688809394836,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "You have the right to cancel if you do not agree with updated Terms.",
+    "text_length": 68,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1650107204914093,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18800665438175201,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7356669306755066,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "These Terms may be modified without notice at our discretion.",
+    "text_length": 61,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.22477194666862488,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7616649866104126,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1865626722574234,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "You will be informed two weeks before changes take effect.",
+    "text_length": 58,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6542454957962036,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2490260899066925,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.20653420686721802,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "You can reject modifications by terminating your membership.",
+    "text_length": 60,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18218539655208588,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1727156937122345,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7455476522445679,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "You have the option to exit the Service if changes are unacceptable.",
+    "text_length": 68,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18832159042358398,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16314151883125305,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7377706170082092,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "You have the option to exit the Service if changes are unacceptable.",
+    "text_length": 68,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18832159042358398,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16314151883125305,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7377706170082092,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "You can choose to discontinue use rather than accept modified Terms.",
+    "text_length": 68,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.183627188205719,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16871364414691925,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.716460645198822,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "We reserve the right to change these Terms without notification.",
+    "text_length": 64,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.22183656692504883,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7657082676887512,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1717495173215866,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "We may change, modify, or update these Terms at our sole discretion.",
+    "text_length": 68,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.22159813344478607,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7755469083786011,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18294882774353027,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "If changes are unacceptable, you can discontinue your account.",
+    "text_length": 62,
+    "predictions": [
+      {
+        "label": "advance_notice",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17746946215629578,
+        "correct": true
+      },
+      {
+        "label": "unilateral_change",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17909803986549377,
+        "correct": true
+      },
+      {
+        "label": "opt_out_provided",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7531688809394836,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  }
+]

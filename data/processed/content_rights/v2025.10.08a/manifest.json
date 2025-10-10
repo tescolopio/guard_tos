@@ -1,17 +1,17 @@
 {
   "category": "content_rights",
   "version": "v2025.10.08a",
-  "records": 1379,
+  "records": 1595,
   "label_distribution": {
-    "commercial_use_claim": 0.0203,
-    "ip_retained": 0.0384,
-    "license_assignment": 0.9391,
-    "moral_rights_waiver": 0.0022
+    "commercial_use_claim": 0.0627,
+    "ip_retained": 0.0627,
+    "license_assignment": 0.8119,
+    "moral_rights_waiver": 0.0627
   },
   "sources": [
     "hf_cuad",
     "hf_ledgar",
-    "synthetic_ip_retained"
+    "synthetic_template_v1"
   ],
   "qa_sample_size": 0,
   "qa_accuracy": 0.0,
@@ -20,5 +20,5 @@
   ],
   "annotators": [],
   "license": "pending",
-  "notes": "Includes synthetic IP retention augmentation (v2025.10.08), which passed qualitative review."
+  "notes": "Includes synthetic augmentation for commercial_use_claim, moral_rights_waiver, and ip_retained generated via scripts/ml/generate_synthetic_clauses.py (v2025.10.08)."
 }

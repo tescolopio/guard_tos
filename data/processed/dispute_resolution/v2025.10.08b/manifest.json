@@ -1,0 +1,21 @@
+{
+  "category": "dispute_resolution",
+  "version": "v2025.10.08b",
+  "records": 1072,
+  "label_distribution": {
+    "binding_arbitration": 0.5812,
+    "class_action_waiver": 0.1511,
+    "jury_trial_waiver": 0.1530,
+    "venue_selection": 0.2397
+  },
+  "sources": [
+    "hf_cuad",
+    "hf_ledgar",
+    "synthetic_template_v1"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Adds venue_selection synthetic clauses alongside updated waiver coverage via scripts/ml/generate_synthetic_clauses.py (v2025.10.08)."
+}

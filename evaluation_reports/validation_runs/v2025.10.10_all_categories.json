@@ -1,0 +1,279 @@
+{
+  "results": [
+    {
+      "name": "account_management",
+      "status": "passed",
+      "macro_f1": 0.995049504950495,
+      "per_label_metrics": {
+        "easy_termination": {
+          "precision": 0.9803921568627451,
+          "recall": 1.0,
+          "f1": 0.9900990099009901,
+          "support": 50
+        },
+        "auto_renewal_friction": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 50
+        },
+        "manual_cancellation": {
+          "precision": 0.9803921568627451,
+          "recall": 1.0,
+          "f1": 0.9900990099009901,
+          "support": 50
+        },
+        "grace_period": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 50
+        }
+      },
+      "label_support": {
+        "easy_termination": 50,
+        "auto_renewal_friction": 50,
+        "manual_cancellation": 50,
+        "grace_period": 50
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
+      "name": "terms_changes",
+      "status": "passed",
+      "macro_f1": 0.9768518518518517,
+      "per_label_metrics": {
+        "advance_notice": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 67
+        },
+        "unilateral_change": {
+          "precision": 0.8701298701298701,
+          "recall": 1.0,
+          "f1": 0.9305555555555556,
+          "support": 67
+        },
+        "opt_out_provided": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 66
+        }
+      },
+      "label_support": {
+        "advance_notice": 67,
+        "unilateral_change": 67,
+        "opt_out_provided": 66
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
+      "name": "algorithmic_decisions",
+      "status": "passed",
+      "macro_f1": 0.8512514545646884,
+      "per_label_metrics": {
+        "automated_decision": {
+          "precision": 0.5470085470085471,
+          "recall": 0.9552238805970149,
+          "f1": 0.6956521739130435,
+          "support": 67
+        },
+        "human_review": {
+          "precision": 0.9571428571428572,
+          "recall": 1.0,
+          "f1": 0.9781021897810219,
+          "support": 67
+        },
+        "transparency_statement": {
+          "precision": 0.7857142857142857,
+          "recall": 1.0,
+          "f1": 0.88,
+          "support": 66
+        }
+      },
+      "label_support": {
+        "automated_decision": 67,
+        "human_review": 67,
+        "transparency_statement": 66
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
+      "name": "user_privacy",
+      "status": "passed",
+      "macro_f1": 0.860855684016726,
+      "per_label_metrics": {
+        "retention_disclosed": {
+          "precision": 1.0,
+          "recall": 0.7580645161290323,
+          "f1": 0.8623853211009175,
+          "support": 62
+        },
+        "deletion_offered": {
+          "precision": 0.6020408163265306,
+          "recall": 0.9516129032258065,
+          "f1": 0.7375,
+          "support": 62
+        },
+        "access_rights": {
+          "precision": 0.7294117647058823,
+          "recall": 1.0,
+          "f1": 0.8435374149659864,
+          "support": 62
+        },
+        "privacy_waiver": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 62
+        }
+      },
+      "label_support": {
+        "retention_disclosed": 62,
+        "deletion_offered": 62,
+        "access_rights": 62,
+        "privacy_waiver": 62
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
+      "name": "data_collection",
+      "status": "passed",
+      "macro_f1": 0.8858396037586579,
+      "per_label_metrics": {
+        "data_collection_extensive": {
+          "precision": 0.5462184873949579,
+          "recall": 0.9219858156028369,
+          "f1": 0.6860158311345647,
+          "support": 141
+        },
+        "data_collection_minimal": {
+          "precision": 0.996031746031746,
+          "recall": 0.916058394160584,
+          "f1": 0.9543726235741445,
+          "support": 274
+        },
+        "consent_explicit": {
+          "precision": 0.9927272727272727,
+          "recall": 0.9578947368421052,
+          "f1": 0.975,
+          "support": 285
+        },
+        "consent_implied": {
+          "precision": 1.0,
+          "recall": 0.984251968503937,
+          "f1": 0.9920634920634921,
+          "support": 127
+        },
+        "purpose_specific": {
+          "precision": 0.9918918918918919,
+          "recall": 0.9865591397849462,
+          "f1": 0.9892183288409704,
+          "support": 372
+        },
+        "purpose_broad": {
+          "precision": 0.5714285714285714,
+          "recall": 0.967032967032967,
+          "f1": 0.7183673469387755,
+          "support": 91
+        }
+      },
+      "label_support": {
+        "data_collection_extensive": 141,
+        "data_collection_minimal": 274,
+        "consent_explicit": 285,
+        "consent_implied": 127,
+        "purpose_specific": 372,
+        "purpose_broad": 91
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
+      "name": "dispute_resolution",
+      "status": "passed",
+      "macro_f1": 0.973329201463983,
+      "per_label_metrics": {
+        "binding_arbitration": {
+          "precision": 0.9856687898089171,
+          "recall": 0.9935794542536116,
+          "f1": 0.9896083133493205,
+          "support": 623
+        },
+        "class_action_waiver": {
+          "precision": 0.9759036144578314,
+          "recall": 1.0,
+          "f1": 0.9878048780487805,
+          "support": 162
+        },
+        "jury_trial_waiver": {
+          "precision": 0.9642857142857143,
+          "recall": 0.9878048780487805,
+          "f1": 0.9759036144578314,
+          "support": 164
+        },
+        "venue_selection": {
+          "precision": 0.9670781893004116,
+          "recall": 0.914396887159533,
+          "f1": 0.94,
+          "support": 257
+        }
+      },
+      "label_support": {
+        "binding_arbitration": 623,
+        "class_action_waiver": 162,
+        "jury_trial_waiver": 164,
+        "venue_selection": 257
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
+      "name": "content_rights",
+      "status": "passed",
+      "macro_f1": 0.9948317022821973,
+      "per_label_metrics": {
+        "license_assignment": {
+          "precision": 0.9992277992277993,
+          "recall": 0.9992277992277993,
+          "f1": 0.9992277992277993,
+          "support": 1295
+        },
+        "ip_retained": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 100
+        },
+        "moral_rights_waiver": {
+          "precision": 0.9803921568627451,
+          "recall": 1.0,
+          "f1": 0.9900990099009901,
+          "support": 100
+        },
+        "commercial_use_claim": {
+          "precision": 0.99,
+          "recall": 0.99,
+          "f1": 0.99,
+          "support": 100
+        }
+      },
+      "label_support": {
+        "license_assignment": 1295,
+        "ip_retained": 100,
+        "moral_rights_waiver": 100,
+        "commercial_use_claim": 100
+      },
+      "failures": [],
+      "warnings": []
+    }
+  ],
+  "failed_categories": [],
+  "warning_categories": []
+}

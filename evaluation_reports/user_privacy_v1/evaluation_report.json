@@ -1,0 +1,71 @@
+{
+  "model_path": "artifacts/models/user_privacy/v2025.10.07c-v1",
+  "dataset_path": "data/processed/user_privacy/v2025.10.07c/gold_seed.jsonl",
+  "category": "user_privacy",
+  "threshold": 0.3,
+  "macro_metrics": {
+    "macro_precision": 0.7857142857142857,
+    "macro_recall": 0.8611111111111112,
+    "macro_f1": 0.7843026538678712
+  },
+  "per_label_metrics": {
+    "retention_disclosed": {
+      "precision": 1.0,
+      "recall": 0.5555555555555556,
+      "f1": 0.7142857142857143,
+      "support": 9
+    },
+    "deletion_offered": {
+      "precision": 0.5714285714285714,
+      "recall": 0.8888888888888888,
+      "f1": 0.6956521739130435,
+      "support": 9
+    },
+    "access_rights": {
+      "precision": 0.5714285714285714,
+      "recall": 1.0,
+      "f1": 0.7272727272727273,
+      "support": 8
+    },
+    "privacy_waiver": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 6
+    }
+  },
+  "confusion_matrices": {
+    "retention_disclosed": {
+      "true_negative": 20,
+      "false_positive": 0,
+      "false_negative": 4,
+      "true_positive": 5
+    },
+    "deletion_offered": {
+      "true_negative": 14,
+      "false_positive": 6,
+      "false_negative": 1,
+      "true_positive": 8
+    },
+    "access_rights": {
+      "true_negative": 15,
+      "false_positive": 6,
+      "false_negative": 0,
+      "true_positive": 8
+    },
+    "privacy_waiver": {
+      "true_negative": 23,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_positive": 6
+    }
+  },
+  "summary": {
+    "num_labels": 4,
+    "labels_above_f1_0.70": 3,
+    "labels_above_f1_0.75": 1,
+    "labels_above_f1_0.80": 1,
+    "weakest_label": "deletion_offered",
+    "strongest_label": "privacy_waiver"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "false_positives": [
+    {
+      "label": "venue_selection",
+      "text": "The Agreement shall be construed and interpreted in accordance with the laws of the State of Delaware, without regard to the conflict of laws provisions of any state, to the extent not preempted by fe...",
+      "confidence": 0.5401666760444641,
+      "text_length": 969
+    }
+  ],
+  "false_negatives": [
+    {
+      "label": "binding_arbitration",
+      "text": "By accepting this award, you agree, with respect to any claim brought in connection with your employment with the Firm in any forum (i) to waive the right to a jury trial and (ii) that any judicial pr...",
+      "confidence": 0.478596031665802,
+      "text_length": 482
+    },
+    {
+      "label": "binding_arbitration",
+      "text": "You and the Company agree to submit to mandatory binding arbitration any and all claims arising out of or related to your employment or service with the Company and the termination thereof, including,...",
+      "confidence": 0.28439757227897644,
+      "text_length": 1304
+    },
+    {
+      "label": "binding_arbitration",
+      "text": "You and the Company agree to submit to mandatory binding arbitration any and all claims arising out of or related to your service with the Company and the termination thereof, including, but not limit...",
+      "confidence": 0.31193652749061584,
+      "text_length": 1287
+    },
+    {
+      "label": "class_action_waiver",
+      "text": "By accepting this award, you agree, with respect to any claim brought in connection with your employment with the Firm in any forum (i) to waive the right to a jury trial and (ii) that any judicial pr...",
+      "confidence": 0.46391692757606506,
+      "text_length": 482
+    },
+    {
+      "label": "venue_selection",
+      "text": "By accepting this award, you agree, with respect to any claim brought in connection with your employment with the Firm in any forum (i) to waive the right to a jury trial and (ii) that any judicial pr...",
+      "confidence": 0.09965484589338303,
+      "text_length": 482
+    },
+    {
+      "label": "venue_selection",
+      "text": "Any dispute, controversy or claim between the parties arising out of or relating to this Agreement (whether based in contract or tort, in law or equity), or any breach or asserted breach thereof, shal...",
+      "confidence": 0.2846768796443939,
+      "text_length": 981
+    },
+    {
+      "label": "venue_selection",
+      "text": "Wherever in this Lease provisions are made for submitting disputes to arbitration (with the exception of disputes under Article IV above, which shall be subject to arbitration as set forth in Section ...",
+      "confidence": 0.08146921545267105,
+      "text_length": 3146
+    }
+  ]
+}

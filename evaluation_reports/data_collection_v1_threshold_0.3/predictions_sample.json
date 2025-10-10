@@ -1,0 +1,1002 @@
+[
+  {
+    "text": "section, and how to direct consumers to exercise their rights under those sections.(7) Use any personal information collected from the consumer in connection with the business\u2019 verification of the consumer\u2019s request solely for the purposes of verification and shall not further disclose the personal ...",
+    "text_length": 2636,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.41024646162986755,
+        "correct": false
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.2822587490081787,
+        "correct": false
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12402752786874771,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06119633838534355,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08738435804843903,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.4053070843219757,
+        "correct": false
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 6
+  },
+  {
+    "text": "not incorporate this Privacy Policy.This Privacy Policy doesn\u2019t apply to:The information practices of other companies and organizations that advertise our servicesServices offered by other companies or individuals, including products or sites they offer that may include Google services to which the ...",
+    "text_length": 2078,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.35604339838027954,
+        "correct": false
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1759214848279953,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.11155760288238525,
+        "correct": false
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0737118124961853,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06606757640838623,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.45235612988471985,
+        "correct": false
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 6
+  },
+  {
+    "text": "You can restrict our processing of your Personal Information where one of the following applies: (a) you dispute the accuracy of Personal Information processed by 23andMe (for a period enabling us to verify its accuracy); (b) the processing is unlawful and you oppose the erasure of the Personal Info...",
+    "text_length": 693,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2807324230670929,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.16728465259075165,
+        "correct": false
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11701890826225281,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08119671791791916,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07032780349254608,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.3049890697002411,
+        "correct": false
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 6
+  },
+  {
+    "text": "We collect only the minimum contact information necessary to deliver functionality.",
+    "text_length": 83,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1203777864575386,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.4143325686454773,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13525530695915222,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.119386687874794,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.37924134731292725,
+        "correct": false
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11189353466033936,
+        "correct": true
+      }
+    ],
+    "num_correct": 5,
+    "num_labels": 6
+  },
+  {
+    "text": "For example, we collect log and event information related to how and when you use our services (such as the pages, servers, and channels you visit, the activities you engage in, the features you use, and the surfaces or embedded content you interact with).Other information that we collect automatica...",
+    "text_length": 1914,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.36700761318206787,
+        "correct": false
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1826205998659134,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10404576361179352,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0715089961886406,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06959890574216843,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.4521454870700836,
+        "correct": true
+      }
+    ],
+    "num_correct": 5,
+    "num_labels": 6
+  },
+  {
+    "text": "Residents of the State of California can request a list of all third-parties to which our App has disclosed certain personal information (as defined by California law) during the preceding year for those third-parties direct marketing purposes.",
+    "text_length": 244,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.2604381740093231,
+        "correct": false
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1856471598148346,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12813372910022736,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06898154318332672,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.09173423051834106,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2333112210035324,
+        "correct": true
+      }
+    ],
+    "num_correct": 5,
+    "num_labels": 6
+  },
+  {
+    "text": "persons to provide the same level of privacy protection as is required by this title.(3) Grants the business rights to take reasonable and appropriate steps to help ensure that the third party, service provider, or contractor uses the personal information transferred in a manner consistent with the ...",
+    "text_length": 2751,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.4204035997390747,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.28416991233825684,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13328176736831665,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.061426132917404175,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.085396409034729,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.41345271468162537,
+        "correct": false
+      }
+    ],
+    "num_correct": 5,
+    "num_labels": 6
+  },
+  {
+    "text": "and requests, and assisting you with operational requests such as password resets. We use the following categories of personal information for this purpose: personal details, payment details, purchase information, Netflix account/profile information, usage information, device and network information...",
+    "text_length": 2268,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.36847391724586487,
+        "correct": false
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18480932712554932,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10304898023605347,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0681333988904953,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07426151633262634,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.46475517749786377,
+        "correct": true
+      }
+    ],
+    "num_correct": 5,
+    "num_labels": 6
+  },
+  {
+    "text": "Prohibits the contractor from:(i) Selling or sharing the personal information.(ii) Retaining, using, or disclosing the personal information for any purpose other than for the business purposes specified in the contract, including retaining, using, or disclosing the personal information for a commerc...",
+    "text_length": 2799,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.39961108565330505,
+        "correct": false
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2532415986061096,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12160472571849823,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0648750439286232,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08202580362558365,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.42828038334846497,
+        "correct": true
+      }
+    ],
+    "num_correct": 5,
+    "num_labels": 6
+  },
+  {
+    "text": "no, we don\u00e2\u0080\u0099t sell your personal information.\u00c2 6.2 We move your data to make X work for you. Just as you use X to seamlessly participate in global conversations with people in countries all over the world, X must move information across borders and to different countries around the world to support...",
+    "text_length": 1707,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.32494720816612244,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17042945325374603,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11477571725845337,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06908104568719864,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07005402445793152,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.3717609643936157,
+        "correct": false
+      }
+    ],
+    "num_correct": 5,
+    "num_labels": 6
+  },
+  {
+    "text": "as otherwise permitted by this title, and shall be prohibited from:(1) Selling or sharing the personal information.(2) Retaining, using, or disclosing that consumer\u2019s personal information.(A) For any purpose other than for the specific purpose of performing the services offered to the business.(B) O...",
+    "text_length": 2715,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.40957632660865784,
+        "correct": false
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2600543200969696,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11607614904642105,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0636214017868042,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08026131987571716,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.43315669894218445,
+        "correct": true
+      }
+    ],
+    "num_correct": 5,
+    "num_labels": 6
+  },
+  {
+    "text": "We restrict technical information collection to the minimum required for operate the platform.",
+    "text_length": 94,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12191113829612732,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.37526676058769226,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10207592695951462,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11982814967632294,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.3391248881816864,
+        "correct": false
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11974701285362244,
+        "correct": true
+      }
+    ],
+    "num_correct": 5,
+    "num_labels": 6
+  },
+  {
+    "text": "We limit our collection to account details strictly required for maintain the service.",
+    "text_length": 86,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11413950473070145,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.4015227258205414,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10736854374408722,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12548606097698212,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.3540750741958618,
+        "correct": false
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11429042369127274,
+        "correct": true
+      }
+    ],
+    "num_correct": 5,
+    "num_labels": 6
+  },
+  {
+    "text": "Continued use implies your consent to collect usage data.",
+    "text_length": 57,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11808072775602341,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1363006979227066,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.20823530852794647,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.5671702027320862,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16620241105556488,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11579974740743637,
+        "correct": true
+      }
+    ],
+    "num_correct": 6,
+    "num_labels": 6
+  },
+  {
+    "text": "We limit our use of profile data to fulfill your orders.",
+    "text_length": 56,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0829629972577095,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.24757127463817596,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10694926977157593,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18377722799777985,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.44399693608283997,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07809349149465561,
+        "correct": true
+      }
+    ],
+    "num_correct": 6,
+    "num_labels": 6
+  },
+  {
+    "text": "User preferences is only collected if you explicitly permit it.",
+    "text_length": 63,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.152011439204216,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13216762244701385,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6957663893699646,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.15907298028469086,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1469716876745224,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11698782444000244,
+        "correct": true
+      }
+    ],
+    "num_correct": 6,
+    "num_labels": 6
+  },
+  {
+    "text": "By visiting or interacting with our Platform, you acknowledge to our use of cookies and tracking technologies.",
+    "text_length": 110,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1450384259223938,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1436280757188797,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1568283587694168,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.5646548271179199,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1539183109998703,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14796918630599976,
+        "correct": true
+      }
+    ],
+    "num_correct": 6,
+    "num_labels": 6
+  },
+  {
+    "text": "By visiting or navigating our Services, you accept to these Terms of Service.",
+    "text_length": 77,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12711332738399506,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14321480691432953,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17761628329753876,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.5958924293518066,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1776162087917328,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1364942044019699,
+        "correct": true
+      }
+    ],
+    "num_correct": 6,
+    "num_labels": 6
+  },
+  {
+    "text": "Continued use implies your consent to collect personal information.",
+    "text_length": 67,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12251024693250656,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13584858179092407,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.21455539762973785,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.5794666409492493,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16555792093276978,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11979363858699799,
+        "correct": true
+      }
+    ],
+    "num_correct": 6,
+    "num_labels": 6
+  },
+  {
+    "text": "Data minimization: we only collect usage data necessary for provide and improve our services.",
+    "text_length": 93,
+    "predictions": [
+      {
+        "label": "data_collection_extensive",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14681197702884674,
+        "correct": true
+      },
+      {
+        "label": "data_collection_minimal",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.3143814206123352,
+        "correct": true
+      },
+      {
+        "label": "consent_explicit",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07418876886367798,
+        "correct": true
+      },
+      {
+        "label": "consent_implied",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11567624658346176,
+        "correct": true
+      },
+      {
+        "label": "purpose_specific",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.24981413781642914,
+        "correct": true
+      },
+      {
+        "label": "purpose_broad",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1498691588640213,
+        "correct": true
+      }
+    ],
+    "num_correct": 6,
+    "num_labels": 6
+  }
+]

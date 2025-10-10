@@ -1,0 +1,50 @@
+{
+  "binding_arbitration": {
+    "precision": 0.967391304347826,
+    "recall": 0.9888888888888889,
+    "f1-score": 0.978021978021978,
+    "support": 90.0
+  },
+  "class_action_waiver": {
+    "precision": 1.0,
+    "recall": 0.9090909090909091,
+    "f1-score": 0.9523809523809523,
+    "support": 22.0
+  },
+  "jury_trial_waiver": {
+    "precision": 0.9,
+    "recall": 0.9310344827586207,
+    "f1-score": 0.9152542372881356,
+    "support": 29.0
+  },
+  "venue_selection": {
+    "precision": 0.8333333333333334,
+    "recall": 0.625,
+    "f1-score": 0.7142857142857143,
+    "support": 16.0
+  },
+  "micro avg": {
+    "precision": 0.948051948051948,
+    "recall": 0.9299363057324841,
+    "f1-score": 0.9389067524115756,
+    "support": 157.0
+  },
+  "macro avg": {
+    "precision": 0.9251811594202899,
+    "recall": 0.8635035701846047,
+    "f1-score": 0.889985720494195,
+    "support": 157.0
+  },
+  "weighted avg": {
+    "precision": 0.9458506415582018,
+    "recall": 0.9299363057324841,
+    "f1-score": 0.9359573457597855,
+    "support": 157.0
+  },
+  "samples avg": {
+    "precision": 0.9615384615384616,
+    "recall": 0.9522144522144523,
+    "f1-score": 0.9496503496503498,
+    "support": 157.0
+  }
+}

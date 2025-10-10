@@ -1,0 +1,722 @@
+[
+  {
+    "text": "Purchase Data Survey and Research Data If we were to sell or negotiate to sell our business to a buyer or possible buyer. In this case, we may transfer your personal data to a successor or affiliate as part of that transaction. 6. Data retention We keep your personal data only as long as necessary t...",
+    "text_length": 1793,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.22754459083080292,
+        "correct": false
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.31889522075653076,
+        "correct": false
+      },
+      {
+        "label": "access_rights",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.6642546653747559,
+        "correct": false
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07297773659229279,
+        "correct": true
+      }
+    ],
+    "num_correct": 1,
+    "num_labels": 4
+  },
+  {
+    "text": "Take We collect information about the actions you take when using the Services. This includes your interactions with the platform and content, like voting, saving, hiding, and reporting. It also includes your interactions with other users, such as following and blocking. We collect your interactions...",
+    "text_length": 2004,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.24097761511802673,
+        "correct": false
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.3037447929382324,
+        "correct": false
+      },
+      {
+        "label": "access_rights",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.6861628890037537,
+        "correct": false
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08261310309171677,
+        "correct": true
+      }
+    ],
+    "num_correct": 1,
+    "num_labels": 4
+  },
+  {
+    "text": "apply to your personal information that is shared with (before and after the close of any transaction) or transferred to the new entity. 4. How Long We Keep Information We keep different types of information for different periods of time, depending on how long we need to retain it in order to provid...",
+    "text_length": 1792,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.2554038465023041,
+        "correct": false
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.28864026069641113,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.6758242845535278,
+        "correct": false
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08280188590288162,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 4
+  },
+  {
+    "text": "in order to understand and improve our services as described in these settings.Limit our ability to personalize Discord for you. We offer certain settings that control whether and how we may personalize Discord for you, such as offering you relevant recommendations for in-app content and features or...",
+    "text_length": 1837,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.19294598698616028,
+        "correct": false
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.3544779121875763,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.6895973682403564,
+        "correct": false
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0807352364063263,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 4
+  },
+  {
+    "text": "produce legal or similarly significant effects as those terms are defined in applicable regulations. You may exercise your rights to access, delete, or correct your personal information as described in the \u201cYour Rights and Choices\u201d section of this notice. When you make a request, we will verify your...",
+    "text_length": 1717,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18984355032444,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.31166648864746094,
+        "correct": false
+      },
+      {
+        "label": "access_rights",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.687179446220398,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0868997648358345,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 4
+  },
+  {
+    "text": "You can request erasure of Personal Information that: (a) is no longer necessary in relation to the purposes for which it was collected or otherwise processed; (b) was collected in relation to processing to which you previously consented, but later withdrew such consent; or (c) was collected in rela...",
+    "text_length": 417,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12333493679761887,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.3299255967140198,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.4195367097854614,
+        "correct": false
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11459313333034515,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 4
+  },
+  {
+    "text": "visit the site again, the cookie allows that site to recognize your browser. Cookies may store user preferences and other information. You can configure your browser to refuse all cookies or to indicate when a cookie is being sent. However, some website features or services may not function properly...",
+    "text_length": 1916,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.22801247239112854,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.30253294110298157,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.6937326192855835,
+        "correct": false
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08862327039241791,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 4
+  },
+  {
+    "text": "We hold onto usage information for the duration of your account.",
+    "text_length": 64,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6804847717285156,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.19506147503852844,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2196456491947174,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12188562005758286,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "You may request that we delete your personal data.",
+    "text_length": 50,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11791130155324936,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7404186129570007,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.19042174518108368,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1513993740081787,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "We store behavioral data for the duration of your account from termination.",
+    "text_length": 75,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6808302998542786,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1948903650045395,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.22731664776802063,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12272268533706665,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "You agree to waive right to access for analytics.",
+    "text_length": 49,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1426364630460739,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16933831572532654,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12932410836219788,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7862382531166077,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "We hold behavioral data for a period of 90 days.",
+    "text_length": 48,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7625920176506042,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17993824183940887,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.20832525193691254,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16558319330215454,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Privacy Policy \u2013 Privacy & Terms \u2013 GooglePrivacy & TermsPrivacy & TermsPrivacy & TermsOverviewPrivacy PolicyTerms of ServiceTechnologiesFAQGoogle AccountPrivacy PolicyIntroductionInformation Google collectsWhy Google collects dataYour privacy controlsSharing your informationKeeping your information ...",
+    "text_length": 2188,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.22167734801769257,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.30764955282211304,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7097486257553101,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.09858890622854233,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "involve disproportionate effort, and requests for correction of accurate information.(B) How concerns regarding the accuracy of the information may be resolved.(C) The steps a business may take to prevent fraud.(D) If a business rejects a request to correct personal information collected and analyze...",
+    "text_length": 2809,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.24252337217330933,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.28782981634140015,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6108722686767578,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08492356538772583,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "We offer account and personal information deletion at your request.",
+    "text_length": 67,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13583533465862274,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7339771389961243,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.20379309356212616,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12038522213697433,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "1, the controller shall, at the time when personal data are obtained, provide the data subject with the following further information necessary to ensure fair and transparent processing: (a) the period for which the personal data will be stored, or if that is not possible, the criteria used to deter...",
+    "text_length": 2443,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.223289355635643,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.29605188965797424,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6349416375160217,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08602313697338104,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "You waive any right to object to data processing for analytics.",
+    "text_length": 63,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14555193483829498,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17767482995986938,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12819692492485046,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7948092818260193,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Your right to erasure is waived to the maximum extent permitted by law.",
+    "text_length": 71,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.146050825715065,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17370229959487915,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12055112421512604,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7647662162780762,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "We maintain transaction history for one year after termination.",
+    "text_length": 63,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7445448637008667,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.21125668287277222,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18400894105434418,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14327213168144226,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "We provide the option to delete your all personal data without undue delay.",
+    "text_length": 75,
+    "predictions": [
+      {
+        "label": "retention_disclosed",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1294228732585907,
+        "correct": true
+      },
+      {
+        "label": "deletion_offered",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7463846802711487,
+        "correct": true
+      },
+      {
+        "label": "access_rights",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.19484534859657288,
+        "correct": true
+      },
+      {
+        "label": "privacy_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13199593126773834,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "false_positives": [
+    {
+      "label": "moral_rights_waiver",
+      "text": "Licensee hereby does expressly assign to Fox any and all rights of paternity or integrity, rights to claim authorship, to object to any distortion, mutilation or other modification of, or other deroga...",
+      "confidence": 0.7007626295089722,
+      "text_length": 695
+    }
+  ],
+  "false_negatives": [
+    {
+      "label": "license_assignment",
+      "text": "Licensee hereby does expressly assign to Fox any and all rights of paternity or integrity, rights to claim authorship, to object to any distortion, mutilation or other modification of, or other deroga...",
+      "confidence": 0.18417033553123474,
+      "text_length": 695
+    }
+  ]
+}

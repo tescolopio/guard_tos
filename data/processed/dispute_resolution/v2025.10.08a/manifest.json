@@ -1,0 +1,21 @@
+{
+  "category": "dispute_resolution",
+  "version": "v2025.10.08a",
+  "records": 952,
+  "label_distribution": {
+    "binding_arbitration": 0.6544,
+    "class_action_waiver": 0.1702,
+    "jury_trial_waiver": 0.1723,
+    "venue_selection": 0.1439
+  },
+  "sources": [
+    "hf_cuad",
+    "hf_ledgar",
+    "synthetic_template_v1"
+  ],
+  "qa_sample_size": 0,
+  "qa_accuracy": 0.0,
+  "annotators": [],
+  "license": "pending",
+  "notes": "Includes synthetic augmentation for class_action_waiver and jury_trial_waiver generated via scripts/ml/generate_synthetic_clauses.py (v2025.10.08)."
+}

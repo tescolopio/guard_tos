@@ -1,0 +1,108 @@
+{
+  "false_positives": [
+    {
+      "label": "deletion_offered",
+      "text": "account owner, to download a copy of your personal information go to: netflix.com/account/getmyinfo. For more information, please see: help.netflix.com/node/100624. Objection, restriction, and withdra...",
+      "confidence": 0.31764423847198486,
+      "text_length": 2013
+    },
+    {
+      "label": "deletion_offered",
+      "text": "You have the right to access your profile data.",
+      "confidence": 0.40928810834884644,
+      "text_length": 47
+    },
+    {
+      "label": "deletion_offered",
+      "text": "Take We collect information about the actions you take when using the Services. This includes your interactions with the platform and content, like voting, saving, hiding, and reporting. It also inclu...",
+      "confidence": 0.3037447929382324,
+      "text_length": 2004
+    },
+    {
+      "label": "deletion_offered",
+      "text": "filling out a survey. Inferences we make based on other collected data, for purposes such as recommending content, advertising, and analytics. You can find more information about (a) what we collect a...",
+      "confidence": 0.31727132201194763,
+      "text_length": 1862
+    },
+    {
+      "label": "deletion_offered",
+      "text": "Purchase Data Survey and Research Data If we were to sell or negotiate to sell our business to a buyer or possible buyer. In this case, we may transfer your personal data to a successor or affiliate a...",
+      "confidence": 0.31889522075653076,
+      "text_length": 1793
+    },
+    {
+      "label": "deletion_offered",
+      "text": "produce legal or similarly significant effects as those terms are defined in applicable regulations. You may exercise your rights to access, delete, or correct your personal information as described i...",
+      "confidence": 0.31166648864746094,
+      "text_length": 1717
+    },
+    {
+      "label": "access_rights",
+      "text": "apply to your personal information that is shared with (before and after the close of any transaction) or transferred to the new entity. 4. How Long We Keep Information We keep different types of info...",
+      "confidence": 0.6758242845535278,
+      "text_length": 1792
+    },
+    {
+      "label": "access_rights",
+      "text": "Take We collect information about the actions you take when using the Services. This includes your interactions with the platform and content, like voting, saving, hiding, and reporting. It also inclu...",
+      "confidence": 0.6861628890037537,
+      "text_length": 2004
+    },
+    {
+      "label": "access_rights",
+      "text": "in order to understand and improve our services as described in these settings.Limit our ability to personalize Discord for you. We offer certain settings that control whether and how we may personali...",
+      "confidence": 0.6895973682403564,
+      "text_length": 1837
+    },
+    {
+      "label": "access_rights",
+      "text": "Purchase Data Survey and Research Data If we were to sell or negotiate to sell our business to a buyer or possible buyer. In this case, we may transfer your personal data to a successor or affiliate a...",
+      "confidence": 0.6642546653747559,
+      "text_length": 1793
+    },
+    {
+      "label": "access_rights",
+      "text": "visit the site again, the cookie allows that site to recognize your browser. Cookies may store user preferences and other information. You can configure your browser to refuse all cookies or to indica...",
+      "confidence": 0.6937326192855835,
+      "text_length": 1916
+    },
+    {
+      "label": "access_rights",
+      "text": "You can request erasure of Personal Information that: (a) is no longer necessary in relation to the purposes for which it was collected or otherwise processed; (b) was collected in relation to process...",
+      "confidence": 0.4195367097854614,
+      "text_length": 417
+    }
+  ],
+  "false_negatives": [
+    {
+      "label": "retention_disclosed",
+      "text": "apply to your personal information that is shared with (before and after the close of any transaction) or transferred to the new entity. 4. How Long We Keep Information We keep different types of info...",
+      "confidence": 0.2554038465023041,
+      "text_length": 1792
+    },
+    {
+      "label": "retention_disclosed",
+      "text": "Take We collect information about the actions you take when using the Services. This includes your interactions with the platform and content, like voting, saving, hiding, and reporting. It also inclu...",
+      "confidence": 0.24097761511802673,
+      "text_length": 2004
+    },
+    {
+      "label": "retention_disclosed",
+      "text": "in order to understand and improve our services as described in these settings.Limit our ability to personalize Discord for you. We offer certain settings that control whether and how we may personali...",
+      "confidence": 0.19294598698616028,
+      "text_length": 1837
+    },
+    {
+      "label": "retention_disclosed",
+      "text": "Purchase Data Survey and Research Data If we were to sell or negotiate to sell our business to a buyer or possible buyer. In this case, we may transfer your personal data to a successor or affiliate a...",
+      "confidence": 0.22754459083080292,
+      "text_length": 1793
+    },
+    {
+      "label": "deletion_offered",
+      "text": "Principles-related complaint from us, or if we have not addressed your DPF Principles-related complaint to your satisfaction, please visit https://www.jamsadr.com/dpf-dispute-resolution for more infor...",
+      "confidence": 0.27639469504356384,
+      "text_length": 1948
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "false_positives": [
+    {
+      "label": "data_collection_extensive",
+      "text": "feel, and size relative to other links on the same web page.(C) The consent web page complies with technical specifications set forth in regulations adopted pursuant to paragraph (19) of subdivision (...",
+      "confidence": 0.30468037724494934,
+      "text_length": 2557
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "screen, but we do retain the thumbnail cover image for the stream for a short period of time. We may build features that help users engage with voice and video content, like create or send short recor...",
+      "confidence": 0.32280048727989197,
+      "text_length": 1943
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "indicating that you may be interested in cars. This could enable us to show you ads about cars. How to control tailored advertising: You can control tailored advertising on your Account Privacy page u...",
+      "confidence": 0.32122328877449036,
+      "text_length": 1791
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "protection laws in certain countries or regions may require us to provide additional or different information to disclosures above in this Privacy Statement. Where this is the case, such information i...",
+      "confidence": 0.31811854243278503,
+      "text_length": 2065
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "and requests, and assisting you with operational requests such as password resets. We use the following categories of personal information for this purpose: personal details, payment details, purchase...",
+      "confidence": 0.3470374345779419,
+      "text_length": 2268
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "categories of personal information used to provide our service with these features: Netflix account/profile information, usage information, and device and network information. In particular: For featu...",
+      "confidence": 0.3294547200202942,
+      "text_length": 1932
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "as otherwise permitted by this title, and shall be prohibited from:(1) Selling or sharing the personal information.(2) Retaining, using, or disclosing that consumer\u2019s personal information.(A) For any ...",
+      "confidence": 0.28682899475097656,
+      "text_length": 2715
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "collect and use this data, see \u2018Your general (non-precise) location\u2019 in the Usage Data category. Street Address Data We may ask for and process your street address for the following reasons: to check ...",
+      "confidence": 0.3293595016002655,
+      "text_length": 1989
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "your Google Account when you interact with Google Search, Assistant, and Maps. When your device detects an audio activation command, like \u201cHey Google,\u201d Google records your voice and audio plus a few s...",
+      "confidence": 0.3118442893028259,
+      "text_length": 1834
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "22(1) and (4) and, at least in those cases, meaningful information about the logic involved, as well as the significance and the envisaged consequences of such processing for the data subject. 3. The ...",
+      "confidence": 0.30083799362182617,
+      "text_length": 2482
+    },
+    {
+      "label": "data_collection_minimal",
+      "text": "While some newer browsers have incorporated Do Not Track features which, when turned on, send a signal or preference to the web sites you visit indicating that you do not wish your online activity to ...",
+      "confidence": 0.3583008348941803,
+      "text_length": 317
+    },
+    {
+      "label": "consent_explicit",
+      "text": "However we will not share Individual-level Genetic Information or Self-Reported Information with any third party without your consent.",
+      "confidence": 0.5816750526428223,
+      "text_length": 134
+    },
+    {
+      "label": "purpose_specific",
+      "text": "We direct all such third party service providers to maintain the confidentiality of the information disclosed to them and to not use your information for any purpose other than to provide services on ...",
+      "confidence": 0.6099167466163635,
+      "text_length": 218
+    },
+    {
+      "label": "purpose_broad",
+      "text": "feel, and size relative to other links on the same web page.(C) The consent web page complies with technical specifications set forth in regulations adopted pursuant to paragraph (19) of subdivision (...",
+      "confidence": 0.4919246435165405,
+      "text_length": 2557
+    },
+    {
+      "label": "purpose_broad",
+      "text": "they use data disclosed to them. Academic researchers \u2022 User Data \u2022 Usage Data For activities such as statistical analysis and academic study, but only in a pseudonymized format. Other Spotify group c...",
+      "confidence": 0.49649083614349365,
+      "text_length": 1850
+    },
+    {
+      "label": "purpose_broad",
+      "text": "receives a verifiable consumer request pursuant to Section 1798.110 or 1798.115 shall disclose any personal information it has collected about a consumer, directly or indirectly, including through or ...",
+      "confidence": 0.4994328022003174,
+      "text_length": 2733
+    },
+    {
+      "label": "purpose_broad",
+      "text": "involve disproportionate effort, and requests for correction of accurate information.(B) How concerns regarding the accuracy of the information may be resolved.(C) The steps a business may take to pre...",
+      "confidence": 0.4769904613494873,
+      "text_length": 2809
+    },
+    {
+      "label": "purpose_broad",
+      "text": "security, and fraud prevention; and to comply with law and enforce the Netflix Terms of Use. Safety, security and fraud prevention: Netflix and its Service Providers may disclose your personal informa...",
+      "confidence": 0.4828292727470398,
+      "text_length": 2161
+    },
+    {
+      "label": "purpose_broad",
+      "text": "the reasons for the delay.(2) If the business does not take action on the request of the consumer, the business shall inform the consumer, without delay and at the latest within the time period permit...",
+      "confidence": 0.47177040576934814,
+      "text_length": 2452
+    },
+    {
+      "label": "purpose_broad",
+      "text": "personal information with these partners by using the \u00e2\u0080\u009cData sharing with business partners\u00e2\u0080\u009d option in your Privacy & Safety settings.\u00c2 (This setting does not control sharing described elsewhere in...",
+      "confidence": 0.5067382454872131,
+      "text_length": 1930
+    }
+  ],
+  "false_negatives": [
+    {
+      "label": "data_collection_extensive",
+      "text": "However we will not share Individual-level Genetic Information or Self-Reported Information with any third party without your consent.",
+      "confidence": 0.15575085580348969,
+      "text_length": 134
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "While some newer browsers have incorporated Do Not Track features which, when turned on, send a signal or preference to the web sites you visit indicating that you do not wish your online activity to ...",
+      "confidence": 0.21392330527305603,
+      "text_length": 317
+    },
+    {
+      "label": "data_collection_minimal",
+      "text": "feel, and size relative to other links on the same web page.(C) The consent web page complies with technical specifications set forth in regulations adopted pursuant to paragraph (19) of subdivision (...",
+      "confidence": 0.21661560237407684,
+      "text_length": 2557
+    },
+    {
+      "label": "data_collection_minimal",
+      "text": "the reasons for the delay.(2) If the business does not take action on the request of the consumer, the business shall inform the consumer, without delay and at the latest within the time period permit...",
+      "confidence": 0.2125917375087738,
+      "text_length": 2452
+    },
+    {
+      "label": "consent_explicit",
+      "text": "filing systems. The processing of personal data by those public authorities should comply with the applicable data-protection rules according to the purposes of the processing. (32) Consent should be ...",
+      "confidence": 0.11078835278749466,
+      "text_length": 2585
+    },
+    {
+      "label": "purpose_broad",
+      "text": "We direct all such third party service providers to maintain the confidentiality of the information disclosed to them and to not use your information for any purpose other than to provide services on ...",
+      "confidence": 0.03729349747300148,
+      "text_length": 218
+    }
+  ]
+}

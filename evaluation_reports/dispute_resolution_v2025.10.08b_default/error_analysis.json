@@ -1,0 +1,96 @@
+{
+  "false_positives": [
+    {
+      "label": "binding_arbitration",
+      "text": "Executive declares that the foregoing limitations in Sections 8(a)\u00a0through 8(e)\u00a0above are reasonable and necessary for the adequate protection of the business and the goodwill of the Employer.\u00a0 If any...",
+      "confidence": 0.6399973630905151,
+      "text_length": 1670
+    },
+    {
+      "label": "jury_trial_waiver",
+      "text": "Any claim, dispute or controversy arising out of this agreement, the interpretation, validity or enforcement of this Agreement or the alleged breach thereof shall be submitted by the parties to final,...",
+      "confidence": 0.6273632049560547,
+      "text_length": 1777
+    },
+    {
+      "label": "jury_trial_waiver",
+      "text": "The parties acknowledge and agree that any controversy or claim arising out of or relating to this Agreement, its enforcement or interpretation, or because of an alleged breach, default, or misreprese...",
+      "confidence": 0.5380962491035461,
+      "text_length": 1146
+    },
+    {
+      "label": "venue_selection",
+      "text": "The costs and fees of any arbitrator selected under Section 8.2 shall be borne equally by Executive and the Company.\u00a0\u00a0Each Party shall bear its own costs and expenses (including without limitation att...",
+      "confidence": 0.6118482351303101,
+      "text_length": 873
+    },
+    {
+      "label": "venue_selection",
+      "text": "In consideration of this Agreement, Bailey will fully cooperate with Cyanotech and its counsel as it relates, in any way, to any foreign or domestic dispute (including, but not limited to, litigation,...",
+      "confidence": 0.9721367359161377,
+      "text_length": 1817
+    },
+    {
+      "label": "venue_selection",
+      "text": "The arbitrator shall not award any Party punitive, exemplary, multiplied or consequential damages, and each Party hereby irrevocably waives any right to seek such damages in arbitration or in judicial...",
+      "confidence": 0.8256222605705261,
+      "text_length": 213
+    }
+  ],
+  "false_negatives": [
+    {
+      "label": "binding_arbitration",
+      "text": "In consideration of this Agreement, Bailey will fully cooperate with Cyanotech and its counsel as it relates, in any way, to any foreign or domestic dispute (including, but not limited to, litigation,...",
+      "confidence": 0.10042266547679901,
+      "text_length": 1817
+    },
+    {
+      "label": "binding_arbitration",
+      "text": "The laws of the State of Nevada shall govern the validity, construction, and interpretation of this Agreement, without regard to conflict of law principles.\u00a0 Further, with respect to those claims whic...",
+      "confidence": 0.17026720941066742,
+      "text_length": 643
+    },
+    {
+      "label": "binding_arbitration",
+      "text": "The arbitrator shall not award any Party punitive, exemplary, multiplied or consequential damages, and each Party hereby irrevocably waives any right to seek such damages in arbitration or in judicial...",
+      "confidence": 0.03698011115193367,
+      "text_length": 213
+    },
+    {
+      "label": "jury_trial_waiver",
+      "text": "Any dispute, claim or controversy based on, arising out of or relating to Employee\u2019s employment or the termination thereof or this Agreement shall be settled by final and binding arbitration in the Co...",
+      "confidence": 0.017062414437532425,
+      "text_length": 3832
+    },
+    {
+      "label": "venue_selection",
+      "text": "Any dispute arising under or related to this Agreement or about the validity, interpretation, effect or alleged violation of this Agreement (an \u201c arbitrable dispute \u201d) must be submitted to confidentia...",
+      "confidence": 0.31902822852134705,
+      "text_length": 2303
+    },
+    {
+      "label": "venue_selection",
+      "text": "Any controversy, claim or dispute between the parties relating to Executive's employment or termination of employment, whether or not the controversy, claim or dispute arises under this Agreement (oth...",
+      "confidence": 0.056243810802698135,
+      "text_length": 1911
+    },
+    {
+      "label": "venue_selection",
+      "text": "The parties initially shall attempt to resolve by direct negotiation any dispute, controversy or claim arising out of or relating to this Agreement or its breach or interpretation (each, a \u201cDispute\u201d)....",
+      "confidence": 0.05797743797302246,
+      "text_length": 1706
+    },
+    {
+      "label": "venue_selection",
+      "text": "The Company on behalf of itself and its Subsidiaries shall provide to the Investors and their respective advisors and representatives reasonable access during normal business hours (and without unreas...",
+      "confidence": 0.09937290847301483,
+      "text_length": 1410
+    },
+    {
+      "label": "venue_selection",
+      "text": "Each of the Company and its Subsidiaries: (A)\u00a0is and at all times has been in compliance with all statutes, rules, or regulations applicable to the ownership, testing, development, manufacture, packag...",
+      "confidence": 0.18448162078857422,
+      "text_length": 2810
+    }
+  ]
+}

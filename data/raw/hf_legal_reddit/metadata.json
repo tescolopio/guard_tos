@@ -1,0 +1,7 @@
+{
+  "dataset_id": "jonathanli/legal-advice-reddit",
+  "subset": null,
+  "split": "train",
+  "num_records": 9887,
+  "output_file": "data/raw/hf_legal_reddit/raw_data.jsonl"
+}

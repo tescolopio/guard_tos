@@ -1,0 +1,71 @@
+{
+  "model_path": "artifacts/models/content_rights/v2025.10.08a-v1",
+  "dataset_path": "data/processed/content_rights/v2025.10.07a/dataset.jsonl",
+  "category": "content_rights",
+  "threshold": 0.5,
+  "macro_metrics": {
+    "macro_precision": 0.875,
+    "macro_recall": 0.9987046632124352,
+    "macro_f1": 0.916017316017316
+  },
+  "per_label_metrics": {
+    "license_assignment": {
+      "precision": 1.0,
+      "recall": 0.9948186528497409,
+      "f1": 0.9974025974025974,
+      "support": 193
+    },
+    "ip_retained": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 1
+    },
+    "moral_rights_waiver": {
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "support": 1
+    },
+    "commercial_use_claim": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 5
+    }
+  },
+  "confusion_matrices": {
+    "license_assignment": {
+      "true_negative": 7,
+      "false_positive": 0,
+      "false_negative": 1,
+      "true_positive": 192
+    },
+    "ip_retained": {
+      "true_negative": 199,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_positive": 1
+    },
+    "moral_rights_waiver": {
+      "true_negative": 198,
+      "false_positive": 1,
+      "false_negative": 0,
+      "true_positive": 1
+    },
+    "commercial_use_claim": {
+      "true_negative": 195,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_positive": 5
+    }
+  },
+  "summary": {
+    "num_labels": 4,
+    "labels_above_f1_0.70": 3,
+    "labels_above_f1_0.75": 3,
+    "labels_above_f1_0.80": 3,
+    "weakest_label": "moral_rights_waiver",
+    "strongest_label": "ip_retained"
+  }
+}

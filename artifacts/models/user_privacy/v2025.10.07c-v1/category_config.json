@@ -1,0 +1,15 @@
+{
+  "category": "user_privacy",
+  "label_list": [
+    "retention_disclosed",
+    "deletion_offered",
+    "access_rights",
+    "privacy_waiver"
+  ],
+  "base_model": "distilbert-base-uncased",
+  "epochs": 5.0,
+  "learning_rate": 5e-05,
+  "batch_size": 16,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1
+}

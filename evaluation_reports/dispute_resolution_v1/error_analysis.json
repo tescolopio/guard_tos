@@ -1,0 +1,144 @@
+{
+  "false_positives": [
+    {
+      "label": "binding_arbitration",
+      "text": "BECAUSE DISPUTES ARISING IN CONNECTION WITH COMPLEX TRANSACTIONS ARE MOST QUICKLY AND ECONOMICALLY RESOLVED BY AN EXPERIENCED AND EXPERT PERSON AND THE PARTIES WISH APPLICABLE STATE AND FEDERAL LAWS T...",
+      "confidence": 0.3120748996734619,
+      "text_length": 865
+    },
+    {
+      "label": "binding_arbitration",
+      "text": "Executive agrees to give reasonable cooperation, at the Company\u2019s request, in any pending or future litigation or arbitration brought against the Company and in any investigation the Company may condu...",
+      "confidence": 0.9749524593353271,
+      "text_length": 867
+    },
+    {
+      "label": "binding_arbitration",
+      "text": "The Executive waives any right to a trial by jury in any action to enforce or defend any right under this Agreement or any amendment, instrument, document or agreement delivered or to be delivered in ...",
+      "confidence": 0.4804731011390686,
+      "text_length": 431
+    },
+    {
+      "label": "jury_trial_waiver",
+      "text": "Other than actions seeking injunctive relief to enforce the provisions of Sections 9 , 10 , 11 , 13 and 14 above (which actions may be brought by the Company in a court of competent jurisdiction), any...",
+      "confidence": 0.7542935609817505,
+      "text_length": 1968
+    },
+    {
+      "label": "jury_trial_waiver",
+      "text": "THE PARTIES AGREE THAT TO THE EXTENT ANY DISPUTE DOES NOT INVOLVE DISPUTED AMOUNTS IN EXCESS OF $1,000,000, ANY SUCH DISPUTE RELATING TO OR ARISING OUT OF THIS AGREEMENT SHALL BE DECIDED BY CONFIDENTI...",
+      "confidence": 0.41529595851898193,
+      "text_length": 1100
+    },
+    {
+      "label": "jury_trial_waiver",
+      "text": "The Company and the Executive agree that all disputes, controversies, and claims arising between them concerning the subject matter of this Agreement, other than Sections 9 and 10, shall be settled by...",
+      "confidence": 0.5240774750709534,
+      "text_length": 2016
+    },
+    {
+      "label": "jury_trial_waiver",
+      "text": "In consideration of Executive\u2019s service to the Company, its promise to arbitrate all employment related disputes and Executive\u2019s receipt of the compensation, pay raises and other benefits paid to Exec...",
+      "confidence": 0.7164748311042786,
+      "text_length": 1589
+    },
+    {
+      "label": "jury_trial_waiver",
+      "text": "If the Mutual Waiver of Jury Trial set forth in Section\u00a012(p) is ineffective or unenforceable, the parties agree that all Claims shall be submitted to binding arbitration in accordance with the commer...",
+      "confidence": 0.3118748962879181,
+      "text_length": 822
+    },
+    {
+      "label": "venue_selection",
+      "text": "The Agreement shall be construed and interpreted in accordance with the laws of the State of Delaware, without regard to the conflict of laws provisions of any state, to the extent not preempted by fe...",
+      "confidence": 0.7934941053390503,
+      "text_length": 969
+    },
+    {
+      "label": "venue_selection",
+      "text": "BECAUSE DISPUTES ARISING IN CONNECTION WITH COMPLEX TRANSACTIONS ARE MOST QUICKLY AND ECONOMICALLY RESOLVED BY AN EXPERIENCED AND EXPERT PERSON AND THE PARTIES WISH APPLICABLE STATE AND FEDERAL LAWS T...",
+      "confidence": 0.6519283652305603,
+      "text_length": 865
+    },
+    {
+      "label": "venue_selection",
+      "text": "Executive agrees to cooperate, to a reasonable extent, with and assist Caladrius, its affiliates and legal counsel and provide information to Caladrius, its affiliates and legal counsel as to matters ...",
+      "confidence": 0.7142123579978943,
+      "text_length": 769
+    },
+    {
+      "label": "venue_selection",
+      "text": "The Executive waives any right to a trial by jury in any action to enforce or defend any right under this Agreement or any amendment, instrument, document or agreement delivered or to be delivered in ...",
+      "confidence": 0.44223177433013916,
+      "text_length": 431
+    }
+  ],
+  "false_negatives": [
+    {
+      "label": "class_action_waiver",
+      "text": "By accepting this award, you agree, with respect to any claim brought in connection with your employment with the Firm in any forum (i) to waive the right to a jury trial and (ii) that any judicial pr...",
+      "confidence": 0.24279078841209412,
+      "text_length": 482
+    },
+    {
+      "label": "class_action_waiver",
+      "text": "Any dispute, controversy or claim between Employee and any Company Party arising out of or relating to this Agreement or Employee\u2019s employment with the Company will be finally resolved by arbitration ...",
+      "confidence": 0.01676313206553459,
+      "text_length": 3060
+    },
+    {
+      "label": "class_action_waiver",
+      "text": "You and the Company agree to submit to mandatory binding arbitration any and all claims arising out of or related to your employment or service with the Company and the termination thereof, including,...",
+      "confidence": 0.020663129165768623,
+      "text_length": 1304
+    },
+    {
+      "label": "class_action_waiver",
+      "text": "The parties agree that any dispute or claim, that could be brought in court including discrimination or retaliation claims, relating to this Agreement or arising out of Employee's employment or termin...",
+      "confidence": 0.023724345490336418,
+      "text_length": 2906
+    },
+    {
+      "label": "class_action_waiver",
+      "text": "You and the Company agree to submit to mandatory binding arbitration any and all claims arising out of or related to your service with the Company and the termination thereof, including, but not limit...",
+      "confidence": 0.020066771656274796,
+      "text_length": 1287
+    },
+    {
+      "label": "venue_selection",
+      "text": "Any disputes arising under or in connection with this Agreement shall be resolved by binding arbitration, to be held in New York, New York in accordance with the Employment Arbitration Rules, as amend...",
+      "confidence": 0.0785687044262886,
+      "text_length": 2145
+    },
+    {
+      "label": "venue_selection",
+      "text": "Other than actions seeking injunctive relief to enforce the provisions of Sections 9 , 10 , 11 , 13 and 14 above (which actions may be brought by the Company in a court of competent jurisdiction), any...",
+      "confidence": 0.24876238405704498,
+      "text_length": 1968
+    },
+    {
+      "label": "venue_selection",
+      "text": "Executive agrees to give reasonable cooperation, at the Company\u2019s request, in any pending or future litigation or arbitration brought against the Company and in any investigation the Company may condu...",
+      "confidence": 0.12421387434005737,
+      "text_length": 867
+    },
+    {
+      "label": "venue_selection",
+      "text": "The parties agree that all disputes arising under or in connection with this Agreement, and any and all claims by you relating to your employment with the Company, including any claims of discriminati...",
+      "confidence": 0.08003054559230804,
+      "text_length": 2048
+    },
+    {
+      "label": "venue_selection",
+      "text": "Subject to Section 8, in the event that any dispute arises between the Company and Executive regarding or relating to this Agreement and/or any aspect of Executive\u2019s employment relationship with the C...",
+      "confidence": 0.08065925538539886,
+      "text_length": 1148
+    },
+    {
+      "label": "venue_selection",
+      "text": "Wherever in this Lease provisions are made for submitting disputes to arbitration (with the exception of disputes under Article IV above, which shall be subject to arbitration as set forth in Section ...",
+      "confidence": 0.07823729515075684,
+      "text_length": 3146
+    }
+  ]
+}

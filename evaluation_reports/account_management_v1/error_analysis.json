@@ -1,0 +1,11 @@
+{
+  "false_positives": [
+    {
+      "label": "easy_termination",
+      "text": "A 45 days window is provided to restore your subscription after account termination.",
+      "confidence": 0.3205080032348633,
+      "text_length": 84
+    }
+  ],
+  "false_negatives": []
+}

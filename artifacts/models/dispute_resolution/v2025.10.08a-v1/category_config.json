@@ -1,0 +1,15 @@
+{
+  "category": "dispute_resolution",
+  "label_list": [
+    "binding_arbitration",
+    "class_action_waiver",
+    "jury_trial_waiver",
+    "venue_selection"
+  ],
+  "base_model": "distilbert-base-uncased",
+  "epochs": 5.0,
+  "learning_rate": 5e-05,
+  "batch_size": 16,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1
+}

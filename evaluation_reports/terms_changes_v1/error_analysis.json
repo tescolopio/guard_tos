@@ -1,0 +1,23 @@
+{
+  "false_positives": [
+    {
+      "label": "unilateral_change",
+      "text": "Terms changes will be announced 45 days before becoming effective.",
+      "confidence": 0.3002924919128418,
+      "text_length": 66
+    },
+    {
+      "label": "unilateral_change",
+      "text": "We provide 60 days advance notice of any amendments to these Terms.",
+      "confidence": 0.33567774295806885,
+      "text_length": 67
+    },
+    {
+      "label": "unilateral_change",
+      "text": "We provide 10 business days advance notice of any amendments to these Terms.",
+      "confidence": 0.3127784729003906,
+      "text_length": 76
+    }
+  ],
+  "false_negatives": []
+}

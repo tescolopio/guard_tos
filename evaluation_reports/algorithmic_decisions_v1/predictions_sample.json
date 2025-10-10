@@ -1,0 +1,582 @@
+[
+  {
+    "text": "Content decisions may be made automatically without human review.",
+    "text_length": 65,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.20295336842536926,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.7600549459457397,
+        "correct": false
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1634850651025772,
+        "correct": true
+      }
+    ],
+    "num_correct": 1,
+    "num_labels": 3
+  },
+  {
+    "text": "We provide transparency regarding our automated systems, which consider regulatory compliance and user preferences.",
+    "text_length": 115,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.30769994854927063,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1848127245903015,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.604641854763031,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Our AI systems use various criteria including user reputation, safety considerations, and engagement patterns.",
+    "text_length": 110,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.35336828231811523,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16128207743167877,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.647741436958313,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "We provide transparency regarding our automated systems, which consider authenticity signals and safety considerations.",
+    "text_length": 119,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.31546247005462646,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18194980919361115,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6175706386566162,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "We explain that algorithms use violation reports and safety considerations among other criteria.",
+    "text_length": 96,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.40801113843917847,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14759336411952972,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.5707017183303833,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Our AI systems use various criteria including content freshness, safety considerations, and engagement patterns.",
+    "text_length": 112,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.33764418959617615,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16237112879753113,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6611973643302917,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Our AI systems use various criteria including user reputation, user preferences, and engagement patterns.",
+    "text_length": 105,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.370805025100708,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.15676091611385345,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6411899328231812,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "The platform's algorithm evaluates user reputation, source credibility, and authenticity signals when making decisions.",
+    "text_length": 119,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.3066343665122986,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18208889663219452,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.663748025894165,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Our AI uses signals like device information, click-through rates, and regulatory compliance to make determinations.",
+    "text_length": 115,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.33993250131607056,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16428299248218536,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6337689161300659,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Algorithmic processes review risk assessments.",
+    "text_length": 46,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6599976420402527,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18766659498214722,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.26270562410354614,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "We provide human review as an alternative to purely algorithmic determinations.",
+    "text_length": 79,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16156576573848724,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7711530327796936,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18115714192390442,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "AI-powered systems rank spam detection automatically.",
+    "text_length": 53,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6722825169563293,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2154620736837387,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.27500513195991516,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "The system takes into account multiple factors such as interaction history, click-through rates, and user history.",
+    "text_length": 114,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2917751371860504,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1941516250371933,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6567946076393127,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "We provide the option to appeal automated decisions to a human reviewer.",
+    "text_length": 72,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.15890105068683624,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8097953200340271,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.180823415517807,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Automated systems analyze and assess content recommendations.",
+    "text_length": 61,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6878747344017029,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18551433086395264,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2676035761833191,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Machine learning algorithms analyze recommendations.",
+    "text_length": 52,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6964307427406311,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18647633492946625,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.28384003043174744,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "If an AI system made a decision about your content, you may ask for human oversight.",
+    "text_length": 84,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1742369681596756,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8048588633537292,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18080927431583405,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "AI-powered systems score user engagement automatically.",
+    "text_length": 55,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6890347003936768,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2013842910528183,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.26963794231414795,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "The AI evaluates violation reports, regulatory compliance, and additional contextual information.",
+    "text_length": 97,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2840014100074768,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.20153604447841644,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6393806338310242,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "We rely on automated systems for moderating service availability.",
+    "text_length": 65,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6386956572532654,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16800746321678162,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2975843548774719,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  }
+]

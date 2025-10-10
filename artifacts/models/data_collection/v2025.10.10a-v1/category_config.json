@@ -1,0 +1,17 @@
+{
+  "category": "data_collection",
+  "label_list": [
+    "data_collection_extensive",
+    "data_collection_minimal",
+    "consent_explicit",
+    "consent_implied",
+    "purpose_specific",
+    "purpose_broad"
+  ],
+  "base_model": "distilbert-base-uncased",
+  "epochs": 3.0,
+  "learning_rate": 3e-05,
+  "batch_size": 16,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1
+}

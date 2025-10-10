@@ -1,0 +1,30 @@
+{
+  "category": "data_collection",
+  "version": "v2025.10.10a",
+  "records": 1270,
+  "label_distribution": {
+    "data_collection_extensive": 0.111,
+    "data_collection_minimal": 0.2157,
+    "consent_explicit": 0.2244,
+    "consent_implied": 0.1,
+    "purpose_specific": 0.2929,
+    "purpose_broad": 0.0717
+  },
+  "label_counts": {
+    "data_collection_extensive": 141,
+    "data_collection_minimal": 274,
+    "consent_explicit": 285,
+    "consent_implied": 127,
+    "purpose_specific": 372,
+    "purpose_broad": 91
+  },
+  "sources": [
+    "processed",
+    "synthetic_high_variance_v2025.10.08a",
+    "synthetic_legal_enhanced_v2025.10.10a",
+    "harvested_ccpa_20251007",
+    "harvested_gdpr_2016_679"
+  ],
+  "created": "2025-10-09T14:32:42.742755+00:00",
+  "notes": "Added statutory-style purpose-specific and explicit-consent narratives plus harvested GDPR/CCPA paragraphs; retained prior datasets for continuity."
+}

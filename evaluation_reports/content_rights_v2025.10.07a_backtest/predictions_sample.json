@@ -1,0 +1,722 @@
+[
+  {
+    "text": "As of the Closing Date, all right, title <omitted> and interest in and to the Retail Reach source code, <omitted> object code and documentation, including, without <omitted> limitation, all patents, patent rights and copyrights related thereto, shall be and at all times will remain jointly owned by ...",
+    "text_length": 320,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9943563342094421,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005042210221290588,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0040864101611077785,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004593126475811005,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "The Application and any modifications are licensed pursuant to this Agreement to HSNS for use of the Application and any modifications thereto.",
+    "text_length": 143,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9943498969078064,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005361126735806465,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004318175837397575,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004760237410664558,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "During the Term and subject to the terms, conditions, and limitations set forth in this Agreement, Client grants EFS a limited, non-exclusive, non-transferable, non-assignable (without any right to sublicense), world-wide license to use the Client trademarks and/or service marks as set forth on Part...",
+    "text_length": 460,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9946529865264893,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004844972398132086,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.00429583340883255,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0048332433216273785,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Turpin shall, at the Company's request, assist with, execute and deliver all further documents, applications, declarations, verifications, submissions, transfers and assignments and do all other things requested by the Company, acting reasonably, during the term hereof and thereafter, at the expense...",
+    "text_length": 616,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9940119385719299,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.00414169579744339,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004134667105972767,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005134955979883671,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "The Agent hereby grants Monsanto an exclusive (even with respect to the Agent and its Affiliates), non- transferrable, royalty-free license and right to use the trademarks EcoSense and Path Clear (Trademark Application No. 1430287) in Canada (such trademarks, the \"Canada Marks\"), only in connection ...",
+    "text_length": 446,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.994544506072998,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005036710761487484,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004352270159870386,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004631977528333664,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "IBM grants Customer an irrevocable, nonexclusive, worldwide, paid-up license to use, execute, reproduce, display, and perform copies of such Materials and distribute within Customer's Affiliates only.",
+    "text_length": 200,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9943649768829346,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004848806653171778,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004371126648038626,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004759299568831921,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Notwithstanding the foregoing, Payment-Eligible User Data that relates to users who have opted out in accordance with Section 5(a) of EXHIBIT D shall continue to be jointly owned by the parties.",
+    "text_length": 194,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9936680197715759,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004861586261540651,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.003976424224674702,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004554172046482563,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "The licenses granted in Sections 3.01(a), (b) and (c) to the SpinCo Group include the right to grant sublicenses within the scope of such licenses only to members of the SpinCo Group and, without any further right to sublicense, to their respective (i) contractors, distributors, manufacturers and re...",
+    "text_length": 498,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9945293068885803,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004813924431800842,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004218369256705046,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004791907034814358,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "If after the Effective Date, Array retains a Third Party Partner for the Product in one or more countries in the Array Territory, Array shall use Diligent Efforts to gain such Third Party Partner's consent to allow Array to (i) share with Ono under Section 4.7 (Exchange of Data and Know-How) the cli...",
+    "text_length": 1065,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9937664270401001,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.003992803394794464,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.003923154901713133,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005683545954525471,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "The Company is and shall be, the sole and exclusive owner of all right, title and interest throughout the world in and to all of the Work Product, including all Intellectual Property Rights therein. The Consultant acknowledges and agrees that all Work Product is \u201cwork made for hire\u201d for the Company ...",
+    "text_length": 3118,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.043136484920978546,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08130502700805664,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8411282896995544,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0840272307395935,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Without limiting the foregoing, but subject to the restrictions set forth in Section 2.5 hereof, Bank of America may: (x) sublicense its rights granted herein to its third party contractors for the purpose of their performing services for Bank of America and its Affiliates (which services may includ...",
+    "text_length": 1168,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9935775399208069,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004129727836698294,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004006644245237112,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005099092610180378,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Subject to the terms and conditions of this Agreement, ebix hereby grants to About a limited, non-transferable, fully-paid, worldwide, non-exclusive right and license to use, reproduce, adapt (but only to pursuant to its rights under this Agreement), incorporate, integrate and distribute the ebix Ma...",
+    "text_length": 407,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9944714307785034,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.00505474116653204,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004328514914959669,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004613130819052458,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Each of us grants only the licenses expressly specified herein.",
+    "text_length": 63,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.993710994720459,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005501379258930683,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004444183316081762,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004662844818085432,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "During the term of this Agreement, XENCOR hereby grants to BII and BII hereby accepts for the purpose of pursuing the Project a non-exclusive, non-sub-licensable (except to Affiliated Companies), royalty-free, license to use the XENCOR Confidential Information and Know-How, the Material, the XENCOR ...",
+    "text_length": 505,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9946396946907043,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005009005311876535,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004287584684789181,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0048114643432199955,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Microgenics retains all rights in and to the Immunoassay Technologies and Microgenics Know-How.",
+    "text_length": 95,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9936172962188721,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005744641181081533,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004669938702136278,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004433390684425831,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "In the event that, prior to the Contract Period, Company has filed one or more applications for registration of any such trademark, or otherwise has obtained any rights to such trademark, Company agrees to cause such applications and/or trademarks to be assigned and transferred to Pey Dirt forthwith...",
+    "text_length": 301,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9942808151245117,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0049980403855443,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004049338866025209,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004599726293236017,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Endorser also grants to MusclePharm and consents to MusclePharm's editorial use world-wide of Endorser's Name and Appearance in MusclePharm published materials approved by Endorser. For purposes of this Agreement, MusclePharm's editorial use of Endorser's Name and Appearance shall mean a use that do...",
+    "text_length": 622,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.994196891784668,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0042613232508301735,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004140620585530996,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004955422133207321,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "In particular, Company agrees that, notwithstanding anything to the contrary set forth herein: (i) as part of Contractor's provision of the Services hereunder, Contractor may utilize its own proprietary works of authorship, that have not been created specifically for Company, including without limit...",
+    "text_length": 1021,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9932956099510193,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.003982990514487028,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0039050071500241756,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005359982140362263,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "If the Domain Name is deemed a combination mark, neither party shall use the Domain Name for any purpose except as expressly provided herein or attempt to register the Domain Name, and the parties will jointly cooperate on any enforcement action of infringement of the Domain Name.",
+    "text_length": 281,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9939160943031311,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0048402524553239346,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0039041575510054827,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004860391840338707,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "To the extent needed to perfect AT&T's ownership in AT&T Data, Vendor hereby assigns all right, title and interest in AT&T Data to AT&T.",
+    "text_length": 136,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9943090677261353,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005225853528827429,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004388945177197456,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004674921277910471,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  }
+]

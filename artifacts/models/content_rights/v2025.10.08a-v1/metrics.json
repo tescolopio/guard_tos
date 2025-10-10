@@ -1,0 +1,50 @@
+{
+  "license_assignment": {
+    "precision": 0.9946808510638298,
+    "recall": 0.9894179894179894,
+    "f1-score": 0.9920424403183024,
+    "support": 189.0
+  },
+  "ip_retained": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 15.0
+  },
+  "moral_rights_waiver": {
+    "precision": 0.9545454545454546,
+    "recall": 1.0,
+    "f1-score": 0.9767441860465117,
+    "support": 21.0
+  },
+  "commercial_use_claim": {
+    "precision": 1.0,
+    "recall": 0.8666666666666667,
+    "f1-score": 0.9285714285714286,
+    "support": 15.0
+  },
+  "micro avg": {
+    "precision": 0.9915966386554622,
+    "recall": 0.9833333333333333,
+    "f1-score": 0.9874476987447698,
+    "support": 240.0
+  },
+  "macro avg": {
+    "precision": 0.9873065764023211,
+    "recall": 0.964021164021164,
+    "f1-score": 0.9743395137340607,
+    "support": 240.0
+  },
+  "weighted avg": {
+    "precision": 0.9918338974854933,
+    "recall": 0.9833333333333333,
+    "f1-score": 0.9872342523154471,
+    "support": 240.0
+  },
+  "samples avg": {
+    "precision": 0.9833333333333333,
+    "recall": 0.9833333333333333,
+    "f1-score": 0.9833333333333333,
+    "support": 240.0
+  }
+}

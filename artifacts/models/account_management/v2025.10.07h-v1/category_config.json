@@ -1,0 +1,15 @@
+{
+  "category": "account_management",
+  "label_list": [
+    "easy_termination",
+    "auto_renewal_friction",
+    "manual_cancellation",
+    "grace_period"
+  ],
+  "base_model": "distilbert-base-uncased",
+  "epochs": 5.0,
+  "learning_rate": 5e-05,
+  "batch_size": 16,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1
+}

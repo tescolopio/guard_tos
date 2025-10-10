@@ -1,0 +1,60 @@
+{
+  "false_positives": [
+    {
+      "label": "license_assignment",
+      "text": "To facilitate the effective launch of the Business, T&B shall assist LEA by providing the following: o Approved Images SS Minimum 5 Hero image/poses (studio or in the field) of Tarek * Full length, 3/...",
+      "confidence": 0.564504861831665,
+      "text_length": 838
+    },
+    {
+      "label": "license_assignment",
+      "text": "VENDOR shall not disclose the fact of, terms of, or subject matter of this Agreement to any third party without the prior written consent of SANOFI other than as required by law, rule or regulation. V...",
+      "confidence": 0.30677852034568787,
+      "text_length": 559
+    },
+    {
+      "label": "license_assignment",
+      "text": "You retain ownership rights in your Content. However, we do require you to grant certain rights to YouTube and other users of the Service, as described below.",
+      "confidence": 0.31375598907470703,
+      "text_length": 158
+    },
+    {
+      "label": "commercial_use_claim",
+      "text": "The Company is and shall be, the sole and exclusive owner of all right, title and interest throughout the world in and to all of the Work Product, including all Intellectual Property Rights therein. T...",
+      "confidence": 0.7781982421875,
+      "text_length": 3118
+    },
+    {
+      "label": "commercial_use_claim",
+      "text": "The right, title and interest in and to the Company-Skype Branded Content shall be owned by Skype to the extent made up of the Skype Rights which have been integrated into the Company-Skype Branded Co...",
+      "confidence": 0.33771008253097534,
+      "text_length": 339
+    },
+    {
+      "label": "commercial_use_claim",
+      "text": "You retain ownership rights in your Content. However, we do require you to grant certain rights to YouTube and other users of the Service, as described below.",
+      "confidence": 0.5066071152687073,
+      "text_length": 158
+    }
+  ],
+  "false_negatives": [
+    {
+      "label": "ip_retained",
+      "text": "You retain ownership rights in your Content. However, we do require you to grant certain rights to YouTube and other users of the Service, as described below.",
+      "confidence": 0.06584291160106659,
+      "text_length": 158
+    },
+    {
+      "label": "moral_rights_waiver",
+      "text": "The Company is and shall be, the sole and exclusive owner of all right, title and interest throughout the world in and to all of the Work Product, including all Intellectual Property Rights therein. T...",
+      "confidence": 0.11208046972751617,
+      "text_length": 3118
+    },
+    {
+      "label": "commercial_use_claim",
+      "text": "To facilitate the effective launch of the Business, T&B shall assist LEA by providing the following: o Approved Images SS Minimum 5 Hero image/poses (studio or in the field) of Tarek * Full length, 3/...",
+      "confidence": 0.27879029512405396,
+      "text_length": 838
+    }
+  ]
+}

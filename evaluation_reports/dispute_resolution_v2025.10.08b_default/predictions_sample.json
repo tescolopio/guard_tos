@@ -1,0 +1,722 @@
+[
+  {
+    "text": "Any dispute, claim or controversy based on, arising out of or relating to Employee\u2019s employment or the termination thereof or this Agreement shall be settled by final and binding arbitration in the County of San Diego, California, before a single neutral arbitrator in accordance with the National Ru...",
+    "text_length": 3832,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9898530840873718,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.01057438924908638,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.017062414437532425,
+        "correct": false
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08333201706409454,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 4
+  },
+  {
+    "text": "There is no action, suit, inquiry, notice of violation, proceeding, investigation, inquiry or other similar proceeding of any federal or state government unit pending or, to the knowledge of the Company, threatened against or affecting the Company, any Subsidiary or any of their respective propertie...",
+    "text_length": 1558,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10879316926002502,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.018954919651150703,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.02047019451856613,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9592817425727844,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "This Agreement supersedes any and all other agreements, either oral or in writing, between the parties with respect to the employment of Employee by the Company, excluding any Nondisclosure Agreement previously signed by Employee, the Proprietary Rights Agreement, the written policies adopted by the...",
+    "text_length": 1049,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9876959323883057,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.011823500506579876,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.01886899769306183,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.04808314889669418,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "If claimants continue to dispute the benefit denial based upon completed performance of this Plan and the Joinder Agreement or the meaning and effect of the terms and conditions thereof , then claimants may submit the dispute to mediation, administered by the American Arbitration Association (\u201cAAA\u201d)...",
+    "text_length": 667,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9910813570022583,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.014614193700253963,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.020579928532242775,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.027568070217967033,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "In entering these Terms, The parties agree that any litigation arising out of this Agreement shall be brought solely in courts situated in the Province of Ontario, and both parties irrevocably submit to the exclusive jurisdiction of such courts.",
+    "text_length": 245,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.02701079100370407,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.025306764990091324,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.031632859259843826,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9718390703201294,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "There is no Litigation, action, suit, proceeding, claim, arbitration or investigation pending or, to the knowledge of the Subscriber, threatened in writing against the Subscriber, nor is the Subscriber subject to any outstanding order, writ, judgment, injunction or decree that, in any case, would (i...",
+    "text_length": 635,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9877196550369263,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.013787762261927128,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.016075436025857925,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.031484223902225494,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "As a condition precedent to using Acme Platform, Exclusive jurisdiction and venue for proceedings shall reside in the state and federal courts located in the Commonwealth of Australia, and the parties consent to personal jurisdiction therein.",
+    "text_length": 242,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.029380280524492264,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.024787114933133125,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.028244419023394585,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9713003039360046,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Any controversy or claim arising out of, or relating to, this Agreement, or the making, performance, or interpretation thereof, shall be settled by arbitration in Nevada, in accordance with the Rules of the American Arbitration Association then existing, and judgment on the arbitration award may be ...",
+    "text_length": 384,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9893848299980164,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.014066258445382118,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.019688526168465614,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.02704346366226673,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "By accepting service usage, Proceedings related to this Agreement must be filed and maintained in the State of California, and the parties waive transfer motions seeking a different venue.",
+    "text_length": 188,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.027351735159754753,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.021984504535794258,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.029957540333271027,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9685160517692566,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Any dispute arising out of or relating to Article 5 of this Lease (with respect to the issues expressly stated therein) shall be submitted to and determined in binding arbitration under the Commercial Arbitration Rules of the American Arbitration Association. The arbitration shall be conducted befor...",
+    "text_length": 1644,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9909624457359314,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.011559249833226204,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.015983672812581062,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05493604391813278,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "In entering these Terms, For avoidance of doubt, the parties stipulate that the State of California courts provide the exclusive forum for any dispute, and agree not to contest personal jurisdiction there.",
+    "text_length": 205,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.028641285374760628,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.022349849343299866,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.03063299134373665,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9710484743118286,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Except where prohibited by the laws of the Province of Ontario, The parties irrevocably waive the ability to consolidate claims or proceed in any class, collective, or representative capacity before an arbitrator or court. Administrative fees and arbitrator compensation shall be governed by the rule...",
+    "text_length": 324,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.03185275197029114,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9805052876472473,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.026983696967363358,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.029446467757225037,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Any dispute, controversy or claim between Employee and any Company Party arising out of or relating to this Agreement or Employee\u2019s employment with the Company will be finally resolved by arbitration in Houston, Texas in accordance with the then-existing American Arbitration Association (\u201c AAA \u201d) Em...",
+    "text_length": 3060,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7979577779769897,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7777942419052124,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05565081536769867,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13168194890022278,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "If a claim, dispute, or controversy arises between the Loan Parties and Lender with respect to the Loan Documents, or any other agreement or business relationship between the Loan Parties and Lender whether or not related to the subject matter of this Agreement (all of the foregoing, a \u201c Dispute \u201d),...",
+    "text_length": 796,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9738360047340393,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.016945237293839455,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.661607563495636,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06509093195199966,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "[Except for injunctive relief as set forth herein,] 3 the parties agree that any dispute between the parties regarding this Agreement shall be submitted to binding arbitration in Orlando, Florida pursuant to the Darden dispute resolution program.",
+    "text_length": 246,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9895613789558411,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.012580256909132004,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.021191062405705452,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.03087281808257103,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "As a condition precedent to using Nimbus Services, Any dispute shall be resolved in individual arbitration; the parties expressly waive any right to participate in a class action, class arbitration, private attorney general action, or any other representative proceeding. Administrative fees and arbi...",
+    "text_length": 373,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.03898094594478607,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9812286496162415,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.028963889926671982,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.028511136770248413,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "To the fullest extent permitted, You and Northwind Networks agree that disputes will be adjudicated solely on an individual basis and that neither party shall bring claims as a plaintiff or class member in any purported class or representative action. Notwithstanding the foregoing, the parties may s...",
+    "text_length": 401,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.032489292323589325,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9809236526489258,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.027909714728593826,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.029696431010961533,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Any dispute or disagreement with respect to any portion of this Agreement or its validity, construction, meaning, performance, or Participant\u2019s rights hereunder shall be settled by arbitration, conducted in Philadelphia, Pennsylvania, in accordance with the Commercial Arbitration Rules of the Americ...",
+    "text_length": 1519,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9914010167121887,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.013049131259322166,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.018700387328863144,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.03395918384194374,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Except as otherwise provided herein (including Section\u00a09.4 ), any and all justiciable controversies, claims or disputes that the Executive may have against the Company and/or the Company may have against the Executive arising out of, relating to, or resulting from the Executive\u2019s employment with the...",
+    "text_length": 2735,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.991929292678833,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.012169774621725082,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.018412159755825996,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.059157151728868484,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Arbitrators must be active members of the Bar in [INSERT STATE] or retired judges of the state or federal judiciary of [INSERT STATE] with expertise in the substantive laws applicable to the subject matter of the Dispute. Arbitrators are empowered to resolve Disputes by summary rulings in response t...",
+    "text_length": 1135,
+    "predictions": [
+      {
+        "label": "binding_arbitration",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9787499308586121,
+        "correct": true
+      },
+      {
+        "label": "class_action_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0057436940260231495,
+        "correct": true
+      },
+      {
+        "label": "jury_trial_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.020951295271515846,
+        "correct": true
+      },
+      {
+        "label": "venue_selection",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17846626043319702,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  }
+]

@@ -1,0 +1,72 @@
+{
+  "false_positives": [
+    {
+      "label": "automated_decision",
+      "text": "We provide transparency regarding our automated systems, which consider regulatory compliance and user preferences.",
+      "confidence": 0.30769994854927063,
+      "text_length": 115
+    },
+    {
+      "label": "automated_decision",
+      "text": "We explain that algorithms use violation reports and safety considerations among other criteria.",
+      "confidence": 0.40801113843917847,
+      "text_length": 96
+    },
+    {
+      "label": "automated_decision",
+      "text": "Our AI systems use various criteria including violation reports, click-through rates, and engagement patterns.",
+      "confidence": 0.34564483165740967,
+      "text_length": 110
+    },
+    {
+      "label": "automated_decision",
+      "text": "Our AI systems use various criteria including user reputation, user preferences, and engagement patterns.",
+      "confidence": 0.370805025100708,
+      "text_length": 105
+    },
+    {
+      "label": "automated_decision",
+      "text": "The platform's algorithm evaluates user reputation, source credibility, and authenticity signals when making decisions.",
+      "confidence": 0.3066343665122986,
+      "text_length": 119
+    },
+    {
+      "label": "automated_decision",
+      "text": "We provide transparency regarding our automated systems, which consider authenticity signals and safety considerations.",
+      "confidence": 0.31546247005462646,
+      "text_length": 119
+    },
+    {
+      "label": "automated_decision",
+      "text": "Our AI systems use various criteria including user reputation, safety considerations, and engagement patterns.",
+      "confidence": 0.35336828231811523,
+      "text_length": 110
+    },
+    {
+      "label": "automated_decision",
+      "text": "Our AI systems use various criteria including content freshness, safety considerations, and engagement patterns.",
+      "confidence": 0.33764418959617615,
+      "text_length": 112
+    },
+    {
+      "label": "automated_decision",
+      "text": "Our AI uses signals like device information, click-through rates, and regulatory compliance to make determinations.",
+      "confidence": 0.33993250131607056,
+      "text_length": 115
+    },
+    {
+      "label": "human_review",
+      "text": "Content decisions may be made automatically without human review.",
+      "confidence": 0.7600549459457397,
+      "text_length": 65
+    }
+  ],
+  "false_negatives": [
+    {
+      "label": "automated_decision",
+      "text": "Content decisions may be made automatically without human review.",
+      "confidence": 0.20295336842536926,
+      "text_length": 65
+    }
+  ]
+}

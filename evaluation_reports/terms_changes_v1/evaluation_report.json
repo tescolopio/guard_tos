@@ -1,0 +1,59 @@
+{
+  "model_path": "artifacts/models/terms_changes/v2025.10.07e-v1",
+  "dataset_path": "data/processed/terms_changes/v2025.10.07e/gold_seed.jsonl",
+  "category": "terms_changes",
+  "threshold": 0.3,
+  "macro_metrics": {
+    "macro_precision": 0.8571428571428571,
+    "macro_recall": 1.0,
+    "macro_f1": 0.9090909090909092
+  },
+  "per_label_metrics": {
+    "advance_notice": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 8
+    },
+    "unilateral_change": {
+      "precision": 0.5714285714285714,
+      "recall": 1.0,
+      "f1": 0.7272727272727273,
+      "support": 4
+    },
+    "opt_out_provided": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 11
+    }
+  },
+  "confusion_matrices": {
+    "advance_notice": {
+      "true_negative": 15,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_positive": 8
+    },
+    "unilateral_change": {
+      "true_negative": 16,
+      "false_positive": 3,
+      "false_negative": 0,
+      "true_positive": 4
+    },
+    "opt_out_provided": {
+      "true_negative": 12,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_positive": 11
+    }
+  },
+  "summary": {
+    "num_labels": 3,
+    "labels_above_f1_0.70": 3,
+    "labels_above_f1_0.75": 2,
+    "labels_above_f1_0.80": 2,
+    "weakest_label": "unilateral_change",
+    "strongest_label": "advance_notice"
+  }
+}

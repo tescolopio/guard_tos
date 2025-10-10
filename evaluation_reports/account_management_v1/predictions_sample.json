@@ -1,0 +1,722 @@
+[
+  {
+    "text": "A 45 days window is provided to restore your subscription after account termination.",
+    "text_length": 84,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.3205080032348633,
+        "correct": false
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0963587611913681,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1445292979478836,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.5529143810272217,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 4
+  },
+  {
+    "text": "Your content is preserved for two weeks after you end your paid plan.",
+    "text_length": 69,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18355008959770203,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18015539646148682,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12420839816331863,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.673281729221344,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Self-service cancellation is available instantly in your account settings.",
+    "text_length": 74,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.797665536403656,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08370077610015869,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2311846762895584,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.19586609303951263,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Cancel your premium account immediately with just a few clicks in profile page.",
+    "text_length": 79,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8054296970367432,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.09671831130981445,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.20973755419254303,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.19453664124011993,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Automatic renewal occurs each billing period. You must cancel 14 days in advance.",
+    "text_length": 81,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1142847016453743,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7827702164649963,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.22465264797210693,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.20562869310379028,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Cancel your service instantly with just a few clicks in online portal.",
+    "text_length": 70,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8097514510154724,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.09857078641653061,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.22882691025733948,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1807926744222641,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "To cancel your plan, please contacting member services.",
+    "text_length": 55,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2223813533782959,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1611306369304657,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7056222558021545,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14594723284244537,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "To close your service, please submitting a request via customer service.",
+    "text_length": 72,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2605888247489929,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13542288541793823,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7031524181365967,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14313851296901703,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Terminateing is processed only after writing to us.",
+    "text_length": 51,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1960785984992981,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.12460988759994507,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.631855309009552,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1840008944272995,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Account shall automatically rebill on the next billing cycle. Cancel one week in advance to avoid charges.",
+    "text_length": 106,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10676581412553787,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7755185961723328,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2105969488620758,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.19506427645683289,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "If you close by mistake, you can recover within 30 days.",
+    "text_length": 56,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.19308997690677643,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16274888813495636,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14730021357536316,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6683567762374878,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "You have one month after cancellation to reactivate your subscription.",
+    "text_length": 70,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17628200352191925,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17538344860076904,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13800549507141113,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6392421722412109,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "No explanation needed - just discontinue from your account settings.",
+    "text_length": 68,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7093835473060608,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07935312390327454,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1994955837726593,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.26283419132232666,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Our support team must be contacted via contacting to process cancellation.",
+    "text_length": 74,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.21299324929714203,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13820765912532806,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7012364268302917,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16400912404060364,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Cancel at least 14 days before renewal or you will be charged for the next quarter.",
+    "text_length": 83,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11268544942140579,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7916312217712402,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17551930248737335,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.22508470714092255,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "A 30 days window is provided to recover your plan after account closure.",
+    "text_length": 72,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.20370346307754517,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14836344122886658,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13997645676136017,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6644546389579773,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "A three months window is provided to restore your premium account after cancellation.",
+    "text_length": 85,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.24435099959373474,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13856293261051178,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11163172870874405,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6024567484855652,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Service cancellation is only available by submitting a request via customer support.",
+    "text_length": 84,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.20641635358333588,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.15100185573101044,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7222950458526611,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.15256352722644806,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Cancel your premium account anytime with just a few clicks in account settings.",
+    "text_length": 79,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7987746000289917,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10018190741539001,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.19850006699562073,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.209486186504364,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Cancellations must be writing to and confirmed by customer support.",
+    "text_length": 67,
+    "predictions": [
+      {
+        "label": "easy_termination",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17850889265537262,
+        "correct": true
+      },
+      {
+        "label": "auto_renewal_friction",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.18452449142932892,
+        "correct": true
+      },
+      {
+        "label": "manual_cancellation",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7165114283561707,
+        "correct": true
+      },
+      {
+        "label": "grace_period",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.15610697865486145,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  }
+]

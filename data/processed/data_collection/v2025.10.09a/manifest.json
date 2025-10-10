@@ -1,0 +1,28 @@
+{
+  "category": "data_collection",
+  "version": "v2025.10.09a",
+  "records": 948,
+  "label_distribution": {
+    "data_collection_extensive": 0.1487,
+    "data_collection_minimal": 0.2184,
+    "consent_explicit": 0.2015,
+    "consent_implied": 0.1139,
+    "purpose_specific": 0.2426,
+    "purpose_broad": 0.096
+  },
+  "label_counts": {
+    "data_collection_extensive": 141,
+    "data_collection_minimal": 207,
+    "consent_explicit": 191,
+    "consent_implied": 108,
+    "purpose_specific": 230,
+    "purpose_broad": 91
+  },
+  "sources": [
+    "processed",
+    "synthetic_expanded_phase2",
+    "synthetic_high_variance_v2025.10.09a"
+  ],
+  "created": "2025-10-09T04:49:22.212129+00:00",
+  "notes": "Merged high-variance synthetic batch emphasizing minimization, explicit consent, and purpose-specific boundaries; retained earlier phase-2 extensive coverage."
+}

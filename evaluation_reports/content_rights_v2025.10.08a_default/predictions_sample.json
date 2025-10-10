@@ -1,0 +1,722 @@
+[
+  {
+    "text": "Subject to the terms of this Agreement, Company grants Reseller the right to use and display the Company trademarks, tradenames and other designations of source, and proprietary notices, slogans, designs and distinct advertising as may appear on any documentation or other material with respect to Pr...",
+    "text_length": 376,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9940958023071289,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004318214952945709,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004154777619987726,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005069741979241371,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "To facilitate the promotion and performance of Tests, during the Term Life Technologies hereby grants Biocept a non-exclusive, royalty-free, non-transferable license to use the Life Technologies Trademarks solely for use in connection with the promotion and performance of the Tests in the Territory.",
+    "text_length": 300,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9946199655532837,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005067072343081236,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004189295694231987,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004802515730261803,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "During the Term, subject to the terms and conditions of this Agreement, Depomed hereby grants to King and its Affiliates and King and its Affiliates hereby accept a co-exclusive right to Promote the Product under the Depomed Trademarks in the Territory together with Depomed and its Affiliates only, ...",
+    "text_length": 360,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.994531512260437,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0049797664396464825,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004150191321969032,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004688951652497053,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "(a) Notwithstanding Section 3.01, Honeywell hereby grants, and agrees to cause the members of the Honeywell Group to hereby grant, to SpinCo and the members of the SpinCo Group, for a period of ten (10) years after the Distribution Date (unless earlier terminated in accordance with Section 3.03(c)),...",
+    "text_length": 500,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.994499683380127,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005024801008403301,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004271313548088074,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.00463859923183918,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "FMM grants to iVillage, during the Initial Term of this Agreement, a royalty-free, non-exclusive, worldwide license to use, reproduce and display Ford's tradenames, trademarks, service marks and logos (collectively, the \"Marks\") in connection with this Agreement.",
+    "text_length": 263,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9946711659431458,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005225077737122774,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004469557665288448,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004883996676653624,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Subject to applicable law, Contributor permits Acme Platform to broker exclusive or non-exclusive sponsorship integrations of the content within Commonwealth of Australia and abroad without additional approvals. These rights extend to affiliated entities and authorized distribution partners of Helio...",
+    "text_length": 308,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06519879400730133,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08417021483182907,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06724410504102707,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8992612957954407,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Each Party hereby assigns to the other Party a joint equal and undivided interest in and to all Joint Inventions (including Joint Improvements) to effect such joint ownership of such Joint Inventions (including Joint Improvements).",
+    "text_length": 231,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9942691326141357,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005463405512273312,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004552583675831556,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004703890066593885,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Neoforma hereby grants VerticalNet an exclusive license to use, modify, enhance, reproduce, display, perform and transmit the Neoforma T&E Content, subject to and in accordance with the terms, conditions and provisions of this Agreement.",
+    "text_length": 237,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9945008754730225,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.00539399404078722,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004514084663242102,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004743382800370455,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "During the term of this Agreement, Detto shall have the right to use and reproduce the Trademarks in connection with Detto's marketing, advertising, promotion and distribution of Qwik-Fix Pro.",
+    "text_length": 192,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9945957064628601,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.00503165228292346,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004242104943841696,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004774633329361677,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Notwithstanding the foregoing, to the extent that the Domain Name is deemed a combination mark, neither party shall use the Domain Name for any purpose except as expressly provided herein or attempt to register the Domain Name, and the parties will jointly cooperate on any enforcement action of infr...",
+    "text_length": 328,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9937506318092346,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004811055958271027,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.003904079319909215,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004756628535687923,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "This license expressly prohibits any pass-through rights or the use of the HOF Entity Marks by any third party, except (x) to Constellation's subsidiaries and brands for use in a manner consistent with clauses (i) through (iii) hereof or (y) with the express written consent of the HOF Entities (or t...",
+    "text_length": 327,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9944283962249756,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005001375451683998,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.00420550350099802,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0046088132075965405,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Subject to the terms and conditions of this Agreement, Commerce One hereby grants to Corio a fee-bearing, perpetual and irrevocable, nonexclusive, nontransferable (except in accordance with Section 14.1 of this Agreement), right and license in the Territory to <omitted> (iv) sublicense an unlimited ...",
+    "text_length": 425,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9944568872451782,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004916639532893896,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004248905926942825,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0047074719332158566,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Sonos hereby authorizes IAC to use and to cause its Affiliates to use, the Marks as specified by Sonos on the Products and relevant documents solely for the purpose of this Agreement",
+    "text_length": 182,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9944808483123779,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004971303511410952,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004273626487702131,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004724542610347271,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Effective as of the Initial Closing Date, the Purchaser will cause each Acquired Company and each Purchaser Assignee to grant, following each applicable Closing Date, to the Seller Parties, an irrevocable (except as expressly set forth herein), non-sublicenseable (except as expressly set forth herei...",
+    "text_length": 1751,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.993617057800293,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.003946302458643913,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.003976156003773212,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005833817645907402,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Notwithstanding the foregoing, Payment-Eligible User Data that relates to users who have opted out in accordance with Section 5(a) of EXHIBIT D shall continue to be jointly owned by the parties.",
+    "text_length": 194,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9936680197715759,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004861586261540651,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.003976424224674702,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004554172046482563,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Investor hereby agrees to grant to Company a non-exclusive, irrevocable, royalty-free license under any Joint Improvement and any patent claiming such Joint Improvement solely for use in rare earth mineral processing and rare earth separation.",
+    "text_length": 243,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9943700432777405,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005160208325833082,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004252942744642496,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0045575606636703014,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "Subject to the terms and conditions of this Agreement, the Company hereby grants to Allscripts and its Affiliates a non-exclusive, royalty- free, irrevocable [***] non-transferable (except in accordance with Section 28.4), sublicensable (through multiple levels of sublicensees), fully paid- up right...",
+    "text_length": 737,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9944120049476624,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004562320653349161,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.003943945746868849,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004919083323329687,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "E.piphany allows for unlimited calls to its technical support desk by the HSNS personnel designated under Section 5.7 (\"HSNS Responsibilities.\")",
+    "text_length": 144,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9936177730560303,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004849770572036505,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004555508494377136,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0051283445209264755,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "In order to carry out the intent of the Parties with respect to the recordation of the transfers of any registrations or applications of Nuance IP or SpinCo IP, as applicable, to the extent the ownership thereof has transferred from a member of the Nuance Group to a member of the SpinCo Group, or vi...",
+    "text_length": 945,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9934248924255371,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004031985532492399,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.003956328146159649,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0056612505577504635,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  },
+  {
+    "text": "VerticalNet hereby grants Neoforma an exclusive license, even as to <omitted> VerticalNet, to use, modify, enhance, reproduce, display, perform and transmit the VerticalNet Medical Product Listings, subject to and in accordance with the terms, conditions and provisions of this Agreement, to the exte...",
+    "text_length": 343,
+    "predictions": [
+      {
+        "label": "license_assignment",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9945429563522339,
+        "correct": true
+      },
+      {
+        "label": "ip_retained",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.005290394648909569,
+        "correct": true
+      },
+      {
+        "label": "moral_rights_waiver",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004492876119911671,
+        "correct": true
+      },
+      {
+        "label": "commercial_use_claim",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.004641907289624214,
+        "correct": true
+      }
+    ],
+    "num_correct": 4,
+    "num_labels": 4
+  }
+]

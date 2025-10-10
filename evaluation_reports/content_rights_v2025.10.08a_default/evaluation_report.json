@@ -1,0 +1,71 @@
+{
+  "model_path": "artifacts/models/content_rights/v2025.10.08a-v1",
+  "dataset_path": "data/processed/content_rights/v2025.10.08a/dataset.jsonl",
+  "category": "content_rights",
+  "threshold": 0.5,
+  "macro_metrics": {
+    "macro_precision": 0.9873065764023211,
+    "macro_recall": 0.964021164021164,
+    "macro_f1": 0.9743395137340607
+  },
+  "per_label_metrics": {
+    "license_assignment": {
+      "precision": 0.9946808510638298,
+      "recall": 0.9894179894179894,
+      "f1": 0.9920424403183024,
+      "support": 189
+    },
+    "ip_retained": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 15
+    },
+    "moral_rights_waiver": {
+      "precision": 0.9545454545454546,
+      "recall": 1.0,
+      "f1": 0.9767441860465117,
+      "support": 21
+    },
+    "commercial_use_claim": {
+      "precision": 1.0,
+      "recall": 0.8666666666666667,
+      "f1": 0.9285714285714286,
+      "support": 15
+    }
+  },
+  "confusion_matrices": {
+    "license_assignment": {
+      "true_negative": 50,
+      "false_positive": 1,
+      "false_negative": 2,
+      "true_positive": 187
+    },
+    "ip_retained": {
+      "true_negative": 225,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_positive": 15
+    },
+    "moral_rights_waiver": {
+      "true_negative": 218,
+      "false_positive": 1,
+      "false_negative": 0,
+      "true_positive": 21
+    },
+    "commercial_use_claim": {
+      "true_negative": 225,
+      "false_positive": 0,
+      "false_negative": 2,
+      "true_positive": 13
+    }
+  },
+  "summary": {
+    "num_labels": 4,
+    "labels_above_f1_0.70": 4,
+    "labels_above_f1_0.75": 4,
+    "labels_above_f1_0.80": 4,
+    "weakest_label": "commercial_use_claim",
+    "strongest_label": "ip_retained"
+  }
+}

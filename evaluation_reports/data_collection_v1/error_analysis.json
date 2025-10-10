@@ -1,0 +1,209 @@
+{
+  "false_positives": [],
+  "false_negatives": [
+    {
+      "label": "data_collection_extensive",
+      "text": "In particular, the law provides that companies must inform consumers about the categories of personal information that have been shared with third parties, the names and addresses of those third parti...",
+      "confidence": 0.33781710267066956,
+      "text_length": 286
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "Games may use location-based tracking, which relies upon a mobile devices GPS coordinates.",
+      "confidence": 0.17506980895996094,
+      "text_length": 90
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "with Section 17200) of Part 2 of Division 7 of the Business and Professions Code).(ae) \u201cSensitive personal information\u201d means:(1) Personal information that reveals:(A) A consumer\u2019s social security, dr...",
+      "confidence": 0.40473300218582153,
+      "text_length": 2833
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "Residents of the State of California can request a list of all third-parties to which our App has disclosed certain personal information (as defined by California law) during the preceding year for th...",
+      "confidence": 0.2604381740093231,
+      "text_length": 244
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "the Code of Federal Regulations, the Federal Policy for the Protection of Human Subjects, also known as the Common Rule.(4) Pursuant to a contract where the lawful holder of the deidentified informati...",
+      "confidence": 0.37386494874954224,
+      "text_length": 2767
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "For example, the services may receive information about your activity on the Platform and may notify your connections on the third-party services about your use of the Platform, in accordance with the...",
+      "confidence": 0.3718520700931549,
+      "text_length": 1894
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "filing systems. The processing of personal data by those public authorities should comply with the applicable data-protection rules according to the purposes of the processing. (32) Consent should be ...",
+      "confidence": 0.33538779616355896,
+      "text_length": 2585
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "no, we don\u00e2\u0080\u0099t sell your personal information.\u00c2 6.2 We move your data to make X work for you. Just as you use X to seamlessly participate in global conversations with people in countries all over the ...",
+      "confidence": 0.32494720816612244,
+      "text_length": 1707
+    },
+    {
+      "label": "data_collection_extensive",
+      "text": "persons to provide the same level of privacy protection as is required by this title.(3) Grants the business rights to take reasonable and appropriate steps to help ensure that the third party, servic...",
+      "confidence": 0.4204035997390747,
+      "text_length": 2751
+    },
+    {
+      "label": "data_collection_minimal",
+      "text": "You can restrict our processing of your Personal Information where one of the following applies: (a) you dispute the accuracy of Personal Information processed by 23andMe (for a period enabling us to ...",
+      "confidence": 0.16728465259075165,
+      "text_length": 693
+    },
+    {
+      "label": "data_collection_minimal",
+      "text": "We collect only the minimum contact information necessary to deliver functionality.",
+      "confidence": 0.4143325686454773,
+      "text_length": 83
+    },
+    {
+      "label": "data_collection_minimal",
+      "text": "section, and how to direct consumers to exercise their rights under those sections.(7) Use any personal information collected from the consumer in connection with the business\u2019 verification of the con...",
+      "confidence": 0.2822587490081787,
+      "text_length": 2636
+    },
+    {
+      "label": "data_collection_minimal",
+      "text": "We limit our collection to account details strictly required for maintain the service.",
+      "confidence": 0.4015227258205414,
+      "text_length": 86
+    },
+    {
+      "label": "data_collection_minimal",
+      "text": "We minimize personal information collection to what is strictly needed for provide and improve our services.",
+      "confidence": 0.40145501494407654,
+      "text_length": 108
+    },
+    {
+      "label": "data_collection_minimal",
+      "text": "We restrict technical information collection to the minimum required for operate the platform.",
+      "confidence": 0.37526676058769226,
+      "text_length": 94
+    },
+    {
+      "label": "data_collection_minimal",
+      "text": "Data minimization: we only collect usage data necessary for provide and improve our services.",
+      "confidence": 0.3143814206123352,
+      "text_length": 93
+    },
+    {
+      "label": "data_collection_minimal",
+      "text": "Only necessary contact information is collected to maintain the service.",
+      "confidence": 0.3286191523075104,
+      "text_length": 72
+    },
+    {
+      "label": "consent_explicit",
+      "text": "not incorporate this Privacy Policy.This Privacy Policy doesn\u2019t apply to:The information practices of other companies and organizations that advertise our servicesServices offered by other companies o...",
+      "confidence": 0.11155760288238525,
+      "text_length": 2078
+    },
+    {
+      "label": "consent_explicit",
+      "text": "racial or ethnic origin, political opinions, religious or philosophical beliefs, or trade union membership, and the processing of genetic data, biometric data for the purpose of uniquely identifying a...",
+      "confidence": 0.13670769333839417,
+      "text_length": 2472
+    },
+    {
+      "label": "consent_explicit",
+      "text": "filing systems. The processing of personal data by those public authorities should comply with the applicable data-protection rules according to the purposes of the processing. (32) Consent should be ...",
+      "confidence": 0.11760913580656052,
+      "text_length": 2585
+    },
+    {
+      "label": "consent_implied",
+      "text": "You are assumed to have agree to our data collection practices upon visiting the Service.",
+      "confidence": 0.38086217641830444,
+      "text_length": 89
+    },
+    {
+      "label": "purpose_specific",
+      "text": "Browsing history collection is restricted to verify your identity.",
+      "confidence": 0.4254341125488281,
+      "text_length": 66
+    },
+    {
+      "label": "purpose_specific",
+      "text": "use in a consumer report, as defined in subdivision (d) of Section 1681a of Title 15 of the United States Code, and by a user of a consumer report as set forth in Section 1681b of Title 15 of the Unit...",
+      "confidence": 0.0830608531832695,
+      "text_length": 2553
+    },
+    {
+      "label": "purpose_specific",
+      "text": "We limit our use of profile data to fulfill your orders.",
+      "confidence": 0.44399693608283997,
+      "text_length": 56
+    },
+    {
+      "label": "purpose_broad",
+      "text": "as otherwise permitted by this title, and shall be prohibited from:(1) Selling or sharing the personal information.(2) Retaining, using, or disclosing that consumer\u2019s personal information.(A) For any ...",
+      "confidence": 0.43315669894218445,
+      "text_length": 2715
+    },
+    {
+      "label": "purpose_broad",
+      "text": "Personal Information We CollectWe collect the following categories of personal information about you: Personal details: When you create your Netflix account, we collect your contact information (such ...",
+      "confidence": 0.4630714952945709,
+      "text_length": 2045
+    },
+    {
+      "label": "purpose_broad",
+      "text": "use in a consumer report, as defined in subdivision (d) of Section 1681a of Title 15 of the United States Code, and by a user of a consumer report as set forth in Section 1681b of Title 15 of the Unit...",
+      "confidence": 0.4014655351638794,
+      "text_length": 2553
+    },
+    {
+      "label": "purpose_broad",
+      "text": "start to type in their name. This feature makes it easier to share things with people you know. Learn moreThe Google app can use data that you have stored in other Google products to show you personal...",
+      "confidence": 0.45303842425346375,
+      "text_length": 1770
+    },
+    {
+      "label": "purpose_broad",
+      "text": "with Section 17200) of Part 2 of Division 7 of the Business and Professions Code).(ae) \u201cSensitive personal information\u201d means:(1) Personal information that reveals:(A) A consumer\u2019s social security, dr...",
+      "confidence": 0.4147597849369049,
+      "text_length": 2833
+    },
+    {
+      "label": "purpose_broad",
+      "text": "For example, we collect log and event information related to how and when you use our services (such as the pages, servers, and channels you visit, the activities you engage in, the features you use, ...",
+      "confidence": 0.4521454870700836,
+      "text_length": 1914
+    },
+    {
+      "label": "purpose_broad",
+      "text": "and requests, and assisting you with operational requests such as password resets. We use the following categories of personal information for this purpose: personal details, payment details, purchase...",
+      "confidence": 0.46475517749786377,
+      "text_length": 2268
+    },
+    {
+      "label": "purpose_broad",
+      "text": "internationally with Spotify group companies, subcontractors and partners when carrying out the activities described in this Policy. Whenever we transfer personal data internationally, we use tools to...",
+      "confidence": 0.420225590467453,
+      "text_length": 1962
+    },
+    {
+      "label": "purpose_broad",
+      "text": "Prohibits the contractor from:(i) Selling or sharing the personal information.(ii) Retaining, using, or disclosing the personal information for any purpose other than for the business purposes specifi...",
+      "confidence": 0.42828038334846497,
+      "text_length": 2799
+    },
+    {
+      "label": "purpose_broad",
+      "text": "filing systems. The processing of personal data by those public authorities should comply with the applicable data-protection rules according to the purposes of the processing. (32) Consent should be ...",
+      "confidence": 0.36769139766693115,
+      "text_length": 2585
+    }
+  ]
+}

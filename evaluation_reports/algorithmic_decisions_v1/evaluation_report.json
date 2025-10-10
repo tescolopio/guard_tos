@@ -1,0 +1,59 @@
+{
+  "model_path": "artifacts/models/algorithmic_decisions/v2025.10.07b-v1",
+  "dataset_path": "data/processed/algorithmic_decisions/v2025.10.07b/gold_seed.jsonl",
+  "category": "algorithmic_decisions",
+  "threshold": 0.3,
+  "macro_metrics": {
+    "macro_precision": 0.7458333333333332,
+    "macro_recall": 0.9583333333333334,
+    "macro_f1": 0.8240740740740741
+  },
+  "per_label_metrics": {
+    "automated_decision": {
+      "precision": 0.4375,
+      "recall": 0.875,
+      "f1": 0.5833333333333334,
+      "support": 8
+    },
+    "human_review": {
+      "precision": 0.8,
+      "recall": 1.0,
+      "f1": 0.888888888888889,
+      "support": 4
+    },
+    "transparency_statement": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 11
+    }
+  },
+  "confusion_matrices": {
+    "automated_decision": {
+      "true_negative": 6,
+      "false_positive": 9,
+      "false_negative": 1,
+      "true_positive": 7
+    },
+    "human_review": {
+      "true_negative": 18,
+      "false_positive": 1,
+      "false_negative": 0,
+      "true_positive": 4
+    },
+    "transparency_statement": {
+      "true_negative": 12,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_positive": 11
+    }
+  },
+  "summary": {
+    "num_labels": 3,
+    "labels_above_f1_0.70": 2,
+    "labels_above_f1_0.75": 2,
+    "labels_above_f1_0.80": 2,
+    "weakest_label": "automated_decision",
+    "strongest_label": "transparency_statement"
+  }
+}

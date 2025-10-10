@@ -1,0 +1,15 @@
+{
+  "category": "content_rights",
+  "label_list": [
+    "license_assignment",
+    "ip_retained",
+    "moral_rights_waiver",
+    "commercial_use_claim"
+  ],
+  "base_model": "distilbert-base-uncased",
+  "epochs": 3.0,
+  "learning_rate": 5e-05,
+  "batch_size": 16,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1
+}

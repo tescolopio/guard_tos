@@ -1,0 +1,21 @@
+{
+  "category": "algorithmic_decisions",
+  "version": "v2025.10.08a",
+  "records": 322,
+  "label_distribution": {
+    "automated_decision": 0.3944099378881988,
+    "human_review": 0.2267080745341615,
+    "transparency_statement": 0.37888198757763975
+  },
+  "label_counts": {
+    "automated_decision": 127,
+    "human_review": 73,
+    "transparency_statement": 122
+  },
+  "sources": [
+    "synthetic",
+    "synthetic_expanded_v2"
+  ],
+  "created": "2025-10-09T03:27:26.190090+00:00",
+  "notes": "Merged legacy synthetic set with refreshed automated enforcement coverage and diversified human-review appeals."
+}

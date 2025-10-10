@@ -1,0 +1,14 @@
+{
+  "category": "terms_changes",
+  "label_list": [
+    "advance_notice",
+    "unilateral_change",
+    "opt_out_provided"
+  ],
+  "base_model": "distilbert-base-uncased",
+  "epochs": 5.0,
+  "learning_rate": 5e-05,
+  "batch_size": 16,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1
+}

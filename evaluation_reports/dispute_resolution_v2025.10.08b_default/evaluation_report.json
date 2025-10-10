@@ -1,0 +1,71 @@
+{
+  "model_path": "artifacts/models/dispute_resolution/v2025.10.08b-v1",
+  "dataset_path": "data/processed/dispute_resolution/v2025.10.08b/dataset.jsonl",
+  "category": "dispute_resolution",
+  "threshold": 0.5,
+  "macro_metrics": {
+    "macro_precision": 0.945503421309873,
+    "macro_recall": 0.9399895871940136,
+    "macro_f1": 0.9423214285714285
+  },
+  "per_label_metrics": {
+    "binding_arbitration": {
+      "precision": 0.98989898989899,
+      "recall": 0.9702970297029703,
+      "f1": 0.98,
+      "support": 101
+    },
+    "class_action_waiver": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 26
+    },
+    "jury_trial_waiver": {
+      "precision": 0.8888888888888888,
+      "recall": 0.9411764705882353,
+      "f1": 0.9142857142857143,
+      "support": 17
+    },
+    "venue_selection": {
+      "precision": 0.9032258064516129,
+      "recall": 0.8484848484848485,
+      "f1": 0.875,
+      "support": 33
+    }
+  },
+  "confusion_matrices": {
+    "binding_arbitration": {
+      "true_negative": 59,
+      "false_positive": 1,
+      "false_negative": 3,
+      "true_positive": 98
+    },
+    "class_action_waiver": {
+      "true_negative": 135,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_positive": 26
+    },
+    "jury_trial_waiver": {
+      "true_negative": 142,
+      "false_positive": 2,
+      "false_negative": 1,
+      "true_positive": 16
+    },
+    "venue_selection": {
+      "true_negative": 125,
+      "false_positive": 3,
+      "false_negative": 5,
+      "true_positive": 28
+    }
+  },
+  "summary": {
+    "num_labels": 4,
+    "labels_above_f1_0.70": 4,
+    "labels_above_f1_0.75": 4,
+    "labels_above_f1_0.80": 4,
+    "weakest_label": "venue_selection",
+    "strongest_label": "class_action_waiver"
+  }
+}

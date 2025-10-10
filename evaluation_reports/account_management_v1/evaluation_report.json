@@ -1,0 +1,71 @@
+{
+  "model_path": "artifacts/models/account_management/v2025.10.07h-v1",
+  "dataset_path": "data/processed/account_management/v2025.10.07h/gold_seed.jsonl",
+  "category": "account_management",
+  "threshold": 0.3,
+  "macro_metrics": {
+    "macro_precision": 0.9722222222222222,
+    "macro_recall": 1.0,
+    "macro_f1": 0.9852941176470589
+  },
+  "per_label_metrics": {
+    "easy_termination": {
+      "precision": 0.8888888888888888,
+      "recall": 1.0,
+      "f1": 0.9411764705882353,
+      "support": 8
+    },
+    "auto_renewal_friction": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 3
+    },
+    "manual_cancellation": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 8
+    },
+    "grace_period": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 11
+    }
+  },
+  "confusion_matrices": {
+    "easy_termination": {
+      "true_negative": 21,
+      "false_positive": 1,
+      "false_negative": 0,
+      "true_positive": 8
+    },
+    "auto_renewal_friction": {
+      "true_negative": 27,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_positive": 3
+    },
+    "manual_cancellation": {
+      "true_negative": 22,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_positive": 8
+    },
+    "grace_period": {
+      "true_negative": 19,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_positive": 11
+    }
+  },
+  "summary": {
+    "num_labels": 4,
+    "labels_above_f1_0.70": 4,
+    "labels_above_f1_0.75": 4,
+    "labels_above_f1_0.80": 4,
+    "weakest_label": "easy_termination",
+    "strongest_label": "auto_renewal_friction"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "model_path": "artifacts/models/data_collection/v2025.10.10a-v1",
+  "dataset_path": "data/processed/data_collection/v2025.10.10a/dataset.jsonl",
+  "category": "data_collection",
+  "threshold": 0.26,
+  "macro_metrics": {
+    "macro_precision": 0.8800229035691167,
+    "macro_recall": 0.9639652014652015,
+    "macro_f1": 0.915058102414048
+  },
+  "per_label_metrics": {
+    "data_collection_extensive": {
+      "precision": 0.717948717948718,
+      "recall": 0.9333333333333333,
+      "f1": 0.8115942028985508,
+      "support": 30
+    },
+    "data_collection_minimal": {
+      "precision": 0.975609756097561,
+      "recall": 0.9523809523809523,
+      "f1": 0.963855421686747,
+      "support": 42
+    },
+    "consent_explicit": {
+      "precision": 0.975,
+      "recall": 0.975,
+      "f1": 0.975,
+      "support": 40
+    },
+    "consent_implied": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 21
+    },
+    "purpose_specific": {
+      "precision": 0.98,
+      "recall": 1.0,
+      "f1": 0.98989898989899,
+      "support": 49
+    },
+    "purpose_broad": {
+      "precision": 0.631578947368421,
+      "recall": 0.9230769230769231,
+      "f1": 0.75,
+      "support": 13
+    }
+  },
+  "confusion_matrices": {
+    "data_collection_extensive": {
+      "true_negative": 150,
+      "false_positive": 11,
+      "false_negative": 2,
+      "true_positive": 28
+    },
+    "data_collection_minimal": {
+      "true_negative": 148,
+      "false_positive": 1,
+      "false_negative": 2,
+      "true_positive": 40
+    },
+    "consent_explicit": {
+      "true_negative": 150,
+      "false_positive": 1,
+      "false_negative": 1,
+      "true_positive": 39
+    },
+    "consent_implied": {
+      "true_negative": 170,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_positive": 21
+    },
+    "purpose_specific": {
+      "true_negative": 141,
+      "false_positive": 1,
+      "false_negative": 0,
+      "true_positive": 49
+    },
+    "purpose_broad": {
+      "true_negative": 171,
+      "false_positive": 7,
+      "false_negative": 1,
+      "true_positive": 12
+    }
+  },
+  "summary": {
+    "num_labels": 6,
+    "labels_above_f1_0.70": 6,
+    "labels_above_f1_0.75": 6,
+    "labels_above_f1_0.80": 5,
+    "weakest_label": "purpose_broad",
+    "strongest_label": "consent_implied"
+  }
+}

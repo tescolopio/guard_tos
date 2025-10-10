@@ -1,0 +1,42 @@
+{
+  "false_positives": [
+    {
+      "label": "license_assignment",
+      "text": "During the Term, (a) Women.com will not buy, sell, display, distribute advertising from (including, but not limited to, banner ads, buttons, badges, text links, hyperlinks or editorial mentions) or ot...",
+      "confidence": 0.7872486114501953,
+      "text_length": 827
+    },
+    {
+      "label": "moral_rights_waiver",
+      "text": "Licensee hereby does expressly assign to Fox any and all rights of paternity or integrity, rights to claim authorship, to object to any distortion, mutilation or other modification of, or other deroga...",
+      "confidence": 0.7007626295089722,
+      "text_length": 695
+    }
+  ],
+  "false_negatives": [
+    {
+      "label": "license_assignment",
+      "text": "Licensee hereby does expressly assign to Fox any and all rights of paternity or integrity, rights to claim authorship, to object to any distortion, mutilation or other modification of, or other deroga...",
+      "confidence": 0.18417033553123474,
+      "text_length": 695
+    },
+    {
+      "label": "license_assignment",
+      "text": "Consultant also hereby irrevocably transfers and assigns to the Company, and agrees to irrevocably transfer and assign to the Company, and waives and agrees never to assert, any and all Moral Rights (...",
+      "confidence": 0.4449673891067505,
+      "text_length": 325
+    },
+    {
+      "label": "commercial_use_claim",
+      "text": "Each Party acknowledges that the other possesses, and will continue to possess, information that has been created, discovered or developed by them and/or in which property rights have been assigned or...",
+      "confidence": 0.49672210216522217,
+      "text_length": 1366
+    },
+    {
+      "label": "commercial_use_claim",
+      "text": "During the Term, (a) Women.com will not buy, sell, display, distribute advertising from (including, but not limited to, banner ads, buttons, badges, text links, hyperlinks or editorial mentions) or ot...",
+      "confidence": 0.18491055071353912,
+      "text_length": 827
+    }
+  ]
+}

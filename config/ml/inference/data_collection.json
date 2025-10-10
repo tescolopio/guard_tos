@@ -1,0 +1,14 @@
+{
+  "category": "data_collection",
+  "version": "v2025.10.10a",
+  "updated": "2025-10-10T18:45:00+00:00",
+  "labels": {
+    "data_collection_extensive": 0.3,
+    "data_collection_minimal": 0.3,
+    "consent_explicit": 0.26,
+    "consent_implied": 0.3,
+    "purpose_specific": 0.3,
+    "purpose_broad": 0.3
+  },
+  "notes": "Calibrated consent_explicit threshold to 0.26 based on v2025.10.10a evaluation sweep."
+}

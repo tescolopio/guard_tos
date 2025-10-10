@@ -1,0 +1,13 @@
+{
+  "count": 150,
+  "label_totals": {
+    "automated_decision": 50,
+    "human_review": 50,
+    "transparency_statement": 50
+  },
+  "label_distribution": {
+    "automated_decision": 0.3333,
+    "human_review": 0.3333,
+    "transparency_statement": 0.3333
+  }
+}
