@@ -76,6 +76,15 @@ module.exports = {
             return Buffer.from(html);
           },
         },
+        // Copy utility files needed by sidepanel.html
+        {
+          from: "./src/utils/constants.js",
+          to: "constants.js",
+        },
+        {
+          from: "./src/utils/debugger.js",
+          to: "debugger.js",
+        },
         // Ship sample analysis payload for in-panel demo
         {
           from: "./data/sample_analysis.json",
