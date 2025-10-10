@@ -69,12 +69,18 @@ Uncaught ReferenceError: require is not defined at debugger.js:1:22
 **Root Cause:**
 `debugger.js` was using Node.js CommonJS syntax `require("./constants")` which doesn't work in the browser context. When loaded as a `<script>` tag, there is no `require()` function available.
 
-**Solution:**
+**Initial Solution (Partial):**
 1. Modified `debugger.js` to use `window.EXT_CONSTANTS` (which is set by `constants.js`) instead of `require()`
 2. Added fallback to `require()` for Node.js test environments
 3. Restored separate `<script src="constants.js">` in `sidepanel.html` to load BEFORE `debugger.js`
 
-**Status:** Fixed in commit 6dfdd50
+**Problem Continued:**
+This caused Issue #3 to reoccur - webpack's Terser minifier was processing both `constants.js` and `debugger.js` separately, causing both to declare `const EXT_CONSTANTS=`, leading to duplicate declaration errors.
+
+**Final Solution:**
+Removed separate `<script>` tags for `constants.js` and `debugger.js` from `sidepanel.html` entirely. Since `sidepanel.js` already imports both files via `require()`, webpack properly bundles them together into `sidepanel.js`, eliminating duplicate declarations.
+
+**Status:** Fixed in commits 6dfdd50 and 0dbf587
 
 ---
 
