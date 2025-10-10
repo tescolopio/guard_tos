@@ -13,7 +13,11 @@
  *  - 2024-09-25 | tescolopio | Modified to work with Chrome extension content scripts.
  */
 
-const { EXT_CONSTANTS } = require("./constants");
+// Use global EXT_CONSTANTS (loaded via constants.js script tag)
+// Falls back to require() for Node.js environments (testing)
+const EXT_CONSTANTS = typeof window !== 'undefined' && window.EXT_CONSTANTS 
+  ? window.EXT_CONSTANTS 
+  : (typeof require !== 'undefined' ? require("./constants").EXT_CONSTANTS : {});
 
 (function (global) {
   "use strict";

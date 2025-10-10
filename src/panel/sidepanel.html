@@ -329,7 +329,9 @@ key excerpts, and uncommon terms.
       </section>
     </div>
 
-    <!-- Logger utilities (includes constants via require) -->
+    <!-- Load constants first to set window.EXT_CONSTANTS -->
+    <script src="constants.js"></script>
+    <!-- Logger utilities (uses window.EXT_CONSTANTS) -->
     <script src="debugger.js"></script>
     <!-- Finally, load the sidepanel controller which consumes the above -->
     <script src="sidepanel.js"></script>
