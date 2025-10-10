@@ -1,0 +1,42 @@
+{
+  "automated_decision": [
+    {
+      "label": "automated_decision",
+      "text": "Our automated systems collect user reputation and violation reports for analysis purposes.",
+      "confidence": 0.31379687786102295,
+      "text_length": 90
+    }
+  ],
+  "transparency_statement": [
+    {
+      "label": "transparency_statement",
+      "text": "The automated system relies on criteria including authenticity signals and relevance scores.",
+      "confidence": 0.856902539730072,
+      "text_length": 92
+    },
+    {
+      "label": "transparency_statement",
+      "text": "The automated system relies on criteria including previous behavior patterns and click-through rates.",
+      "confidence": 0.8539826273918152,
+      "text_length": 101
+    },
+    {
+      "label": "transparency_statement",
+      "text": "We are committed to transparency regarding our use of safety considerations and relevance scores in automated systems.",
+      "confidence": 0.4695352017879486,
+      "text_length": 118
+    },
+    {
+      "label": "transparency_statement",
+      "text": "We are committed to transparency regarding our use of violation reports and geographic signals in automated systems.",
+      "confidence": 0.3293445408344269,
+      "text_length": 116
+    },
+    {
+      "label": "transparency_statement",
+      "text": "Our governance framework addresses algorithmic processing of click-through rates, device information, and account age.",
+      "confidence": 0.27462008595466614,
+      "text_length": 118
+    }
+  ]
+}

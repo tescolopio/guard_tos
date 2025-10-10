@@ -1,0 +1,53 @@
+{
+  "category": "data_collection",
+  "dataset_path": "data/processed/data_collection/v2025.10.08a/dataset.jsonl",
+  "records": 579,
+  "label_totals": {
+    "data_collection_extensive": 141,
+    "data_collection_minimal": 90,
+    "consent_explicit": 86,
+    "consent_implied": 81,
+    "purpose_specific": 110,
+    "purpose_broad": 91
+  },
+  "label_distribution": {
+    "data_collection_extensive": 0.2435,
+    "data_collection_minimal": 0.1554,
+    "consent_explicit": 0.1485,
+    "consent_implied": 0.1399,
+    "purpose_specific": 0.19,
+    "purpose_broad": 0.1572
+  },
+  "length_stats": {
+    "avg_chars": 689.09,
+    "median_chars": 89,
+    "avg_tokens": 104.5
+  },
+  "manifest": {
+    "category": "data_collection",
+    "version": "v2025.10.08a",
+    "records": 579,
+    "label_distribution": {
+      "data_collection_extensive": 0.24352331606217617,
+      "data_collection_minimal": 0.15544041450777202,
+      "consent_explicit": 0.14853195164075994,
+      "consent_implied": 0.13989637305699482,
+      "purpose_specific": 0.18998272884283246,
+      "purpose_broad": 0.15716753022452504
+    },
+    "label_counts": {
+      "data_collection_extensive": 141,
+      "data_collection_minimal": 90,
+      "consent_explicit": 86,
+      "consent_implied": 81,
+      "purpose_specific": 110,
+      "purpose_broad": 91
+    },
+    "sources": [
+      "processed",
+      "synthetic_expanded_phase2"
+    ],
+    "created": "2025-10-09T03:09:35.690249+00:00",
+    "notes": "Normalized legacy records to full label schema and added 80 high-variance extensive clauses plus refreshed consent/purpose examples."
+  }
+}

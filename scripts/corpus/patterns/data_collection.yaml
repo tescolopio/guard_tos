@@ -2,7 +2,7 @@ metadata:
   category: data_collection_use
   version: "1.0.0"
   created: "2025-09-28"
-  updated: "2025-10-01"
+  updated: "2025-10-08"
   description: "Patterns for identifying data collection scope, consent mechanisms, purpose limitation, and retention practices"
   notes:
     - "Patterns prioritize precision to minimize false positives in training data"
@@ -82,6 +82,36 @@ labels:
         examples:
           - "automatically collect device data"
           - "passively gather browsing information"
+
+      - pattern: '\b(collect|record|store|log).{0,120}(every|all|entire|full|complete)\s+(interaction|activity|action|click|movement|communication)\b'
+        weight: 0.88
+        examples:
+          - "record every interaction"
+          - "log all activity across the service"
+
+      - pattern: '\b(combine|link|merge|correlat).{0,120}(data|information).{0,60}(from|across).{0,100}(online|offline|third[\s-]?party|public|commercial)\s+(sources|partners|services)\b'
+        weight: 0.87
+        examples:
+          - "combine data from online and offline sources"
+          - "link information across third-party services"
+
+      - pattern: '\b(purchase|license|acquire|obtain).{0,100}(data|information).{0,80}(broker|marketplace|aggregator|commercial\s+source|data\s+provider)\b'
+        weight: 0.86
+        examples:
+          - "purchase data from commercial brokers"
+          - "license information from third-party aggregators"
+
+      - pattern: '\b(sell|rent|share|disclose).{0,80}(data|information).{0,80}(advertis|marketing|ad\s+network|analytics|monetization)\b'
+        weight: 0.82
+        examples:
+          - "share information with advertising networks"
+          - "disclose data to marketing analytics partners"
+
+      - pattern: '\bmonitor(ing)?.{0,100}(across|between|throughout).{0,60}(devices|channels|sessions|properties|experiences)\b'
+        weight: 0.8
+        examples:
+          - "monitoring across devices"
+          - "monitor your sessions throughout our network"
 
     negative_patterns:
       - pattern: '\b(only|solely|exclusively|limited\s+to).{0,50}(necessary|required|essential)\b'

@@ -31,20 +31,19 @@ The following **7 substantive categories** have labeled training datasets. The 8
 - **Expansion**: **81 → 238** (Phase 2 complete, +157 examples)
 
 ### 3. Content Rights ✅
-- **Version**: v2025.10.07a  
-- **Records**: 1,379 labeled examples  
+- **Version**: v2025.10.08a  
+- **Records**: 1,595 labeled examples  
 - **Gold Seed**: 91 records  
 - **Labels**: 4 (license_assignment, ip_retained, moral_rights_waiver, commercial_use_claim)  
-- **Sources**: Corpus (extensive real-world examples)  
-- **Location**: `data/processed/content_rights/v2025.10.07a/`
+- **Sources**: Corpus + Synthetic (template augmentation for low-support labels)  
+- **Location**: `data/processed/content_rights/v2025.10.08a/`
 
-### 4. Dispute Resolution ✅
-- **Version**: v2025.10.07a  
-- **Records**: 712 labeled examples  
+- **Version**: v2025.10.08b  
+- **Records**: 1,072 labeled examples  
 - **Gold Seed**: 148 records  
 - **Labels**: 4 (binding_arbitration, class_action_waiver, jury_trial_waiver, venue_selection)  
-- **Sources**: Corpus (extensive real-world examples)  
-- **Location**: `data/processed/dispute_resolution/v2025.10.07a/`
+- **Sources**: Corpus + Synthetic (template augmentation for waiver + venue labels)  
+- **Location**: `data/processed/dispute_resolution/v2025.10.08b/`
 
 ### 5. Account Management ✅
 - **Version**: v2025.10.07h  
@@ -97,34 +96,40 @@ The following **7 substantive categories** have labeled training datasets. The 8
 
 | Category | Records | Gold Seed | Labels | Source Mix | Status |
 |----------|---------|-----------|--------|------------|--------|
-| Content Rights | 1,379 | 91 | 4 | Corpus | ✓ Excellent |
-| Dispute Resolution | 712 | 148 | 4 | Corpus | ✓ Strong |
+| Content Rights | 1,595 | 91 | 4 | Corpus + Synthetic | ✓ Excellent |
+| Dispute Resolution | 1,072 | 148 | 4 | Corpus + Synthetic | ✓ Strong |
 | **Data Collection** | **364** | **291** | **6** | **Corpus + Synthetic** | **✓ Production Ready** |
 | **User Privacy** | **238** | **190** | **4** | **Corpus + Synthetic** | **✓ Production Ready** |
 | **Account Management** | **200** | **200** | **4** | **Synthetic** | **✓ Production Ready** |
 | **Terms Changes** | **200** | **150** | **3** | **Synthetic** | **✓ Production Ready** |
 | **Algorithmic Decisions** | **200** | **150** | **3** | **Synthetic** | **✓ Production Ready** |
 | **Clarity & Transparency** | **—** | **—** | **—** | **Derived Metric** | **✓ Ready (uses categories 1-7)** |
-| **TOTAL (Substantive)** | **3,293** | **1,220** | **28** | **Mixed** | **✅ ALL 7 CATEGORIES PRODUCTION READY** |
+| **TOTAL (Substantive)** | **3,869** | **1,220** | **28** | **Mixed** | **✅ ALL 7 CATEGORIES PRODUCTION READY** |
 
 ---
 
 ## Dataset Quality Notes
 
 ### High Corpus Coverage
-- **Content Rights** (1,379 records): Extensive real-world examples from platform ToS
-- **Dispute Resolution** (712 records): Rich corpus of arbitration and waiver clauses
+- **Content Rights** (1,595 records): Extensive real-world examples from platform ToS supplemented with targeted synthetic balance
+- **Dispute Resolution** (1,072 records): Rich corpus of arbitration clauses plus synthetic waivers and venue selection clauses
 
 ### Synthetic Augmentation Success (Phase 1 & 2 Complete)
 - **Phase 1 (Critical Categories)**: Account Management, Terms Changes, Algorithmic Decisions expanded to 200 records each
 - **Phase 2 (Medium Categories)**: Data Collection expanded to 364 records, User Privacy to 238 records
+- **Phase 3 (Targeted Balance)**: Content Rights and Dispute Resolution received synthetic clauses to reach ≥100 positives for all labels
 - All synthetic examples use template-based generation with variable substitution for natural language variation
 - Targeted generation for underrepresented labels ensures balanced label distribution
 - Direct import approach bypasses weak supervision for pre-labeled synthetic data
 
+- **Content Rights**: Low-support labels raised to 100 positives each via template augmentation
+- **Dispute Resolution**: class_action_waiver and jury_trial_waiver increased to >160 examples each
+- All categories now have reasonable label distribution for production training
 ### Label Balance Improvements
 - **Data Collection**: Fixed severe imbalance (purpose_specific 5→245, purpose_broad 91→192)
 - **User Privacy**: Fixed severe imbalance (privacy_waiver 6→137, access_rights 51→92)
+- **Content Rights**: Low-support labels raised to 100 positives each via template augmentation
+- **Dispute Resolution**: class_action_waiver and jury_trial_waiver increased to >160 examples each, venue_selection now 257 positives
 - All categories now have reasonable label distribution for production training
 
 ### Pattern Engineering
@@ -137,7 +142,7 @@ The following **7 substantive categories** have labeled training datasets. The 8
 
 ## Expansion Summary
 
-**Total Growth**: 2,476 → 3,293 records (+817, +33%)
+**Total Growth**: 2,476 → 3,869 records (+1,393, +56%)
 
 ### Phase 1 (Critical Categories - Complete)
 - Account Management: 36 → 200 (+164, +456%)
@@ -149,6 +154,11 @@ The following **7 substantive categories** have labeled training datasets. The 8
 - Data Collection: 192 → 364 (+172, +89%)
 - User Privacy: 81 → 238 (+157, +194%)
 - **Phase 2 Total**: +329 records
+
+### Phase 3 (Targeted Balance - Complete)
+- Content Rights: 1,331 → 1,595 (+264, +20%)
+- Dispute Resolution: 712 → 1,072 (+360, +51%)
+- **Phase 3 Total**: +624 records
 
 ### Production Readiness Achievement
 - ✅ **All 8 URI categories complete** (7 substantive + 1 derived)

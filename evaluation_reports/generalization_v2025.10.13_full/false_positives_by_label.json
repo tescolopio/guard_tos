@@ -1,0 +1,66 @@
+{
+  "automated_decision": [
+    {
+      "label": "automated_decision",
+      "text": "Automated classifiers recommend actions to reviewers who have final authority over account decisions.",
+      "confidence": 0.8380527496337891,
+      "text_length": 101
+    },
+    {
+      "label": "automated_decision",
+      "text": "Our system flags transactions algorithmically, yet analysts authorize any blocking actions.",
+      "confidence": 0.8220981359481812,
+      "text_length": 91
+    },
+    {
+      "label": "automated_decision",
+      "text": "We employ algorithm-assisted decision-making where models inform rather than dictate outcomes.",
+      "confidence": 0.7509154081344604,
+      "text_length": 94
+    },
+    {
+      "label": "automated_decision",
+      "text": "We use semi-automated processes where algorithms recommend actions that staff may confirm or override.",
+      "confidence": 0.7132691740989685,
+      "text_length": 102
+    },
+    {
+      "label": "automated_decision",
+      "text": "Algorithms analyze behavior patterns to inform reviewers, who retain decision-making authority.",
+      "confidence": 0.663620114326477,
+      "text_length": 95
+    }
+  ],
+  "human_review": [
+    {
+      "label": "human_review",
+      "text": "Decisions are made by our systems unless you exercise your right to request human review.",
+      "confidence": 0.8964322805404663,
+      "text_length": 89
+    },
+    {
+      "label": "human_review",
+      "text": "Your account may be subject to automated restrictions unless you request human review within 30 days.",
+      "confidence": 0.8709565997123718,
+      "text_length": 101
+    },
+    {
+      "label": "human_review",
+      "text": "Your access may be limited by automated systems, pending verification by our team.",
+      "confidence": 0.7716953754425049,
+      "text_length": 82
+    },
+    {
+      "label": "human_review",
+      "text": "We use AI for initial screening, but specialists conduct final assessments.",
+      "confidence": 0.7328240275382996,
+      "text_length": 75
+    },
+    {
+      "label": "human_review",
+      "text": "Preliminary assessments are made by AI, though final determinations may involve human judgment.",
+      "confidence": 0.6811928153038025,
+      "text_length": 95
+    }
+  ]
+}

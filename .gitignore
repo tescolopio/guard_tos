@@ -147,3 +147,28 @@ Thumbs.db
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# ML Model Artifacts (large binary files)
+artifacts/models/**/checkpoint-*/
+artifacts/models/**/pytorch_model.bin
+artifacts/models/**/optimizer.pt
+artifacts/models/**/model.safetensors
+artifacts/models/**/*.bin
+artifacts/models/**/*.pt
+*.ckpt
+*.h5
+*.pkl
+*.pickle
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Large data files
+data/raw/**/*.arrow
+data/raw/**/*.parquet
+*.arrow
+*.parquet

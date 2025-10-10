@@ -1,0 +1,582 @@
+[
+  {
+    "text": "We are committed to transparency regarding our use of safety considerations and relevance scores in automated systems.",
+    "text_length": 118,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.034788720309734344,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13985289633274078,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.4695352017879486,
+        "correct": false
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "The service explains that algorithms help sort content based on content freshness and regulatory compliance.",
+    "text_length": 108,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07738538831472397,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05662606656551361,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.2622523307800293,
+        "correct": false
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Our automated systems collect user reputation and violation reports for analysis purposes.",
+    "text_length": 90,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.31379687786102295,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07473111152648926,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06161849573254585,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "We are committed to transparency regarding our use of violation reports and geographic signals in automated systems.",
+    "text_length": 116,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.03547888994216919,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1591939479112625,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.3293445408344269,
+        "correct": false
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Automated processing is used to select service availability. Advertising review models auto-reject creatives that breach platform integrity standards. ICO and FTC guidance on automated enforcement inform our governance controls. Decisions trigger automated messaging and appeal options in your accoun...",
+    "text_length": 312,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8972289562225342,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08510615676641464,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06984153389930725,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "AI moderation queues automatically deprioritize recommendation placement once thresholds are met.",
+    "text_length": 97,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8967830538749695,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.09581924974918365,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07394766807556152,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Our system's automated logic relies on device information and content freshness.",
+    "text_length": 80,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05427193641662598,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06834319978952408,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8409033417701721,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "While algorithms analyze relevance scores and device information, all final decisions require human review.",
+    "text_length": 107,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08870624005794525,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.15058937668800354,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11001035571098328,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Automated evaluation is employed to rank account eligibility. Content moderation stacks auto-remove posts and suspend accounts to comply with trust and safety policies. ICO and FTC guidance on automated enforcement inform our governance controls. Outcomes are delivered instantly via in-product notif...",
+    "text_length": 337,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8953870534896851,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08560765534639359,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06877469271421432,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "The service shares how automated tools organize account age and user reputation for display purposes.",
+    "text_length": 101,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11331450939178467,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08697796612977982,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11608949303627014,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Our systems use algorithms to assist with sorting relevance scores, regulatory compliance, and account age.",
+    "text_length": 107,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10326811671257019,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05037403479218483,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.19069746136665344,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Machine learning algorithms select content moderation decisions.",
+    "text_length": 64,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8933359980583191,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.09013959765434265,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07186371833086014,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "You can contest automated decisions by requesting human review within 30 days. Contact our trust and safety queue within 30 days for manual escalation by a support agent.",
+    "text_length": 170,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07659316807985306,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.9086636304855347,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07270251214504242,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "The algorithm processes user reputation, click-through rates, and previous behavior patterns to reach decisions.",
+    "text_length": 112,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05302411690354347,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06255430728197098,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8410725593566895,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "We apply automated systems for reviewing pricing.",
+    "text_length": 49,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8770550489425659,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.09321576356887817,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05483214184641838,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Automated processing is used to recommend service availability.",
+    "text_length": 63,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8885909914970398,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08631138503551483,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06817951053380966,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Automated processing is used to select service availability.",
+    "text_length": 60,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.891391396522522,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08901107311248779,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07471850514411926,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "AI systems automatically review service availability.",
+    "text_length": 53,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.897672176361084,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.09805306792259216,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06926540285348892,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Automated evaluation is employed to score fraud detection. Ride safety systems auto-deactivate drivers when telematics models identify hazardous behavior. ICO and FTC guidance on automated enforcement inform our governance controls. Decisions trigger automated messaging and appeal options in your ac...",
+    "text_length": 316,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8966694474220276,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0876525267958641,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06803391873836517,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "The automated system relies on criteria including temporal patterns and violation reports.",
+    "text_length": 90,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05740657448768616,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0712694376707077,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8469491004943848,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  }
+]

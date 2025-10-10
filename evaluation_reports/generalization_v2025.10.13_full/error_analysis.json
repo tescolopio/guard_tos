@@ -1,0 +1,174 @@
+{
+  "false_positives": [
+    {
+      "label": "automated_decision",
+      "text": "Initial content moderation is performed algorithmically, with subsequent human review in certain cases.",
+      "confidence": 0.5254485011100769,
+      "text_length": 103
+    },
+    {
+      "label": "automated_decision",
+      "text": "Machine learning models surface potential violations, but moderators make the final determination.",
+      "confidence": 0.5774213075637817,
+      "text_length": 98
+    },
+    {
+      "label": "automated_decision",
+      "text": "The system could automatically restrict access if risk thresholds are exceeded, pending investigation.",
+      "confidence": 0.6290404200553894,
+      "text_length": 102
+    },
+    {
+      "label": "automated_decision",
+      "text": "We use semi-automated processes where algorithms recommend actions that staff may confirm or override.",
+      "confidence": 0.7132691740989685,
+      "text_length": 102
+    },
+    {
+      "label": "automated_decision",
+      "text": "Machine learning helps identify content for review, though removal requires manual confirmation.",
+      "confidence": 0.5591659545898438,
+      "text_length": 96
+    },
+    {
+      "label": "automated_decision",
+      "text": "We may use automated systems to make decisions about your account, subject to regulatory requirements.",
+      "confidence": 0.543595552444458,
+      "text_length": 102
+    },
+    {
+      "label": "automated_decision",
+      "text": "We employ algorithm-assisted decision-making where models inform rather than dictate outcomes.",
+      "confidence": 0.7509154081344604,
+      "text_length": 94
+    },
+    {
+      "label": "automated_decision",
+      "text": "Automated classifiers recommend actions to reviewers who have final authority over account decisions.",
+      "confidence": 0.8380527496337891,
+      "text_length": 101
+    },
+    {
+      "label": "automated_decision",
+      "text": "Our system flags transactions algorithmically, yet analysts authorize any blocking actions.",
+      "confidence": 0.8220981359481812,
+      "text_length": 91
+    },
+    {
+      "label": "automated_decision",
+      "text": "Algorithms analyze behavior patterns to inform reviewers, who retain decision-making authority.",
+      "confidence": 0.663620114326477,
+      "text_length": 95
+    },
+    {
+      "label": "human_review",
+      "text": "Decisions are made by our systems unless you exercise your right to request human review.",
+      "confidence": 0.8964322805404663,
+      "text_length": 89
+    },
+    {
+      "label": "human_review",
+      "text": "Decisions about service eligibility are partially automated, with human oversight for appeals.",
+      "confidence": 0.5220744609832764,
+      "text_length": 94
+    },
+    {
+      "label": "human_review",
+      "text": "Your account may be subject to automated restrictions unless you request human review within 30 days.",
+      "confidence": 0.8709565997123718,
+      "text_length": 101
+    },
+    {
+      "label": "human_review",
+      "text": "The system makes preliminary determinations automatically, with human review triggered by confidence thresholds.",
+      "confidence": 0.6475582718849182,
+      "text_length": 112
+    },
+    {
+      "label": "human_review",
+      "text": "Your eligibility is assessed through both algorithmic scoring and manual underwriting for borderline cases.",
+      "confidence": 0.665785551071167,
+      "text_length": 107
+    },
+    {
+      "label": "human_review",
+      "text": "Your access may be limited by automated systems, pending verification by our team.",
+      "confidence": 0.7716953754425049,
+      "text_length": 82
+    },
+    {
+      "label": "human_review",
+      "text": "Preliminary assessments are made by AI, though final determinations may involve human judgment.",
+      "confidence": 0.6811928153038025,
+      "text_length": 95
+    },
+    {
+      "label": "human_review",
+      "text": "We use AI for initial screening, but specialists conduct final assessments.",
+      "confidence": 0.7328240275382996,
+      "text_length": 75
+    }
+  ],
+  "false_negatives": [
+    {
+      "label": "automated_decision",
+      "text": "Content reach and visibility are determined by our AI-powered recommendation algorithms.",
+      "confidence": 0.21726714074611664,
+      "text_length": 88
+    },
+    {
+      "label": "automated_decision",
+      "text": "The app employs automated triage algorithms that classify symptoms and recommend levels of care urgency.",
+      "confidence": 0.29460322856903076,
+      "text_length": 104
+    },
+    {
+      "label": "automated_decision",
+      "text": "Access to features depends on algorithmic evaluation of your activity patterns.",
+      "confidence": 0.49341699481010437,
+      "text_length": 79
+    },
+    {
+      "label": "automated_decision",
+      "text": "The system applies account restrictions based on risk scores calculated by our models.",
+      "confidence": 0.20162266492843628,
+      "text_length": 86
+    },
+    {
+      "label": "automated_decision",
+      "text": "Content reach is influenced by algorithmic scoring of quality and safety signals.",
+      "confidence": 0.1593625545501709,
+      "text_length": 81
+    },
+    {
+      "label": "automated_decision",
+      "text": "Seller account status is determined by algorithmic evaluation of performance metrics and customer feedback.",
+      "confidence": 0.3126579523086548,
+      "text_length": 107
+    },
+    {
+      "label": "automated_decision",
+      "text": "Treatment plan adjustments are suggested by AI models analyzing patient data and clinical outcomes.",
+      "confidence": 0.4981878101825714,
+      "text_length": 99
+    },
+    {
+      "label": "automated_decision",
+      "text": "Your access is shaped by machine learning evaluation of risk factors.",
+      "confidence": 0.3061104416847229,
+      "text_length": 69
+    },
+    {
+      "label": "automated_decision",
+      "text": "Your account status reflects automated assessments of compliance with our standards.",
+      "confidence": 0.43799883127212524,
+      "text_length": 84
+    },
+    {
+      "label": "automated_decision",
+      "text": "Your experience adapts based on machine learning classification of preferences.",
+      "confidence": 0.400272935628891,
+      "text_length": 79
+    }
+  ]
+}

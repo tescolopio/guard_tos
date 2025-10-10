@@ -1,0 +1,14 @@
+{
+  "category": "algorithmic_decisions",
+  "label_list": [
+    "automated_decision",
+    "human_review",
+    "transparency_statement"
+  ],
+  "base_model": "distilbert-base-uncased",
+  "epochs": 4.0,
+  "learning_rate": 2e-05,
+  "batch_size": 16,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1
+}

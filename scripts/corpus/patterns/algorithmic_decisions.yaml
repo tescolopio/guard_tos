@@ -30,6 +30,24 @@ labels:
         examples:
           - "automated processing of data"
 
+      - pattern: '\b(automat|algorithm|AI).{0,80}(flag|suspend|restrict|limit|prioritiz|deprioritiz|demot|remov|escalat).{0,60}(account|profile|content|access|visibility)'
+        weight: 0.82
+        examples:
+          - "algorithms automatically suspend accounts"
+          - "AI may deprioritize content visibility"
+
+      - pattern: '\b(risk|fraud|compliance|safety|trust).{0,40}(score|profil|assessment).{0,40}(automat|algorithm)'
+        weight: 0.83
+        examples:
+          - "automated risk scoring"
+          - "algorithmic fraud assessments"
+
+      - pattern: '\bautomated\s+(review|moderation|enforcement|screening)\b'
+        weight: 0.8
+        examples:
+          - "automated moderation"
+          - "automated enforcement process"
+
     negative_patterns:
       - pattern: '\b(manual|human).{0,30}(review|oversight|decision)\b'
         weight: -0.6

@@ -1,0 +1,126 @@
+{
+  "false_positives": [
+    {
+      "label": "automated_decision",
+      "text": "The automated system relies on criteria including account age and temporal patterns.",
+      "confidence": 0.3469846546649933,
+      "text_length": 84
+    },
+    {
+      "label": "automated_decision",
+      "text": "We aim to be transparent about how our algorithmic systems work.",
+      "confidence": 0.32972145080566406,
+      "text_length": 64
+    },
+    {
+      "label": "automated_decision",
+      "text": "We aim to be transparent about how our algorithmic systems work.",
+      "confidence": 0.32972145080566406,
+      "text_length": 64
+    },
+    {
+      "label": "automated_decision",
+      "text": "Our algorithmic models consider inputs like temporal patterns, user engagement, and user preferences.",
+      "confidence": 0.364969938993454,
+      "text_length": 101
+    },
+    {
+      "label": "automated_decision",
+      "text": "We explain how our algorithms process information: they analyze authenticity signals and previous behavior patterns.",
+      "confidence": 0.3889464735984802,
+      "text_length": 116
+    },
+    {
+      "label": "automated_decision",
+      "text": "We provide transparency regarding our automated systems, which consider authenticity signals and safety considerations.",
+      "confidence": 0.3154623508453369,
+      "text_length": 119
+    },
+    {
+      "label": "automated_decision",
+      "text": "The AI evaluates spam indicators, previous behavior patterns, and additional contextual information.",
+      "confidence": 0.3134402334690094,
+      "text_length": 100
+    },
+    {
+      "label": "automated_decision",
+      "text": "Our algorithm considers factors such as content freshness, geographic signals, and previous behavior patterns.",
+      "confidence": 0.32599931955337524,
+      "text_length": 110
+    },
+    {
+      "label": "automated_decision",
+      "text": "The system takes into account multiple factors such as user reputation, content freshness, and user history.",
+      "confidence": 0.2881433367729187,
+      "text_length": 108
+    },
+    {
+      "label": "automated_decision",
+      "text": "We are transparent about our AI's use of device information, account age, and similar signals.",
+      "confidence": 0.2966996729373932,
+      "text_length": 94
+    },
+    {
+      "label": "human_review",
+      "text": "Content decisions may be made automatically without human review.",
+      "confidence": 0.7600549459457397,
+      "text_length": 65
+    },
+    {
+      "label": "transparency_statement",
+      "text": "Decisions about user behavior are made algorithmically.",
+      "confidence": 0.2681245803833008,
+      "text_length": 55
+    },
+    {
+      "label": "transparency_statement",
+      "text": "Algorithmic processes review risk assessments.",
+      "confidence": 0.26270562410354614,
+      "text_length": 46
+    },
+    {
+      "label": "transparency_statement",
+      "text": "Machine learning algorithms analyze recommendations.",
+      "confidence": 0.2838400900363922,
+      "text_length": 52
+    },
+    {
+      "label": "transparency_statement",
+      "text": "We utilize artificial intelligence to recommend recommendations.",
+      "confidence": 0.2792169749736786,
+      "text_length": 64
+    },
+    {
+      "label": "transparency_statement",
+      "text": "AI-powered systems score user engagement automatically.",
+      "confidence": 0.2696380019187927,
+      "text_length": 55
+    },
+    {
+      "label": "transparency_statement",
+      "text": "Automated systems analyze and select account status.",
+      "confidence": 0.2773975133895874,
+      "text_length": 52
+    },
+    {
+      "label": "transparency_statement",
+      "text": "We rely on automated systems for analyzing account status.",
+      "confidence": 0.31467270851135254,
+      "text_length": 58
+    },
+    {
+      "label": "transparency_statement",
+      "text": "The service uses AI to analyze user behavior.",
+      "confidence": 0.375688761472702,
+      "text_length": 45
+    }
+  ],
+  "false_negatives": [
+    {
+      "label": "automated_decision",
+      "text": "Content decisions may be made automatically without human review.",
+      "confidence": 0.20295336842536926,
+      "text_length": 65
+    }
+  ]
+}

@@ -177,6 +177,41 @@ artifacts/models/{category}/{version}/
 - **Other 5 categories**: Synthetically balanced for better training
 - **Gold Seeds**: Used for training (80% sample from full datasets)
 
+## Targeted Augmentation Pipeline — v2025.10.12
+
+Before retraining data_collection or algorithmic_decisions with the 2025-10-12 release,
+generate the targeted augmentation batch and updated processed datasets:
+
+```bash
+.venv/bin/python scripts/augmentation/run_targeted_pipeline.py --data-collection-base data/processed/data_collection/v2025.10.10a/dataset.jsonl --data-collection-output data/processed/data_collection/v2025.10.12/dataset.jsonl --emit-data-collection-negatives --algorithmic-base data/processed/algorithmic_decisions/v2025.10.08a/dataset.jsonl --algorithmic-output data/processed/algorithmic_decisions/v2025.10.12/dataset.jsonl --emit-algorithmic-negatives
+```
+
+- Override counts with `--data-collection-label LABEL=COUNT` or `--algorithmic-label LABEL=COUNT`.
+- Attach curated snippets via `--data-collection-curated path/to/file.jsonl` (repeatable).
+- Add `--dry-run` to preview totals without writing files.
+
+See `docs/training_logs/augmentation_plan_2025-10-10.md` for label targets.
+
+### Metrics Tracking
+
+1. Capture validation metrics (with deltas) immediately after the run:
+
+```bash
+.venv/bin/python scripts/ml/run_model_validation.py --json-report evaluation_reports/validation_runs/v2025.10.12_all_categories.json --summary-csv reports/eval/validation_metrics_log.csv --run-id v2025.10.12
+```
+
+2. Log automated decision deltas for Grafana:
+
+```bash
+.venv/bin/python scripts/ml/compare_model_metrics.py --previous reports/eval/history/algorithmic_decisions/v2025.10.10a_model_eval.json --current reports/eval/history/algorithmic_decisions/v2025.10.12_model_eval.json --labels automated_decision --category algorithmic_decisions --previous-run-id v2025.10.10a --current-run-id v2025.10.12 --export-csv reports/eval/algorithmic_decisions_metrics.csv
+```
+
+3. Publish grouped false positives during evaluation:
+
+```bash
+.venv/bin/python scripts/ml/evaluate_model.py --model artifacts/models/algorithmic_decisions/v2025.10.12 --dataset data/processed/algorithmic_decisions/v2025.10.12/dataset.jsonl --category algorithmic_decisions --threshold 0.26 --output-dir evaluation_reports/algorithmic_decisions_v2025.10.12 --fp-destination reports/eval/fp_samples --run-id v2025.10.12
+```
+
 ---
 
 ## Validation & Testing

@@ -1,0 +1,71 @@
+# Validation thresholds for Terms Guardian models used during alpha testing.
+# Each category entry defines the expected model artifact, evaluation dataset,
+# and minimum acceptable quality metrics. The validation runner will report a
+# failure (non-zero exit code) whenever an entry with `enforce: true` violates
+# any of its requirements. Entries with `enforce: false` will surface warnings
+# but will not break the pipeline, which is useful for categories still under
+# active development.
+
+categories:
+  - name: account_management
+    model_path: artifacts/models/account_management/v2025.10.07h-v1
+    dataset_path: data/processed/account_management/v2025.10.07h/dataset.jsonl
+    threshold: 0.3
+    min_macro_f1: 0.95
+    min_label_f1: 0.90
+    min_label_support: 40
+    enforce: true
+
+  - name: terms_changes
+    model_path: artifacts/models/terms_changes/v2025.10.07e-v1
+    dataset_path: data/processed/terms_changes/v2025.10.07e/dataset.jsonl
+    threshold: 0.3
+    min_macro_f1: 0.85
+    min_label_f1: 0.70
+    min_label_support: 50
+    enforce: true
+
+  - name: algorithmic_decisions
+    model_path: artifacts/models/algorithmic_decisions/v2025.10.07b-v1
+    dataset_path: data/processed/algorithmic_decisions/v2025.10.07b/dataset.jsonl
+    threshold: 0.3
+    min_macro_f1: 0.80
+    min_label_f1: 0.55
+    min_label_support: 50
+    enforce: true
+
+  - name: user_privacy
+    model_path: artifacts/models/user_privacy/v2025.10.07c-v1
+    dataset_path: data/processed/user_privacy/v2025.10.07c/dataset.jsonl
+    threshold: 0.3
+    min_macro_f1: 0.75
+    min_label_f1: 0.50
+    min_label_support: 50
+    enforce: true
+
+  - name: data_collection
+    model_path: artifacts/models/data_collection/v2025.10.10a-v1
+    dataset_path: data/processed/data_collection/v2025.10.10a/dataset.jsonl
+    threshold: 0.26
+    min_macro_f1: 0.70
+    min_label_f1: 0.40
+    min_label_support: 50
+    enforce: true
+
+  - name: dispute_resolution
+    model_path: artifacts/models/dispute_resolution/v2025.10.08b-v1
+    dataset_path: data/processed/dispute_resolution/v2025.10.08b/dataset.jsonl
+    threshold: 0.3
+    min_macro_f1: 0.70
+    min_label_f1: 0.60
+    min_label_support: 50
+    enforce: true
+
+  - name: content_rights
+    model_path: artifacts/models/content_rights/v2025.10.08a-v1
+    dataset_path: data/processed/content_rights/v2025.10.08a/dataset.jsonl
+    threshold: 0.3
+    min_macro_f1: 0.70
+    min_label_f1: 0.60
+    min_label_support: 50
+    enforce: true

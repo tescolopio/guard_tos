@@ -1,0 +1,437 @@
+[
+  {
+    "text": "Initial content moderation is performed algorithmically, with subsequent human review in certain cases.",
+    "text_length": 103,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.5254493951797485,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.32171517610549927,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.03208688646554947,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Decisions about service eligibility are partially automated, with human oversight for appeals.",
+    "text_length": 94,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.23425620794296265,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.5220739245414734,
+        "correct": false
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.035736992955207825,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "The app employs automated triage algorithms that classify symptoms and recommend levels of care urgency.",
+    "text_length": 104,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.2946033775806427,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.13029293715953827,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0600598081946373,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Decisions are made by our systems unless you exercise your right to request human review.",
+    "text_length": 89,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08224499970674515,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.8964322805404663,
+        "correct": false
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07745715230703354,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Content reach and visibility are determined by our AI-powered recommendation algorithms.",
+    "text_length": 88,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.21726682782173157,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.03643486276268959,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2681274712085724,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Access to features depends on algorithmic evaluation of your activity patterns.",
+    "text_length": 79,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.49341705441474915,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08915828913450241,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05419190600514412,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Account actions result from a combination of automated processing and human evaluation.",
+    "text_length": 87,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.24000707268714905,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06379709392786026,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1385740488767624,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Automated systems detect anomalies, and trained personnel investigate before concluding.",
+    "text_length": 88,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.472829133272171,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.3527866303920746,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.040304794907569885,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Advertiser eligibility is assessed by automated review systems that evaluate compliance with our policies.",
+    "text_length": 106,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.626602828502655,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07999429106712341,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05398073047399521,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "We use automated risk scoring to prioritize cases for manual review by our compliance team.",
+    "text_length": 91,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.3112715184688568,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.3799775242805481,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.02898976393043995,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "The platform uses machine learning to identify candidates for review by decision-makers.",
+    "text_length": 88,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.3015475273132324,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.09001226723194122,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06214825063943863,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Content visibility may be reduced when our algorithms identify policy concerns.",
+    "text_length": 79,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6969214677810669,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.062413040548563004,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06935100257396698,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Your privileges are adjusted by systems analyzing compliance with our policies.",
+    "text_length": 79,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.5215030312538147,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0780082419514656,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05513719841837883,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Decisions about content visibility are partly algorithmic and partly based on curator discretion.",
+    "text_length": 97,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2273225039243698,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.04532716050744057,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.17630307376384735,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Access levels are modified by our systems when algorithms detect policy issues.",
+    "text_length": 79,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7394547462463379,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.057749345898628235,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0718350037932396,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  }
+]

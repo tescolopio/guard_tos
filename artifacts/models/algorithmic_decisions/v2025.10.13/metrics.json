@@ -1,0 +1,44 @@
+{
+  "automated_decision": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 34.0
+  },
+  "human_review": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 14.0
+  },
+  "transparency_statement": {
+    "precision": 0.9354838709677419,
+    "recall": 0.9666666666666667,
+    "f1-score": 0.9508196721311476,
+    "support": 30.0
+  },
+  "micro avg": {
+    "precision": 0.9746835443037974,
+    "recall": 0.9871794871794872,
+    "f1-score": 0.980891719745223,
+    "support": 78.0
+  },
+  "macro avg": {
+    "precision": 0.978494623655914,
+    "recall": 0.9888888888888889,
+    "f1-score": 0.9836065573770493,
+    "support": 78.0
+  },
+  "weighted avg": {
+    "precision": 0.9751861042183623,
+    "recall": 0.9871794871794872,
+    "f1-score": 0.9810844892812105,
+    "support": 78.0
+  },
+  "samples avg": {
+    "precision": 0.7129629629629629,
+    "recall": 0.7129629629629629,
+    "f1-score": 0.7129629629629629,
+    "support": 78.0
+  }
+}

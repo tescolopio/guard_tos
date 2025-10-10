@@ -1,0 +1,582 @@
+[
+  {
+    "text": "Our automated processes might suspend accounts temporarily until manual verification is completed.",
+    "text_length": 98,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.8641530871391296,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10411164909601212,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05673091486096382,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Algorithms analyze behavior patterns to inform reviewers, who retain decision-making authority.",
+    "text_length": 95,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.663620114326477,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06228051334619522,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05795055627822876,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Our system flags transactions algorithmically, yet analysts authorize any blocking actions.",
+    "text_length": 91,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.8220981359481812,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08590268343687057,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.052962325513362885,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Decisions about service eligibility are partially automated, with human oversight for appeals.",
+    "text_length": 94,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.23425593972206116,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.5220744609832764,
+        "correct": false
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.035736992955207825,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Automated tools pre-screen applications, but underwriters make final approval determinations.",
+    "text_length": 93,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.8268510103225708,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11595185101032257,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.04558040574193001,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "Content reach is influenced by algorithmic scoring of quality and safety signals.",
+    "text_length": 81,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": true,
+        "confidence": 0.1593625545501709,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.04200628027319908,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.2657143175601959,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "AI models classify content, but human reviewers validate classifications before action.",
+    "text_length": 87,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": false,
+        "confidence": 0.5203104615211487,
+        "correct": false
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.058034736663103104,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10174927115440369,
+        "correct": true
+      }
+    ],
+    "num_correct": 2,
+    "num_labels": 3
+  },
+  {
+    "text": "The bank employs algorithmic fraud detection that automatically blocks suspicious transactions to protect your account security.",
+    "text_length": 128,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8230222463607788,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08939426392316818,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05712946876883507,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Access to premium features is controlled by automated licensing systems that verify subscription status.",
+    "text_length": 104,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.7781387567520142,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10912434011697769,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0449989028275013,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Advertiser eligibility is assessed by automated review systems that evaluate compliance with our policies.",
+    "text_length": 106,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.6266025900840759,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07999422401189804,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.05398076772689819,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "AI tools assist our team in detecting policy breaches, but humans decide whether to enforce consequences.",
+    "text_length": 105,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.22976379096508026,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.3536951243877411,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.033721618354320526,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Account closures may result from automated risk management processes that flag violations of banking regulations.",
+    "text_length": 113,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8134137392044067,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08128591626882553,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07027216255664825,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Machine learning highlights issues for human consideration and ultimate resolution.",
+    "text_length": 83,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.1895734667778015,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08523251116275787,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.11387690156698227,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Our automated tools support reviewers who retain exclusive authority over decisions.",
+    "text_length": 84,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.16827359795570374,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14557254314422607,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.062052857130765915,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Algorithms provide recommendations to staff who maintain full control over outcomes.",
+    "text_length": 84,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.14950011670589447,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.3760877251625061,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.04777909070253372,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Automated processing usually determines outcomes, though manual intervention occurs in certain circumstances.",
+    "text_length": 109,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.43760210275650024,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.19985561072826385,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.04554538056254387,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "The platform employs hybrid decision-making combining algorithmic assessment with human validation.",
+    "text_length": 99,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.40839117765426636,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0889197513461113,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.06418100744485855,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Our AI systems provisionally classify content, with final confirmation in cases flagged as uncertain.",
+    "text_length": 101,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.3708035945892334,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.08181335777044296,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07617553323507309,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Pricing tiers adjust automatically based on AI analysis of usage patterns.",
+    "text_length": 74,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.8721752762794495,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.07323940098285675,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.0711636021733284,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  },
+  {
+    "text": "Feature access varies according to automated assessments of account standing.",
+    "text_length": 77,
+    "predictions": [
+      {
+        "label": "automated_decision",
+        "predicted": true,
+        "actual": true,
+        "confidence": 0.5165919661521912,
+        "correct": true
+      },
+      {
+        "label": "human_review",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.052739083766937256,
+        "correct": true
+      },
+      {
+        "label": "transparency_statement",
+        "predicted": false,
+        "actual": false,
+        "confidence": 0.10650425404310226,
+        "correct": true
+      }
+    ],
+    "num_correct": 3,
+    "num_labels": 3
+  }
+]

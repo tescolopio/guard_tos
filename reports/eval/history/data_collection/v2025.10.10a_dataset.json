@@ -1,0 +1,27 @@
+{
+  "category": "data_collection",
+  "dataset_path": "data/processed/data_collection/v2025.10.10a/dataset.jsonl",
+  "manifest_path": "data/processed/data_collection/v2025.10.10a/manifest.json",
+  "records": 1270,
+  "label_totals": {
+    "data_collection_extensive": 141,
+    "data_collection_minimal": 274,
+    "consent_explicit": 285,
+    "consent_implied": 127,
+    "purpose_specific": 372,
+    "purpose_broad": 91
+  },
+  "label_distribution": {
+    "data_collection_extensive": 0.111,
+    "data_collection_minimal": 0.2157,
+    "consent_explicit": 0.2244,
+    "consent_implied": 0.1,
+    "purpose_specific": 0.2929,
+    "purpose_broad": 0.0717
+  },
+  "length_stats": {
+    "avg_chars": 480.55,
+    "median_chars": 297.0,
+    "avg_tokens": 72.41
+  }
+}

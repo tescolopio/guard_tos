@@ -51,7 +51,11 @@ except ImportError as exc:  # pragma: no cover - guidance for users without deps
         "`pip install -r scripts/requirements.txt` before running training."
     ) from exc
 
-from scripts.ml.category_config import CATEGORY_REGISTRY, CategoryConfig
+# Add scripts/ml to path for local imports
+import sys
+sys.path.insert(0, str(Path(__file__).parent))
+
+from category_config import CATEGORY_REGISTRY, CategoryConfig
 
 
 LOGGER = logging.getLogger("train_category_model")

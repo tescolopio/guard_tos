@@ -1,0 +1,35 @@
+{
+  "version": "v2025.10.13",
+  "category": "algorithmic_decisions",
+  "created": "2025-10-09",
+  "base_version": "v2025.10.08a",
+  "total_examples": 716,
+  "sources": {
+    "baseline": {
+      "version": "v2025.10.08a",
+      "count": 322
+    },
+    "phase2a_positives": {
+      "path": "data/aug/algorithmic_decisions/v2025.10.13/synthetic_phase2a.jsonl",
+      "count": 248,
+      "description": "Targeted positives with strong decisional language and user impact"
+    },
+    "phase2a_hard_negatives": {
+      "path": "data/aug/algorithmic_decisions/v2025.10.13/hard_negatives/synthetic_phase2a_negatives.jsonl",
+      "count": 146,
+      "description": "Transparency statements mentioning algorithms but not making decisions"
+    }
+  },
+  "labels": [
+    "automated_decision",
+    "human_review",
+    "transparency_statement"
+  ],
+  "augmentation_strategy": "Phase 2a: Address automated_decision precision issues by adding hard negatives that target false positive pattern (transparency statements confused with decisions)",
+  "target_improvements": {
+    "automated_decision_precision": {
+      "baseline": 0.375,
+      "target": 0.60
+    }
+  }
+}

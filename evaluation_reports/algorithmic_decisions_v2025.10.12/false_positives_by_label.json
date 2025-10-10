@@ -1,0 +1,74 @@
+{
+  "automated_decision": [
+    {
+      "label": "automated_decision",
+      "text": "We explain how our algorithms process information: they analyze authenticity signals and previous behavior patterns.",
+      "confidence": 0.3889464735984802,
+      "text_length": 116
+    },
+    {
+      "label": "automated_decision",
+      "text": "Our algorithmic models consider inputs like temporal patterns, user engagement, and user preferences.",
+      "confidence": 0.364969938993454,
+      "text_length": 101
+    },
+    {
+      "label": "automated_decision",
+      "text": "The automated system relies on criteria including account age and temporal patterns.",
+      "confidence": 0.3469846546649933,
+      "text_length": 84
+    },
+    {
+      "label": "automated_decision",
+      "text": "We aim to be transparent about how our algorithmic systems work.",
+      "confidence": 0.32972145080566406,
+      "text_length": 64
+    },
+    {
+      "label": "automated_decision",
+      "text": "We aim to be transparent about how our algorithmic systems work.",
+      "confidence": 0.32972145080566406,
+      "text_length": 64
+    }
+  ],
+  "human_review": [
+    {
+      "label": "human_review",
+      "text": "Content decisions may be made automatically without human review.",
+      "confidence": 0.7600549459457397,
+      "text_length": 65
+    }
+  ],
+  "transparency_statement": [
+    {
+      "label": "transparency_statement",
+      "text": "The service uses AI to analyze user behavior.",
+      "confidence": 0.375688761472702,
+      "text_length": 45
+    },
+    {
+      "label": "transparency_statement",
+      "text": "We rely on automated systems for analyzing account status.",
+      "confidence": 0.31467270851135254,
+      "text_length": 58
+    },
+    {
+      "label": "transparency_statement",
+      "text": "Machine learning algorithms analyze recommendations.",
+      "confidence": 0.2838400900363922,
+      "text_length": 52
+    },
+    {
+      "label": "transparency_statement",
+      "text": "We utilize artificial intelligence to recommend recommendations.",
+      "confidence": 0.2792169749736786,
+      "text_length": 64
+    },
+    {
+      "label": "transparency_statement",
+      "text": "Automated systems analyze and select account status.",
+      "confidence": 0.2773975133895874,
+      "text_length": 52
+    }
+  ]
+}

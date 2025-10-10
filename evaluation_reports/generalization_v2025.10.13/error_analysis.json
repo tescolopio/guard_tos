@@ -1,0 +1,42 @@
+{
+  "false_positives": [
+    {
+      "label": "automated_decision",
+      "text": "Initial content moderation is performed algorithmically, with subsequent human review in certain cases.",
+      "confidence": 0.5254493951797485,
+      "text_length": 103
+    },
+    {
+      "label": "human_review",
+      "text": "Decisions are made by our systems unless you exercise your right to request human review.",
+      "confidence": 0.8964322805404663,
+      "text_length": 89
+    },
+    {
+      "label": "human_review",
+      "text": "Decisions about service eligibility are partially automated, with human oversight for appeals.",
+      "confidence": 0.5220739245414734,
+      "text_length": 94
+    }
+  ],
+  "false_negatives": [
+    {
+      "label": "automated_decision",
+      "text": "Content reach and visibility are determined by our AI-powered recommendation algorithms.",
+      "confidence": 0.21726682782173157,
+      "text_length": 88
+    },
+    {
+      "label": "automated_decision",
+      "text": "The app employs automated triage algorithms that classify symptoms and recommend levels of care urgency.",
+      "confidence": 0.2946033775806427,
+      "text_length": 104
+    },
+    {
+      "label": "automated_decision",
+      "text": "Access to features depends on algorithmic evaluation of your activity patterns.",
+      "confidence": 0.49341705441474915,
+      "text_length": 79
+    }
+  ]
+}
