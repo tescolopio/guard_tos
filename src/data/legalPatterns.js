@@ -141,6 +141,12 @@ const LEGAL_PATTERNS = {
     /(?:^|\n)\s*["']?\w+["']?\s+(?:shall |means |refers to |is defined as )/im,
   LEGAL_HEADERS:
     /(?:^|\n)(?:terms|privacy|policy|agreement|notice|disclaimer|conditions)/i,
+  SECTION_NUMBERING:
+    /(?:^|\n)\s*(?:\d+\.|\d+\)|[A-Z]\.|\([a-z]\)|\([ivxIVX]+\))/m,
+  CITATIONS:
+    /\d+\s+U\.S\.C\.|(?:Section|§)\s+\d+|Art(?:icle|\.)\s+\d+/i,
+  LISTS:
+    /(?:^|\n)\s*(?:[-•·]|\d+\.|\([a-z]\))\s+\w/m,
   // Clause-level patterns for rights scoring rubric
   CLAUSES: {
     HIGH_RISK: {

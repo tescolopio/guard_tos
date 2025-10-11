@@ -10,6 +10,7 @@ const { EXT_CONSTANTS } = require("../utils/constants");
   "use strict";
 
   const { createTextExtractor } = require("./textExtractor");
+  const { LEGAL_PATTERNS } = require("../data/legalPatterns");
 
   function createLegalTextAnalyzer({
     log,
@@ -33,7 +34,8 @@ const { EXT_CONSTANTS } = require("../utils/constants");
     async function analyzeText(text) {
       try {
         // Extract and preprocess text
-        const processedText = await textExtractor.extract(text, "text");
+        const result = await textExtractor.extract(text, "text");
+        const processedText = typeof result === 'string' ? result : result.text;
 
         if (!processedText || processedText.length < ANALYSIS.MIN_WORD_LENGTH) {
           return {
