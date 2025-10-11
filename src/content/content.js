@@ -342,12 +342,14 @@ try {
         let extractionResult;
         if (typeof inputText === "string" && inputText.trim().length > 0) {
           const words = inputText.toLowerCase().split(/\W+/).filter(Boolean);
-          const legalTerms = (global.legalTerms || []).map((t) =>
+          // Use the loaded legalTerms (single-word list)
+          const legalTermsList = (legalTerms || []).map((t) =>
             String(t).toLowerCase(),
           );
           const legalTermCount = words.filter((w) =>
-            legalTerms.includes(w),
+            legalTermsList.includes(w),
           ).length;
+          this.log(this.logLevels.DEBUG, `Manual count from input text: ${legalTermCount} legal terms in ${words.length} words`);
           extractionResult = {
             text: inputText,
             metadata: {
@@ -373,18 +375,22 @@ try {
 
         // 3. Get the count of legal terms found
         const legalTermCount = extractionResult.metadata.legalTermCount;
+        this.log(this.logLevels.INFO, `Legal term count: ${legalTermCount}, AUTO_GRADE threshold: ${EXT_CONSTANTS.DETECTION.THRESHOLDS.AUTO_GRADE}, NOTIFY threshold: ${EXT_CONSTANTS.DETECTION.THRESHOLDS.NOTIFY}`);
 
         // 4. Determine the appropriate action based on the legal term count
         if (legalTermCount >= EXT_CONSTANTS.DETECTION.THRESHOLDS.AUTO_GRADE) {
           // If there are many legal terms, handle as a high count
+          this.log(this.logLevels.INFO, "Triggering full analysis (AUTO_GRADE threshold met)");
           await this.handleHighLegalTermCount(extractionResult.text);
           return true;
         } else if (legalTermCount > EXT_CONSTANTS.DETECTION.THRESHOLDS.NOTIFY) {
           // If there are a moderate number of legal terms, handle accordingly
+          this.log(this.logLevels.INFO, "Moderate legal term count - showing notification only");
           this.handleModerateLegalTermCount();
           return false;
         } else {
           // If there are few legal terms, run a pattern-based analysis as a fallback
+          this.log(this.logLevels.DEBUG, "Low legal term count - running pattern analysis fallback");
           try {
             const patternAnalysis = await this.legalAnalyzer.analyzeText(
               extractionResult.text,
