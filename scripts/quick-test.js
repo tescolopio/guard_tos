@@ -38,7 +38,7 @@ const path = require('path');
       'debug': '🐛'
     }[type] || '📝';
     
-    if (text.includes('Terms Guardian') || text.includes('[INFO]') || text.includes('[ERROR]') || text.includes('[WARN]')) {
+    if (text.includes('Terms Guardian') || text.includes('[INFO]') || text.includes('[ERROR]') || text.includes('[WARN]') || text.includes('[DEBUG]')) {
       console.log(`${emoji} [${type.toUpperCase()}] ${text}`);
     }
     

@@ -46,6 +46,7 @@ let EXT_CONSTANTS,
   createReadabilityGrader,
   utilities,
   commonWords,
+  legalTerms,
   legalTermsDefinitions;
 let createSummarizer,
   createEnhancedSummarizer,
@@ -67,6 +68,8 @@ try {
     require("../analysis/readabilityGrader").createReadabilityGrader;
   utilities = require("../utils/utilities");
   commonWords = require("../data/commonWords").commonWords;
+  // Use single-word legal terms for efficient word-by-word matching
+  legalTerms = require("../data/legalTermsSingleWords").legalTermsSingleWords;
   legalTermsDefinitions =
     require("../data/legalTermsDefinitions").legalTermsDefinitions;
   createSummarizer = require("../analysis/summarizeTos").createSummarizer;
@@ -97,6 +100,7 @@ try {
     global.ReadabilityGrader && global.ReadabilityGrader.create;
   utilities = global.utilities;
   commonWords = global.commonWords;
+  legalTerms = global.legalTerms;
   legalTermsDefinitions = global.legalTermsDefinitions;
   createSummarizer = global.TosSummarizer && global.TosSummarizer.create;
   createEnhancedSummarizer =
@@ -166,9 +170,11 @@ try {
         this.legalAnalyzer = createLegalTextAnalyzer({
           log: this.log,
           logLevels: this.logLevels,
-          legalTerms: global.legalTerms || [],
+          legalTerms: legalTerms || [],
           utilities,
         });
+        
+        this.log(this.logLevels.DEBUG, `Legal analyzer initialized with ${(legalTerms || []).length} legal terms`);
 
         if (!createSummarizer) {
           throw new Error("TosSummarizer not available");

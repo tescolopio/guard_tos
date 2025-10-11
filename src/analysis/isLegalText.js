@@ -169,7 +169,8 @@ const { EXT_CONSTANTS } = require("../utils/constants");
       const score = density * 0.4 + proximityScore * 0.3 + patternScore * 0.3;
 
       // Determine if text is legal based on term thresholds from constants
-      const isLegal = termCount >= DETECTION.THRESHOLDS.SECTION && score >= 0.5;
+      // Lower threshold from 0.5 to 0.15 for better sensitivity
+      const isLegal = termCount >= DETECTION.THRESHOLDS.SECTION && score >= 0.15;
 
       // Determine confidence level based on term count thresholds
       let confidence = "low";
@@ -178,6 +179,24 @@ const { EXT_CONSTANTS } = require("../utils/constants");
       } else if (termCount >= DETECTION.THRESHOLDS.NOTIFY) {
         confidence = "medium";
       }
+
+      // Enhanced logging for debugging
+      log(logLevels.DEBUG, "Legal text detection decision:", {
+        termCount,
+        threshold: DETECTION.THRESHOLDS.SECTION,
+        density,
+        proximityScore,
+        patternScore,
+        finalScore: score,
+        scoreThreshold: 0.15,
+        isLegal,
+        confidence,
+        reason: !isLegal ? 
+          (termCount < DETECTION.THRESHOLDS.SECTION ? 
+            `Not enough terms (${termCount} < ${DETECTION.THRESHOLDS.SECTION})` : 
+            `Score too low (${score.toFixed(3)} < 0.15)`) : 
+          "Detected as legal"
+      });
 
       return { isLegal, confidence, score };
     }
