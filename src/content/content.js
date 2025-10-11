@@ -547,6 +547,14 @@ try {
           }
         }
 
+        this.log(this.logLevels.INFO, "Sending analysis to service worker", {
+          type: "tosDetected",
+          textLength: text.length,
+          hasAnalysis: !!minimal,
+          rightsScore: minimal.rights?.rightsScore,
+          readabilityGrade: minimal.readability?.grade
+        });
+
         chrome.runtime.sendMessage({
           type: "tosDetected",
           text: text,
