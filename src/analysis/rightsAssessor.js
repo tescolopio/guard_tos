@@ -591,7 +591,12 @@ const { EXT_CONSTANTS } = require("../utils/constants");
 
   // Export for both Chrome extension and test environments
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = { createRightsAssessor };
+    module.exports = { 
+      createRightsAssessor,
+      RightsAssessor: {
+        create: createRightsAssessor
+      }
+    };
   } else if (typeof window !== "undefined") {
     global.RightsAssessor = {
       create: createRightsAssessor,

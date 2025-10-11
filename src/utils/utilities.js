@@ -206,9 +206,13 @@
     create: createUtilities,
   };
 
+  // Create a default instance
+  const defaultUtilities = createUtilities({});
+
   // Export for both Chrome extension and test environments
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = { createUtilities };
+    module.exports = defaultUtilities; // Export default instance as main export
+    module.exports.createUtilities = createUtilities; // Also export factory
   } else {
     const utils = createUtilities({
       log: global.log,
