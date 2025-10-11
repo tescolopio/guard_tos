@@ -42,7 +42,11 @@ module.exports = merge(common, {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: "vendors",
-          chunks: "initial",
+          chunks(chunk) {
+            // Exclude content script from vendor splitting
+            // Content scripts can't load separate chunks in Chrome extensions
+            return chunk.name !== 'content';
+          },
           priority: 5,
         },
       },
