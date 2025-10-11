@@ -122,7 +122,7 @@
     }
 
     /**
-     * Summarizes a section of text using compromise.js
+     * Summarizes a section of text using compromise.js or fallback sentence extraction
      * @param {string} sectionText Text to summarize
      * @returns {string} Summarized text
      */
@@ -132,23 +132,47 @@
           return "";
         }
 
-        const doc = compromise(sectionText);
-        
-        // Get key sentences (first sentence, any sentences with important terms, last sentence)
-        const firstSentence = doc.sentences().first().text();
-        const lastSentence = doc.sentences().last().text();
-        
-        // Look for sentences with important legal terms
-        const importantSentences = doc.sentences()
-          .filter(s => s.has('#Condition') || s.has('#Legal') || s.has('#Money'))
-          .text();
+        // If compromise is available, use it for advanced NLP
+        if (compromise && typeof compromise === 'function') {
+          const doc = compromise(sectionText);
+          
+          // Get key sentences (first sentence, any sentences with important terms, last sentence)
+          const firstSentence = doc.sentences().first().text();
+          const lastSentence = doc.sentences().last().text();
+          
+          // Look for sentences with important legal terms
+          const importantSentences = doc.sentences()
+            .filter(s => s.has('#Condition') || s.has('#Legal') || s.has('#Money'))
+            .text();
 
-        // Combine and deduplicate sentences
-        const summary = [...new Set([firstSentence, importantSentences, lastSentence])]
-          .filter(Boolean)
-          .join(' ');
+          // Combine and deduplicate sentences
+          const summary = [...new Set([firstSentence, importantSentences, lastSentence])]
+            .filter(Boolean)
+            .join(' ');
 
-        return summary || "No summary available.";
+          return summary || "No summary available.";
+        } else {
+          // Fallback: Simple sentence extraction when compromise isn't available
+          log(logLevels.DEBUG, "Using fallback sentence extraction (compromise not available)");
+          
+          // Split by sentence endings
+          const sentences = sectionText
+            .split(/[.!?]+/)
+            .map(s => s.trim())
+            .filter(s => s.length > 0);
+          
+          if (sentences.length === 0) {
+            return "No content available.";
+          }
+          
+          // Return first sentence, or first 150 chars if first sentence is too long
+          const firstSentence = sentences[0];
+          if (firstSentence.length > 150) {
+            return firstSentence.substring(0, 147) + '...';
+          }
+          
+          return firstSentence + '.';
+        }
       } catch (error) {
         log(logLevels.ERROR, "Error summarizing section:", error);
         return "Error generating summary.";

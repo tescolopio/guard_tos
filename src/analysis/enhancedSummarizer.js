@@ -684,9 +684,20 @@
         text = text.replace(regex, plain);
       }
 
-      // Use compromise.js for better sentence extraction
-      const doc = compromise(text);
-      const sentences = doc.sentences().json();
+      // Use compromise.js for better sentence extraction if available
+      let sentences;
+      if (compromise && typeof compromise === 'function') {
+        const doc = compromise(text);
+        sentences = doc.sentences().json();
+      } else {
+        // Fallback: Simple sentence splitting
+        log(logLevels.DEBUG, "Using fallback sentence splitting (compromise not available)");
+        sentences = text
+          .split(/[.!?]+/)
+          .map(s => s.trim())
+          .filter(s => s.length > 0)
+          .map(s => ({ text: s }));
+      }
 
       // Extract the most important sentences
       const importantSentences = extractImportantSentences(
