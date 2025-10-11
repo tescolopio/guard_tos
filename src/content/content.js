@@ -15,12 +15,15 @@
  *  - 2024-09-26 | tescolopio | Modified to work with Chrome extension content scripts and globally defined variables.
  */
 
+console.log("🔵 Terms Guardian: Content script file is loading...");
+
 // IMPORTANT: set webpack runtime publicPath to the extension base before anything else
 // This prevents "Automatic publicPath is not supported in this browser" errors
 try {
   require("../runtime/publicPath");
+  console.log("✅ Terms Guardian: publicPath set successfully");
 } catch (e) {
-  /* noop */
+  console.error("❌ Terms Guardian: Failed to set publicPath:", e);
 }
 
 // Set a flag on the body to indicate the content script has loaded
@@ -31,7 +34,10 @@ if (document.readyState === "loading") {
   });
 } else {
   document.body.setAttribute("data-terms-guardian-loaded", "true");
+  console.log("✅ Terms Guardian: Body attribute set (DOM already loaded)");
 }
+
+console.log("🔵 Terms Guardian: Starting module imports...");
 
 // Fallback imports for browser environment
 let EXT_CONSTANTS,
@@ -52,6 +58,7 @@ let ContentHashService,
   TextCache;
 
 try {
+  console.log("🔵 Terms Guardian: Importing modules via require()...");
   EXT_CONSTANTS = require("../utils/constants").EXT_CONSTANTS;
   RightsAssessor = require("../analysis/rightsAssessor").RightsAssessor;
   createLegalTextAnalyzer =
@@ -79,7 +86,9 @@ try {
   UserPreferenceService =
     require("../services/userPreferenceService").UserPreferenceService;
   TextCache = require("../data/cache/textCache").TextCache;
+  console.log("✅ Terms Guardian: All modules imported successfully via require()");
 } catch (e) {
+  console.warn("⚠️ Terms Guardian: require() failed, falling back to globals:", e);
   // Fallback to global objects in production build
   EXT_CONSTANTS = global.EXT_CONSTANTS;
   RightsAssessor = global.RightsAssessor;
