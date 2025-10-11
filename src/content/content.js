@@ -688,8 +688,16 @@ try {
         const readabilityAnalysis =
           await this.readabilityGrader.calculateReadabilityGrade(text);
 
-        // Create simple HTML wrapper for text to enable summarization
-        const htmlContent = `<html><body><div>${text.replace(/\n/g, "<br>")}</div></body></html>`;
+        // Get actual document HTML for summarization (preserves heading structure)
+        // Use document.body.innerHTML for the full page, or create a wrapper if text is provided
+        let htmlContent;
+        if (document && document.body) {
+          // Use actual page HTML to preserve heading structure for section identification
+          htmlContent = document.body.innerHTML;
+        } else {
+          // Fallback: create simple HTML wrapper (for testing or when no DOM is available)
+          htmlContent = `<html><body><div>${text.replace(/\n/g, "<br>")}</div></body></html>`;
+        }
 
         // Use enhanced summarizer for plain language summaries
         const summaryAnalysis =
