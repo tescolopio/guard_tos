@@ -20,16 +20,24 @@ function createDomCheerio() {
     
     /**
      * jQuery-like selector function
-     * @param {string} selector CSS selector
+     * @param {string|object} selector CSS selector or element wrapper
      * @returns {Object} jQuery-like object with methods
      */
     function $(selector) {
       let elements;
       
+      // If selector is already a wrapped element (from .each callback), return it
+      if (typeof selector === 'object' && selector.text && selector.nextUntil) {
+        return selector;
+      }
+      
       if (selector === 'body') {
         elements = [doc.body];
-      } else {
+      } else if (typeof selector === 'string') {
         elements = Array.from(doc.querySelectorAll(selector));
+      } else {
+        // Unsupported selector type, return empty
+        elements = [];
       }
       
       return {
