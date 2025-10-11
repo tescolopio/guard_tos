@@ -116,7 +116,6 @@ function createServiceWorker({ log, logLevels }) {
       log(logLevels.INFO, "Side panel opened successfully");
     } catch (error) {
       log(logLevels.ERROR, "Error opening side panel:", error);
-      // Consider showing a user-friendly error message here if appropriate
     }
   }
 

@@ -57,6 +57,7 @@ let ContentHashService,
   DatabaseService,
   UserPreferenceService,
   TextCache;
+let createDomCheerio; // Browser-native cheerio replacement
 
 try {
   console.log("🔵 Terms Guardian: Importing modules via require()...");
@@ -79,6 +80,9 @@ try {
     require("../analysis/textExtractor").createTextExtractor;
   createUncommonWordsIdentifier =
     require("../analysis/uncommonWordsIdentifier").createUncommonWordsIdentifier;
+  
+  // Browser-native cheerio replacement for DOM parsing
+  createDomCheerio = require("../utils/domCheerio").createDomCheerio;
 
   // Hash-based caching services
   ContentHashService =
@@ -179,9 +183,11 @@ try {
         if (!createSummarizer) {
           throw new Error("TosSummarizer not available");
         }
+        // Create browser-native cheerio for DOM parsing
+        const domCheerio = createDomCheerio ? createDomCheerio() : null;
         this.summarizer = createSummarizer({
           compromise: global.compromise,
-          cheerio: global.cheerio,
+          cheerio: domCheerio,
           log: this.log,
           logLevels: this.logLevels,
         });
@@ -192,7 +198,7 @@ try {
         }
         this.enhancedSummarizer = createEnhancedSummarizer({
           compromise: global.compromise,
-          cheerio: global.cheerio,
+          cheerio: domCheerio,
           log: this.log,
           logLevels: this.logLevels,
         });
