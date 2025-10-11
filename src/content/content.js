@@ -197,6 +197,7 @@ try {
         this.extractor = createTextExtractor({
           log: this.log,
           logLevels: this.logLevels,
+          utilities: utilities, // Add utilities service
           config: {
             highlightThreshold: 20,
             sectionThreshold: 10,

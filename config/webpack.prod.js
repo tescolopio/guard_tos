@@ -17,9 +17,9 @@ module.exports = merge(common, {
             comments: false,
           },
           compress: {
-            drop_console: true,
-            drop_debugger: true,
-            pure_funcs: ["console.log"],
+            drop_console: false, // Keep console for debugging
+            drop_debugger: false, // Keep debugger for debugging
+            pure_funcs: [], // Don't remove console.log
           },
         },
         extractComments: false,

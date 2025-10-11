@@ -13,6 +13,9 @@ async function debugExtension() {
   const extensionPath = path.join(__dirname, '../dist');
   console.log(`📁 Extension path: ${extensionPath}\n`);
 
+  // Track all console messages
+  const allLogs = [];
+
   // Launch browser with extension
   const context = await chromium.launchPersistentContext('', {
     headless: false,
@@ -22,7 +25,7 @@ async function debugExtension() {
       '--no-sandbox',
       '--disable-dev-shm-usage',
     ],
-    devtools: true, // Open DevTools automatically
+    devtools: false, // Don't open DevTools automatically to reduce interference
   });
 
   const page = await context.newPage();
@@ -40,17 +43,23 @@ async function debugExtension() {
       'debug': '🐛'
     }[type] || '📄';
 
-    console.log(`${emoji} [${type.toUpperCase()}] ${text}`);
+    const logEntry = `${emoji} [${type.toUpperCase()}] ${text}`;
+    allLogs.push(logEntry);
+    console.log(logEntry);
   });
 
   // Capture page errors
   page.on('pageerror', error => {
-    console.error('❌ [PAGE ERROR]', error.message);
+    const errMsg = `❌ [PAGE ERROR] ${error.message}`;
+    allLogs.push(errMsg);
+    console.error(errMsg);
   });
 
   // Capture request failures
   page.on('requestfailed', request => {
-    console.error('❌ [REQUEST FAILED]', request.url(), request.failure().errorText);
+    const errMsg = `❌ [REQUEST FAILED] ${request.url()} - ${request.failure().errorText}`;
+    allLogs.push(errMsg);
+    console.error(errMsg);
   });
 
   console.log('🌐 Navigating to test page...\n');
@@ -60,7 +69,8 @@ async function debugExtension() {
   });
 
   console.log('\n✅ Page loaded. Waiting for content script...\n');
-  await page.waitForTimeout(5000);
+  console.log('\n⏳ Waiting 10 seconds for initialization...\n');
+  await page.waitForTimeout(10000);
 
   // Check if content script loaded
   const hasAttribute = await page.evaluate(() => {
@@ -84,12 +94,30 @@ async function debugExtension() {
     console.log('❌ Content script global flag is NOT set');
   }
 
-  console.log('\n⏳ Monitoring console for 30 seconds...');
-  console.log('(Chrome will stay open - check DevTools manually)\n');
+  // Print summary of logs
+  console.log('\n📊 === CONSOLE LOG SUMMARY ===');
+  console.log(`Total messages: ${allLogs.length}`);
   
-  await page.waitForTimeout(30000);
+  const termsGuardianLogs = allLogs.filter(log => log.includes('Terms Guardian'));
+  console.log(`Terms Guardian messages: ${termsGuardianLogs.length}\n`);
+  
+  if (termsGuardianLogs.length > 0) {
+    console.log('📋 Terms Guardian Messages:');
+    termsGuardianLogs.forEach(log => console.log(log));
+  }
 
-  console.log('\n✅ Test complete. Closing browser...');
+  const errors = allLogs.filter(log => log.includes('ERROR') || log.includes('error'));
+  if (errors.length > 0) {
+    console.log('\n⚠️ Errors detected:');
+    errors.forEach(log => console.log(log));
+  }
+
+  console.log('\n✅ Debug session complete. Browser will stay open for 60 seconds...');
+  console.log('Check the Chrome window for any UI or manual testing.\n');
+  
+  await page.waitForTimeout(60000);
+  
+  console.log('⏰ Closing browser...');
   await context.close();
 }
 
