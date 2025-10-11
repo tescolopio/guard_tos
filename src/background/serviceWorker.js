@@ -228,7 +228,7 @@ function createServiceWorker({ log, logLevels }) {
    */
   async function handleTosDetected(message, sender) {
     // Validate input
-    if (!message || !sender || !sender.tab || !sender.tab.id || !message.text) {
+    if (!message || !sender || !sender.tab || !sender.tab.id) {
       log(logLevels.WARN, "Invalid ToS detection data:", { message, sender });
       return;
     }
@@ -243,7 +243,17 @@ function createServiceWorker({ log, logLevels }) {
     try {
       state.analysisInProgress.add(tabId);
 
-      const results = await analyzeContent(message.text);
+      // Use analysis from content script if available, otherwise analyze here
+      let results;
+      if (message.analysis) {
+        log(logLevels.INFO, "Using analysis from content script");
+        results = message.analysis;
+      } else if (message.text) {
+        log(logLevels.INFO, "No analysis in message, analyzing content in service worker");
+        results = await analyzeContent(message.text);
+      } else {
+        throw new Error("No analysis or text provided in message");
+      }
 
       // Store results
       await storeAnalysisData(`${STORAGE_KEYS.ANALYSIS_RESULTS}_${tabId}`, {
@@ -254,9 +264,9 @@ function createServiceWorker({ log, logLevels }) {
       // Show notification
       showNotification(MESSAGES.AUTO_GRADE);
 
-      log(logLevels.INFO, "ToS analysis completed successfully");
+      log(logLevels.INFO, "ToS analysis completed and stored successfully");
     } catch (error) {
-      log(logLevels.ERROR, "Error analyzing ToS:", error);
+      log(logLevels.ERROR, "Error handling ToS detection:", error);
 
       // Show a generic error message to the user
       showNotification(EXT_CONSTANTS.MESSAGES.ERROR.ANALYSIS_FAILED);
