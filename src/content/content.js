@@ -214,7 +214,8 @@ try {
         if (!createUncommonWordsIdentifier) {
           throw new Error("UncommonWordsIdentifier not available");
         }
-        this.identifier = createUncommonWordsIdentifier({
+        // Store the creator function for lazy initialization
+        this.createIdentifier = () => createUncommonWordsIdentifier({
           log: this.log,
           logLevels: this.logLevels,
           commonWords: global.commonWords,
@@ -224,6 +225,7 @@ try {
             maxDefinitionRetries: 3,
           },
         });
+        this.identifier = null; // Will be initialized lazily
 
         // Initialize hash-based caching services
         try {
@@ -307,6 +309,15 @@ try {
       } catch (error) {
         this.log(this.logLevels.ERROR, "Error initializing analyzers:", error);
         throw error; // Consider handling this error more gracefully
+      }
+    }
+
+    /**
+     * Ensures the uncommon words identifier is initialized
+     */
+    async ensureIdentifierInitialized() {
+      if (!this.identifier && this.createIdentifier) {
+        this.identifier = await this.createIdentifier();
       }
     }
 
@@ -736,6 +747,8 @@ try {
         // Keep legacy summarizer for backward compatibility if needed
         const legacySummary = await this.summarizer.summarizeTos(htmlContent);
 
+        // Ensure identifier is initialized before use
+        await this.ensureIdentifierInitialized();
         const uncommonWords = await this.identifier.identifyUncommonWords(text);
         const keyExcerpts = this.extractKeyExcerpts(text);
 
