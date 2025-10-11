@@ -548,7 +548,7 @@ try {
         }
 
         this.log(this.logLevels.INFO, "Sending analysis to service worker", {
-          type: "tosDetected",
+          action: "tosDetected",
           textLength: text.length,
           hasAnalysis: !!minimal,
           rightsScore: minimal.rights?.rightsScore,
@@ -556,7 +556,7 @@ try {
         });
 
         chrome.runtime.sendMessage({
-          type: "tosDetected",
+          action: "tosDetected",  // Changed from 'type' to 'action'
           text: text,
           analysis: minimal,
         });
