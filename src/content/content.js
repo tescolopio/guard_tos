@@ -937,9 +937,22 @@ try {
     document.head.appendChild(script);
   }
 
+  // Create a simple logger that handles log levels
+  const simpleLogger = (level, ...args) => {
+    const levelNames = {
+      0: '[ERROR]',
+      1: '[WARN]',
+      2: '[INFO]',
+      3: '[DEBUG]',
+      4: '[TRACE]'
+    };
+    const levelName = levelNames[level] || '[LOG]';
+    console.log(levelName, ...args);
+  };
+
   // Initialize the content controller
   const controller = new ContentController({
-    log: console.log,
+    log: simpleLogger,
     logLevels: EXT_CONSTANTS.DEBUG.LEVELS, // Use CONSTANTS.DEBUG.LEVELS
   });
 
