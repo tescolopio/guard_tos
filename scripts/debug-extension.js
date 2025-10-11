@@ -69,8 +69,8 @@ async function debugExtension() {
   });
 
   console.log('\n✅ Page loaded. Waiting for content script...\n');
-  console.log('\n⏳ Waiting 10 seconds for initialization...\n');
-  await page.waitForTimeout(10000);
+  console.log('\n⏳ Waiting 8 seconds for initialization...\n');
+  await page.waitForTimeout(8000);
 
   // Check if content script loaded
   const hasAttribute = await page.evaluate(() => {

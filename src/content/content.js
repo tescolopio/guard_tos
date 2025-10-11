@@ -310,7 +310,10 @@ try {
      */
     updateExtensionIcon(showExclamation) {
       try {
-        chrome.action.setBadgeText({
+        // Content scripts can't access chrome.action directly
+        // Send message to service worker to update badge
+        chrome.runtime.sendMessage({
+          action: "updateBadge",
           text: showExclamation ? "!" : "",
         });
         this.log(
@@ -566,9 +569,9 @@ try {
         }
 
         // Use the legal text analyzer to check if this is a legal document
-        const isLegal = await this.legalTextAnalyzer.analyze(this.cachedText);
+        const result = await this.legalAnalyzer.analyzeText(this.cachedText);
 
-        if (isLegal) {
+        if (result && result.isLegal) {
           this.log(this.logLevels.INFO, "Legal document detected");
           this.updateExtensionIcon(true); // Set the badge to "!"
 

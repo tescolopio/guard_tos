@@ -190,6 +190,27 @@ function createServiceWorker({ log, logLevels }) {
           sendResponse(response);
           break;
         }
+        case "updateBadge": {
+          // Update extension badge (content scripts can't access chrome.action directly)
+          try {
+            const tabId = sender?.tab?.id;
+            if (tabId) {
+              await chrome.action.setBadgeText({
+                text: message.text || "",
+                tabId: tabId,
+              });
+              log(logLevels.DEBUG, `Badge updated to "${message.text}" for tab ${tabId}`);
+              sendResponse({ success: true });
+            } else {
+              log(logLevels.WARN, "updateBadge: No tab ID available");
+              sendResponse({ error: "No tab ID" });
+            }
+          } catch (error) {
+            log(logLevels.ERROR, "Error updating badge:", error);
+            sendResponse({ error: error.message });
+          }
+          break;
+        }
         default:
           log(logLevels.WARN, "Unknown message action:", message.action);
           sendResponse({ error: MESSAGES.ERROR.UNKNOWN_ACTION });
