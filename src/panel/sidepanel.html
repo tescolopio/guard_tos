@@ -1,8 +1,7 @@
-<!-- 
-
-This HTML file represents the structure of the side panel for the "Terms Guardian Analysis" application. 
-It provides a user interface for analyzing terms and conditions documents, displaying scores, summaries, 
-key excerpts, and uncommon terms.
+<!--
+  Side panel layout for the Terms Guardian extension.
+  Provides a condensed summary, key excerpts, and uncommon terms analysis
+  for the active document.
 -->
 
 <!doctype html>
@@ -15,319 +14,73 @@ key excerpts, and uncommon terms.
   </head>
 
   <body>
-    <div id="sidepanel-content" class="loading">
-      <header class="panel-header">
+    <article class="sidepanel" id="sidepanel-content" aria-label="Terms Guardian analysis">
+      <header>
         <h1>Terms Guardian</h1>
-        <h2>Know Your Terms, Know Your Rights!</h2>
-
-        <div class="analysis-header">
-          <div class="url-container">
-            <a id="terms-url" href="#" target="_blank" rel="noopener"
-              >Terms URL</a
-            >
-          </div>
-          <h3 id="terms-title"></h3>
+        <h2>Know Your Terms, Know Your Rights</h2>
+        <div class="document-meta">
+          <span id="service-name">Loading...</span>
+          <a id="terms-url" href="#" target="_blank" rel="noopener">--</a>
         </div>
-
-        <div class="scores">
-          <div
-            class="score-card readability-score"
-            data-popup="readabilityPopup"
-          >
-            <div class="grade-circle">
-              <span id="readability-grade">-</span>
-            </div>
-            <p>Readability Grade</p>
-            <div
-              id="readabilityPopup"
-              class="popup"
-              role="tooltip"
-              title="Readability Score Tooltip"
-            >
-              <div class="popup-content"></div>
-            </div>
-          </div>
-
-          <div class="score-card user-rights-index" data-popup="rightsPopup">
-            <div class="grade-circle">
-              <span id="user-rights-index">-</span>
-            </div>
-            <p>User Rights Index Grade</p>
-            <div
-              id="rightsPopup"
-              class="popup"
-              role="tooltip"
-              title="User Rights Index Tooltip"
-            >
-              <div class="popup-content"></div>
-            </div>
-          </div>
+        <div class="grade-display">
+          <p class="grade-value" id="document-grade" role="text">-</p>
+          <p class="grade-caption">Document Grade</p>
         </div>
       </header>
 
-      <main class="analysis-content">
-        <div class="loading-indicator">Analyzing document...</div>
+      <main>
+        <section aria-labelledby="summary-heading">
+          <div class="summary-header">
+            <h2 id="summary-heading">Summary</h2>
+          </div>
+          <div class="summary-toggle-group" role="group">
+            <button type="button" id="summary-document-btn" class="summary-toggle-btn active">
+              Whole Document
+            </button>
+            <button type="button" id="summary-section-btn" class="summary-toggle-btn">
+              By Section
+            </button>
+          </div>
+          <p id="summary-view-label" class="summary-view-label">Document Summary</p>
 
-        <!-- Risk Alert Section -->
-        <section
-          class="risk-alert-section"
-          id="risk-alert"
-          style="display: none"
-        >
-          <div class="risk-alert">
-            <div class="risk-icon">⚠️</div>
-            <div class="risk-content">
-              <div class="risk-message" id="risk-message"></div>
+          <div class="summary-view" id="summary-overall">
+            <div class="metric-grid" role="list">
+              <div class="metric-card" role="listitem">
+                <span class="metric-label">Rights Score</span>
+                <span class="metric-value" id="rights-score">--</span>
+                <span class="chip">Confidence: <span id="confidence">--</span></span>
+              </div>
+              <div class="metric-card" role="listitem">
+                <span class="metric-label">Readability</span>
+                <span class="metric-value" id="readability-score">--</span>
+                <span class="chip">Hover for breakdown</span>
+              </div>
             </div>
+            <div class="flags" role="list" id="flags-container">
+              <!-- Populated dynamically -->
+            </div>
+            <div class="summary-card" id="summary-text">
+              Loading analysis...
+            </div>
+          </div>
+
+          <div class="summary-view" id="summary-sections" hidden>
+            <div id="sections-accordion"></div>
           </div>
         </section>
 
-        <!-- Key Findings Section -->
-        <section
-          class="key-findings-section"
-          id="key-findings-section"
-          style="display: none"
-        >
-          <h2>📋 Key Findings</h2>
-          <div id="key-findings-list" class="key-findings-list">
-            <div class="placeholder">Loading key findings...</div>
-          </div>
-        </section>
-
-        <section class="column">
-          <h2>📝 Document Summary</h2>
-          <div class="content-organization">
-            <div class="view-toggle">
-              <button
-                type="button"
-                id="document-level-btn"
-                class="toggle-btn active"
-              >
-                Overall
-              </button>
-              <button type="button" id="by-section-btn" class="toggle-btn">
-                By Section
-              </button>
-              <button
-                type="button"
-                id="load-sample-btn"
-                class="toggle-btn demo-btn"
-                title="Load sample analysis into the panel"
-              >
-                Load Sample Data
-              </button>
-            </div>
-          </div>
-          <div id="overall-summary" class="content-section enhanced-summary">
-            <div class="placeholder">Loading summary...</div>
-          </div>
-
-          <!-- Document Risk Level Display -->
-          <div class="document-risk" id="document-risk" style="display: none">
-            <div class="risk-level-indicator">
-              <span class="risk-label">Document Risk Level:</span>
-              <span class="risk-badge" id="risk-badge">Medium</span>
-            </div>
-          </div>
-        </section>
-
-        <section class="column section-breakdown-container">
-          <div id="section-summaries" class="content-section enhanced-sections">
-            <div class="placeholder">Loading sections...</div>
+        <section aria-labelledby="terms-heading">
+          <h2 id="terms-heading">Uncommon Legal Terms</h2>
+          <div id="uncommon-terms-container">
+            <!-- Populated dynamically -->
           </div>
         </section>
       </main>
 
-      <aside class="additional-info">
-        <section class="key-excerpts" data-popup="excerptsPopup">
-          <h2>Key Excerpts</h2>
-          <div class="content-organization">
-            <div class="view-toggle">
-              <button
-                type="button"
-                id="excerpts-neg-btn"
-                class="toggle-btn active"
-              >
-                Negative
-              </button>
-              <button type="button" id="excerpts-pos-btn" class="toggle-btn">
-                Positive
-              </button>
-            </div>
-          </div>
-          <div id="key-excerpts-list" class="content-section">
-            <div class="placeholder">Loading excerpts...</div>
-          </div>
-          <div
-            id="excerptsPopup"
-            class="popup"
-            role="tooltip"
-            title="Key Excerpts Tooltip"
-          >
-            <div class="popup-content"></div>
-          </div>
-        </section>
-
-        <section class="uncommon-terms" data-popup="termsPopup">
-          <h2>Uncommon Terms</h2>
-          <div id="uncommon-terms-list" class="content-section">
-            <div class="placeholder">Loading terms...</div>
-          </div>
-          <div
-            id="termsPopup"
-            class="popup"
-            role="tooltip"
-            title="Uncommon Terms Tooltip"
-          >
-            <div class="popup-content"></div>
-          </div>
-        </section>
-
-        <section class="dictionary-terms" data-popup="termsPopup">
-          <h2>Dictionary Terms</h2>
-          <ul id="dictionary-terms-list" class="content-section">
-            <div class="placeholder">Loading dictionary terms...</div>
-          </ul>
-        </section>
-      </aside>
-
-      <footer class="panel-footer">
-        <div class="action-buttons">
-          <button type="button" id="contactBtn" class="action-button">
-            Contact Us
-          </button>
-          <button type="button" id="reportBtn" class="action-button">
-            Report Issue
-          </button>
-          <button type="button" id="githubBtn" class="action-button">
-            Github
-          </button>
-          <button type="button" id="feedbackBtn" class="action-button">
-            Give Feedback
-          </button>
-          <button type="button" id="donateBtn" class="action-button">
-            Donate
-          </button>
-        </div>
-        <div
-          id="status-message"
-          class="status-message"
-          role="status"
-          aria-live="polite"
-        ></div>
+      <footer>
+        Analysis by Terms Guardian
       </footer>
-
-      <!-- Optional Diagnostics (visible only when enabled) -->
-      <section id="diagnostics" class="diagnostics" style="display: none">
-        <h2>Diagnostics</h2>
-        <label style="display: block; margin: 0.5rem 0">
-          <input type="checkbox" id="toggle-diagnostics" /> Enable Dictionary
-          Metrics
-        </label>
-        <div class="diagnostic-card">
-          <h3>Dictionary Cache</h3>
-          <div class="diag-grid">
-            <div>Hits: <span id="dict-metric-hits">0</span></div>
-            <div>Misses: <span id="dict-metric-misses">0</span></div>
-            <div>Size: <span id="dict-metric-size">0</span></div>
-            <div>Max: <span id="dict-metric-max">0</span></div>
-            <div>TTL (ms): <span id="dict-metric-ttl">0</span></div>
-            <div>Last Update: <span id="dict-metric-ts">-</span></div>
-          </div>
-        </div>
-        <div class="diagnostic-card" id="pattern-weights-card">
-          <h3>Pattern Weights & Clause Counts</h3>
-          <label
-            style="
-              display: block;
-              margin: 0.25rem 0 0.5rem 0;
-              font-size: 0.85rem;
-            "
-          >
-            <input type="checkbox" id="toggle-clause-counts" /> Show Live Clause
-            Counts
-          </label>
-          <div class="diag-grid" id="pattern-weights-grid">
-            <!-- dynamically populated -->
-          </div>
-          <div
-            class="diag-grid"
-            id="pattern-clausecounts-grid"
-            style="display: none; margin-top: 0.5rem"
-          >
-            <!-- dynamically populated with live counts -->
-          </div>
-        </div>
-      </section>
-
-      <!-- Settings Section -->
-      <section id="settings" class="settings" style="display: none">
-        <h2>Settings</h2>
-
-        <div class="settings-card">
-          <h3>Cache Settings</h3>
-          <label style="display: block; margin: 0.5rem 0">
-            <input type="checkbox" id="enable-hash-caching" checked /> Enable
-            Hash-based Caching
-          </label>
-          <div class="setting-group">
-            <label for="processing-mode">Processing Mode:</label>
-            <select id="processing-mode">
-              <option value="cloud">Cloud Processing (Shared Results)</option>
-              <option value="local">Local Only (Private)</option>
-            </select>
-          </div>
-          <div class="setting-group">
-            <label for="cache-retention">Cache Retention (days):</label>
-            <input
-              type="number"
-              id="cache-retention"
-              min="1"
-              max="365"
-              value="30"
-            />
-          </div>
-        </div>
-
-        <div class="settings-card">
-          <h3>Analysis Preferences</h3>
-          <label style="display: block; margin: 0.5rem 0">
-            <input type="checkbox" id="auto-update" checked /> Auto-update
-            Analysis
-          </label>
-          <label style="display: block; margin: 0.5rem 0">
-            <input type="checkbox" id="debug-mode" /> Debug Mode
-          </label>
-        </div>
-
-        <div class="settings-card">
-          <h3>Cache Statistics</h3>
-          <div class="diag-grid">
-            <div>Local Hits: <span id="cache-local-hits">0</span></div>
-            <div>Cloud Hits: <span id="cache-cloud-hits">0</span></div>
-            <div>Misses: <span id="cache-misses">0</span></div>
-            <div>Total Entries: <span id="cache-total-entries">0</span></div>
-            <div>Hit Rate: <span id="cache-hit-rate">0%</span></div>
-            <div>Storage Used: <span id="cache-storage-used">0 KB</span></div>
-          </div>
-          <button id="clear-cache-btn" class="settings-btn danger">
-            Clear Cache
-          </button>
-          <button id="refresh-stats-btn" class="settings-btn">
-            Refresh Stats
-          </button>
-        </div>
-
-        <div class="settings-actions">
-          <button id="reset-settings-btn" class="settings-btn">
-            Reset to Defaults
-          </button>
-          <button id="export-settings-btn" class="settings-btn">
-            Export Settings
-          </button>
-        </div>
-      </section>
-    </div>
+    </article>
 
     <!-- Sidepanel controller (includes constants and debugger via webpack bundle) -->
     <script src="sidepanel.js"></script>
