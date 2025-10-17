@@ -58,6 +58,9 @@ class Sidepanel {
       // Core container
       content: document.getElementById("sidepanel-content"),
       
+      // Loading spinner (2025-10-17: new loading visual feedback)
+      loadingSpinner: document.getElementById("loading-spinner"),
+      
       // Document info (2025-10-17: renamed from termsTitle to serviceName)
       serviceName: document.getElementById("service-name"),
       termsUrl: document.getElementById("terms-url"),
@@ -77,6 +80,10 @@ class Sidepanel {
       readabilityScore: document.getElementById("readability-score"),
       flagsContainer: document.getElementById("flags-container"),
       summaryText: document.getElementById("summary-text"),
+      
+      // URI category breakdown (2025-10-17: new collapsible section)
+      uriBreakdown: document.getElementById("uri-breakdown"),
+      uriCategoriesContainer: document.getElementById("uri-categories-container"),
       
       // Sections summary view (2025-10-17: new accordion)
       summarySections: document.getElementById("summary-sections"),
@@ -99,24 +106,45 @@ class Sidepanel {
 
   /**
    * Loading State Management
-   * 2025-10-17: Simplified - new HTML structure doesn't have loadingIndicator element
+   * 2025-10-17: Updated to use visual loading spinner in header
    */
   loadingManager = {
     start: (message = "Loading...") => {
       this.debug.info && this.debug.info("Starting loading state", { message });
       this.state.isLoading = true;
       this.elements.content.classList.add("loading");
+      
+      // 2025-10-17: Show loading spinner
+      if (this.elements.loadingSpinner) {
+        this.elements.loadingSpinner.removeAttribute('hidden');
+        const loadingText = this.elements.loadingSpinner.querySelector('.loading-text');
+        if (loadingText) {
+          loadingText.textContent = message;
+        }
+      }
     },
 
     update: (message) => {
-      // 2025-10-17: No-op - no visual loading indicator in new structure
       this.debug.info && this.debug.info("Loading update", { message });
+      
+      // 2025-10-17: Update loading message
+      if (this.elements.loadingSpinner) {
+        const loadingText = this.elements.loadingSpinner.querySelector('.loading-text');
+        if (loadingText) {
+          loadingText.textContent = message;
+        }
+      }
     },
 
     end: () => {
       this.debug.info && this.debug.info("Ending loading state");
       this.state.isLoading = false;
       this.elements.content.classList.remove("loading");
+      
+      // 2025-10-17: Hide loading spinner
+      if (this.elements.loadingSpinner) {
+        this.elements.loadingSpinner.setAttribute('hidden', '');
+      }
     },
   };
 
@@ -316,6 +344,68 @@ class Sidepanel {
     }
   }
 
+  /**
+   * Update URI Category Breakdown
+   * 2025-10-17: Display all 8 URI categories with scores and grades
+   */
+  updateUriCategoryBreakdown(userRightsIndex) {
+    if (!this.elements.uriCategoriesContainer || !userRightsIndex) return;
+
+    try {
+      const categories = userRightsIndex.categories || {};
+      
+      // Category labels in display order
+      const categoryOrder = [
+        { key: 'DATA_COLLECTION_USE', label: 'Data Collection & Use' },
+        { key: 'USER_PRIVACY', label: 'User Privacy' },
+        { key: 'DISPUTE_RESOLUTION', label: 'Dispute Resolution' },
+        { key: 'TERMS_CHANGES', label: 'Terms Changes' },
+        { key: 'CONTENT_RIGHTS', label: 'Content Rights' },
+        { key: 'ACCOUNT_MANAGEMENT', label: 'Account Management' },
+        { key: 'ALGORITHMIC_DECISIONS', label: 'Algorithmic Decisions' },
+        { key: 'CLARITY_TRANSPARENCY', label: 'Clarity & Transparency' }
+      ];
+
+      const categoryItems = categoryOrder.map(({ key, label }) => {
+        const cat = categories[key];
+        const score = typeof cat?.score === 'number' ? cat.score : null;
+        const grade = cat?.grade || 'N/A';
+        
+        // Determine score class for color coding
+        let scoreClass = '';
+        if (score !== null) {
+          if (score >= 85) scoreClass = 'score-high';
+          else if (score >= 70) scoreClass = 'score-medium';
+          else if (score >= 50) scoreClass = 'score-low';
+          else scoreClass = 'score-critical';
+        }
+
+        const scoreText = score !== null ? `${Math.round(score)}%` : '--';
+
+        return `
+          <div class="uri-category-item">
+            <span class="uri-category-label">${label}</span>
+            <div class="uri-category-score ${scoreClass}">
+              <span class="score-value">${scoreText}</span>
+              <span class="score-grade">${grade}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      this.elements.uriCategoriesContainer.innerHTML = categoryItems;
+
+      // Show the breakdown section if we have valid data
+      if (this.elements.uriBreakdown && categoryItems) {
+        this.elements.uriBreakdown.style.display = 'block';
+      }
+
+      this.debug.info && this.debug.info('URI category breakdown updated');
+    } catch (error) {
+      this.debug.error && this.debug.error('Error updating URI category breakdown:', error);
+    }
+  }
+
   updateSummary(summary, enhancedData) {
     if (!summary) return;
 
@@ -359,6 +449,11 @@ class Sidepanel {
       wordCount: readabilityData?.wordCount,
       clauseCount: this.calculateTotalClauses(rightsData),
     });
+
+    // 2025-10-17: Update URI category breakdown
+    if (this.currentContent?.userRightsIndex) {
+      this.updateUriCategoryBreakdown(this.currentContent.userRightsIndex);
+    }
 
     // 2025-10-17: Update main summary text (renamed from overallSummary to summaryText)
     if (summaryBundle?.keyFindings && Array.isArray(summaryBundle.keyFindings)) {
@@ -1443,6 +1538,11 @@ class Sidepanel {
 
     this.setupEventListeners();
     console.log("🔵 SIDEPANEL: Event listeners set up");
+    
+    // 2025-10-17: Setup interactive tooltips for metric cards
+    this.setupTooltips();
+    console.log("🔵 SIDEPANEL: Tooltips initialized");
+    
     // Ensure default view is Document-Level on load
     try {
       this.toggleView("document");
@@ -1455,6 +1555,167 @@ class Sidepanel {
     this.debug.endTimer && this.debug.endTimer("sidepanelInit");
     this.debug.info && this.debug.info("Sidepanel initialized.");
     this.debug.endGroup && this.debug.endGroup();
+  }
+
+  /**
+   * Setup interactive tooltips for metric cards
+   * 2025-10-17: Added for URI category breakdown and readability metrics display
+   */
+  setupTooltips() {
+    // Create tooltip element (shared for all metrics)
+    if (!document.getElementById('metric-tooltip')) {
+      const tooltip = document.createElement('div');
+      tooltip.id = 'metric-tooltip';
+      tooltip.className = 'metric-tooltip';
+      document.body.appendChild(tooltip);
+      this.tooltipElement = tooltip;
+    } else {
+      this.tooltipElement = document.getElementById('metric-tooltip');
+    }
+
+    // Setup Rights Score tooltip (shows URI breakdown)
+    const rightsCard = this.elements.rightsScore?.parentElement;
+    if (rightsCard) {
+      rightsCard.addEventListener('mouseenter', (e) => {
+        const uri = this.currentContent?.userRightsIndex;
+        if (uri) {
+          const content = this.formatUriPopup(uri);
+          this.showTooltip(rightsCard, content);
+        }
+      });
+
+      rightsCard.addEventListener('mouseleave', () => {
+        this.hideTooltip();
+      });
+    }
+
+    // Setup Readability Score tooltip (shows Flesch/Kincaid/Fog metrics)
+    const readabilityCard = this.elements.readabilityScore?.parentElement;
+    if (readabilityCard) {
+      readabilityCard.addEventListener('mouseenter', (e) => {
+        const readability = this.currentContent?.readability;
+        if (readability) {
+          const content = this.formatReadabilityPopup(readability);
+          this.showTooltip(readabilityCard, content);
+        }
+      });
+
+      readabilityCard.addEventListener('mouseleave', () => {
+        this.hideTooltip();
+      });
+    }
+
+    // Setup Confidence tooltip (shows what confidence means)
+    const confidenceElement = this.elements.confidence;
+    if (confidenceElement) {
+      confidenceElement.style.cursor = 'help';
+      confidenceElement.addEventListener('mouseenter', (e) => {
+        const rightsData = this.currentContent?.rightsDetails || this.currentContent?.rights;
+        if (rightsData) {
+          const content = this.formatConfidencePopup(rightsData);
+          this.showTooltip(confidenceElement, content);
+        }
+      });
+
+      confidenceElement.addEventListener('mouseleave', () => {
+        this.hideTooltip();
+      });
+    }
+
+    this.debug.info && this.debug.info('Tooltips initialized for metric cards');
+  }
+
+  /**
+   * Show tooltip with content
+   * 2025-10-17: Position tooltip near target element
+   */
+  showTooltip(targetElement, htmlContent) {
+    if (!this.tooltipElement) return;
+
+    this.tooltipElement.innerHTML = htmlContent;
+    this.tooltipElement.classList.add('visible');
+
+    // Position tooltip
+    const rect = targetElement.getBoundingClientRect();
+    const tooltipRect = this.tooltipElement.getBoundingClientRect();
+    
+    // Position below the target by default
+    let top = rect.bottom + 10;
+    let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+    // Adjust if tooltip would go off-screen
+    if (left < 10) left = 10;
+    if (left + tooltipRect.width > window.innerWidth - 10) {
+      left = window.innerWidth - tooltipRect.width - 10;
+    }
+
+    // If tooltip would go below viewport, show above instead
+    if (top + tooltipRect.height > window.innerHeight - 10) {
+      top = rect.top - tooltipRect.height - 10;
+    }
+
+    this.tooltipElement.style.top = `${top}px`;
+    this.tooltipElement.style.left = `${left}px`;
+  }
+
+  /**
+   * Hide tooltip
+   * 2025-10-17: Remove visible class with fade out
+   */
+  hideTooltip() {
+    if (this.tooltipElement) {
+      this.tooltipElement.classList.remove('visible');
+    }
+  }
+
+  /**
+   * Format confidence tooltip
+   * 2025-10-17: Explain what confidence percentage means
+   */
+  formatConfidencePopup(rightsData) {
+    const confidence = typeof rightsData.confidence === 'number' 
+      ? Math.round(rightsData.confidence * 100) 
+      : null;
+
+    return `
+      <div class="popup-header">
+        <strong>Confidence: ${confidence !== null ? confidence + '%' : 'N/A'}</strong>
+      </div>
+      <div class="popup-metrics">
+        <h4>What This Measures:</h4>
+        <p style="margin: 8px 0; font-size: 0.88rem; line-height: 1.5;">
+          Confidence indicates how certain we are about the rights assessment, based on:
+        </p>
+        <div class="metric-row">
+          <span class="metric-label">Coverage (40%):</span>
+          <span class="metric-value">Document completeness</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Signal Strength (40%):</span>
+          <span class="metric-value">Clear clause matches</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Type Quality (20%):</span>
+          <span class="metric-value">Legal term clarity</span>
+        </div>
+      </div>
+      <div class="popup-explanation">
+        <p><strong>What this means:</strong></p>
+        <p>${this.getConfidenceExplanation(confidence)}</p>
+      </div>
+    `;
+  }
+
+  /**
+   * Get explanation for confidence level
+   * 2025-10-17: User-friendly confidence interpretation
+   */
+  getConfidenceExplanation(confidence) {
+    if (confidence === null) return 'Confidence data not available.';
+    if (confidence >= 80) return 'We have high confidence in this assessment. The document is clear and contains strong indicators.';
+    if (confidence >= 60) return 'We have good confidence in this assessment. Most indicators are clear, though some areas may be ambiguous.';
+    if (confidence >= 40) return 'We have moderate confidence. Some document sections are unclear or contain conflicting signals.';
+    return 'We have lower confidence in this assessment. The document may be incomplete, ambiguous, or lack clear legal language.';
   }
 
   setupEventListeners() {

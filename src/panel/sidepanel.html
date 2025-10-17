@@ -18,6 +18,11 @@
       <header>
         <h1>Terms Guardian</h1>
         <h2>Know Your Terms, Know Your Rights</h2>
+        <!-- 2025-10-17: Loading spinner -->
+        <div class="loading-spinner" id="loading-spinner" hidden>
+          <div class="spinner"></div>
+          <span class="loading-text">Analyzing document...</span>
+        </div>
         <div class="document-meta">
           <span id="service-name">Loading...</span>
           <a id="terms-url" href="#" target="_blank" rel="noopener">--</a>
@@ -59,6 +64,18 @@
             <div class="flags" role="list" id="flags-container">
               <!-- Populated dynamically -->
             </div>
+            
+            <!-- 2025-10-17: URI Category Breakdown -->
+            <details class="uri-breakdown" id="uri-breakdown">
+              <summary class="uri-breakdown-toggle">
+                <span class="toggle-text">View Rights Category Breakdown</span>
+                <span class="toggle-icon">▼</span>
+              </summary>
+              <div class="uri-categories" id="uri-categories-container">
+                <!-- Populated dynamically with 8 categories -->
+              </div>
+            </details>
+            
             <div class="summary-card" id="summary-text">
               Loading analysis...
             </div>

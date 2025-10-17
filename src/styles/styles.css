@@ -89,6 +89,42 @@ header h2 {
   text-align: center;
 }
 
+/* 2025-10-17: Loading spinner */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  margin: 0 0 16px;
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 12px;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.loading-spinner[hidden] {
+  display: none;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(148, 163, 184, 0.3);
+  border-top-color: #22d3ee;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 0.95rem;
+  color: #cbd5f5;
+  font-weight: 500;
+}
+
 .document-meta {
   display: flex;
   flex-direction: column;
@@ -519,8 +555,291 @@ footer {
   color: #94a3b8;
 }
 
+/* 2025-10-17: URI Category Breakdown */
+.uri-breakdown {
+  margin: 16px 0;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.uri-breakdown-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(51, 65, 85, 0.5);
+  transition: background-color 0.2s ease;
+  list-style: none;
+}
+
+.uri-breakdown-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.uri-breakdown-toggle:hover {
+  background: rgba(51, 65, 85, 0.7);
+}
+
+.uri-breakdown-toggle .toggle-text {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #22d3ee;
+}
+
+.uri-breakdown-toggle .toggle-icon {
+  font-size: 0.8rem;
+  transition: transform 0.2s ease;
+  color: #94a3b8;
+}
+
+.uri-breakdown[open] .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.uri-categories {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.uri-category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(15, 23, 42, 0.7);
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.uri-category-item:hover {
+  background: rgba(30, 41, 59, 0.8);
+  transform: translateX(4px);
+}
+
+.uri-category-label {
+  font-size: 0.88rem;
+  color: #cbd5f5;
+  flex: 1;
+}
+
+.uri-category-score {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.uri-category-score .score-value {
+  font-size: 0.95rem;
+  min-width: 45px;
+  text-align: right;
+}
+
+.uri-category-score .score-grade {
+  font-size: 0.85rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(51, 65, 85, 0.6);
+  min-width: 32px;
+  text-align: center;
+}
+
+/* Color coding for category scores */
+.uri-category-score.score-high .score-value {
+  color: #22c55e;
+}
+
+.uri-category-score.score-medium .score-value {
+  color: #fbbf24;
+}
+
+.uri-category-score.score-low .score-value {
+  color: #fb923c;
+}
+
+.uri-category-score.score-critical .score-value {
+  color: #ef4444;
+}
+
+.uri-category-score.score-high .score-grade {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.uri-category-score.score-medium .score-grade {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+
+.uri-category-score.score-low .score-grade {
+  background: rgba(251, 146, 60, 0.2);
+  color: #fb923c;
+}
+
+.uri-category-score.score-critical .score-grade {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+/* 2025-10-17: Tooltip system for metric cards */
+.metric-card {
+  position: relative;
+  cursor: help;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.metric-tooltip {
+  visibility: hidden;
+  position: fixed;
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  max-width: 400px;
+  min-width: 320px;
+  backdrop-filter: blur(12px);
+}
+
+.metric-tooltip.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.metric-tooltip .popup-header {
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.metric-tooltip .popup-header strong {
+  font-size: 1.1rem;
+  color: #22d3ee;
+  font-weight: 600;
+}
+
+.metric-tooltip .popup-metrics {
+  margin-bottom: 12px;
+}
+
+.metric-tooltip .popup-metrics h4 {
+  margin: 0 0 10px 0;
+  font-size: 0.9rem;
+  color: #cbd5f5;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.metric-tooltip .metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.metric-tooltip .metric-row:last-child {
+  border-bottom: none;
+}
+
+.metric-tooltip .metric-label {
+  font-size: 0.88rem;
+  color: #cbd5f5;
+  flex: 1;
+}
+
+.metric-tooltip .metric-value {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-left: 12px;
+}
+
+/* Color-coded metric values in tooltip */
+.metric-tooltip .metric-value.score-high {
+  color: #22c55e;
+}
+
+.metric-tooltip .metric-value.score-medium {
+  color: #fbbf24;
+}
+
+.metric-tooltip .metric-value.score-low {
+  color: #fb923c;
+}
+
+.metric-tooltip .metric-value.score-critical {
+  color: #ef4444;
+}
+
+.metric-tooltip .popup-explanation {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.metric-tooltip .popup-explanation p {
+  margin: 6px 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #cbd5f5;
+}
+
+.metric-tooltip .popup-explanation strong {
+  color: #22d3ee;
+  font-weight: 600;
+}
+
+/* Tooltip arrow (optional) */
+.metric-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid rgba(148, 163, 184, 0.3);
+}
+
+.metric-tooltip::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid rgba(15, 23, 42, 0.98);
+}
+
 @media (max-width: 680px) {
   .metric-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .metric-tooltip {
+    max-width: calc(100vw - 40px);
+    min-width: 280px;
   }
 }
