@@ -138,6 +138,14 @@ try {
       this.lastDetectionTime = 0;
       this.observer = null;
       this.debouncedDetect = null;
+      this.isDetecting = false; // Add a lock to prevent concurrent runs
+      this.analysisState = {
+        inProgress: false,
+        currentSignature: null,
+        lastSignature: null,
+        pendingSignature: null,
+        pendingText: null,
+      };
 
       // Initialize analyzers
       this.initializeAnalyzers();
@@ -327,6 +335,67 @@ try {
       }
     }
 
+    generateTextSignature(text) {
+      if (typeof text !== "string") {
+        return null;
+      }
+
+      const trimmed = text.trim();
+      if (!trimmed) {
+        return null;
+      }
+
+      const sampleInterval = Math.max(1, Math.floor(trimmed.length / 1000));
+      let hash = 0;
+      for (let i = 0; i < trimmed.length; i += sampleInterval) {
+        hash = (hash << 5) - hash + trimmed.charCodeAt(i);
+        hash |= 0; // Keep 32-bit integer bounds
+      }
+      return `${trimmed.length}:${hash}`;
+    }
+
+    shouldStartFullAnalysis(signature, text) {
+      if (!signature) {
+        return true;
+      }
+
+      if (this.analysisState.inProgress) {
+        if (signature === this.analysisState.currentSignature) {
+          this.log(
+            this.logLevels.DEBUG,
+            "Skipping analysis; identical content currently processing",
+          );
+          return false;
+        }
+        if (signature === this.analysisState.pendingSignature) {
+          this.log(
+            this.logLevels.DEBUG,
+            "Skipping analysis; identical content already queued",
+          );
+          return false;
+        }
+        this.analysisState.pendingSignature = signature;
+        this.analysisState.pendingText = text;
+        this.log(
+          this.logLevels.DEBUG,
+          "Analysis in progress; queued re-run for updated content",
+        );
+        return false;
+      }
+
+      if (signature === this.analysisState.lastSignature) {
+        this.log(
+          this.logLevels.DEBUG,
+          "Skipping analysis; content signature unchanged",
+        );
+        return false;
+      }
+
+      this.analysisState.inProgress = true;
+      this.analysisState.currentSignature = signature;
+      return true;
+    }
+
     /**
      * Updates the extension icon
      * @param {boolean} showExclamation Whether to show the exclamation mark
@@ -354,6 +423,12 @@ try {
      * @returns {Promise<boolean>} whether grading should be initiated
      */
     async detectLegalAgreements(inputText) {
+      if (this.isDetecting) {
+        this.log(this.logLevels.DEBUG, "Detection already in progress. Skipping.");
+        return false;
+      }
+      this.isDetecting = true;
+
       try {
         // 1. Get text and metadata either from provided input or via extractor
         let extractionResult;
@@ -390,6 +465,9 @@ try {
           return false; // Exit if there's an error
         }
 
+        const text = extractionResult.text || "";
+        const signature = this.generateTextSignature(text);
+
         // 3. Get the count of legal terms found
         const legalTermCount = extractionResult.metadata.legalTermCount;
         this.log(this.logLevels.INFO, `Legal term count: ${legalTermCount}, AUTO_GRADE threshold: ${EXT_CONSTANTS.DETECTION.THRESHOLDS.AUTO_GRADE}, NOTIFY threshold: ${EXT_CONSTANTS.DETECTION.THRESHOLDS.NOTIFY}`);
@@ -397,8 +475,12 @@ try {
         // 4. Determine the appropriate action based on the legal term count
         if (legalTermCount >= EXT_CONSTANTS.DETECTION.THRESHOLDS.AUTO_GRADE) {
           // If there are many legal terms, handle as a high count
+          if (!this.shouldStartFullAnalysis(signature, text)) {
+            return false;
+          }
+
           this.log(this.logLevels.INFO, "Triggering full analysis (AUTO_GRADE threshold met)");
-          await this.handleHighLegalTermCount(extractionResult.text);
+          await this.handleHighLegalTermCount(text, signature);
           return true;
         } else if (legalTermCount > EXT_CONSTANTS.DETECTION.THRESHOLDS.NOTIFY) {
           // If there are a moderate number of legal terms, handle accordingly
@@ -426,7 +508,11 @@ try {
                     (EXT_CONSTANTS.DETECTION.FALLBACK_GATES
                       ?.MIN_PATTERN_SCORE || 0.3)))
             ) {
-              await this.handleHighLegalTermCount(extractionResult.text);
+              if (!this.shouldStartFullAnalysis(signature, text)) {
+                return false;
+              }
+
+              await this.handleHighLegalTermCount(text, signature);
               return true;
             } else {
               // Otherwise, clear the extension icon
@@ -457,6 +543,8 @@ try {
         this.updateExtensionIcon(false);
         return false;
         // Consider additional error handling or user feedback here
+      } finally {
+        this.isDetecting = false; // Release the lock
       }
     }
 
@@ -464,7 +552,7 @@ try {
      * Handles high legal term count detection
      * @param {string} text The extracted text
      */
-    async handleHighLegalTermCount(text) {
+    async handleHighLegalTermCount(text, signature) {
       try {
         this.updateExtensionIcon(true);
         const url =
@@ -526,6 +614,8 @@ try {
           scores: {
             readability: analysis.readability, // Full readability object with stats
             rights: analysis.rightsDetails, // Full rights object with categoryScores
+            userRightsIndex: analysis.userRightsIndex,
+            combinedGrade: analysis.combinedGrade,
           },
           summary: analysis.summary,
           enhancedSummary: analysis.enhancedSummary,
@@ -536,6 +626,8 @@ try {
           rights: analysis.rights,
           readability: analysis.readability,
           rightsDetails: analysis.rightsDetails,
+          userRightsIndex: analysis.userRightsIndex,
+          combinedGrade: analysis.combinedGrade,
           uncommonWords: analysis.uncommonWords,
           riskLevel: analysis.riskLevel,
           keyFindings: analysis.keyFindings,
@@ -557,8 +649,18 @@ try {
           action: "tosDetected",
           textLength: text.length,
           hasAnalysis: !!minimal,
-          rightsScore: minimal.rights?.rightsScore,
-          readabilityGrade: minimal.readability?.grade
+          rightsScore: analysis.rightsDetails?.rightsScore,
+          readabilityGrade: analysis.readability?.grade,
+          combinedGrade: analysis.combinedGrade?.grade
+        });
+
+        // Debug: log the exact structure being sent
+        console.log("PAYLOAD DEBUG - scores.combinedGrade:", {
+          exists: !!minimal.scores?.combinedGrade,
+          type: typeof minimal.scores?.combinedGrade,
+          value: minimal.scores?.combinedGrade,
+          hasGrade: !!minimal.scores?.combinedGrade?.grade,
+          gradeValue: minimal.scores?.combinedGrade?.grade
         });
 
         chrome.runtime.sendMessage({
@@ -572,6 +674,32 @@ try {
           "Error handling high legal term count:",
           error,
         );
+      } finally {
+        if (signature) {
+          this.analysisState.lastSignature = signature;
+        }
+        this.analysisState.currentSignature = null;
+        this.analysisState.inProgress = false;
+
+        const nextSignature = this.analysisState.pendingSignature;
+        const nextText = this.analysisState.pendingText;
+        if (
+          nextSignature &&
+          nextSignature !== this.analysisState.lastSignature
+        ) {
+          this.analysisState.pendingSignature = null;
+          this.analysisState.pendingText = null;
+          setTimeout(() => {
+            if (typeof nextText === "string" && nextText.trim()) {
+              this.detectLegalAgreements(nextText);
+            } else {
+              this.detectLegalAgreements();
+            }
+          }, 0);
+        } else if (nextSignature) {
+          this.analysisState.pendingSignature = null;
+          this.analysisState.pendingText = null;
+        }
       }
     }
 
@@ -613,7 +741,7 @@ try {
           this.updateExtensionIcon(true); // Set the badge to "!"
 
           // Run full analysis
-          this.detectLegalAgreements(this.cachedText);
+          await this.detectLegalAgreements(this.cachedText);
           return true;
         } else {
           this.log(this.logLevels.DEBUG, "Not detected as a legal document");
@@ -706,22 +834,48 @@ try {
         // Section-level rights scoring: analyze each section's content
         try {
           if (Array.isArray(summaryAnalysis.sections)) {
+            const sectionAnalysisCache = new Map();
             const analyzedSections = await Promise.all(
               summaryAnalysis.sections.map(async (section) => {
                 const sectionText =
                   section.originalText || section.content || "";
                 if (!sectionText || sectionText.length < 20) return section;
+                const sectionSignature = this.generateTextSignature(sectionText);
+                if (
+                  sectionSignature &&
+                  sectionAnalysisCache.has(sectionSignature)
+                ) {
+                  section.rights = JSON.parse(
+                    JSON.stringify(sectionAnalysisCache.get(sectionSignature)),
+                  );
+                  return section;
+                }
+
                 const secRes = await this.assessor.analyzeContent(sectionText);
                 // Normalize per-section rights shape
                 const catScores = secRes?.details?.categoryScores || {};
-                section.rights = {
-                  categoryScores: catScores,
+                const normalizedScores = Object.entries(catScores).reduce(
+                  (acc, [category, data]) => {
+                    acc[category] = { ...data };
+                    return acc;
+                  },
+                  {},
+                );
+                const sectionSummary = {
+                  categoryScores: normalizedScores,
                   grade: secRes?.grade,
                   confidence: secRes?.confidence,
                   wordCount:
                     (secRes?.details && secRes.details.wordCount) ||
                     sectionText.split(/\s+/).filter(Boolean).length,
                 };
+                section.rights = sectionSummary;
+                if (sectionSignature) {
+                  sectionAnalysisCache.set(
+                    sectionSignature,
+                    JSON.parse(JSON.stringify(sectionSummary)),
+                  );
+                }
                 return section;
               }),
             );
@@ -784,6 +938,7 @@ try {
 
         // Compute User Rights Index (URI)
         let userRightsIndex = null;
+        let combinedGrade = null;
         try {
           const {
             createUserRightsIndex,
@@ -797,26 +952,59 @@ try {
             rightsDetails: normalizedRightsAnalysis,
             sections: summaryAnalysis.sections,
           });
+
+          // Compute combined grade (URI + readability)
+          if (userRightsIndex && readabilityAnalysis) {
+            const uriScore = userRightsIndex.weightedScore || 50;
+            const readabilityScore = readabilityAnalysis.normalizedScore || 50;
+            
+            this.log(
+              this.logLevels.DEBUG,
+              `Computing combined grade: URI=${uriScore}, Readability=${readabilityScore}`
+            );
+            
+            combinedGrade = uri.computeCombinedGrade(
+              uriScore,
+              readabilityScore,
+              0.7, // 70% weight for URI
+              0.3  // 30% weight for readability
+            );
+            
+            this.log(
+              this.logLevels.INFO,
+              `Combined grade computed: ${combinedGrade?.grade} (${combinedGrade?.combinedScore})`
+            );
+          } else {
+            this.log(
+              this.logLevels.WARN,
+              `Skipping combined grade - URI: ${!!userRightsIndex}, Readability: ${!!readabilityAnalysis}`
+            );
+          }
         } catch (e) {
           this.log(this.logLevels.WARN, "URI compute failed", e);
         }
 
-        return {
-          rights: rightsAnalysis.rightsScore / 100, // Convert to 0-1 scale for UI
+        const analysisResult = {
+          rightsDetails: normalizedRightsAnalysis,
           readability: readabilityAnalysis,
-          summary: summaryAnalysis.overall, // Enhanced plain language summary
-          enhancedSummary: summaryAnalysis, // Complete enhanced summary object
-          legacySummary: legacySummary.overall, // Original summary for comparison
-          sections: summaryAnalysis.sections, // Enhanced section summaries with risk levels and per-section rights
-          excerpts: keyExcerpts, // Key excerpts as array of strings
-          rightsDetails: normalizedRightsAnalysis, // Keep full details for diagnostics
+          summary: legacySummary.summary,
+          enhancedSummary: summaryAnalysis,
           uncommonWords: uncommonWords,
-          userRightsIndex,
-          riskLevel: summaryAnalysis.overallRisk, // Overall document risk assessment
-          keyFindings: summaryAnalysis.keyFindings, // Important findings for quick review
-          plainLanguageAlert: summaryAnalysis.plainLanguageAlert, // User warnings if any
-          timestamp: new Date().toISOString(),
+          keyExcerpts: keyExcerpts,
+          userRightsIndex: userRightsIndex,
+          combinedGrade: combinedGrade,
+          riskLevel: summaryAnalysis.riskLevel,
+          keyFindings: summaryAnalysis.keyFindings,
+          plainLanguageAlert: summaryAnalysis.plainLanguageAlert,
+          sections: summaryAnalysis.sections,
         };
+
+        // PAYLOAD DEBUG
+        console.log("PAYLOAD DEBUG - Full analysis result:", JSON.stringify(analysisResult, null, 2));
+        console.log("PAYLOAD DEBUG - combinedGrade object:", JSON.stringify(analysisResult.combinedGrade, null, 2));
+        console.log(`PAYLOAD DEBUG - scores.combinedGrade: {exists: ${!!analysisResult.combinedGrade}, type: ${typeof analysisResult.combinedGrade}, value: ${JSON.stringify(analysisResult.combinedGrade)}, hasGrade: ${!!analysisResult.combinedGrade?.grade}, gradeValue: ${analysisResult.combinedGrade?.grade}}`);
+
+        return analysisResult;
       } catch (error) {
         this.log(
           this.logLevels.ERROR,

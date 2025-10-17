@@ -7,10 +7,37 @@
 (function (global) {
   "use strict";
 
-  function createTextExtractor({ log, logLevels, utilities }) {
+  function createTextExtractor({
+    log,
+    logLevels,
+    utilities,
+    config: overrideConfig = {},
+    legalTerms: overrideLegalTerms,
+  }) {
     if (!utilities) {
       throw new Error("Utilities service must be provided to text extractor");
     }
+
+    const defaultConfig = {
+      highlightThreshold: 20,
+      sectionThreshold: 10,
+      legalTerms: [],
+    };
+    const extractorConfig = {
+      ...defaultConfig,
+      ...overrideConfig,
+    };
+    const legalTermsList = Array.isArray(overrideLegalTerms)
+      ? overrideLegalTerms
+      : Array.isArray(extractorConfig.legalTerms)
+        ? extractorConfig.legalTerms
+        : defaultConfig.legalTerms;
+    extractorConfig.legalTerms = legalTermsList;
+    const legalTermsSet = new Set(
+      legalTermsList
+        .filter((term) => typeof term === "string")
+        .map((term) => term.toLowerCase()),
+    );
 
     /**
      * Splits text into words, removing punctuation and converting to lower case.
@@ -286,7 +313,7 @@
             .filter(Boolean).length;
         }
         metadata.hasLegalTerms = words.some((word) =>
-          global.legalTerms?.includes(word.toLowerCase()),
+          legalTermsSet.has(word.toLowerCase()),
         );
 
         // Cache if meets minimum requirements
@@ -674,7 +701,7 @@
           count: legalElements.length,
         });
 
-        if (legalElements.length > config.highlightThreshold) {
+  if (legalElements.length > extractorConfig.highlightThreshold) {
           log(
             logLevels.INFO,
             "Highlight threshold exceeded, extracting full body text",
@@ -797,13 +824,21 @@
     function isLegalText(text) {
       try {
         log(logLevels.DEBUG, "Starting legal text analysis", { text });
+        if (typeof text !== "string") {
+          return false;
+        }
 
-        const words = text.toLowerCase().split(/\s+/);
+        const normalized = text.trim();
+        if (!normalized) {
+          return false;
+        }
+
+        const words = normalized.toLowerCase().split(/\s+/);
         const legalTermCount = words.filter((word) =>
-          legalTerms.includes(word),
+          legalTermsSet.has(word),
         ).length;
 
-        const threshold = config.sectionThreshold;
+        const threshold = extractorConfig.sectionThreshold;
         const isLegal = legalTermCount >= threshold;
 
         log(logLevels.DEBUG, "Legal text analysis result", {

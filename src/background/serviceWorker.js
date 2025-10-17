@@ -18,6 +18,7 @@ function createServiceWorker({ log, logLevels }) {
     notifiedDomains: new Map(),
     analysisInProgress: new Set(),
     initialized: false,
+    sidePanelOpen: new Map(), // Track side panel state per tab
   };
 
   /**
@@ -37,6 +38,12 @@ function createServiceWorker({ log, logLevels }) {
    * @param {string} message Notification message
    */
   function showNotification(message) {
+    // Check if notifications API is available
+    if (!chrome.notifications) {
+      log(logLevels.DEBUG, "Notifications API not available, skipping notification");
+      return;
+    }
+
     const notificationOptions = {
       type: "basic",
       title: EXTENSION.NAME,
@@ -113,9 +120,49 @@ function createServiceWorker({ log, logLevels }) {
   async function openSidePanel(tabId) {
     try {
       await chrome.sidePanel.open({ tabId });
+      state.sidePanelOpen.set(tabId, true);
       log(logLevels.INFO, "Side panel opened successfully");
     } catch (error) {
       log(logLevels.ERROR, "Error opening side panel:", error);
+    }
+  }
+
+  /**
+   * Closes the side panel
+   * @param {number} tabId Tab ID
+   */
+  async function closeSidePanel(tabId) {
+    try {
+      // Side panel API doesn't have a close method, so we need to use a workaround
+      // We'll send a message to the side panel to close itself
+      await chrome.runtime.sendMessage({
+        action: "closeSidePanel",
+        tabId: tabId,
+      });
+      state.sidePanelOpen.set(tabId, false);
+      log(logLevels.INFO, "Side panel close requested");
+    } catch (error) {
+      log(logLevels.ERROR, "Error closing side panel:", error);
+    }
+  }
+
+  /**
+   * Toggles the side panel open/closed
+   * @param {number} tabId Tab ID
+   */
+  async function toggleSidePanel(tabId) {
+    try {
+      const isOpen = state.sidePanelOpen.get(tabId);
+      
+      if (isOpen) {
+        // Panel is open, close it
+        await closeSidePanel(tabId);
+      } else {
+        // Panel is closed, open it
+        await openSidePanel(tabId);
+      }
+    } catch (error) {
+      log(logLevels.ERROR, "Error toggling side panel:", error);
     }
   }
 
@@ -145,32 +192,59 @@ function createServiceWorker({ log, logLevels }) {
         }
         case "getAnalysisResults": {
           try {
-            let tabId = sender?.tab?.id;
+            // First, check if tabId was explicitly provided in the message
+            let tabId = message.tabId || sender?.tab?.id;
+            console.log("🔍 getAnalysisResults: message.tabId =", message.tabId);
+            console.log("🔍 getAnalysisResults: sender.tab.id =", sender?.tab?.id);
+            console.log("🔍 getAnalysisResults: Using tabId =", tabId);
+            
+            // If no tab ID from either source, try to get the active tab
             if (!tabId) {
               const tabs = await chrome.tabs.query({
                 active: true,
-                lastFocusedWindow: true,
+                currentWindow: true, // Changed from lastFocusedWindow
               });
-              if (tabs && tabs.length > 0) tabId = tabs[0].id;
+              console.log("🔍 Active tabs query result:", tabs);
+              if (tabs && tabs.length > 0) {
+                tabId = tabs[0].id;
+                console.log("🔍 Using active tab ID:", tabId);
+              }
             }
+            
             let data = null;
+            
+            // Try tab-specific key first
             if (tabId) {
               const key = `${STORAGE_KEYS.ANALYSIS_RESULTS}_${tabId}`;
+              console.log("🔍 Looking for key:", key);
               const res = await chrome.storage.local.get(key);
+              console.log("🔍 Storage result for tab-specific key:", res);
               data = res[key] || null;
             }
+            
+            // Fallback to generic key
             if (!data) {
+              console.log("🔍 No tab-specific data, trying generic key:", STORAGE_KEYS.ANALYSIS_RESULTS);
               const res = await chrome.storage.local.get(
                 STORAGE_KEYS.ANALYSIS_RESULTS,
               );
+              console.log("🔍 Storage result for generic key:", res);
               data = res[STORAGE_KEYS.ANALYSIS_RESULTS] || null;
             }
+            
+            // If still no data, log all storage to debug
             if (!data) {
+              const allStorage = await chrome.storage.local.get(null);
+              const analysisKeys = Object.keys(allStorage).filter(k => k.startsWith('analysisResults'));
+              console.log("🔍 No data found. All analysis keys in storage:", analysisKeys);
+              console.log("🔍 Full storage:", allStorage);
               sendResponse({ error: "No analysis results found" });
             } else {
+              console.log("✅ Found data, sending response");
               sendResponse({ data });
             }
           } catch (e) {
+            console.error("❌ Error in getAnalysisResults:", e);
             sendResponse({
               error: e?.message || "Failed to retrieve analysis results",
             });
@@ -259,6 +333,18 @@ function createServiceWorker({ log, logLevels }) {
         ...results,
         timestamp: new Date().toISOString(),
       });
+
+      // Notify sidepanel of new analysis
+      try {
+        await chrome.runtime.sendMessage({
+          action: MESSAGES.UPDATE_SIDEPANEL,
+          data: results,
+        });
+        log(logLevels.INFO, "Sent UPDATE_SIDEPANEL message to sidepanel");
+      } catch (e) {
+        // Sidepanel might not be open yet, that's okay
+        log(logLevels.DEBUG, "Could not send message to sidepanel (may not be open):", e?.message);
+      }
 
       // Show notification
       showNotification(MESSAGES.AUTO_GRADE);
@@ -395,8 +481,15 @@ function createServiceWorker({ log, logLevels }) {
       return true;
     });
 
+    // Toggle side panel on badge click
     chrome.action.onClicked.addListener((tab) => {
-      openSidePanel(tab.id);
+      toggleSidePanel(tab.id);
+    });
+
+    // Track when tabs are closed to clean up state
+    chrome.tabs.onRemoved.addListener((tabId) => {
+      state.sidePanelOpen.delete(tabId);
+      state.analysisInProgress.delete(tabId);
     });
 
     state.initialized = true;
@@ -415,6 +508,8 @@ function createServiceWorker({ log, logLevels }) {
       showNotification,
       storeAnalysisData,
       openSidePanel,
+      closeSidePanel,
+      toggleSidePanel,
       handleCheckNotification,
     },
   };

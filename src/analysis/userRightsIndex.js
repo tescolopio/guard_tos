@@ -112,11 +112,22 @@ function createUserRightsIndex({ log = () => {}, logLevels = {} } = {}) {
 
   function gradeFrom(score) {
     const g = CFG.GRADING;
+    // Check grades in descending order
+    if (score >= g["A+"].MIN) return "A+";
     if (score >= g.A.MIN) return "A";
+    if (score >= g["A-"].MIN) return "A-";
+    if (score >= g["B+"].MIN) return "B+";
     if (score >= g.B.MIN) return "B";
+    if (score >= g["B-"].MIN) return "B-";
+    if (score >= g["C+"].MIN) return "C+";
     if (score >= g.C.MIN) return "C";
+    if (score >= g["C-"].MIN) return "C-";
+    if (score >= g["D+"].MIN) return "D+";
     if (score >= g.D.MIN) return "D";
-    return "F";
+    if (score >= g["D-"].MIN) return "D-";
+    if (score >= g["F+"].MIN) return "F+";
+    if (score >= g.F.MIN) return "F";
+    return "F-";
   }
 
   /**
@@ -301,7 +312,71 @@ function createUserRightsIndex({ log = () => {}, logLevels = {} } = {}) {
     }
   }
 
-  return { compute };
+  /**
+   * Computes a combined grade that merges URI and readability scores
+   * @param {number} uriScore - User Rights Index score (0-100)
+   * @param {number} readabilityScore - Normalized readability score (0-100)
+   * @param {number} uriWeight - Weight for URI (default 0.7)
+   * @param {number} readabilityWeight - Weight for readability (default 0.3)
+   * @returns {Object} Combined grade and breakdown
+   */
+  function computeCombinedGrade(
+    uriScore,
+    readabilityScore,
+    uriWeight = 0.7,
+    readabilityWeight = 0.3
+  ) {
+    try {
+      // Validate inputs
+      const validURI = typeof uriScore === "number" && !isNaN(uriScore);
+      const validReadability =
+        typeof readabilityScore === "number" && !isNaN(readabilityScore);
+
+      if (!validURI && !validReadability) {
+        return {
+          combinedScore: 50,
+          grade: "C",
+          breakdown: {
+            uriScore: 50,
+            readabilityScore: 50,
+            uriWeight,
+            readabilityWeight,
+          },
+        };
+      }
+
+      // Use fallback values if one component is missing
+      const finalURI = validURI ? uriScore : 50;
+      const finalReadability = validReadability ? readabilityScore : 50;
+
+      // Calculate weighted combined score
+      const combinedScore =
+        finalURI * uriWeight + finalReadability * readabilityWeight;
+
+      // Determine grade
+      const grade = gradeFrom(combinedScore);
+
+      return {
+        combinedScore: Math.round(combinedScore * 100) / 100,
+        grade,
+        breakdown: {
+          uriScore: finalURI,
+          readabilityScore: finalReadability,
+          uriWeight,
+          readabilityWeight,
+        },
+      };
+    } catch (e) {
+      log(logLevels.ERROR || 3, "Combined grade computation error", e);
+      return {
+        combinedScore: 50,
+        grade: "C",
+        error: e?.message,
+      };
+    }
+  }
+
+  return { compute, computeCombinedGrade };
 }
 
 module.exports = { createUserRightsIndex };

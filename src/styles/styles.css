@@ -116,7 +116,9 @@ header h2 {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-text {
@@ -837,7 +839,7 @@ footer {
   .metric-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .metric-tooltip {
     max-width: calc(100vw - 40px);
     min-width: 280px;

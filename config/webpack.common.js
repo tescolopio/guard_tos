@@ -81,6 +81,10 @@ module.exports = {
           from: "./data/sample_analysis.json",
           to: "sample/sample_analysis.json",
         },
+        {
+          from: "./src/data/dictionaries",
+          to: "dictionaries",
+        },
         { from: "./images", to: "images" },
         { from: "./src/styles/styles.css", to: "styles.css" },
       ],

@@ -8,6 +8,22 @@
 const { LEGAL_PATTERNS } = require("../data/legalPatterns");
 const { EXT_CONSTANTS } = require("../utils/constants");
 
+let modelHubModule;
+let getModelHubFn;
+
+try {
+  modelHubModule = require("../ml/modelHub.js");
+  getModelHubFn =
+    (modelHubModule && modelHubModule.getModelHub) ||
+    (modelHubModule &&
+      modelHubModule.default &&
+      modelHubModule.default.getModelHub) ||
+    null;
+} catch (error) {
+  modelHubModule = null;
+  getModelHubFn = null;
+}
+
 (function (global) {
   "use strict";
 
@@ -23,6 +39,25 @@ const { EXT_CONSTANTS } = require("../utils/constants");
     // Optional ML augmenter for clause detection; used to fuse rule-based and ML signals
     mlAugmenter,
   }) {
+    const mlLoadState = {
+      suppressed: false,
+      error: null,
+      loggedOnce: false,
+    };
+
+    function notifyMlSuppressedOnce(reason) {
+      if (mlLoadState.loggedOnce) return;
+      mlLoadState.loggedOnce = true;
+      if (log) {
+        log(logLevels.WARN || 3, "ML augmentation disabled", {
+          reason:
+            reason ||
+            (mlLoadState.error && mlLoadState.error.message) ||
+            "Unknown reason",
+        });
+      }
+    }
+
     /**
      * Chunks text into smaller segments
      * @param {string} text Text to chunk
@@ -172,9 +207,24 @@ const { EXT_CONSTANTS } = require("../utils/constants");
         const mlCfg = EXT_CONSTANTS && EXT_CONSTANTS.ML;
         if (!mlCfg || mlCfg.ENABLED !== true) return;
 
-        // Lazy import model hub to remain compatible with legacy TF-IDF model and future category models
-        const { getModelHub } = await import("../ml/modelHub.js");
-        const hub = await getModelHub();
+        if (mlLoadState.suppressed) {
+          notifyMlSuppressedOnce(
+            mlLoadState.error && mlLoadState.error.message,
+          );
+          return;
+        }
+
+        if (typeof getModelHubFn !== "function") {
+          mlLoadState.suppressed = true;
+          mlLoadState.error = new Error("Model hub loader unavailable");
+          notifyMlSuppressedOnce(mlLoadState.error.message);
+          return;
+        }
+
+        const hub = await getModelHubFn();
+        if (!hub || typeof hub.predict !== "function") {
+          throw new Error("Model hub did not provide a predict function");
+        }
         const sentences = (textChunk.match(/[^.!?]+[.!?]+/g) || [textChunk])
           .map((s) => s.trim())
           .filter(Boolean);
@@ -247,10 +297,18 @@ const { EXT_CONSTANTS } = require("../utils/constants");
             (res.clauseCounts.MEDIUM_RISK.UNILATERAL_CHANGES || 0) + 1;
         }
       } catch (e) {
-        // ML is optional; swallow errors
+        const message = (e && e.message) || String(e);
+
+        if (!mlLoadState.suppressed) {
+          mlLoadState.suppressed = true;
+          mlLoadState.error = e instanceof Error ? e : new Error(message);
+          notifyMlSuppressedOnce(message);
+        }
+
+        // ML is optional; swallow non-fatal errors but keep debug breadcrumbs
         log &&
           log(logLevels.DEBUG || 2, "ML augmentation skipped", {
-            error: (e && e.message) || String(e),
+            error: message,
           });
       }
     }

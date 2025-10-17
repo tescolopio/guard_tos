@@ -5,12 +5,30 @@
  * multi-category predictions.
  */
 
+const clauseModule = require("./clauseClassifier.js");
+
 let hubInstance = null;
 
-async function createFallbackHub() {
-  const clauseModule = await import(
-    /* webpackChunkName: "clauseClassifier" */ "./clauseClassifier.js"
-  );
+function resolveClassifierNamespace() {
+  if (!clauseModule) return null;
+  if (typeof clauseModule.classifySentences === "function") {
+    return clauseModule;
+  }
+  if (
+    clauseModule.default &&
+    typeof clauseModule.default.classifySentences === "function"
+  ) {
+    return clauseModule.default;
+  }
+  return clauseModule;
+}
+
+async function createModelHub() {
+  const classifierNs = resolveClassifierNamespace();
+
+  if (!classifierNs || typeof classifierNs.classifySentences !== "function") {
+    throw new Error("Clause classifier module did not expose classifySentences");
+  }
 
   return {
     /**
@@ -20,7 +38,7 @@ async function createFallbackHub() {
      * @returns {Promise<{clauseProbabilities: Record<string, number>, categoryScores: Record<string, number>}>}
      */
     async predict(sentences, context = {}) {
-      const predictions = await clauseModule.classifySentences(
+      const predictions = await classifierNs.classifySentences(
         sentences,
         context,
       );
@@ -43,13 +61,19 @@ async function createFallbackHub() {
   };
 }
 
-export async function getModelHub() {
+async function getModelHub() {
   if (!hubInstance) {
-    hubInstance = createFallbackHub();
+    hubInstance = createModelHub();
   }
   return hubInstance;
 }
 
-export function resetModelHubForTests() {
+function resetModelHubForTests() {
   hubInstance = null;
 }
+
+const api = { getModelHub, resetModelHubForTests };
+
+module.exports = api;
+module.exports.default = api;
+module.exports.__esModule = true;

@@ -51,42 +51,72 @@
 **Impact:** ToS summarization can now parse HTML correctly  
 **Commit:** 66120e0
 
+### Issue #16: HTML Structure Loss
+**Status:** ✅ RESOLVED  
+**Error:** `[DEBUG] Found 0 sections` in summarization  
+**Root Cause:** performFullAnalysis() wrapped plain text in `<div>`, stripping all heading tags  
+**Fix:** Use `document.body.innerHTML` to preserve actual HTML structure  
+**Impact:** Section identification now finds all 10 sections in test page  
+**Commit:** 6bf18d6
+
+### Issue #17: Element Re-wrapping in domCheerio
+**Status:** ✅ RESOLVED  
+**Error:** `SyntaxError: Failed to execute 'querySelectorAll' on 'Document': '[object Object]' is not a valid selector`  
+**Root Cause:** domCheerio's .each() callback provides wrapped elements, but code called $(el) to re-wrap, causing querySelectorAll to receive object instead of string  
+**Fix:** Modified $() function to detect already-wrapped elements and return them directly  
+**Impact:** Section identification works without querySelectorAll errors  
+**Commit:** 1b33d22
+
+### Issue #18: Compromise.js Not Available
+**Status:** ✅ RESOLVED  
+**Error:** `TypeError: t is not a function` in both summarizers  
+**Root Cause:** global.compromise is undefined - compromise.js library not bundled or loaded in extension  
+**Fix:** Added fallback sentence extraction when compromise unavailable:
+- Check if compromise is a function before calling
+- Fallback uses simple sentence splitting by `.!?` characters
+- Returns first sentence or first 150 chars
+**Impact:** Both summarizers work without compromise.js dependency  
+**Commit:** 8fd9290
+
 ---
 
 ## 📊 Test Results: Simple ToS Page (localhost:8080/simple-tos.html)
 
 ### Legal Detection
 - **Status:** ✅ WORKING
-- **Terms Found:** 89 legal terms out of 436 words
-- **Density:** 20.4%
+- **Terms Found:** 69 legal terms out of 397 words (after page edit)
+- **Density:** 17.4%
 - **Threshold Met:** AUTO_GRADE (20+)
 - **Detection Time:** ~1 second
 
 ### Rights Analysis
 - **Status:** ✅ WORKING
-- **Score:** 80 / 100
+- **Score:** 81.71 / 100
 - **Grade:** B
-- **Confidence:** 0.64
+- **Confidence:** 0.44
 - **Method:** Rule-based (ML augmentation skipped - models not loading)
 - **Chunks Analyzed:** 7
 
 ### Readability Analysis
 - **Status:** ✅ WORKING
-- **Flesch Score:** 68.38
+- **Flesch Score:** 72.01
+- **Kincaid Grade:** 6.28
+- **Fog Index:** 11.82
 - **Grade:** F (difficult to read)
 - **Analysis:** Legal jargon detected
 
 ### Uncommon Words Identification
 - **Status:** ✅ WORKING
-- **Uncommon Words Found:** 5
-- **Candidates Analyzed:** 151
+- **Uncommon Words Found:** 7 (increased after page edit)
+- **Candidates Analyzed:** 130
 - **Time:** ~2 seconds
 
 ### Summarization
-- **Status:** ⚠️ PARTIALLY WORKING (after fix)
-- **Enhanced Summarization:** Processing sections (4 errors during processing)
-- **Basic Summarization:** Now using browser-native DOM parser
-- **Next Test:** Verify summaries appear in side panel
+- **Status:** ✅ WORKING (after Issue #18 fix)
+- **Enhanced Summarization:** 10 sections identified ✅
+- **Basic Summarization:** 10 sections found and processed ✅
+- **Fallback:** Using simple sentence extraction (compromise.js not loaded)
+- **Next Test:** Verify summaries appear correctly in side panel
 
 ### Side Panel Display
 - **Status:** ✅ WORKING

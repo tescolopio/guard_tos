@@ -24,6 +24,11 @@ const { EXT_CONSTANTS } = require("../utils/constants");
       log,
       logLevels,
       utilities,
+      config: {
+        legalTerms,
+        highlightThreshold: DETECTION.THRESHOLDS.HIGHLIGHT,
+        sectionThreshold: DETECTION.THRESHOLDS.SECTION,
+      },
     });
 
     /**

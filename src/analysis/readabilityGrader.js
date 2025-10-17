@@ -170,19 +170,35 @@
     }
 
     function determineGrade(averageScore, kincaidScore, fogIndexScore) {
+      const g = GRADES;
       let grade;
 
-      if (averageScore >= GRADES.A.MIN) grade = "A";
-      else if (averageScore >= GRADES.B.MIN) grade = "B";
-      else if (averageScore >= GRADES.C.MIN) grade = "C";
-      else if (averageScore >= GRADES.D.MIN) grade = "D";
-      else grade = "F";
+      // Determine base grade with plus/minus modifiers
+      if (averageScore >= g["A+"].MIN) grade = "A+";
+      else if (averageScore >= g.A.MIN) grade = "A";
+      else if (averageScore >= g["A-"].MIN) grade = "A-";
+      else if (averageScore >= g["B+"].MIN) grade = "B+";
+      else if (averageScore >= g.B.MIN) grade = "B";
+      else if (averageScore >= g["B-"].MIN) grade = "B-";
+      else if (averageScore >= g["C+"].MIN) grade = "C+";
+      else if (averageScore >= g.C.MIN) grade = "C";
+      else if (averageScore >= g["C-"].MIN) grade = "C-";
+      else if (averageScore >= g["D+"].MIN) grade = "D+";
+      else if (averageScore >= g.D.MIN) grade = "D";
+      else if (averageScore >= g["D-"].MIN) grade = "D-";
+      else if (averageScore >= g["F+"].MIN) grade = "F+";
+      else if (averageScore >= g.F.MIN) grade = "F";
+      else grade = "F-";
 
-      // Fine-tune based on other scores
-      if (kincaidScore > 12 || fogIndexScore > 12) {
-        grade = String.fromCharCode(grade.charCodeAt(0) + 1);
+      // Fine-tune: penalize very high complexity scores
+      if (kincaidScore > 16 || fogIndexScore > 16) {
+        // Downgrade by one step if complexity is extremely high
+        const gradeOrder = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F+", "F", "F-"];
+        const currentIndex = gradeOrder.indexOf(grade);
+        if (currentIndex < gradeOrder.length - 1) {
+          grade = gradeOrder[currentIndex + 1];
+        }
       }
-      if (grade > "F") grade = "F";
 
       return grade;
     }

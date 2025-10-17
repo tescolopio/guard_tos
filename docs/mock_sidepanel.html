@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Terms Guardian — Mock Sidepanel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+      .summary-toggle-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      }
+
+      body {
+        margin: 0;
+        background: radial-gradient(circle at top left, #0f172a 0%, #020617 70%);
+        display: flex;
+        justify-content: center;
+        padding: 24px;
+        padding: 8px 18px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: rgba(15, 23, 42, 0.94);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 18px;
+        color: #e2e8f0;
+        background: rgba(30, 41, 59, 0.75);
+        box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.12);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+      header {
+        padding: 24px 24px 12px;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+        box-shadow: 0 8px 18px rgba(79, 70, 229, 0.25);
+        border-color: rgba(96, 165, 250, 0.35);
+      }
+
+      .summary-toggle-btn.active {
+        font-size: 1.75rem;
+        border-color: transparent;
+      }
+
+      #summary-document-btn.summary-toggle-btn.active {
+        background: linear-gradient(135deg, #22d3ee, #6366f1);
+        box-shadow: 0 6px 18px rgba(14, 165, 233, 0.35);
+      }
+
+      #summary-section-btn.summary-toggle-btn.active {
+        background: linear-gradient(135deg, #ec4899, #db2777);
+        box-shadow: 0 6px 18px rgba(236, 72, 153, 0.35);
+        letter-spacing: -0.01em;
+      }
+
+      header h2 {
+        margin: 0 0 16px;
+        font-weight: 400;
+        font-size: 0.98rem;
+        color: #cbd5f5;
+      }
+
+      .document-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 20px;
+      }
+
+      .document-meta a {
+        color: #60a5fa;
+        font-size: 0.9rem;
+        text-decoration: none;
+      }
+
+      .document-meta a:hover {
+        text-decoration: underline;
+      }
+
+      .grade-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        border-radius: 16px;
+        background: rgba(30, 64, 175, 0.15);
+        border: 1px solid rgba(99, 102, 241, 0.4);
+        gap: 8px;
+      }
+
+      .grade-value {
+        font-size: 4.5rem;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        margin: 0;
+        padding: 0 12px;
+        background: linear-gradient(135deg, #22d3ee 0%, #22c55e 45%, #eab308 70%, #f97316 85%, #ef4444 100%);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+      }
+
+      .grade-caption {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #cbd5f5;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 24px 28px;
+      }
+
+      section {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: rgba(15, 23, 42, 0.75);
+        border: 1px solid rgba(148, 163, 184, 0.15);
+        border-radius: 16px;
+        padding: 18px 20px 20px;
+        box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.06);
+      }
+
+      section h2 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .metric-card {
+        background: rgba(30, 41, 59, 0.72);
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.12);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .metric-label {
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #cbd5f5;
+      }
+
+      .metric-value {
+        font-size: 1.35rem;
+        font-weight: 700;
+      }
+
+      .flags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chip {
+        font-size: 0.82rem;
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        background: rgba(51, 65, 85, 0.7);
+      }
+
+      .chip[data-theme="risk"] {
+        border-color: rgba(239, 68, 68, 0.45);
+        background: linear-gradient(135deg, rgba(248, 113, 113, 0.25), rgba(239, 68, 68, 0.15));
+        color: #fecaca;
+      }
+
+      .summary-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .summary-header h2 {
+        margin: 0;
+      }
+
+      .summary-toggle-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .summary-view-label {
+        margin: 0 0 12px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #cbd5f5;
+      }
+
+      .summary-toggle-btn {
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #e2e8f0;
+        background: rgba(30, 41, 59, 0.7);
+        box-shadow: inset 0 0 0 1px rgba(51, 65, 85, 0.35);
+        text-align: center;
+        white-space: nowrap;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      }
+
+      .summary-toggle-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px rgba(79, 70, 229, 0.28);
+        border-color: rgba(96, 165, 250, 0.4);
+      }
+
+      .summary-toggle-btn.active {
+        color: #ffffff;
+        border-color: transparent;
+      }
+
+      #summary-document-btn.summary-toggle-btn.active {
+        background: linear-gradient(135deg, #22d3ee, #6366f1);
+        box-shadow: 0 6px 18px rgba(14, 165, 233, 0.35);
+      }
+
+      #summary-section-btn.summary-toggle-btn.active {
+        background: linear-gradient(135deg, #ec4899, #db2777);
+        box-shadow: 0 6px 18px rgba(236, 72, 153, 0.35);
+      }
+
+      .summary-toggle-btn:focus-visible {
+        outline: 2px solid #22d3ee;
+        outline-offset: 2px;
+      }
+
+      .summary-view {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .summary-view[hidden] {
+        display: none;
+      }
+
+      .summary-intro {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #cbd5f5;
+      }
+
+      .summary-card {
+        background: rgba(30, 41, 59, 0.6);
+        border-radius: 12px;
+        padding: 14px 16px;
+        line-height: 1.5;
+        color: #e2e8f0;
+        border: 1px solid rgba(148, 163, 184, 0.12);
+      }
+
+      .callouts {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .callouts h3 {
+        margin: 0;
+        font-size: 0.92rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #cbd5f5;
+      }
+
+      ul, ol {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 0.95rem;
+        color: #e2e8f0;
+        line-height: 1.55;
+      }
+
+      .sections {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .section-card {
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.12);
+        background: rgba(30, 41, 59, 0.6);
+        padding: 14px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+
+      .section-header h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      .risk-tag {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 4px 10px;
+        border-radius: 999px;
+      }
+
+      .risk-high {
+        background: rgba(248, 113, 113, 0.18);
+        color: #fecaca;
+        border: 1px solid rgba(248, 113, 113, 0.45);
+      }
+
+      .risk-medium {
+        background: rgba(251, 191, 36, 0.18);
+        color: #fef08a;
+        border: 1px solid rgba(251, 191, 36, 0.4);
+      }
+
+      .excerpts, .terms {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      blockquote {
+        margin: 0;
+        padding: 12px 14px;
+        border-left: 3px solid rgba(96, 165, 250, 0.6);
+        background: rgba(30, 41, 59, 0.5);
+        border-radius: 8px;
+        font-size: 0.95rem;
+        color: #e2e8f0;
+      }
+
+      .term-card {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(148, 163, 184, 0.14);
+      }
+
+      .term-word {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      footer {
+        padding: 18px 24px 22px;
+        border-top: 1px solid rgba(148, 163, 184, 0.16);
+        background: rgba(15, 23, 42, 0.82);
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      footer button {
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: rgba(30, 41, 59, 0.85);
+        color: #e2e8f0;
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        cursor: pointer;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      footer button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+        border-color: rgba(96, 165, 250, 0.45);
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 12px;
+        }
+        .sidepanel {
+          width: 100%;
+        }
+        .metric-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <article class="sidepanel" aria-label="Terms Guardian analysis mockup">
+      <header>
+        <h1>Terms Guardian</h1>
+        <h2>Know Your Terms, Know Your Rights</h2>
+        <div class="document-meta">
+          <span>Example Terms of Service</span>
+          <a href="https://example.com/terms" target="_blank" rel="noopener">https://example.com/terms</a>
+        </div>
+        <div class="grade-display">
+          <p class="grade-value" role="text" aria-label="Combined document grade">B</p>
+          <p class="grade-caption">Document Grade</p>
+        </div>
+      </header>
+
+      <main>
+        <section aria-labelledby="summary-heading">
+          <div class="summary-header">
+            <h2 id="summary-heading">Summary</h2>
+          </div>
+          <div
+            class="summary-toggle-group"
+            role="group"
+            aria-label="Summary view selection"
+          >
+            <button
+              type="button"
+              id="summary-document-btn"
+              class="summary-toggle-btn active"
+              aria-pressed="true"
+              aria-controls="summary-overall"
+            >
+              Whole Document
+            </button>
+            <button
+              type="button"
+              id="summary-section-btn"
+              class="summary-toggle-btn"
+              aria-pressed="false"
+              aria-controls="summary-sections"
+            >
+              By Section
+            </button>
+            </div>
+          <p id="summary-view-label" class="summary-view-label">Document Summary</p>
+
+          <div class="summary-view" id="summary-overall" data-view="overall">
+            <div class="metric-grid" role="list">
+              <div class="metric-card" role="listitem">
+                <span class="metric-label">User Rights Score</span>
+                <span class="metric-value">74</span>
+                <span class="chip">Weighted blend</span>
+              </div>
+              <div class="metric-card" role="listitem">
+                <span class="metric-label">Rights Grade</span>
+                <span class="metric-value">C</span>
+                <span class="chip">Signals: 0.82 confidence</span>
+              </div>
+              <div class="metric-card" role="listitem">
+                <span class="metric-label">Readability Ease</span>
+                <span class="metric-value">72.3</span>
+                <span class="chip">Flesch score (Grade 7.8)</span>
+              </div>
+              <div class="metric-card" role="listitem">
+                <span class="metric-label">Document Length</span>
+                <span class="metric-value">1,543</span>
+                <span class="chip">Words across 112 sentences</span>
+              </div>
+            </div>
+            <div class="flags" role="list">
+              <span class="chip" data-theme="risk" role="listitem">Medium Risk</span>
+              <span class="chip" role="listitem">Analysis confidence&nbsp;82%</span>
+              <span class="chip" role="listitem">5 key findings tracked</span>
+            </div>
+            <div class="summary-card">
+              <p>
+                Overall, these terms present moderate risks around dispute resolution and liability,
+                with better transparency and user controls in data practices.
+              </p>
+            </div>
+            <div class="callouts">
+              <h3>Key Findings</h3>
+              <ul>
+                <li>Mandatory arbitration with a delegation of arbitrability.</li>
+                <li>Class action waiver remains in effect for most disputes.</li>
+                <li>Opt-out controls exist for certain data sharing scenarios.</li>
+                <li>Auto-renewal defaults to on and cancellation requires several steps.</li>
+                <li>Clear retention policy plus self-service account deletion.</li>
+              </ul>
+            </div>
+            <div class="callouts">
+              <h3>Plain Language Alert</h3>
+              <div class="summary-card">
+                This document contains several sections that may impact your rights.
+                Review arbitration and liability sections carefully.
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="summary-view summary-view--sections"
+            id="summary-sections"
+            data-view="sections"
+            hidden
+          >
+            <p class="summary-intro">
+              When we scan each major clause, these are the areas that raise flags first.
+            </p>
+            <div class="sections">
+              <article class="section-card">
+                <div class="section-header">
+                  <h3>How disputes are handled</h3>
+                  <span class="risk-tag risk-high">High Risk</span>
+                </div>
+                <p>Most disputes are pushed to binding arbitration, with limited carveouts.</p>
+                <ul>
+                  <li>Binding arbitration is mandatory.</li>
+                  <li>Class action waiver applies across programs.</li>
+                  <li>Delegation of arbitrability is specified.</li>
+                </ul>
+              </article>
+              <article class="section-card">
+                <div class="section-header">
+                  <h3>How your data is used</h3>
+                  <span class="risk-tag risk-medium">Medium Risk</span>
+                </div>
+                <p>Data is collected for service improvement, with opt-outs for certain sharing and published retention periods.</p>
+                <ul>
+                  <li>Opt-out available for marketing communications.</li>
+                  <li>Retention schedules are transparent.</li>
+                </ul>
+              </article>
+              <article class="section-card">
+                <div class="section-header">
+                  <h3>Subscriptions and billing</h3>
+                  <span class="risk-tag risk-medium">Medium Risk</span>
+                </div>
+                <p>Subscriptions auto-renew by default and cancellation requires a multi-step workflow.</p>
+                <ul>
+                  <li>Auto-renewal enabled by default.</li>
+                  <li>Set reminders to cancel before renewal.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="excerpts-heading">
+          <h2 id="excerpts-heading">Key Excerpts</h2>
+          <div class="excerpts">
+            <blockquote>
+              “Any dispute arising out of these terms will be resolved by binding arbitration.”
+            </blockquote>
+            <blockquote>
+              “You waive the right to participate in a class action.”
+            </blockquote>
+            <blockquote>
+              “You may opt out of certain data sharing by adjusting your settings.”
+            </blockquote>
+          </div>
+        </section>
+
+        <section aria-labelledby="terms-heading">
+          <h2 id="terms-heading">Uncommon Terms</h2>
+          <div class="terms">
+            <div class="term-card">
+              <span class="term-word">Arbitration</span>
+              <span>A process for resolving disputes out of court.</span>
+            </div>
+            <div class="term-card">
+              <span class="term-word">Delegation</span>
+              <span>Assigning decision authority to an arbitrator.</span>
+            </div>
+            <div class="term-card">
+              <span class="term-word">Opt-out</span>
+              <span>A right to decline certain data processing or communications.</span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <button type="button">Contact</button>
+        <button type="button">Report Issue</button>
+        <button type="button">Give Feedback</button>
+      </footer>
+    </article>
+    <script>
+      const summaryDocumentBtn = document.getElementById("summary-document-btn");
+      const summarySectionBtn = document.getElementById("summary-section-btn");
+      const summaryHeading = document.getElementById("summary-heading");
+      const summaryViewLabel = document.getElementById("summary-view-label");
+      const overallView = document.getElementById("summary-overall");
+      const sectionsView = document.getElementById("summary-sections");
+
+      if (
+        summaryDocumentBtn &&
+        summarySectionBtn &&
+        summaryHeading &&
+        summaryViewLabel &&
+        overallView &&
+        sectionsView
+      ) {
+        const setSummaryView = (view) => {
+          const showSections = view === "section";
+
+          summaryDocumentBtn.classList.toggle("active", !showSections);
+          summaryDocumentBtn.setAttribute(
+            "aria-pressed",
+            showSections ? "false" : "true",
+          );
+
+          summarySectionBtn.classList.toggle("active", showSections);
+          summarySectionBtn.setAttribute(
+            "aria-pressed",
+            showSections ? "true" : "false",
+          );
+
+          summaryHeading.textContent = "Summary";
+          summaryViewLabel.textContent = showSections
+            ? "Section Summary"
+            : "Document Summary";
+          sectionsView.hidden = !showSections;
+          overallView.hidden = showSections;
+        };
+
+        summaryDocumentBtn.addEventListener("click", () => setSummaryView("document"));
+        summarySectionBtn.addEventListener("click", () => setSummaryView("section"));
+
+        const defaultView = summaryDocumentBtn.classList.contains("active")
+          ? "document"
+          : "section";
+        setSummaryView(defaultView);
+      }
+    </script>
+  </body>
+</html>
