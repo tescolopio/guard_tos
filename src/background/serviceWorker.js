@@ -284,6 +284,16 @@ function createServiceWorker({ log, logLevels }) {
           }
           break;
         }
+        case "sidepanelClosed": {
+          // Update sidepanel state when it closes
+          const tabId = message.tabId;
+          if (tabId) {
+            state.sidePanelOpen.set(tabId, false);
+            log(logLevels.DEBUG, `Sidepanel closed for tab ${tabId}`);
+          }
+          sendResponse({ success: true });
+          break;
+        }
         default:
           log(logLevels.WARN, "Unknown message action:", message.action);
           sendResponse({ error: MESSAGES.ERROR.UNKNOWN_ACTION });
@@ -328,11 +338,18 @@ function createServiceWorker({ log, logLevels }) {
         throw new Error("No analysis or text provided in message");
       }
 
-      // Store results
-      await storeAnalysisData(`${STORAGE_KEYS.ANALYSIS_RESULTS}_${tabId}`, {
+      // 2025-10-18: Store results with debug logging
+      const storageKey = `${STORAGE_KEYS.ANALYSIS_RESULTS}_${tabId}`;
+      console.log("💾 Storing analysis with key:", storageKey);
+      console.log("💾 TabId:", tabId);
+      console.log("💾 Results keys:", Object.keys(results));
+      
+      await storeAnalysisData(storageKey, {
         ...results,
         timestamp: new Date().toISOString(),
       });
+      
+      console.log("✅ Analysis stored successfully");
 
       // Notify sidepanel of new analysis
       try {

@@ -164,7 +164,7 @@ header h2 {
 }
 
 .grade-value {
-  font-size: 4.5rem;
+  font-size: 7rem;
   font-weight: 800;
   letter-spacing: -0.04em;
   margin: 0;
@@ -446,6 +446,7 @@ section h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   padding: 14px 16px;
   cursor: pointer;
   background: rgba(30, 41, 59, 0.6);
@@ -456,6 +457,12 @@ section h2 {
 
 .accordion-header:hover {
   background: rgba(51, 65, 85, 0.8);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .accordion-title {
@@ -470,6 +477,61 @@ section h2 {
 .accordion-content ul {
   padding-left: 20px;
   margin: 0;
+}
+
+/* Section-specific accordion styles for By Section view */
+.section-accordion-item {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.section-title {
+  font-weight: 600;
+}
+
+.risk-chip {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.risk-chip.risk-high {
+  border: 1px solid rgba(239, 68, 68, 0.55);
+  background: linear-gradient(135deg, rgba(248, 113, 113, 0.3), rgba(239, 68, 68, 0.2));
+  color: #fecaca;
+}
+
+.risk-chip.risk-medium {
+  border: 1px solid rgba(251, 191, 36, 0.55);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.2));
+  color: #fef08a;
+}
+
+.risk-chip.risk-low {
+  border: 1px solid rgba(34, 197, 94, 0.55);
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.3), rgba(34, 197, 94, 0.2));
+  color: #bbf7d0;
+}
+
+.accordion-icon {
+  font-size: 0.75rem;
+  transition: transform 0.2s ease;
+  color: #94a3b8;
+}
+
+.accordion-header.active .accordion-icon {
+  transform: rotate(180deg);
+}
+
+.section-key-points {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.section-key-points li {
+  margin-bottom: 4px;
 }
 
 #uncommon-terms-container .uncommon-terms-list {

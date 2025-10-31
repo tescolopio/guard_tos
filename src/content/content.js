@@ -984,6 +984,40 @@ try {
           this.log(this.logLevels.WARN, "URI compute failed", e);
         }
 
+        // Transform sections for sidepanel display
+        const transformedSections = (summaryAnalysis.sections || []).map(section => {
+          console.log('🔍 Transforming section:', {
+            heading: section.heading,
+            hasRights: !!section.rights,
+            rightsGrade: section.rights?.grade,
+            contentLength: section.content?.length
+          });
+          
+          // Generate key points from content (first 2-3 sentences or key phrases)
+          const content = section.content || '';
+          const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 10);
+          const keyPoints = sentences.slice(0, 3).map(s => s.trim());
+          
+          // Determine risk level from rights analysis
+          let riskLevel = 'medium'; // default
+          if (section.rights?.grade) {
+            const grade = section.rights.grade.toLowerCase();
+            if (grade.includes('a') || grade.includes('b')) {
+              riskLevel = 'low';
+            } else if (grade.includes('f') || grade.includes('d')) {
+              riskLevel = 'high';
+            }
+          }
+          
+          return {
+            userFriendlyHeading: (section.heading || 'Untitled Section').replace(/\s+/g, ' ').trim(),
+            riskLevel: riskLevel,
+            keyPoints: keyPoints.length > 0 ? keyPoints : ['Content analysis in progress...']
+          };
+        });
+
+        console.log('📋 Final transformed sections:', transformedSections.length);
+
         const analysisResult = {
           rightsDetails: normalizedRightsAnalysis,
           readability: readabilityAnalysis,
@@ -996,7 +1030,7 @@ try {
           riskLevel: summaryAnalysis.riskLevel,
           keyFindings: summaryAnalysis.keyFindings,
           plainLanguageAlert: summaryAnalysis.plainLanguageAlert,
-          sections: summaryAnalysis.sections,
+          sections: transformedSections,
         };
 
         // PAYLOAD DEBUG

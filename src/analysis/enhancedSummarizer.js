@@ -1036,53 +1036,163 @@
      * Find concerning patterns across sections
      */
     function findConcerningPatterns(sections) {
-      const findings = [];
+      // 2025-10-22: Dynamically identify the most concerning patterns from high-risk and medium-risk sections
+      const concerningFindings = [];
 
-      const patterns = [
+      // Calculate overall document risk to determine how many findings to show
+      const documentRisk = assessOverallRisk(sections);
+      const maxFindings = getMaxFindingsForRiskLevel(documentRisk);
+
+      // First, get all high-risk and medium-risk sections
+      const highRiskSections = sections.filter(s => s.riskLevel === 'high');
+      const mediumRiskSections = sections.filter(s => s.riskLevel === 'medium');
+
+      // Process high-risk sections first
+      highRiskSections.forEach(section => {
+        const content = (section.originalText || section.summary || '').toLowerCase();
+        const heading = (section.userFriendlyHeading || section.heading || '').toLowerCase();
+
+        // Extract key concerning points from this section
+        const points = extractConcerningPoints(section);
+
+        points.forEach(point => {
+          if (concerningFindings.length < maxFindings) {
+            const finding = createStructuredFinding(point, section, content, heading);
+            if (finding) {
+              concerningFindings.push(finding);
+            }
+          }
+        });
+      });
+
+      // If we don't have enough high-risk findings, add medium-risk ones
+      if (concerningFindings.length < maxFindings) {
+        mediumRiskSections.forEach(section => {
+          const content = (section.originalText || section.summary || '').toLowerCase();
+          const heading = (section.userFriendlyHeading || section.heading || '').toLowerCase();
+
+          const points = extractConcerningPoints(section);
+
+          points.forEach(point => {
+            if (concerningFindings.length < maxFindings) {
+              const finding = createStructuredFinding(point, section, content, heading);
+              if (finding) {
+                concerningFindings.push(finding);
+              }
+            }
+          });
+        });
+      }
+
+      return concerningFindings;
+    }
+
+    function getMaxFindingsForRiskLevel(documentRisk) {
+      // Determine how many key findings to show based on overall document risk
+      switch (documentRisk) {
+        case 'high':
+          return 6; // Show all major concerns for very risky documents
+        case 'medium-high':
+          return 5; // Show most concerns for risky documents
+        case 'medium':
+          return 4; // Show key concerns for moderately risky documents
+        case 'low-medium':
+        default:
+          return 3; // Show main concerns for less risky documents
+      }
+    }
+
+    function extractConcerningPoints(section) {
+      const content = section.originalText || section.summary || '';
+      const points = [];
+
+      // Look for concerning patterns and extract meaningful excerpts
+      const concerningPatterns = [
         {
-          check: (sections) =>
-            sections.some((s) =>
-              /no.*refund|non.*refundable/i.test(s.originalText),
-            ),
-          finding: "💰 Refunds may be limited or not available",
+          pattern: /indemnify|hold.*harmless|pay.*costs.*legal.*fees?/gi,
+          category: 'indemnification',
+          title: 'You Must Pay Legal Costs'
         },
         {
-          check: (sections) =>
-            sections.some((s) =>
-              /sell.*data|share.*third.*part/i.test(s.originalText),
-            ),
-          finding: "🔒 Your personal data may be shared with other companies",
+          pattern: /own.*data|data.*property|exclusive.*property|perpetual.*license/gi,
+          category: 'data_ownership',
+          title: 'They Own Your Data Forever'
         },
         {
-          check: (sections) =>
-            sections.some((s) =>
-              /terminate.*without.*notice/i.test(s.originalText),
-            ),
-          finding: "⚠️ Your account can be terminated without warning",
+          pattern: /change.*terms.*without.*notice|amend.*without.*notification/gi,
+          category: 'unilateral_changes',
+          title: 'Terms Can Change Without Notice'
         },
         {
-          check: (sections) =>
-            sections.some((s) =>
-              /change.*terms.*without.*notice/i.test(s.originalText),
-            ),
-          finding: "📝 Terms can be changed without notifying you",
+          pattern: /sell.*data|commercialize.*data|license.*data.*third.*part/gi,
+          category: 'data_monetization',
+          title: 'Your Data Can Be Sold'
         },
         {
-          check: (sections) =>
-            sections.some((s) =>
-              /waive.*rights?|indemnify/i.test(s.originalText),
-            ),
-          finding: "⚖️ You may be giving up important legal rights",
+          pattern: /no.*warranty|as.*is|disclaim.*liability|not.*responsible/gi,
+          category: 'limited_liability',
+          title: 'No Warranty or Limited Liability'
         },
+        {
+          pattern: /waive.*rights?|give.*up.*rights?|cannot.*sue/gi,
+          category: 'rights_waiver',
+          title: 'You Give Up Important Rights'
+        },
+        {
+          pattern: /terminate.*without.*notice|cancel.*account.*anytime/gi,
+          category: 'termination',
+          title: 'Account Can Be Terminated Anytime'
+        },
+        {
+          pattern: /mandatory.*arbitration|binding.*arbitration|class.*action.*waiver/gi,
+          category: 'dispute_resolution',
+          title: 'Disputes Go to Arbitration'
+        }
       ];
 
-      patterns.forEach(({ check, finding }) => {
-        if (check(sections)) {
-          findings.push(finding);
+      concerningPatterns.forEach(({ pattern, category, title }) => {
+        const matches = content.match(pattern);
+        if (matches) {
+          // Extract a meaningful sentence or phrase around the match
+          const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 10);
+          const relevantSentence = sentences.find(s => pattern.test(s)) || sentences[0];
+
+          if (relevantSentence) {
+            points.push({
+              title: title,
+              text: relevantSentence.trim(),
+              category: category,
+              section: section.userFriendlyHeading || section.heading
+            });
+          }
         }
       });
 
-      return findings;
+      return points;
+    }
+
+    function createStructuredFinding(point, section, content, heading) {
+      const { title, text, category, section: sectionName } = point;
+
+      // Create plain language explanation based on category
+      const plainLanguageMap = {
+        indemnification: "If there's a problem, you have to pay their legal bills.",
+        data_ownership: "Everything you do becomes their property permanently.",
+        unilateral_changes: "They can change the rules anytime without telling you.",
+        data_monetization: "They can sell your personal information to make money.",
+        limited_liability: "If something goes wrong, you're on your own.",
+        rights_waiver: "You lose important legal protections and rights.",
+        termination: "They can shut down your account for any reason.",
+        dispute_resolution: "You can't sue them in court if there's a problem."
+      };
+
+      const inPlainTerms = plainLanguageMap[category] || "This gives them significant advantages over you.";
+
+      return {
+        title: title,
+        whatItSays: `${text} (${sectionName})`,
+        inPlainTerms: inPlainTerms
+      };
     }
 
     /**

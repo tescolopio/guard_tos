@@ -101,6 +101,10 @@ class Sidepanel {
       [MESSAGES.ANALYSIS_ERROR]: (error) =>
         this.errorManager.handle(error, "analysis"),
       [MESSAGES.CLEAR_PANEL]: this.clearPanel.bind(this),
+      closeSidePanel: () => {
+        // 2025-10-22: Close the sidepanel when requested by service worker
+        window.close();
+      },
     };
   }
 
@@ -234,6 +238,7 @@ class Sidepanel {
       }
 
       // 2025-10-17: Update Grade Display (now using documentGrade element)
+      // 2025-10-18: Fixed to keep grade-value base class for proper sizing
       if (combinedGradeData?.grade && this.elements.documentGrade) {
         const grade = combinedGradeData.grade;
         
@@ -241,8 +246,8 @@ class Sidepanel {
         this.elements.documentGrade.textContent = grade;
         this.elements.documentGrade.setAttribute("data-grade-value", grade);
         
-        // 2025-10-17: Grade styling now handled by CSS classes in new structure
-        this.elements.documentGrade.className = `grade grade-${grade.toLowerCase().replace(/[+\-]/g, '')}`;
+        // Keep base class 'grade-value' for sizing, add grade-specific color class
+        this.elements.documentGrade.className = `grade-value grade-${grade.toLowerCase().replace(/[+\-]/g, '')}`;
         
         // Accessibility
         this.elements.documentGrade.setAttribute(
@@ -274,6 +279,9 @@ class Sidepanel {
    */
   updateSummaryMetrics(metrics) {
     try {
+      // 2025-10-18: Debug what metrics are actually passed
+      console.log("📊 updateSummaryMetrics called with:", metrics);
+      
       const {
         uriScore,
         rightsGrade,
@@ -288,18 +296,21 @@ class Sidepanel {
       if (this.elements.rightsScore) {
         this.elements.rightsScore.textContent = 
           typeof uriScore === 'number' ? Math.round(uriScore) : '--';
+        console.log("📊 Set rightsScore to:", this.elements.rightsScore.textContent);
       }
 
       // 2025-10-17: Update Confidence card (renamed from summaryConfidence)
       if (this.elements.confidence) {
         this.elements.confidence.textContent = 
           typeof confidencePct === 'number' ? `${confidencePct}%` : '--';
+        console.log("📊 Set confidence to:", this.elements.confidence.textContent);
       }
 
       // 2025-10-17: Update Readability Score card (renamed from summaryReadabilityScore)
       if (this.elements.readabilityScore) {
         this.elements.readabilityScore.textContent = 
           typeof readabilityEase === 'number' ? readabilityEase.toFixed(1) : '--';
+        console.log("📊 Set readabilityScore to:", this.elements.readabilityScore.textContent);
       }
 
       // 2025-10-17: Update flags/chips in flagsContainer (new structure)
@@ -407,35 +418,64 @@ class Sidepanel {
   }
 
   updateSummary(summary, enhancedData) {
-    if (!summary) return;
+    // 2025-10-18: Debug - log even if summary is null
+    console.log("📋 updateSummary CALLED - summary:", summary);
+    console.log("📋 updateSummary CALLED - enhancedData:", enhancedData);
+    console.log("📋 updateSummary CALLED - this.currentContent:", this.currentContent);
+    
+    if (!summary) {
+      console.warn("⚠️ updateSummary: No summary provided, but will attempt to use currentContent");
+      // 2025-10-18: Don't return early - we can still populate metrics from currentContent
+    }
+
+    // 2025-10-18: Debug data structure
+    console.log("📋 updateSummary - this.currentContent:", this.currentContent);
+    console.log("📋 updateSummary - summary arg:", summary);
+    console.log("📋 updateSummary - enhancedData arg:", enhancedData);
 
     const data = this.currentContent || {};
     const scores = data.scores || {};
+    
+    // 2025-10-18: Extract data from actual structure (rightsDetails, combinedGrade, readability at top level)
     const uriData = scores.userRightsIndex || data.userRightsIndex || null;
     const rightsData = data.rightsDetails || scores.rights || {};
     const readabilityData = data.readability || scores.readability || {};
+    const combinedGradeData = data.combinedGrade || scores.combinedGrade || null;
+    
+    console.log("📋 Extracted - uriData:", uriData);
+    console.log("📋 Extracted - rightsData:", rightsData);
+    console.log("📋 Extracted - readabilityData:", readabilityData);
+    console.log("📋 Extracted - combinedGradeData:", combinedGradeData);
 
-    // Calculate metrics for chips
-    const uriScore = typeof uriData?.weightedScore === "number"
-      ? uriData.weightedScore
-      : typeof rightsData?.rightsScore === "number"
-        ? rightsData.rightsScore
-        : null;
+    // 2025-10-18: Calculate metrics from actual data structure
+    // URI Score comes from combinedGrade.breakdown.uriScore or rightsDetails.rightsScore
+    const uriScore = combinedGradeData?.breakdown?.uriScore ?? 
+                     uriData?.weightedScore ?? 
+                     rightsData?.rightsScore ?? 
+                     null;
 
-    const readabilityEase = typeof readabilityData?.flesch === "number"
-      ? readabilityData.flesch
-      : null;
+    // Readability comes from combinedGrade.breakdown.readabilityScore or readability.flesch
+    const readabilityEase = combinedGradeData?.breakdown?.readabilityScore ??
+                           readabilityData?.flesch ?? 
+                           null;
 
+    // Confidence comes from rightsDetails.confidence
     const confidencePct = typeof rightsData?.confidence === "number"
       ? Math.round(rightsData.confidence * 100)
       : null;
 
-    const summaryBundle = enhancedData || {
+    // 2025-10-18: Get enhanced data from currentContent if not passed as arg
+    const summaryBundle = enhancedData || data.enhancedData || {
       enhancedSummary: data.enhancedSummary,
       riskLevel: data.riskLevel,
       keyFindings: data.keyFindings,
       sections: data.sections,
     };
+    
+    console.log("📋 summaryBundle:", summaryBundle);
+    console.log("📋 summaryBundle.keyFindings:", summaryBundle?.keyFindings);
+    console.log("📋 Is keyFindings an array?", Array.isArray(summaryBundle?.keyFindings));
+    console.log("📋 data structure keys:", Object.keys(data));
 
     const riskLevel = summaryBundle?.riskLevel || rightsData?.riskLevel || null;
 
@@ -450,22 +490,22 @@ class Sidepanel {
       clauseCount: this.calculateTotalClauses(rightsData),
     });
 
-    // 2025-10-17: Update URI category breakdown
-    if (this.currentContent?.userRightsIndex) {
-      this.updateUriCategoryBreakdown(this.currentContent.userRightsIndex);
-    }
+    // 2025-10-18: URI category breakdown removed - shown in tooltip instead
 
-    // 2025-10-17: Update main summary text (renamed from overallSummary to summaryText)
-    if (summaryBundle?.keyFindings && Array.isArray(summaryBundle.keyFindings)) {
-      // Use structured format from enhancedSummarizer
-      const summaryHtml = this.formatEnhancedSummary(summaryBundle.keyFindings);
+    // 2025-10-18: Update main summary text with Key Findings format
+    if (summaryBundle?.keyFindings && Array.isArray(summaryBundle.keyFindings) && summaryBundle.keyFindings.length > 0) {
+      console.log("📋 Using keyFindings:", summaryBundle.keyFindings);
+      // Use structured format from enhancedSummarizer (title, whatItSays, inPlainTerms)
+      const summaryHtml = this.formatKeyFindings(summaryBundle.keyFindings);
       this.elements.summaryText.innerHTML = summaryHtml;
     } else if (summaryBundle?.enhancedSummary?.overall) {
+      console.log("📋 Using enhancedSummary.overall");
       // Fallback to text-based summary
       const summaryHtml = this.formatEnhancedSummary(summaryBundle.enhancedSummary.overall);
       this.elements.summaryText.innerHTML = summaryHtml;
     } else {
-      this.elements.summaryText.innerHTML = `<p>${summary || 'No summary available.'}</p>`;
+      console.log("📋 No key findings found, using fallback");
+      this.elements.summaryText.innerHTML = `<p>Analysis complete. Check the metrics above for details.</p>`;
     }
   }
 
@@ -486,6 +526,41 @@ class Sidepanel {
       }
       return total;
     }, 0);
+  }
+
+  /**
+   * Format Key Findings in structured format
+   * 2025-10-18: Match interactive demo format with title, whatItSays, inPlainTerms
+   */
+  formatKeyFindings(keyFindings) {
+    // 2025-10-22: Updated to include dynamic "Key Takeaways: X Most Important Points" header
+    if (!Array.isArray(keyFindings) || keyFindings.length === 0) {
+      return '<p>No key findings available.</p>';
+    }
+
+    // Check if keyFindings has structured objects
+    if (typeof keyFindings[0] === 'object' && keyFindings[0].title) {
+      const numPoints = keyFindings.length;
+      return `
+        <h3 style="margin: 0 0 1em 0; color: #2c3e50; font-size: 1.1em; font-weight: 600;">Key Takeaways: ${numPoints} Most Important Points</h3>
+        <ol style="padding-left: 20px; margin: 0; list-style-type: decimal;">
+          ${keyFindings.map(finding => `
+            <li style="margin-bottom: 1em;">
+              <strong>${this.escapeHtml(finding.title)}</strong>
+              <p style="margin: 0.35em 0 0.25em;"><strong>What it says:</strong> ${this.escapeHtml(finding.whatItSays)}</p>
+              <p style="margin: 0;"><strong>In plain terms:</strong> "${this.escapeHtml(finding.inPlainTerms)}"</p>
+            </li>
+          `).join('')}
+        </ol>
+      `;
+    }
+
+    // Fallback for simple string array
+    return `
+      <ul style="padding-left: 20px; margin: 0;">
+        ${keyFindings.map(finding => `<li>${this.escapeHtml(String(finding))}</li>`).join('')}
+      </ul>
+    `;
   }
 
   formatEnhancedSummary(summaryData) {
@@ -622,6 +697,11 @@ class Sidepanel {
 
   // 2025-10-17: Updated to use sectionsAccordion instead of sectionSummaries
   updateSections(sections) {
+    console.log('📋 updateSections called with:', sections?.length || 0, 'sections');
+    if (sections?.length > 0) {
+      console.log('📋 First section:', sections[0]);
+    }
+    
     this.elements.sectionsAccordion.innerHTML = "";
 
     if (!sections?.length) {
@@ -647,8 +727,10 @@ class Sidepanel {
       
       header.innerHTML = `
         <span class="section-title">${this.escapeHtml(section.userFriendlyHeading || section.heading)}</span>
-        <span class="risk-chip risk-${riskLevel}">${riskText}</span>
-        <span class="accordion-icon">▼</span>
+        <div class="header-right">
+          <span class="risk-chip risk-${riskLevel}">${riskText}</span>
+          <span class="accordion-icon">▼</span>
+        </div>
       `;
 
       // Accordion content
@@ -1728,6 +1810,19 @@ class Sidepanel {
       return true; // Keep message channel open for async response
     });
 
+    // 2025-10-22: Notify service worker when sidepanel is closing
+    window.addEventListener('beforeunload', () => {
+      // Get current tab ID and notify service worker that sidepanel is closing
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs[0]) {
+          chrome.runtime.sendMessage({
+            action: 'sidepanelClosed',
+            tabId: tabs[0].id
+          });
+        }
+      });
+    });
+
     // Summary toggle buttons (updated IDs)
     this.elements.summaryDocumentBtn.addEventListener("click", () =>
       this.toggleView("document"),
@@ -1970,18 +2065,60 @@ class Sidepanel {
         );
         this.loadingManager.end();
       } else if (response && response.error) {
-        console.error("🔴 SIDEPANEL: Response contains error:", response.error);
-        this.errorManager.handle(response.error, "getAnalysisResults");
+        console.log("🔴 SIDEPANEL: Response contains error:", response.error);
+        // 2025-10-18: Show helpful message when no analysis exists yet
         this.loadingManager.end();
+        this.showWaitingState();
       } else if (response && response.data) {
         console.log("✅ SIDEPANEL: Got analysis data, updating content...");
         this.updateSidepanelContent(response.data);
       } else {
         console.warn("⚠️ SIDEPANEL: No data in response");
-        this.loadingManager.update("No analysis data found.");
-        setTimeout(() => this.loadingManager.end(), 2000);
+        this.loadingManager.end();
+        this.showWaitingState();
       }
     });
+  }
+
+  /**
+   * Show friendly waiting state when no analysis exists yet
+   * 2025-10-18: Better UX for sidepanel opened before analysis
+   */
+  showWaitingState() {
+    // Update service name to show waiting state
+    if (this.elements.serviceName) {
+      this.elements.serviceName.textContent = 'Waiting for analysis...';
+    }
+    
+    // Update URL
+    if (this.elements.termsUrl) {
+      this.elements.termsUrl.textContent = 'Navigate to a Terms of Service page to begin';
+      this.elements.termsUrl.removeAttribute('href');
+    }
+    
+    // Update grade display
+    if (this.elements.documentGrade) {
+      this.elements.documentGrade.textContent = '?';
+      this.elements.documentGrade.setAttribute('data-grade-value', 'N/A');
+    }
+    
+    // Show helpful message in summary
+    if (this.elements.summaryText) {
+      this.elements.summaryText.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <p style="font-size: 1.1rem; margin-bottom: 12px;">📄 No document analyzed yet</p>
+          <p style="color: #94a3b8; line-height: 1.6;">
+            Navigate to a Terms of Service, Privacy Policy, or other legal document 
+            to see the analysis here.
+          </p>
+          <p style="color: #94a3b8; margin-top: 12px; font-size: 0.9rem;">
+            Terms Guardian automatically detects and analyzes legal documents.
+          </p>
+        </div>
+      `;
+    }
+    
+    console.log("🔵 SIDEPANEL: Showing waiting state");
   }
 
   clearPanel() {
